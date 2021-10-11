@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+    <RunConfiguration>
+        <EnvironmentVariables>
+            <NETCASPERSDK_NODE_ADDRESS>http://3.136.227.9:7777/rpc</NETCASPERSDK_NODE_ADDRESS>
+            <NETCASPERSDK_ACCPUBLICKEY>account-hash-21e8cee83ced9ff174357dc5d9b797f259994354993f01e18db49cda2a7700b3</NETCASPERSDK_ACCPUBLICKEY>
+            <NETCASPERSDK_NODE_METRICS_ADDRESS>http://3.136.227.9:8888/metrics</NETCASPERSDK_NODE_METRICS_ADDRESS>
+            <NETCASPERSDK_NODE_METRICS_IP>3.136.227.9</NETCASPERSDK_NODE_METRICS_IP>
+            <NETCASPERSDK_NODE_METRICS_PORT>8888</NETCASPERSDK_NODE_METRICS_PORT>
+        </EnvironmentVariables>
+    </RunConfiguration>
+</RunSettings>
+
