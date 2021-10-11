@@ -1,4 +1,7 @@
 # NetCasperSDK - C# SDK for Casper network
+
+[build-and-test workflow](https://github.com/davidatwhiletrue/netcaspersdk/actions/workflows/build-and-test.yml/badge.svg)
+
 ## Friendly Hackaton
 My work submission to the *Building An SDK In C#* bounty consist of:
 
@@ -41,3 +44,9 @@ Build and test instructions will be added to this page when the hackaton is fini
 
 https://github.com/davidatwhiletrue/docs/blob/hackaton-netcaspersdk/dapp-dev-guide/sdk/csharp-sdk.rst
  
+## Examples:
+
+* [Counter contract tutorial with C#](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/SJBnPCdVt)
+* [Key-Value storage tutorial with C#](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/HyX8i0WBt)
+* [Key management](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/HkvV-MMBt)
+

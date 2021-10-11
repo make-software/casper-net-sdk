@@ -1,18 +1,20 @@
-name: publish to nuget
+name: Publish to nuget.org
+
 on:
   workflow_dispatch:
 
 jobs:
   publish:
-    name: build, pack & publish
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
-       - name: Setup dotnet
-         uses: actions/setup-dotnet@v1
-         with:
-           dotnet-version: 5.0.x
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
 
       - name: publish on version change
         id: publish_nuget
