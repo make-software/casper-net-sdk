@@ -1,6 +1,6 @@
 # NetCasperSDK - C# SDK for Casper network
 
-[build-and-test workflow](https://github.com/davidatwhiletrue/netcaspersdk/actions/workflows/build-and-test.yml/badge.svg)
+![build-and-test workflow](https://github.com/davidatwhiletrue/netcaspersdk/actions/workflows/build-and-test.yml/badge.svg)
 
 ## Friendly Hackaton
 My work submission to the *Building An SDK In C#* bounty consist of:
