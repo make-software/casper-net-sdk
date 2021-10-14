@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json.Serialization;
 using NetCasperSDK.ByteSerializers;
 using NetCasperSDK.Converters;
@@ -93,7 +94,7 @@ namespace NetCasperSDK.Types
         public bool ValidateHashes(out string message)
         {
             var computedHash = ComputeBodyHash(this.Payment.Item2, this.Session.Item2); 
-            if(!this.Header.BodyHash.Equals(computedHash))
+            if(!this.Header.BodyHash.SequenceEqual(computedHash))
             {
                 message = "Computed Body Hash does not match value in deploy header. " +
                           $"Expected: '{Hex.ToHexString(this.Header.BodyHash)}'. " +
@@ -102,7 +103,7 @@ namespace NetCasperSDK.Types
             }
 
             computedHash = ComputeHeaderHash(this.Header);
-            if (!this.Hash.Equals(computedHash))
+            if (!this.Hash.SequenceEqual(computedHash))
             {
                 message = "Computed Hash does not match value in deploy object. " +
                           $"Expected: '{Hex.ToHexString(this.Hash)}'. " +
