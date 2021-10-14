@@ -20,14 +20,20 @@ namespace NetCasperTest
         [Test]
         public void TestValidBlakeEd25519()
         {
-            var hash = PublicKey.FromHexString(ED25519publicKey).GetAccountHash();
+            var publicKey = PublicKey.FromHexString(ED25519publicKey);
+            Assert.AreEqual(KeyAlgo.ED25519, publicKey.KeyAlgorithm);
+
+            var hash = publicKey.GetAccountHash();
             Assert.AreEqual(Hex.ToHexString(hash), ED25519hash, "Unexpected ED25519hash value");
         }
 
         [Test]
         public void TestValidBlakeSecp256k1()
         {
-            var hash = PublicKey.FromHexString(SECP256K1publicKey).GetAccountHash();
+            var publicKey = PublicKey.FromHexString(SECP256K1publicKey);
+            Assert.AreEqual(KeyAlgo.SECP256K1, publicKey.KeyAlgorithm);
+            
+            var hash = publicKey.GetAccountHash();
             Assert.AreEqual(Hex.ToHexString(hash), SECP256K1hash, "Unexpected SECP256K1hash value");
         }
     }
