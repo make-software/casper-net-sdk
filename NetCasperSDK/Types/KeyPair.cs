@@ -156,10 +156,14 @@ namespace NetCasperSDK.Types
                 ParametersWithRandom param = new ParametersWithRandom(_privateKey, k);
 
                 var signer = SignerUtilities.GetSigner("SHA-256withPLAIN-ECDSA");
-                signer.Init(forSigning: true, param);
-                signer.BlockUpdate(message, 0, message.Length);
-                byte[] rs = signer.GenerateSignature();
-
+                byte[] rs;
+                do
+                {
+                    signer.Init(forSigning: true, param);
+                    signer.BlockUpdate(message, 0, message.Length);
+                    rs = signer.GenerateSignature();
+                } while ((rs[32] & 0x80) == 0x80); //discard s with first bit equal to 1
+                
                 return rs;
             }
 
