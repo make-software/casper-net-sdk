@@ -56,34 +56,13 @@ namespace NetCasperSDK.Types
 
         public void Sign(KeyPair keyPair)
         {
-            // DeployByteSerializer serializer = new DeployByteSerializer();
-            // byte[] bDeploy = serializer.ToBytes(this);
+            byte[] signature = keyPair.Sign(this.Hash);
 
-            if (keyPair.PublicKey.KeyAlgorithm == KeyAlgo.ED25519)
+            Approvals.Add(new DeployApproval()
             {
-                // var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
-                // bcBl2bdigest.BlockUpdate(bDeploy,0, bDeploy.Length);
-                //
-                // var hash = new byte[bcBl2bdigest.GetDigestSize()];
-                // bcBl2bdigest.DoFinal(hash, 0);
-
-                byte[] signature = keyPair.Sign(this.Hash);
-            
-                Approvals.Add(new DeployApproval()
-                {
-                    Signature = Signature.FromRawBytes(signature, KeyAlgo.ED25519),
-                    Signer = keyPair.PublicKey
-                });    
-            }
-            else
-            {
-                byte[] signature = keyPair.Sign(this.Hash);
-                Approvals.Add(new DeployApproval()
-                {
-                    Signature = Signature.FromRawBytes(signature, KeyAlgo.SECP256K1),
-                    Signer = keyPair.PublicKey
-                });    
-            }
+                Signature = Signature.FromRawBytes(signature, keyPair.PublicKey.KeyAlgorithm),
+                Signer = keyPair.PublicKey
+            });    
         }
 
         public void AddApproval(DeployApproval approval)

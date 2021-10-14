@@ -4,6 +4,7 @@ using Org.BouncyCastle.Asn1.X9;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Math.EC;
+using Org.BouncyCastle.Math.EC.Rfc8032;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Utilities.Encoders;
@@ -151,6 +152,34 @@ namespace NetCasperSDK.Types
             Array.Copy(RawBytes, 0, bytes, 1, RawBytes.Length);
 
             return bytes;
+        }
+
+        public bool VerifySignature(byte[] message, byte[] signature)
+        {
+            if (KeyAlgorithm == KeyAlgo.ED25519)
+            {
+                Ed25519PublicKeyParameters edPk = new Ed25519PublicKeyParameters(RawBytes, 0);
+                return Ed25519.Verify(signature, 0, RawBytes, 0, message, 0, message.Length);
+            }
+            if (KeyAlgorithm == KeyAlgo.SECP256K1)
+            {
+                var curve = ECNamedCurveTable.GetByName("secp256k1");
+                var domainParams = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H, curve.GetSeed());
+
+                ECPoint q = curve.Curve.DecodePoint(RawBytes);
+                ECPublicKeyParameters pk = new ECPublicKeyParameters(q, domainParams);
+                
+                var signer = SignerUtilities.GetSigner("SHA-256withPLAIN-ECDSA");
+                signer.Init(forSigning: false, pk);
+                signer.BlockUpdate(message, 0, message.Length);
+                return signer.VerifySignature(signature);
+            }
+            throw new Exception("Unsupported key type.");
+        }
+
+        public bool VerifySignature(string message, string signature)
+        {
+            return VerifySignature(Hex.Decode(message), Hex.Decode(signature));
         }
     }
 }
