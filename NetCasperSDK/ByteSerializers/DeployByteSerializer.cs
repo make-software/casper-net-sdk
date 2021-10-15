@@ -42,9 +42,9 @@ namespace NetCasperSDK.ByteSerializers
             
             WriteBytes(ms, source.Hash);
 
-            WriteBytes(ms, itemSerializer.ToBytes(source.Payment.Item2));
+            WriteBytes(ms, itemSerializer.ToBytes(source.Payment));
             
-            WriteBytes(ms, itemSerializer.ToBytes(source.Session.Item2));
+            WriteBytes(ms, itemSerializer.ToBytes(source.Session));
             
             // add the approvals
             //
