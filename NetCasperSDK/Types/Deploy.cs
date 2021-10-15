@@ -29,10 +29,12 @@ namespace NetCasperSDK.Types
         public DeployHeader Header { get; }
 
         [JsonPropertyName("payment")]
-        public Tuple<string,ExecutableDeployItem> Payment { get; }
+        [JsonConverter(typeof(ExecutableDeployItemConverter))]
+        public ExecutableDeployItem Payment { get; }
         
         [JsonPropertyName("session")]
-        public Tuple<string,ExecutableDeployItem> Session { get; }
+        [JsonConverter(typeof(ExecutableDeployItemConverter))]
+        public ExecutableDeployItem Session { get; }
         
         public Deploy(DeployHeader header,
             ExecutableDeployItem payment,
@@ -50,8 +52,8 @@ namespace NetCasperSDK.Types
                 ChainName = header.ChainName
             };
             this.Hash = ComputeHeaderHash(this.Header);
-            this.Payment = new Tuple<string, ExecutableDeployItem>(payment.JsonPropertyName(), payment);
-            this.Session = new Tuple<string, ExecutableDeployItem>(session.JsonPropertyName(), session);
+            this.Payment = payment;
+            this.Session = session;
         }
 
         public void Sign(KeyPair keyPair)
@@ -72,7 +74,7 @@ namespace NetCasperSDK.Types
 
         public bool ValidateHashes(out string message)
         {
-            var computedHash = ComputeBodyHash(this.Payment.Item2, this.Session.Item2); 
+            var computedHash = ComputeBodyHash(this.Payment, this.Session); 
             if(!this.Header.BodyHash.SequenceEqual(computedHash))
             {
                 message = "Computed Body Hash does not match value in deploy header. " +
