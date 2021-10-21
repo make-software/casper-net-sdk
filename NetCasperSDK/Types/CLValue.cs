@@ -285,6 +285,12 @@ namespace NetCasperSDK.Types
             return new CLValue(bytes, new CLTuple3TypeInfo(t0.TypeInfo, t1.TypeInfo, t2.TypeInfo),
                 Hex.ToHexString(bytes));
         }
+
+        public static CLValue PublicKey(PublicKey publicKey)
+        {
+            return new CLValue(publicKey.GetBytes(), new CLTypeInfo(CLType.PublicKey), 
+                Hex.ToHexString(publicKey.GetBytes()));
+        }
         
         public static CLValue PublicKey(byte[] value, KeyAlgo keyAlgorithm)
         {
@@ -298,6 +304,46 @@ namespace NetCasperSDK.Types
         public static CLValue PublicKey(string value, KeyAlgo keyAlgorithm)
         {
             return PublicKey(Hex.Decode(value), keyAlgorithm);
+        }
+
+        public static CLValue KeyFromPublicKey(PublicKey publicKey)
+        {
+            byte[] accountHash = publicKey.GetAccountHash();
+            byte[] bytes = new byte[1 + accountHash.Length];
+            bytes[0] = (byte) KeyTag.Account;
+            Array.Copy(accountHash, 0, bytes, 1, accountHash.Length);
+
+            return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.Account), Hex.ToHexString(bytes));
+        }
+
+        public static CLValue KeyFromHash(byte[] hash, KeyTag keyTag)
+        {
+            byte[] bytes = new byte[1 + hash.Length];
+            bytes[0] = (byte) keyTag;
+            Array.Copy(hash, 0, bytes, 1, hash.Length);
+
+            return new CLValue(bytes, new CLKeyTypeInfo(keyTag), Hex.ToHexString(bytes));
+        }
+
+        public static CLValue KeyFromURef(URef uRef)
+        {
+            byte[] bytes = new byte[1 + uRef.RawBytes.Length + 1];
+            bytes[0] = (byte) KeyTag.URef;
+            Array.Copy(uRef.RawBytes, 0, bytes, 1, uRef.RawBytes.Length);
+            bytes[1 + uRef.RawBytes.Length] = (byte) uRef.AccessRights;
+            
+            return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.URef), Hex.ToHexString(bytes));
+        }
+
+        public static CLValue KeyFromEraInfo(ulong era)
+        {
+            var bEra = BitConverter.GetBytes(era);
+            if(!BitConverter.IsLittleEndian) Array.Reverse(bEra);
+            byte[] bytes = new byte[1 + bEra.Length];
+            bytes[0] = (byte) KeyTag.EraInfo;
+            Array.Copy(bEra, 0, bytes, 1, bEra.Length);
+
+            return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.EraInfo), Hex.ToHexString(bytes));
         }
     }
 }
