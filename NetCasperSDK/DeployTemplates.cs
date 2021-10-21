@@ -87,5 +87,59 @@ namespace NetCasperSDK
             var deploy = new Deploy(header, payment, session);
             return deploy;
         }
+        
+        public static Deploy DelegateTokens(
+            byte[] delegateContractWasmBytes,
+            KeyPair fromKey,
+            PublicKey validatorPK,
+            BigInteger amount,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            var header = new DeployHeader()
+            {
+                Account = fromKey.PublicKey,
+                Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
+                Ttl = ttl,
+                ChainName = chainName,
+                GasPrice = gasPrice
+            };
+            var payment = new ModuleBytesDeployItem(paymentAmount);
+            
+            var session = new ModuleBytesDeployItem(delegateContractWasmBytes);
+            session.RuntimeArgs.Add(new NamedArg("validator", 
+                CLValue.PublicKey(validatorPK)));
+            session.RuntimeArgs.Add(new NamedArg("amount",
+                CLValue.U512(amount)));
+            session.RuntimeArgs.Add(new NamedArg("delegator",
+                CLValue.PublicKey(fromKey.PublicKey)));
+            
+            var deploy = new Deploy(header, payment, session);
+            return deploy;
+        }
+
+        public static Deploy UndelegateTokens(
+            byte[] undelegateContractWasmBytes,
+            KeyPair fromKey,
+            PublicKey validatorPK,
+            BigInteger amount,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            return DelegateTokens(undelegateContractWasmBytes,
+                fromKey,
+                validatorPK,
+                amount,
+                paymentAmount,
+                chainName,
+                gasPrice,
+                ttl);
+        }
     }
 }
