@@ -12,6 +12,9 @@ namespace NetCasperSDK.Converters
             Type typeToConvert,
             JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.StartObject)
+                reader.Read();
+            
             var name = reader.GetString();
             reader.Read();
 
@@ -34,6 +37,8 @@ namespace NetCasperSDK.Converters
             if (item == null)
                 throw new JsonException($"Could not deserialize an ExecutableDeployItem object with name {name}");
 
+            if (reader.TokenType == JsonTokenType.EndObject)
+                reader.Read();
             return item;
         }
 

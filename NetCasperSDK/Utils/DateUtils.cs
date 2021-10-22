@@ -12,7 +12,7 @@ namespace NetCasperSDK.Utils
 
         public static ulong ToEpochTime(string datetime)
         {
-            TimeSpan t = DateTime.Parse(datetime) - new DateTime(1970, 1, 1);
+            TimeSpan t = DateTime.Parse(datetime, null, DateTimeStyles.AdjustToUniversal) - new DateTime(1970, 1, 1);
             return (ulong)t.TotalSeconds * 1000;
         }
 

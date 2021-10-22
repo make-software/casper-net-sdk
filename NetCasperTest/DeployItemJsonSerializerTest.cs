@@ -23,7 +23,9 @@ namespace NetCasperTest
             Assert.IsNotNull(deserialized);
             Assert.AreEqual(Array.Empty<byte>(), deserialized.ModuleBytes);
             var deserializedRuntimeArg = deserialized.RuntimeArgs[0];
-            Assert.AreEqual(1000, deserializedRuntimeArg);
+            Assert.AreEqual("amount", deserializedRuntimeArg.Name);
+            Assert.AreEqual(CLType.U512, deserializedRuntimeArg.Value.TypeInfo.Type);
+            Assert.AreEqual("1000", deserializedRuntimeArg.Value.Parsed);
         }
     }
 }

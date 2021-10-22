@@ -39,7 +39,7 @@ namespace NetCasperSDK.Converters
                 JsonSerializerOptions options)
             {
                 var hex = reader.GetString();
-                reader.Read();
+                // reader.Read();
                 
                 return PublicKey.FromHexString(hex);
             }

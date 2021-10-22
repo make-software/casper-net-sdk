@@ -7,6 +7,7 @@ namespace NetCasperSDK.Types
     public class DeployHeader
     {
         [JsonPropertyName("account")]
+        [JsonConverter(typeof(PublicKeyConverter))]
         public PublicKey Account { get; set; }
         
         [JsonPropertyName("timestamp")]
