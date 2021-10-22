@@ -15,6 +15,23 @@ namespace NetCasperSDK.JsonRpc
 
         [JsonPropertyName("params")] public Dictionary<string, object> Parameters { get; protected set; }
 
+        public static JsonSerializerOptions SerializerOptions
+        {
+            get
+            {
+                return new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                    Converters =
+                    {
+                        new PublicKeyConverter(),
+                        new NamedArgConverter(),
+                        new ExecutableDeployItemConverter()
+                    }
+                };
+            }
+        }
+        
         public RpcMethod(string method, Dictionary<string, object> parameters = null)
         {
             this.Method = method;
@@ -23,17 +40,7 @@ namespace NetCasperSDK.JsonRpc
 
         public string Serialize()
         {
-            var options = new JsonSerializerOptions()
-            {
-                WriteIndented = true,
-                Converters =
-                {
-                    new PublicKeyConverter(),
-                    new NamedArgConverter(),
-                    new ExecutableDeployItemConverter()
-                }
-            };
-            return JsonSerializer.Serialize(this, typeof(RpcMethod), options);
+            return JsonSerializer.Serialize(this, typeof(RpcMethod), SerializerOptions);
         }
     }
 }
