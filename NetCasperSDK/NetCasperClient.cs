@@ -98,6 +98,20 @@ namespace NetCasperSDK
             return await SendRpcRequestAsync(method);
         }
 
+        public async Task<RpcResponse> QueryGlobalState(string key, string stateRootHash,
+            List<string> path = null)
+        {
+            var method = new QueryGlobalState(key, stateRootHash, isBlockHash:false, path);
+            return await SendRpcRequestAsync(method);
+        }
+        
+        public async Task<RpcResponse> QueryGlobalStateWithBlockHash(string key, string blockHash,
+            List<string> path = null)
+        {
+            var method = new QueryGlobalState(key, blockHash, isBlockHash:true, path);
+            return await SendRpcRequestAsync(method);
+        }
+        
         public async Task<RpcResponse> GetAccountBalance(string purseURef, string stateRootHash=null)
         {
             if (!purseURef.StartsWith("uref-"))
@@ -194,6 +208,12 @@ namespace NetCasperSDK
         public async Task<RpcResponse> GetEraInfoBySwitchBlock(int blockHeight)
         {
             var method = new GetEraInfoBySwitchBlockMethod(blockHeight);
+            return await SendRpcRequestAsync(method);
+        }
+
+        public async Task<RpcResponse> GetValidatorChanges()
+        {
+            var method = new GetValidatorChanges();
             return await SendRpcRequestAsync(method);
         }
         

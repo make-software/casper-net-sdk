@@ -9,7 +9,7 @@ namespace NetCasperSDK
         public GetStateRootHashMethod() : base("chain_get_state_root_hash")
         {
         }
-        
+
         public GetStateRootHashMethod(string blockHash) : base("chain_get_state_root_hash")
         {
             var blockIdentifier = new Dictionary<string, string>
@@ -67,6 +67,25 @@ namespace NetCasperSDK
             {
                 {"state_root_hash", state_root_hash},
                 {"path", path},
+                {"key", key}
+            };
+        }
+    }
+
+    public class QueryGlobalState : RpcMethod
+    {
+        public QueryGlobalState(string key, string hash, bool isBlockHash, List<string> path = null) :
+            base("query_global_state")
+        {
+            Dictionary<string, string> stateIdentifier = new Dictionary<string, string>
+            {
+                {isBlockHash ? "BlockHash" : "StateRootHash", hash}
+            };
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"state_identifier", stateIdentifier},
+                {"path", path ?? new List<string>()},
                 {"key", key}
             };
         }
@@ -190,6 +209,13 @@ namespace NetCasperSDK
             {
                 {"block_identifier", blockIdentifier}
             };
+        }
+    }
+
+    public class GetValidatorChanges : RpcMethod
+    {
+        public GetValidatorChanges() : base("info_get_validator_changes")
+        {
         }
     }
 
