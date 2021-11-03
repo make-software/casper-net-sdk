@@ -15,12 +15,17 @@ namespace NetCasperSDK.Types
             AccessRights = accessRights;
         }
 
-        public URef FromRawBytes(byte[] rawBytes, AccessRights accessRights)
+        public override string ToString()
+        {
+            return "uref-" + Hex.ToHexString(RawBytes) + $"-{(byte)AccessRights:000}";
+        }  
+
+        public static URef FromRawBytes(byte[] rawBytes, AccessRights accessRights)
         {
             return new URef(rawBytes, accessRights);
         }
 
-        public URef FromString(string value)
+        public static URef FromString(string value)
         {
             if (!value.StartsWith("uref-"))
                 throw new ArgumentOutOfRangeException(nameof(value), "An URef object must start with 'uref-'.");

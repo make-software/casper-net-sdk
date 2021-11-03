@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Numerics;
@@ -38,7 +39,7 @@ namespace NetCasperSDK.Types
             this(bytes, clType, null)
         {
         }
-        
+
         public CLValue(string hexBytes, CLTypeInfo clType, object parsed)
             : this(Hex.Decode(hexBytes), clType, parsed)
         {
@@ -59,6 +60,8 @@ namespace NetCasperSDK.Types
                 {
                     JsonValueKind.String => je.GetString(),
                     JsonValueKind.Number => je.GetInt32(),
+                    JsonValueKind.True => true,
+                    JsonValueKind.False => false,
                     JsonValueKind.Null => null,
                     _ => je
                 };
@@ -70,7 +73,7 @@ namespace NetCasperSDK.Types
         public static CLValue Bool(bool value)
         {
             var bytes = new byte[] {value ? (byte) 0x01 : (byte) 0x00};
-            return new CLValue(bytes, new CLTypeInfo(CLType.Bool), value.ToString());
+            return new CLValue(bytes, new CLTypeInfo(CLType.Bool), value);
         }
 
         public static CLValue I32(int value)
@@ -187,24 +190,20 @@ namespace NetCasperSDK.Types
 
         public static CLValue URef(string value)
         {
-            if (!value.StartsWith("uref-"))
-                throw new ArgumentOutOfRangeException(nameof(value), "An URef object must start with 'uref-'.");
-
-            var parts = value.Substring(5).Split(new char[] {'-'});
-            if (parts.Length != 2)
-                throw new ArgumentOutOfRangeException(nameof(value),
-                    "An Uref object must end with an access rights suffix.");
-            if (parts[0].Length != 64)
-                throw new ArgumentOutOfRangeException(nameof(value), "An Uref object must contain a 32 byte value.");
-            if (parts[1].Length != 3)
-                throw new ArgumentOutOfRangeException(nameof(value),
-                    "An Uref object must contain a 3 digits access rights suffix.");
+            var uref = Types.URef.FromString(value);
 
             byte[] bytes = new byte[33];
-            Array.Copy(Hex.Decode(parts[0]), 0, bytes, 0, 32);
-            bytes[32] = (byte) uint.Parse(parts[1]);
-            //return new CLValue(bytes, new CLURefTypeInfo(bytes[..31], (AccessRights)bytes[32]), value);
+            Array.Copy(uref.RawBytes, 0, bytes, 0, 32);
+            bytes[32] = (byte) uref.AccessRights;
             return new CLValue(bytes, new CLTypeInfo(CLType.URef), value);
+        }
+
+        public static CLValue URef(URef value)
+        {
+            byte[] bytes = new byte[33];
+            Array.Copy(value.RawBytes, 0, bytes, 0, value.RawBytes.Length);
+            bytes[32] = (byte) value.AccessRights;
+            return new CLValue(bytes, new CLTypeInfo(CLType.URef), value.ToString());
         }
 
         public static CLValue Option(CLValue innerValue)
@@ -214,14 +213,14 @@ namespace NetCasperSDK.Types
             {
                 bytes = new byte[1];
                 bytes[0] = 0x00;
-                
+
                 return new CLValue(bytes, new CLOptionTypeInfo(null), "null");
             }
             else
             {
                 bytes = new byte[1 + innerValue.Bytes.Length];
                 bytes[0] = 0x01;
-                Array.Copy(innerValue.Bytes, 0, bytes, 1, innerValue.Bytes.Length);  
+                Array.Copy(innerValue.Bytes, 0, bytes, 1, innerValue.Bytes.Length);
 
                 return new CLValue(bytes, new CLOptionTypeInfo(innerValue.TypeInfo), innerValue.Parsed);
             }
@@ -231,9 +230,9 @@ namespace NetCasperSDK.Types
         {
             if (values.Length == 0)
                 throw new ArgumentOutOfRangeException(nameof(values), "Can't create instance for empty list");
-            
+
             var ms = new MemoryStream();
-            
+
             byte[] bytes = BitConverter.GetBytes(values.Length);
             if (!BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
@@ -243,10 +242,10 @@ namespace NetCasperSDK.Types
             foreach (var clValue in values)
             {
                 ms.Write(clValue.Bytes);
-                if(!clValue.TypeInfo.Equals(typeInfo))
+                if (!clValue.TypeInfo.Equals(typeInfo))
                     throw new ArgumentOutOfRangeException(nameof(values), "A list cannot contain different types");
             }
-                
+
             return new CLValue(ms.ToArray(), new CLListTypeInfo(typeInfo), "null");
         }
 
@@ -254,11 +253,56 @@ namespace NetCasperSDK.Types
         {
             return new CLValue(bytes, new CLByteArrayTypeInfo(bytes.Length), Hex.ToHexString(bytes));
         }
-        
+
         public static CLValue ByteArray(string hex)
         {
             var bytes = Hex.Decode(hex);
             return new CLValue(bytes, new CLByteArrayTypeInfo(bytes.Length), hex);
+        }
+
+        public static CLValue Ok(CLValue ok, CLTypeInfo errTypeInfo)
+        {
+            var typeInfo = new CLResultTypeInfo(ok.TypeInfo, errTypeInfo);
+            var bytes = new byte[1 + ok.Bytes.Length];
+            bytes[0] = 0x01;
+            Array.Copy(ok.Bytes, 0, bytes, 1, ok.Bytes.Length);
+
+            return new CLValue(bytes, typeInfo, null);
+        }
+
+        public static CLValue Err(CLValue err, CLTypeInfo okTypeInfo)
+        {
+            var typeInfo = new CLResultTypeInfo(okTypeInfo, err.TypeInfo);
+            var bytes = new byte[1 + err.Bytes.Length];
+            bytes[0] = 0x00;
+            Array.Copy(err.Bytes, 0, bytes, 1, err.Bytes.Length);
+
+            return new CLValue(bytes, typeInfo, null);
+        }
+
+        public static CLValue Map(Dictionary<CLValue, CLValue> dict)
+        {
+            CLMapTypeInfo mapTypeInfo = null;
+            MemoryStream bytes = new MemoryStream();
+
+            byte[] len = BitConverter.GetBytes(dict.Keys.Count);
+            if (!BitConverter.IsLittleEndian)
+                Array.Reverse(len);
+            bytes.Write(len);
+
+            foreach (var kv in dict)
+            {
+                if (mapTypeInfo == null)
+                    mapTypeInfo = new CLMapTypeInfo(kv.Key.TypeInfo, kv.Value.TypeInfo);
+                else if (!mapTypeInfo.KeyType.Equals(kv.Key.TypeInfo) ||
+                         !mapTypeInfo.ValueType.Equals(kv.Value.TypeInfo))
+                    throw new ArgumentException("All keys and values must have the same type", nameof(dict));
+
+                bytes.Write(kv.Key.Bytes);
+                bytes.Write(kv.Value.Bytes);
+            }
+
+            return new CLValue(bytes.ToArray(), mapTypeInfo, null);
         }
 
         public static CLValue Tuple1(CLValue t0)
@@ -288,19 +332,19 @@ namespace NetCasperSDK.Types
 
         public static CLValue PublicKey(PublicKey publicKey)
         {
-            return new CLValue(publicKey.GetBytes(), new CLTypeInfo(CLType.PublicKey), 
+            return new CLValue(publicKey.GetBytes(), new CLTypeInfo(CLType.PublicKey),
                 Hex.ToHexString(publicKey.GetBytes()));
         }
-        
+
         public static CLValue PublicKey(byte[] value, KeyAlgo keyAlgorithm)
         {
-            var bytes = new byte[1+value.Length];
+            var bytes = new byte[1 + value.Length];
             bytes[0] = (byte) keyAlgorithm;
             Array.Copy(value, 0, bytes, 1, value.Length);
 
             return new CLValue(bytes, new CLTypeInfo(CLType.PublicKey), Hex.ToHexString(bytes));
         }
-        
+
         public static CLValue PublicKey(string value, KeyAlgo keyAlgorithm)
         {
             return PublicKey(Hex.Decode(value), keyAlgorithm);
@@ -331,14 +375,14 @@ namespace NetCasperSDK.Types
             bytes[0] = (byte) KeyTag.URef;
             Array.Copy(uRef.RawBytes, 0, bytes, 1, uRef.RawBytes.Length);
             bytes[1 + uRef.RawBytes.Length] = (byte) uRef.AccessRights;
-            
+
             return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.URef), Hex.ToHexString(bytes));
         }
 
         public static CLValue KeyFromEraInfo(ulong era)
         {
             var bEra = BitConverter.GetBytes(era);
-            if(!BitConverter.IsLittleEndian) Array.Reverse(bEra);
+            if (!BitConverter.IsLittleEndian) Array.Reverse(bEra);
             byte[] bytes = new byte[1 + bEra.Length];
             bytes[0] = (byte) KeyTag.EraInfo;
             Array.Copy(bEra, 0, bytes, 1, bEra.Length);
