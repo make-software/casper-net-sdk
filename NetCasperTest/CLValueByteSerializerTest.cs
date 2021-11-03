@@ -61,14 +61,12 @@ namespace NetCasperTest
         [Test]
         public void URefByteSerializerTest()
         {
-            var clValue = new CLValue(Hex.Decode("000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f07"),
-                new CLTypeInfo(CLType.URef),
-                "uref-000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f-007");
+            var uref = "uref-000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f-007";
+            var clValue = CLValue.URef(uref);
             var bytes = serializer.ToBytes(clValue);
             Assert.AreEqual("21000000000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f070c", Hex.ToHexString(bytes));
 
-            clValue = CLValue.Option(
-                CLValue.URef("uref-000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f-007"));
+            clValue = CLValue.Option(CLValue.URef(uref));
             bytes = serializer.ToBytes(clValue);
             Assert.AreEqual("2200000001000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f070d0c", Hex.ToHexString(bytes));
         }

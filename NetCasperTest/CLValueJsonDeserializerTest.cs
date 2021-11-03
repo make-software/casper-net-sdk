@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NetCasperSDK.Converters;
@@ -41,12 +43,95 @@ namespace NetCasperTest
             "   \"parsed\": null\n" +
             "}";
 
+        private static string OPTIONLISTU64_JSON =
+            "{\n" +
+            "   \"cl_type\": { \"Option\": { \"List\": \"U8\" } },\n" +
+            "   \"bytes\": \"010400000010203040\",\n" +
+            "   \"parsed\": [ 16, 32, 48, 64 ] \n" +
+            "}";
+
+        private static string LISTOPTIONSTRING_JSON =
+            @"{
+                ""cl_type"": {
+                        ""List"": {
+                            ""Option"": ""String""
+                        }
+                    },
+                ""bytes"": ""040000000107000000537472696e67310107000000537472696e67320107000000537472696e67330107000000537472696e6734"",
+                ""parsed"": [
+                    ""String1"",
+                    ""String2"",
+                    ""String3"",
+                    ""String4""
+                ]
+            }";
+
         private static string UREF_JSON =
             "{\n" +
             "    \"bytes\": \"000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f07\",\n" +
             "    \"cl_type\": \"URef\",\n" +
             "    \"parsed\": \"uref-000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f-007\"\n" +
             "}";
+
+        private static string TUPLE1_JSON =
+            @"{
+                ""cl_type"": {
+                    ""Tuple1"": [
+                        { ""Option"": ""String"" }
+                    ]
+                },
+                ""bytes"": ""010400000061626364"",
+                ""parsed"": [ ""abcd"" ]
+            }";
+
+        private static string TUPLE3_JSON =
+            @"{
+                ""cl_type"": {
+                    ""Tuple3"": [
+                        ""PublicKey"",
+                        {
+                            ""Option"": ""String""
+                        },
+                        ""U512""
+                    ]
+                },
+                ""bytes"": ""02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e010400000061626364020008"",
+                ""parsed"": [
+                    ""02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e"",
+                    ""abcd"",
+                    ""2048""
+                ]
+            }";
+
+        [Test]
+        public void SerializeBoolCLValue()
+        {
+            var clValue = CLValue.Bool(true);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLTypeInfo(CLType.Bool), clValue.TypeInfo);
+            Assert.AreEqual(true, (bool)clValue.Parsed);
+            var json = JsonSerializer.Serialize(clValue).Replace(" ", "");
+            Assert.IsTrue(json.Contains(@"""cl_type"":""Bool"""));;
+            Assert.IsTrue(json.Contains(@"""bytes"":""01"""));
+            Assert.IsTrue(json.Contains(@"""parsed"":true"));
+            
+            clValue = CLValue.Bool(false);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLTypeInfo(CLType.Bool), clValue.TypeInfo);
+            Assert.AreEqual(false, (bool)clValue.Parsed);
+            json = JsonSerializer.Serialize(clValue).Replace(" ", "");
+            Assert.IsTrue(json.Contains(@"""bytes"":""00"""));
+        }
+        
+        [Test]
+        public void DeserializeBoolCLValue()
+        {
+            var json = @"{ ""cl_type"": ""Bool"", ""bytes"": ""01"", ""parsed"": true }";
+            var clValue = JsonSerializer.Deserialize<CLValue>(json);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLTypeInfo(CLType.Bool), clValue.TypeInfo);
+            Assert.AreEqual(true, clValue.Parsed);
+        }
 
         [Test]
         public void SerializeU64CLValue()
@@ -134,6 +219,11 @@ namespace NetCasperTest
             Assert.AreEqual(new CLOptionTypeInfo(new CLTypeInfo(CLType.U64)), clValue.TypeInfo);
             Assert.AreEqual(Hex.Decode("00"), clValue.Bytes);
             Assert.IsNull(clValue.Parsed);
+
+            clValue = JsonSerializer.Deserialize<CLValue>(OPTIONLISTU64_JSON);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLOptionTypeInfo(new CLListTypeInfo(new CLTypeInfo(CLType.U8))), clValue.TypeInfo);
+            Assert.AreEqual(Hex.Decode("010400000010203040"), clValue.Bytes);
         }
 
         [Test]
@@ -200,7 +290,7 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void DeSerializeListCLValue()
+        public void DeserializeListCLValue()
         {
             var json = "{\"cl_type\":{\"List\":\"String\"}," +
                        "\"bytes\":\"020000000400000041414141050000004242424242\",\"parsed\":\"null\"}";
@@ -209,6 +299,17 @@ namespace NetCasperTest
             Assert.AreEqual(new CLListTypeInfo(new CLTypeInfo(CLType.String)), clValue.TypeInfo);
             Assert.AreEqual("020000000400000041414141050000004242424242", Hex.ToHexString(clValue.Bytes));
             Assert.AreEqual("null", clValue.Parsed);
+        }
+
+        [Test]
+        public void DeserializeComplexListCLValue()
+        {
+            var clValue = JsonSerializer.Deserialize<CLValue>(LISTOPTIONSTRING_JSON);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLListTypeInfo(new CLOptionTypeInfo(new CLTypeInfo(CLType.String))), clValue.TypeInfo);
+            Assert.AreEqual(
+                "040000000107000000537472696e67310107000000537472696e67320107000000537472696e67330107000000537472696e6734",
+                Hex.ToHexString(clValue.Bytes));
         }
 
         [Test]
@@ -224,14 +325,20 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void DeSerializeTuple1CLValue()
+        public void DeserializeTuple1CLValue()
         {
-            var json = @"{ ""cl_type"": { ""Tuple1"": ""U32"" }, ""bytes"": ""11000000"", ""parsed"": ""null"" }";
+            var json = @"{ ""cl_type"": { ""Tuple1"": [""U32""] }, ""bytes"": ""11000000"", ""parsed"": ""null"" }";
             var clValue = JsonSerializer.Deserialize<CLValue>(json);
             Assert.IsNotNull(clValue);
             Assert.AreEqual(new CLTuple1TypeInfo(new CLTypeInfo(CLType.U32)), clValue.TypeInfo);
             Assert.AreEqual("11000000", Hex.ToHexString(clValue.Bytes));
             Assert.AreEqual("null", clValue.Parsed);
+
+            clValue = JsonSerializer.Deserialize<CLValue>(TUPLE1_JSON);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLTuple1TypeInfo(new CLOptionTypeInfo(new CLTypeInfo(CLType.String))),
+                clValue.TypeInfo);
+            Assert.AreEqual("010400000061626364", Hex.ToHexString(clValue.Bytes));
         }
 
         [Test]
@@ -247,7 +354,7 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void DeSerializeTuple2CLValue()
+        public void DeserializeTuple2CLValue()
         {
             var json =
                 @"{ ""bytes"": ""ff0000000400000041414141"", ""parsed"": ""null"", ""cl_type"": { ""Tuple2"": [""U32"", ""String""] } }";
@@ -273,7 +380,7 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void DeSerializeTuple3CLValue()
+        public void DeserializeTuple3CLValue()
         {
             var json =
                 @"{ ""cl_type"": { ""Tuple3"": [""U32"", ""String"", ""U32""] }, ""bytes"": ""1100000004000000414141417f000000"", ""parsed"": ""null"" }";
@@ -287,7 +394,21 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void SerializPublicKeyCLValue()
+        public void DeserializeComplexTuple3CLValue()
+        {
+            var clValue = JsonSerializer.Deserialize<CLValue>(TUPLE3_JSON);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(
+                new CLTuple3TypeInfo(new CLTypeInfo(CLType.PublicKey),
+                    new CLOptionTypeInfo(new CLTypeInfo(CLType.String)),
+                    new CLTypeInfo(CLType.U512)), clValue.TypeInfo);
+            Assert.AreEqual(
+                "02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e010400000061626364020008",
+                Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void SerializePublicKeyCLValue()
         {
             var clValue = CLValue.PublicKey("381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771",
                 KeyAlgo.ED25519);
@@ -303,18 +424,82 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void DeSerializPublicKeyCLValue()
+        public void DeserializePublicKeyCLValue()
         {
             var json = "{" +
-                           @"""cl_type"": ""PublicKey""," +
-                           @"""bytes"": ""01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771""," +
-                           @"""parsed"": ""null""" +
+                       @"""cl_type"": ""PublicKey""," +
+                       @"""bytes"": ""01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771""," +
+                       @"""parsed"": ""null""" +
                        "}";
             var clValue = JsonSerializer.Deserialize<CLValue>(json);
             Assert.IsNotNull(clValue);
             Assert.AreEqual(new CLTypeInfo(CLType.PublicKey), clValue.TypeInfo);
-            Assert.AreEqual("01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771", Hex.ToHexString(clValue.Bytes));
+            Assert.AreEqual("01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771",
+                Hex.ToHexString(clValue.Bytes));
             Assert.AreEqual("null", clValue.Parsed);
+        }
+
+        [Test]
+        public void SerializeResultOkCLValue()
+        {
+            var clValue = CLValue.Ok(CLValue.U32(0xFFFEFDFC), new CLTypeInfo(CLType.String));
+            var json = JsonSerializer.Serialize(clValue);
+            json = json.Replace(" ", "");
+            Assert.IsTrue(json.Contains(@"{""Result"":{""ok"":""U32"",""err"":""String""}"));
+            Assert.IsTrue(json.ToLower().Contains(@"""bytes"":""01fcfdfeff"""));
+        }
+        
+        [Test]
+        public void SerializeResultErrCLValue()
+        {
+            var clValue = CLValue.Err(CLValue.String("Failure"), new CLTypeInfo(CLType.U32));
+            var json = JsonSerializer.Serialize(clValue);
+            json = json.Replace(" ", "");
+            Assert.IsTrue(json.Contains(@"{""Result"":{""ok"":""U32"",""err"":""String""}"));
+            Assert.IsTrue(json.ToLower().Contains(@"""bytes"":""00070000004661696c757265"""));
+        }
+        
+        [Test]
+        public void DeserializeResultOkCLValue()
+        {
+            var json =
+                @"{""cl_type"":{""Result"":{""ok"":""String"",""err"":""String""}},""bytes"":""010700000053756363657373"",""parsed"":{""Ok"":""Success""}}";
+            var clValue = JsonSerializer.Deserialize<CLValue>(json);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLResultTypeInfo(new CLTypeInfo(CLType.String), new CLTypeInfo(CLType.String)),
+                clValue.TypeInfo);
+            Assert.AreEqual("010700000053756363657373", Hex.ToHexString(clValue.Bytes));
+            Assert.IsNotNull(clValue.Parsed);
+        }
+
+        [Test]
+        public void DeserializeResultErrCLValue()
+        {
+            var json =
+                @"{""cl_type"":{""Result"":{""ok"":""String"",""err"":""String""}},""bytes"":""00070000004661696c757265"",""parsed"":{""Err"":""Failure""}}";
+            var clValue = JsonSerializer.Deserialize<CLValue>(json);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(new CLResultTypeInfo(new CLTypeInfo(CLType.String), new CLTypeInfo(CLType.String)),
+                clValue.TypeInfo);
+            Assert.AreEqual("00070000004661696c757265", Hex.ToHexString(clValue.Bytes));
+            Assert.IsNotNull(clValue.Parsed);
+        }
+
+        [Test]
+        public void SerializeMapCLValue()
+        {
+            var dict = new Dictionary<CLValue, CLValue>()
+            {
+                {CLValue.String("fourteen"), CLValue.Option(CLValue.String("14"))},
+                {CLValue.String("fifteen"), CLValue.Option(CLValue.String("15"))},
+                {CLValue.String("sixteen"), CLValue.Option(CLValue.String("16"))}
+            };
+            
+            var map = CLValue.Map(dict);
+            var json = JsonSerializer.Serialize(map).Replace(" ", "");
+            Assert.IsNotEmpty(json);
+            Assert.IsTrue(json.Contains(@"""cl_type"":{""Map"":{""key"":""String"",""value"":{""Option"":""String""}}}"));
+            Assert.IsTrue(json.Contains(@"""bytes"":""0300000008000000666f75727465656e01020000003134070000006669667465656e01020000003135070000007369787465656e01020000003136"""));
         }
     }
 }

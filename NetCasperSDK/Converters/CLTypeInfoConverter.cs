@@ -36,6 +36,11 @@ namespace NetCasperSDK.Converters
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
+                return ReadCLType(ref reader);
+            }
+
+            public CLTypeInfo ReadCLType(ref Utf8JsonReader reader)
+            {
                 if (reader.TokenType == JsonTokenType.String)
                 {
                     var value = reader.GetString();
@@ -47,24 +52,22 @@ namespace NetCasperSDK.Converters
                 }
                 if (reader.TokenType == JsonTokenType.StartObject)
                 {
-                    reader.Read();
+                    reader.Read(); //StartObject
                     var propertyName = reader.GetString();
                     reader.Read();
                     if (propertyName == "Option")
                     {
-                        var value = reader.GetString();
-                        if(!CLType.TryParse(reader.GetString(), out CLType clType))
-                            throw new JsonException($"Unable to convert \"{value}\" to CLType Enum.");
+                        var innerType = ReadCLType(ref reader);
                         reader.Read(); //End object
-                        return new CLOptionTypeInfo(new CLTypeInfo(clType));
+
+                        return new CLOptionTypeInfo(innerType);
                     }
                     else if (propertyName == "List")
                     {
-                        var value = reader.GetString();
-                        if(!CLType.TryParse(reader.GetString(), out CLType clType))
-                            throw new JsonException($"Unable to convert \"{value}\" to CLType Enum.");
+                        var innerType = ReadCLType(ref reader);
                         reader.Read(); //End object
-                        return new CLListTypeInfo(new CLTypeInfo(clType));
+
+                        return new CLListTypeInfo(innerType);
                     }
                     else if (propertyName == "ByteArray")
                     {
@@ -72,53 +75,72 @@ namespace NetCasperSDK.Converters
                         reader.Read(); //End object
                         return new CLByteArrayTypeInfo(size);
                     }
+                    else if (propertyName == "Result")
+                    {
+                        reader.Read(); // start object
+                        reader.GetString(); // 'ok' TODO: do not assume that ok comes always first
+                        reader.Read();
+                        var okTypeInfo = ReadCLType(ref reader);
+                        reader.Read();
+                        reader.GetString(); // 'err'
+                        reader.Read();
+                        var errTypeInfo = ReadCLType(ref reader);
+                        reader.Read();
+                        reader.Read(); // end object
+
+                        return new CLResultTypeInfo(okTypeInfo, errTypeInfo);
+                    }
+                    else if (propertyName == "Map")
+                    {
+                        reader.Read(); // start object
+                        reader.GetString(); // 'key' TODO: do not assume that ok comes always first
+                        reader.Read();
+                        var okTypeInfo = ReadCLType(ref reader);
+                        reader.Read();
+                        reader.GetString(); // 'type'
+                        reader.Read();
+                        var errTypeInfo = ReadCLType(ref reader);
+                        reader.Read();
+                        reader.Read(); // end object
+
+                        return new CLMapTypeInfo(okTypeInfo, errTypeInfo);
+                    }
                     else if (propertyName == "Tuple1")
                     {
-                        var value = reader.GetString();
-                        if(!CLType.TryParse(reader.GetString(), out CLType clType))
-                            throw new JsonException($"Unable to convert \"{value}\" to CLType Enum.");
-                        reader.Read(); //End object
-                        return new CLTuple1TypeInfo(new CLTypeInfo(clType));
+                        reader.Read(); // start array
+                        var t0 = ReadCLType(ref reader);
+                        reader.Read(); 
+                        reader.Read(); // end array
+
+                        return new CLTuple1TypeInfo(t0);
                     }
                     else if (propertyName == "Tuple2")
                     {
                         reader.Read(); // start array
-                        var t0 = reader.GetString();
+                        var t0 = ReadCLType(ref reader);
                         reader.Read();
-                        var t1 = reader.GetString();
+                        var t1 = ReadCLType(ref reader);
                         reader.Read();
                         reader.Read(); // end array
                         
-                        if(!CLType.TryParse(t0, out CLType clType0))
-                            throw new JsonException($"Unable to convert \"{t0}\" to CLType Enum.");
-                        if(!CLType.TryParse(t1, out CLType clType1))
-                            throw new JsonException($"Unable to convert \"{t1}\" to CLType Enum.");
-                        //reader.Read(); //End object
-                        return new CLTuple2TypeInfo(new CLTypeInfo(clType0), new CLTypeInfo(clType1));
+                        return new CLTuple2TypeInfo(t0, t1);
                     }
                     else if (propertyName == "Tuple3")
                     {
                         reader.Read(); // start array
-                        var t0 = reader.GetString();
+                        var t0 = ReadCLType(ref reader);
                         reader.Read();
-                        var t1 = reader.GetString();
+                        var t1 = ReadCLType(ref reader);
                         reader.Read();
-                        var t2 = reader.GetString();
+                        var t2 = ReadCLType(ref reader);
                         reader.Read();
                         reader.Read(); // end array
                         
-                        if(!CLType.TryParse(t0, out CLType clType0))
-                            throw new JsonException($"Unable to convert \"{t0}\" to CLType Enum.");
-                        if(!CLType.TryParse(t1, out CLType clType1))
-                            throw new JsonException($"Unable to convert \"{t1}\" to CLType Enum.");
-                        if(!CLType.TryParse(t2, out CLType clType2))
-                            throw new JsonException($"Unable to convert \"{t2}\" to CLType Enum.");
-                        //reader.Read(); //End object
-                        return new CLTuple3TypeInfo(new CLTypeInfo(clType0), new CLTypeInfo(clType1), new CLTypeInfo(clType2));
+                        return new CLTuple3TypeInfo(t0, t1, t2);
                     }
-                    throw new JsonException($"CLType \"{propertyName}\" not yet supported");
+                    throw new JsonException($"CLType \"{propertyName}\" unknown or not supported");
                 }
-                throw new JsonException($"CLType not yet supported");
+                throw new JsonException($"CLType unknown or not supported");
             }
             
             public override void Write(
@@ -126,52 +148,87 @@ namespace NetCasperSDK.Converters
                 CLTypeInfo clTypeInfo,
                 JsonSerializerOptions options)
             {
-                if (clTypeInfo is CLOptionTypeInfo clOption)
+                // write type and inner types (if any) recursively
+                //
+                WriteCLType(writer, clTypeInfo);
+            }
+
+            private void WriteCLType(Utf8JsonWriter writer, CLTypeInfo typeInfo)
+            {
+                if (typeInfo is CLOptionTypeInfo clOption)
                 {
                     writer.WriteStartObject();
-                    writer.WriteString("Option", clOption.OptionType.Type.ToString());
+                    writer.WritePropertyName("Option");
+                    WriteCLType(writer, clOption.OptionType);
                     writer.WriteEndObject();
                 }
-                else if (clTypeInfo is CLListTypeInfo clList)
-                {
-                    writer.WriteStartObject();
-                    writer.WriteString("List", clList.ListType.Type.ToString());
-                    writer.WriteEndObject();
-                }
-                else if (clTypeInfo is CLByteArrayTypeInfo clByteArray)
+                else if (typeInfo is CLByteArrayTypeInfo clByteArray)
                 {
                     writer.WriteStartObject();
                     writer.WriteNumber("ByteArray", clByteArray.Size);
                     writer.WriteEndObject();
                 }
-                else if (clTypeInfo is CLTuple1TypeInfo clTuple1)
-                {
+                else if (typeInfo is CLResultTypeInfo clResult)
+                { 
                     writer.WriteStartObject();
-                    writer.WriteString("Tuple1", clTuple1.Type0.ToString());
+                    writer.WritePropertyName("Result");
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("ok");
+                    WriteCLType(writer, clResult.Ok);
+                    writer.WritePropertyName("err");
+                    WriteCLType(writer, clResult.Err);
+                    writer.WriteEndObject();
                     writer.WriteEndObject();
                 }
-                else if (clTypeInfo is CLTuple2TypeInfo clTuple2)
+                else if (typeInfo is CLMapTypeInfo clMap)
                 {
                     writer.WriteStartObject();
-                    writer.WriteStartArray("Tuple2");
-                    writer.WriteStringValue(clTuple2.Type0.ToString());
-                    writer.WriteStringValue(clTuple2.Type1.ToString());
+                    writer.WritePropertyName("Map");
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("key");
+                    WriteCLType(writer, clMap.KeyType);
+                    writer.WritePropertyName("value");
+                    WriteCLType(writer, clMap.ValueType);
+                    writer.WriteEndObject();
+                    writer.WriteEndObject();
+                }
+                else if (typeInfo is CLListTypeInfo clList)
+                {
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("List");
+                    WriteCLType(writer, clList.ListType);
+                    writer.WriteEndObject();
+                }
+                else if (typeInfo is CLTuple1TypeInfo clTuple1)
+                {
+                    writer.WriteStartObject();
+                    writer.WriteStartArray("Tuple1");
+                    WriteCLType(writer, clTuple1.Type0);
                     writer.WriteEndArray();
                     writer.WriteEndObject();
                 }
-                else if (clTypeInfo is CLTuple3TypeInfo clTuple3)
+                else if (typeInfo is CLTuple2TypeInfo clTuple2)
+                {
+                    writer.WriteStartObject();
+                    writer.WriteStartArray("Tuple2");
+                    WriteCLType(writer, clTuple2.Type0);
+                    WriteCLType(writer, clTuple2.Type1);
+                    writer.WriteEndArray();
+                    writer.WriteEndObject();
+                }
+                else if (typeInfo is CLTuple3TypeInfo clTuple3)
                 {
                     writer.WriteStartObject();
                     writer.WriteStartArray("Tuple3");
-                    writer.WriteStringValue(clTuple3.Type0.ToString());
-                    writer.WriteStringValue(clTuple3.Type1.ToString());
-                    writer.WriteStringValue(clTuple3.Type2.ToString());
+                    WriteCLType(writer, clTuple3.Type0);
+                    WriteCLType(writer, clTuple3.Type1);
+                    WriteCLType(writer, clTuple3.Type2);
                     writer.WriteEndArray();
                     writer.WriteEndObject();
                 }
                 else
                 {
-                    writer.WriteStringValue(clTypeInfo.ToString());
+                    writer.WriteStringValue(typeInfo.ToString());
                 }
             }
         }

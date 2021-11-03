@@ -16,32 +16,50 @@ namespace NetCasperSDK.ByteSerializers
             // serialize data
             //
             WriteBytes(ms, source.Bytes);
-            // serialize type
+            // serialize type and inner types (if any) recursively 
             //
-            WriteByte(ms, (byte)source.TypeInfo.Type);
-            // serialize inner types (if any)
-            //
-            if (source.TypeInfo is CLOptionTypeInfo option)
-                if(option.OptionType != null)
-                    WriteByte(ms, (byte)option.OptionType.Type);
-            if (source.TypeInfo is CLListTypeInfo list)
-                WriteByte(ms, (byte)list.ListType.Type);
-            if(source.TypeInfo is CLByteArrayTypeInfo ba)
-                WriteInteger(ms, ba.Size);
-            if (source.TypeInfo is CLTuple1TypeInfo tuple1)
-                WriteByte(ms, (byte)tuple1.Type0.Type);
-            if (source.TypeInfo is CLTuple2TypeInfo tuple2)
-            {
-                WriteByte(ms, (byte)tuple2.Type0.Type);
-                WriteByte(ms, (byte)tuple2.Type1.Type);
-            }
-            if (source.TypeInfo is CLTuple3TypeInfo tuple3)
-            {
-                WriteByte(ms, (byte)tuple3.Type0.Type);
-                WriteByte(ms, (byte)tuple3.Type1.Type);
-                WriteByte(ms, (byte)tuple3.Type2.Type);
-            }
+            CLTypeToBytes(ms, source.TypeInfo);
+
             return ms.ToArray();
+        }
+
+        private void CLTypeToBytes(MemoryStream ms, CLTypeInfo innerType)
+        {
+            WriteByte(ms, (byte)innerType.Type);
+
+            switch (innerType)
+            {
+                case CLOptionTypeInfo option:
+                    if(option.OptionType != null)
+                        CLTypeToBytes(ms, option.OptionType);
+                    break;
+                case CLListTypeInfo list:
+                    CLTypeToBytes(ms, list.ListType);
+                    break;
+                case CLByteArrayTypeInfo ba:
+                    WriteInteger(ms, ba.Size);
+                    break;
+                case CLResultTypeInfo result:
+                    CLTypeToBytes(ms, result.Ok);
+                    CLTypeToBytes(ms, result.Err);
+                    break;
+                case CLMapTypeInfo map:
+                    CLTypeToBytes(ms, map.KeyType);
+                    CLTypeToBytes(ms, map.ValueType);
+                    break;
+                case CLTuple1TypeInfo tuple1:
+                    CLTypeToBytes(ms, tuple1.Type0);
+                    break;
+                case CLTuple2TypeInfo tuple2:
+                    CLTypeToBytes(ms, tuple2.Type0);
+                    CLTypeToBytes(ms, tuple2.Type1);
+                    break;
+                case CLTuple3TypeInfo tuple3:
+                    CLTypeToBytes(ms, tuple3.Type0);
+                    CLTypeToBytes(ms, tuple3.Type1);
+                    CLTypeToBytes(ms, tuple3.Type2);
+                    break;
+            }
         }
     }
 }
