@@ -22,6 +22,12 @@ To run the tests, use this command:
 dotnet test --settings NetCasperTest/test.runsettings
 ```
 
+### Create a workspace in Gitpod
+
+Click the button to start coding in Gitpod with an online IDE.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/make-software/casper-net-sdk)
+
 ## Usage Examples:
 
 * [Counter contract tutorial with C#](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/SJBnPCdVt)
