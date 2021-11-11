@@ -19,17 +19,16 @@ namespace NetCasperTest
           }
         ]";
         
+        private JsonSerializerOptions _options = new JsonSerializerOptions()
+        {
+            WriteIndented = false,
+            Converters = { new NamedArg.NamedArgConverter() }
+        };
+        
         [Test]
         public void DeserializeNamedArgTarget()
         {
-            var options = new JsonSerializerOptions()
-            {
-                Converters =
-                {
-                    new NamedArgConverter()
-                }
-            };
-            var namedArg = JsonSerializer.Deserialize<NamedArg>(NAMEDARG_TARGET, options);
+            var namedArg = JsonSerializer.Deserialize<NamedArg>(NAMEDARG_TARGET, _options);
             Assert.IsNotNull(namedArg);
             Assert.AreEqual("target", namedArg.Name);
             
@@ -48,14 +47,7 @@ namespace NetCasperTest
 
             var namedArg = new NamedArg("target", clValue);
 
-            var options = new JsonSerializerOptions()
-            {
-                Converters =
-                {
-                    new NamedArgConverter()
-                }
-            };
-            var json = JsonSerializer.Serialize(namedArg, options);
+            var json = JsonSerializer.Serialize(namedArg, _options);
             Assert.IsNotNull(json);
         }
     }

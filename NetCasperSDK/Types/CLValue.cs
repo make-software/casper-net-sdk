@@ -389,5 +389,11 @@ namespace NetCasperSDK.Types
 
             return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.EraInfo), Hex.ToHexString(bytes));
         }
+
+        #region Cast operators
+
+        public static implicit operator CLValue(string s) => CLValue.String(s);
+
+        #endregion
     }
 }

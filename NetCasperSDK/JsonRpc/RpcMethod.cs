@@ -25,7 +25,6 @@ namespace NetCasperSDK.JsonRpc
                     Converters =
                     {
                         new PublicKeyConverter(),
-                        new NamedArgConverter(),
                         new ExecutableDeployItemConverter()
                     }
                 };

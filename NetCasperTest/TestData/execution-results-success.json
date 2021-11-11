@@ -1,0 +1,124 @@
+{
+  "block_hash": "93431b334f603ba3a5c97f18066b87536801a90c1fd19b905a6d3806c7e8fc9c",
+  "result": {
+    "Success": {
+      "effect": {
+        "operations": [
+          {
+            "key": "hash-efef434ae3cea598a8871ac40ac5d5b00f0f4babe8f7b49a05f87d203d1c8391",
+            "kind": "Read"
+          },
+          {
+            "key": "hash-72a1af0be4021eb618b7e6893f3e24959b6ce1986efeafbf50ca222aaa7ec4ea",
+            "kind": "Read"
+          },
+          {
+            "key": "deploy-920278f1a09963ea74d96cecab81eb408792599db1528098f2496c999df99d28",
+            "kind": "Write"
+          },
+          {
+            "key": "hash-ae1b4b9f80dfa823bfe3d440eeb49a5f546418f798aaa5df03bd8472d194b124",
+            "kind": "Add"
+          },
+          {
+            "key": "uref-a3a79be7bd922c0846ed406b01f2430dd6ba367a2703b8d75109a9f41fdc336b-000",
+            "kind": "Write"
+          },
+          {
+            "key": "balance-81d1e5583a904bd71912d1d815b89f6a5665823009784177894dcba5b798eb3d",
+            "kind": "Write"
+          },
+          {
+            "key": "balance-7e3c297ba67d6e70d08938fa2cd6b5bea6bf5d092eb404b5c95b2e7b9a310c77",
+            "kind": "Read"
+          },
+          {
+            "key": "hash-97ef2f4c0ca66bcfd6179178da21694c12a9fb2ab2e031e517c582876456fe15",
+            "kind": "Read"
+          },
+          {
+            "key": "hash-98eca31f263ff3176518b6dcbb6af54c7469b60192749feee073d20618a389e6",
+            "kind": "Read"
+          },
+          {
+            "key": "balance-d86ed76303a691d12cf121e4b4cb4fd875484f28a33c2edf14aad56c01c8c601",
+            "kind": "Write"
+          }
+        ],
+        "transforms": [
+          {
+            "key": "hash-98eca31f263ff3176518b6dcbb6af54c7469b60192749feee073d20618a389e6",
+            "transform": "Identity"
+          },
+          {
+            "key": "balance-7e3c297ba67d6e70d08938fa2cd6b5bea6bf5d092eb404b5c95b2e7b9a310c77",
+            "transform": "Identity"
+          },
+          {
+            "key": "deploy-920278f1a09963ea74d96cecab81eb408792599db1528098f2496c999df99d28",
+            "transform": {
+              "WriteDeployInfo": {
+                "deploy_hash": "920278f1a09963ea74d96cecab81eb408792599db1528098f2496c999df99d28",
+                "transfers": [],
+                "from": "account-hash-989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7",
+                "source": "uref-d86ed76303a691d12cf121e4b4cb4fd875484f28a33c2edf14aad56c01c8c601-007",
+                "gas": "42905260"
+              }
+            }
+          },
+          {
+            "key": "balance-d86ed76303a691d12cf121e4b4cb4fd875484f28a33c2edf14aad56c01c8c601",
+            "transform": {
+              "WriteCLValue": {
+                "cl_type": "U512",
+                "bytes": "06000e1faf7616",
+                "parsed": "24699000000000"
+              }
+            }
+          },
+          {
+            "key": "hash-97ef2f4c0ca66bcfd6179178da21694c12a9fb2ab2e031e517c582876456fe15",
+            "transform": "Identity"
+          },
+          {
+            "key": "hash-ae1b4b9f80dfa823bfe3d440eeb49a5f546418f798aaa5df03bd8472d194b124",
+            "transform": {
+              "AddKeys": [
+                {
+                  "name": "IsSunday",
+                  "key": "uref-a3a79be7bd922c0846ed406b01f2430dd6ba367a2703b8d75109a9f41fdc336b-007"
+                }
+              ]
+            }
+          },
+          {
+            "key": "hash-72a1af0be4021eb618b7e6893f3e24959b6ce1986efeafbf50ca222aaa7ec4ea",
+            "transform": "Identity"
+          },
+          {
+            "key": "hash-efef434ae3cea598a8871ac40ac5d5b00f0f4babe8f7b49a05f87d203d1c8391",
+            "transform": "Identity"
+          },
+          {
+            "key": "balance-81d1e5583a904bd71912d1d815b89f6a5665823009784177894dcba5b798eb3d",
+            "transform": {
+              "AddUInt512": "500000000"
+            }
+          },
+          {
+            "key": "uref-a3a79be7bd922c0846ed406b01f2430dd6ba367a2703b8d75109a9f41fdc336b-000",
+            "transform": {
+              "WriteCLValue": {
+                "cl_type": "Bool",
+                "bytes": "01",
+                "parsed": true
+              }
+            }
+          }
+        ]
+      },
+      "transfers": [],
+      "cost": "42905260"
+    }
+  }
+}

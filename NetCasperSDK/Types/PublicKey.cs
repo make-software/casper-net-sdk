@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using Org.BouncyCastle.Asn1.X9;
 using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Math.EC;
 using Org.BouncyCastle.Math.EC.Rfc8032;
 using Org.BouncyCastle.OpenSsl;
@@ -130,7 +129,7 @@ namespace NetCasperSDK.Types
             return hash;
         }
 
-        public String ToAccountHex()
+        public string ToAccountHex()
         {
             return KeyAlgorithm switch
             {
@@ -138,6 +137,11 @@ namespace NetCasperSDK.Types
                 KeyAlgo.SECP256K1 => "02",
                 _ => throw new Exception("Wrong key type")
             } + Hex.ToHexString(RawBytes);
+        }
+
+        public override string ToString()
+        {
+            return ToAccountHex();
         }
 
         public byte[] GetBytes()

@@ -58,6 +58,37 @@ namespace NetCasperSDK
         }
     }
 
+    public class GetAccountInfo : RpcMethod
+    {
+        public GetAccountInfo(string publicKey, string blockHash = null) : base("state_get_account_info")
+        {
+            var blockIdentifier = new Dictionary<string, string>
+            {
+                {"Hash", blockHash}
+            };
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"block_identifier", blockHash != null ? blockIdentifier : null},
+                {"public_key", publicKey}
+            };
+        }
+
+        public GetAccountInfo(string publicKey, int height) : base("state_get_account_info")
+        {
+            var blockIdentifier = new Dictionary<string, int>
+            {
+                {"Height", height}
+            };
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"block_identifier", blockIdentifier},
+                {"public_key", publicKey}
+            };
+        }
+    }
+    
     public class GetItemMethod : RpcMethod
     {
         public GetItemMethod(string key, string state_root_hash, List<string> path = null) : base("state_get_item")

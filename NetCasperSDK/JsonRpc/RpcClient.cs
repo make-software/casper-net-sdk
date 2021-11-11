@@ -21,9 +21,9 @@ namespace NetCasperSDK.JsonRpc
                 .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")); //ACCEPT header
         }
 
-        public async Task<RpcResponse> SendRpcRequestAsync(RpcMethod method)
+        public async Task<RpcResponse<TRpcResult>> SendRpcRequestAsync<TRpcResult>(RpcMethod method)
         {
-            var rpcResponse = await SendAsync(method);
+            var rpcResponse = await SendAsync<TRpcResult>(method);
 
             if (rpcResponse.Error != null)
                 throw new RpcClientException("Error in request. Check inner RpcError object.", rpcResponse.Error);
@@ -31,7 +31,7 @@ namespace NetCasperSDK.JsonRpc
             return rpcResponse;
         }
 
-        protected async Task<RpcResponse> SendAsync(RpcMethod method)
+        protected async Task<RpcResponse<TRpcResult>> SendAsync<TRpcResult>(RpcMethod method)
         {
             var strMethod = method.Serialize();
 
@@ -49,7 +49,7 @@ namespace NetCasperSDK.JsonRpc
                 var responseMessage = await httpClient.SendAsync(request);
                 responseMessage.EnsureSuccessStatusCode();
                 
-                var jsonResponse = await responseMessage.Content.ReadFromJsonAsync<RpcResponse>();
+                var jsonResponse = await responseMessage.Content.ReadFromJsonAsync<RpcResponse<TRpcResult>>();
                 return jsonResponse;
             }
             catch (Exception e)
