@@ -27,21 +27,23 @@ namespace NetCasperTest
         {
             var casperSdk = new NetCasperClient(_nodeAddress);
 
-            var rpcResponse = await casperSdk.GetAuctionInfo();
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("api_version").GetString());
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("auction_state").GetProperty("state_root_hash")
+            var auctionInfoResp = await casperSdk.GetAuctionInfo();
+            Assert.IsNotNull(auctionInfoResp.Result.GetProperty("api_version").GetString());
+            Assert.IsNotNull(auctionInfoResp.Result.GetProperty("auction_state").GetProperty("state_root_hash")
                 .GetString());
 
-            rpcResponse = await casperSdk.GetNodeStatus();
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("api_version").GetString());
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("chainspec_name").GetString());
-            Assert.IsNotEmpty(rpcResponse.Result.GetProperty("last_added_block_info").GetRawText());
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("last_added_block_info").GetProperty("era_id"));
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("peers")[0].GetProperty("node_id").GetString());
+            var nodeStatusResp = await casperSdk.GetNodeStatus();
+            Assert.IsNotNull(nodeStatusResp.Result.GetProperty("api_version").GetString());
+            Assert.IsNotNull(nodeStatusResp.Result.GetProperty("chainspec_name").GetString());
+            Assert.IsNotEmpty(nodeStatusResp.Result.GetProperty("last_added_block_info").GetRawText());
+            Assert.IsNotNull(nodeStatusResp.Result.GetProperty("last_added_block_info").GetProperty("era_id"));
+            Assert.IsNotNull(nodeStatusResp.Result.GetProperty("peers")[0].GetProperty("node_id").GetString());
 
-            rpcResponse = await casperSdk.GetNodePeers();
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("api_version").GetString());
-            Assert.IsNotNull(rpcResponse.Result.GetProperty("peers")[0].GetProperty("node_id").GetString());
+            var nodeStatus = nodeStatusResp.Parse();
+            
+            var nodePeersResp = await casperSdk.GetNodePeers();
+            Assert.IsNotNull(nodePeersResp.Result.GetProperty("api_version").GetString());
+            Assert.IsNotNull(nodePeersResp.Result.GetProperty("peers")[0].GetProperty("node_id").GetString());
         }
 
         [Test]
@@ -51,12 +53,11 @@ namespace NetCasperTest
 
             try
             {
-                var rpcResponse = await casperSdk.GetAccountInfo(_accountPublicKey);
+                var accInfoResult = await casperSdk.GetAccountInfo(_accountPublicKey);
 
-                var mainPurse = rpcResponse.Result.GetProperty("stored_value")
-                    .GetProperty("Account").GetProperty("main_purse").GetString();
+                var mainPurse = accInfoResult.Result.GetProperty("account").GetProperty("main_purse").GetString();
 
-                rpcResponse = await casperSdk.GetAccountBalance(mainPurse);
+                var rpcResponse = await casperSdk.GetAccountBalance(mainPurse);
 
                 var accountBalance = rpcResponse.Result.GetProperty("balance_value").GetString();
 

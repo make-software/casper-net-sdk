@@ -88,6 +88,32 @@ namespace NetCasperSDK
             return deploy;
         }
         
+        public static Deploy ContractCallWithHash(
+            string contractHash,
+            string sessionEntryPoint,
+            List<NamedArg> args,
+            KeyPair fromKey,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            var header = new DeployHeader()
+            {
+                Account = fromKey.PublicKey,
+                Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
+                Ttl = ttl,
+                ChainName = chainName,
+                GasPrice = gasPrice
+            };
+            var payment = new ModuleBytesDeployItem(paymentAmount);
+            var session = new StoredContractByHashDeployItem(contractHash, sessionEntryPoint, args);
+            
+            var deploy = new Deploy(header, payment, session);
+            return deploy;
+        }
+        
         public static Deploy DelegateTokens(
             byte[] delegateContractWasmBytes,
             KeyPair fromKey,

@@ -22,7 +22,6 @@ namespace NetCasperTest
                 Converters =
                 {
                     new PublicKeyConverter(),
-                    new NamedArgConverter(),
                     new ExecutableDeployItemConverter()
                 }
             };

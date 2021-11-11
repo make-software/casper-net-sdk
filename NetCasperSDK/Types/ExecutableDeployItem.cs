@@ -10,6 +10,7 @@ namespace NetCasperSDK.Types
     public abstract class ExecutableDeployItem
     {
         [JsonPropertyName("args")]
+        [JsonConverter(typeof(GenericListConverter<NamedArg, NamedArg.NamedArgConverter>))]
         public List<NamedArg> RuntimeArgs { get; set; }
 
         public abstract byte Tag();
