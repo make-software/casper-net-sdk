@@ -2,11 +2,7 @@
 
 ![build-and-test workflow](https://github.com/make-software/casper-net-sdk/actions/workflows/build-and-test.yml/badge.svg)
 
-The Casper .NET SDK allows developers to interact with the Casper Network using the .NET languages.
-
-**Casper .NET SDK GitHub repository**
-
-This repository. It contains the source code to build the Casper .NET SDK library along with the Unit Test project.
+The Casper .NET SDK allows developers to interact with the Casper Network using the .NET languages. The project itself is being developed with C#.
 
 ## Build/Test instructions
 
@@ -28,7 +24,7 @@ Click the button to start coding in Gitpod with an online IDE.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/make-software/casper-net-sdk)
 
-## Usage Examples:
+## Usage Examples
 
 * [Counter contract tutorial with C#](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/SJBnPCdVt)
 * [Key-Value storage tutorial with C#](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/HyX8i0WBt)
