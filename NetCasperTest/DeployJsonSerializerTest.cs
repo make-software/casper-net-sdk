@@ -21,7 +21,7 @@ namespace NetCasperTest
                 WriteIndented = true,
                 Converters =
                 {
-                    new PublicKeyConverter(),
+                    new PublicKey.PublicKeyConverter(),
                     new ExecutableDeployItemConverter()
                 }
             };

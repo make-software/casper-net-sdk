@@ -14,6 +14,7 @@ namespace NetCasperSDK
             BigInteger amount,
             BigInteger paymentAmount,
             string chainName,
+            ulong? idTransfer = null,
             ulong gasPrice = 1,
             ulong ttl = 1800000, //30m
             string sourcePurse = null
@@ -32,7 +33,7 @@ namespace NetCasperSDK
                 amount,
                 toKey,
                 sourcePurse==null ? null : CLValue.URef(sourcePurse),
-                1234);
+                idTransfer);
             
             var deploy = new Deploy(header, payment, session);
             return deploy;

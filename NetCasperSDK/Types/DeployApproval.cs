@@ -7,10 +7,10 @@ namespace NetCasperSDK.Types
     {
         [JsonPropertyName("signature")]
         [JsonConverter(typeof(SignatureConverter))]
-        public Signature Signature { get; set; }
+        public Signature Signature { get; init; }
         
         [JsonPropertyName("signer")]
-        [JsonConverter(typeof(PublicKeyConverter))]
-        public PublicKey Signer { get; set; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey Signer { get; init; }
     }
 }

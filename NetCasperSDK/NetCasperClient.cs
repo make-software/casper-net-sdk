@@ -207,10 +207,11 @@ namespace NetCasperSDK
             return await SendRpcRequestAsync<GetValidatorChangesResult>(method);
         }
 
-        public async Task<RpcResponse<RpcResult>> GetRpcSchema()
+        public async Task<string> GetRpcSchema()
         {
             var method = new GetRpcSchema();
-            return await SendRpcRequestAsync<RpcResult>(method);
+            var response = await SendRpcRequestAsync<RpcResult>(method);
+            return response.Result.GetRawText();
         }
 
         public static async Task<string> GetNodeMetrics(string nodeAddress)

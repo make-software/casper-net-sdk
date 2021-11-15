@@ -11,7 +11,7 @@ namespace NetCasperSDK.Types
     {
         [JsonPropertyName("args")]
         [JsonConverter(typeof(GenericListConverter<NamedArg, NamedArg.NamedArgConverter>))]
-        public List<NamedArg> RuntimeArgs { get; set; }
+        public List<NamedArg> RuntimeArgs { get; init; }
 
         public abstract byte Tag();
 
@@ -22,7 +22,7 @@ namespace NetCasperSDK.Types
     {
         [JsonPropertyName("module_bytes")]
         [JsonConverter(typeof(HexBytesConverter))]
-        public byte[] ModuleBytes { get; set; }
+        public byte[] ModuleBytes { get; init; }
 
         public ModuleBytesDeployItem()
         {
@@ -50,9 +50,9 @@ namespace NetCasperSDK.Types
     {
         [JsonPropertyName("hash")]
         [JsonConverter(typeof(HexBytesConverter))]
-        public byte[] Hash { get; set; }
+        public byte[] Hash { get; init; }
 
-        [JsonPropertyName("entry_point")] public string EntryPoint { get; set; } = "";
+        [JsonPropertyName("entry_point")] public string EntryPoint { get; init; } = "";
 
         public StoredContractByHashDeployItem()
         {
@@ -72,9 +72,9 @@ namespace NetCasperSDK.Types
 
     public class StoredContractByNameDeployItem : ExecutableDeployItem
     {
-        [JsonPropertyName("name")] public string Name { get; set; } = "";
+        [JsonPropertyName("name")] public string Name { get; init; } = "";
 
-        [JsonPropertyName("entry_point")] public string EntryPoint { get; set; } = "";
+        [JsonPropertyName("entry_point")] public string EntryPoint { get; init; } = "";
 
         public StoredContractByNameDeployItem()
         {
@@ -96,11 +96,11 @@ namespace NetCasperSDK.Types
     {
         [JsonPropertyName("hash")]
         [JsonConverter(typeof(HexBytesConverter))]
-        public byte[] Hash { get; set; }
+        public byte[] Hash { get; init; }
 
-        [JsonPropertyName("version")] public uint? Version { get; set; }
+        [JsonPropertyName("version")] public uint? Version { get; init; }
 
-        [JsonPropertyName("entry_point")] public string EntryPoint { get; set; } = "";
+        [JsonPropertyName("entry_point")] public string EntryPoint { get; init; } = "";
         
         public StoredVersionedContractByHashDeployItem()
         {
@@ -122,11 +122,11 @@ namespace NetCasperSDK.Types
 
     public class StoredVersionedContractByNameDeployItem : ExecutableDeployItem
     {
-        [JsonPropertyName("name")] public string Name { get; set; } = "";
+        [JsonPropertyName("name")] public string Name { get; init; } = "";
 
-        [JsonPropertyName("version")] public uint? Version { get; set; }
+        [JsonPropertyName("version")] public uint? Version { get; init; }
 
-        [JsonPropertyName("entry_point")] public string EntryPoint { get; set; } = "";
+        [JsonPropertyName("entry_point")] public string EntryPoint { get; init; } = "";
 
         public StoredVersionedContractByNameDeployItem()
         {
