@@ -8,7 +8,7 @@ namespace NetCasperSDK.JsonRpc
 {
     public class RpcLoggingHandler : DelegatingHandler
     {
-        public StreamWriter LoggerStream { get; set; }
+        public StreamWriter LoggerStream { get; init; }
 
         public RpcLoggingHandler(HttpMessageHandler innerHandler)
             : base(innerHandler)

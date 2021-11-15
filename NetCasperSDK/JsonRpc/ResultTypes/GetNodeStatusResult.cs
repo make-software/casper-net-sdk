@@ -36,7 +36,7 @@ namespace NetCasperSDK.JsonRpc.ResultTypes
         /// Node public signing key.
         /// </summary>
         [JsonPropertyName("our_public_signing_key")]
-        [JsonConverter(typeof(PublicKeyConverter))]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey OurPublicSigningKey { get; init; }
 
         /// <summary>

@@ -6,13 +6,13 @@ namespace NetCasperSDK.JsonRpc
 {
     public class RpcResponse<TRpcResult>
     {
-        [JsonPropertyName("jsonrpc")] public string JsonRpc { get; set; }
+        [JsonPropertyName("jsonrpc")] public string JsonRpc { get; init; }
 
-        [JsonPropertyName("id")] public uint Id { get; set; }
+        [JsonPropertyName("id")] public uint Id { get; init; }
 
-        [JsonPropertyName("result")] public JsonElement Result { get; set; }
+        [JsonPropertyName("result")] public JsonElement Result { get; init; }
 
-        [JsonPropertyName("error")] public RpcError Error { get; set; }
+        [JsonPropertyName("error")] public RpcError Error { get; init; }
 
         public TRpcResult Parse()
         {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NetCasperSDK.Converters;
+using NetCasperSDK.Types;
 
 namespace NetCasperSDK.JsonRpc
 {
@@ -24,7 +25,7 @@ namespace NetCasperSDK.JsonRpc
                     WriteIndented = true,
                     Converters =
                     {
-                        new PublicKeyConverter(),
+                        new PublicKey.PublicKeyConverter(),
                         new ExecutableDeployItemConverter()
                     }
                 };

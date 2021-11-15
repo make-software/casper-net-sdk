@@ -132,6 +132,22 @@ namespace NetCasperSDK.Types
             return true;
         }
 
+        public bool VerifySignatures(out string message)
+        {
+            message = string.Empty;
+
+            foreach (var approval in Approvals)
+            {
+                if (!approval.Signer.VerifySignature(this.Hash, approval.Signature.RawBytes))
+                {
+                    message = $"Error verifying signature with signer '{approval.Signer}'.";
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public int GetDeploySizeInBytes()
         {
             var serializer = new DeployByteSerializer();

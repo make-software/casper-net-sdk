@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Org.BouncyCastle.Asn1.X9;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math.EC;
@@ -107,14 +109,6 @@ namespace NetCasperSDK.Types
             }
         }
 
-        public class ECPublicKeySpec
-        {
-            public ECPublicKeySpec(object o, object o1)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public byte[] GetAccountHash()
         {
             var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
@@ -184,6 +178,27 @@ namespace NetCasperSDK.Types
         public bool VerifySignature(string message, string signature)
         {
             return VerifySignature(Hex.Decode(message), Hex.Decode(signature));
+        }
+        
+        public class PublicKeyConverter : JsonConverter<PublicKey>
+        {
+            public override PublicKey Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                var hex = reader.GetString();
+                
+                return PublicKey.FromHexString(hex);
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                PublicKey publicKey,
+                JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(publicKey.ToAccountHex());
+            }
         }
     }
 }
