@@ -159,8 +159,9 @@ namespace NetCasperSDK.Types
             RuntimeArgs = new List<NamedArg>();
             RuntimeArgs.Add(new NamedArg("amount", CLValue.U512(amount)));
             RuntimeArgs.Add(new NamedArg("target", CLValue.ByteArray(targetHash)));
-            if (id != null)
-                RuntimeArgs.Add(new NamedArg("id", CLValue.Option(CLValue.U64(id ?? 0))));
+
+            var optionValue = id == null ? CLValue.OptionNone(new CLTypeInfo(CLType.U64)) : CLValue.Option(CLValue.U64((ulong) id));
+            RuntimeArgs.Add(new NamedArg("id", optionValue));
         }
 
         public override byte Tag() => 5;

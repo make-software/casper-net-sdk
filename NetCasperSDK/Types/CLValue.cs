@@ -214,7 +214,7 @@ namespace NetCasperSDK.Types
                 bytes = new byte[1];
                 bytes[0] = 0x00;
 
-                return new CLValue(bytes, new CLOptionTypeInfo(null), "null");
+                return new CLValue(bytes, new CLOptionTypeInfo(null), null);
             }
             else
             {
@@ -224,6 +224,14 @@ namespace NetCasperSDK.Types
 
                 return new CLValue(bytes, new CLOptionTypeInfo(innerValue.TypeInfo), innerValue.Parsed);
             }
+        }
+
+        public static CLValue OptionNone(CLTypeInfo innerTypeInfo)
+        {
+            byte[] bytes = new byte[1];
+            bytes[0] = 0x00;
+
+            return new CLValue(bytes, new CLOptionTypeInfo(innerTypeInfo), null);
         }
 
         public static CLValue List(CLValue[] values)
