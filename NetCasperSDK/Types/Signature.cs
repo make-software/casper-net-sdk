@@ -1,4 +1,6 @@
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace NetCasperSDK.Types
@@ -47,6 +49,26 @@ namespace NetCasperSDK.Types
                 return "01" + Hex.ToHexString(RawBytes);
             else
                 return "02" + Hex.ToHexString(RawBytes);
+        }
+        
+        public override string ToString()
+        {
+            return ToHexString();
+        }
+        
+        public class SignatureConverter : JsonConverter<Signature>
+        {
+            public override Signature Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options) =>
+                Signature.FromHexString(reader.GetString());
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                Signature signature,
+                JsonSerializerOptions options) =>
+                writer.WriteStringValue(signature.ToHexString());
         }
     }
 }

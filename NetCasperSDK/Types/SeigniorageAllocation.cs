@@ -11,13 +11,13 @@ namespace NetCasperSDK.Types
     public class SeigniorageAllocation
     {
         public bool IsDelegator { get; init; }
-        
-        public string DelegatorPublicKey { get; init; }
-        
-        public string ValidatorPublicKey { get; init; }
-        
+
+        public PublicKey DelegatorPublicKey { get; init; }
+
+        public PublicKey ValidatorPublicKey { get; init; }
+
         public BigInteger Amount { get; init; }
-        
+
         public class SeigniorageAllocationConverter : JsonConverter<SeigniorageAllocation>
         {
             public override SeigniorageAllocation Read(
@@ -38,14 +38,14 @@ namespace NetCasperSDK.Types
 
                 if (reader.TokenType != JsonTokenType.StartObject)
                     throw new JsonException("Cannot deserialize SeigniorageAllocation. StartObject expected");
-                
+
                 reader.Read(); // start object
-                
+
                 string delegatorPk = null;
                 string validatorPk = null;
                 BigInteger amount = BigInteger.Zero;
-                
-                while(reader.TokenType == JsonTokenType.PropertyName)
+
+                while (reader.TokenType == JsonTokenType.PropertyName)
                 {
                     var field = reader.GetString();
                     reader.Read();
@@ -63,8 +63,8 @@ namespace NetCasperSDK.Types
                 return new SeigniorageAllocation()
                 {
                     IsDelegator = propertyName?.ToLower() == "delegator",
-                    DelegatorPublicKey = delegatorPk,
-                    ValidatorPublicKey = validatorPk,
+                    DelegatorPublicKey = delegatorPk != null ? PublicKey.FromHexString(delegatorPk) : null,
+                    ValidatorPublicKey = PublicKey.FromHexString(validatorPk),
                     Amount = amount
                 };
             }

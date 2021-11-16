@@ -14,26 +14,21 @@ namespace NetCasperSDK.Types
         /// <summary>
         /// The purse that was used for delegating.
         /// </summary>
-        // [JsonPropertyName("bonding_purse")]
-        public string BondingPurse { get; init; }
+        public URef BondingPurse { get; init; }
 
         /// <summary>
-        /// Public key of the delegatee
+        /// Public key of the validator
         /// </summary>
-        // [JsonPropertyName("delegatee")]
-        public string Delegatee { get; init; }
+        public PublicKey Delegatee { get; init; }
 
         /// <summary>
         /// Public Key of the delegator
         /// </summary>
-        // [JsonPropertyName("public_key")]
-        public string PublicKey { get; init; }
+        public PublicKey PublicKey { get; init; }
 
         /// <summary>
         /// Amount of Casper token (in motes) delegated
         /// </summary>
-        // [JsonPropertyName("staked_amount")]
-        // [JsonConverter(typeof(BigIntegerConverter))]
         public BigInteger StakedAmount { get; init; }
         
         public VestingSchedule VestingSchedule { get; init; }
@@ -105,10 +100,10 @@ namespace NetCasperSDK.Types
 
                 return new Delegator()
                 {
-                    PublicKey = public_key,
+                    PublicKey = PublicKey.FromHexString(public_key),
                     StakedAmount = BigInteger.Parse(amount),
-                    BondingPurse = bonding_purse,
-                    Delegatee = validator_public_key,
+                    BondingPurse = URef.FromString(bonding_purse),
+                    Delegatee = PublicKey.FromHexString(validator_public_key),
                     VestingSchedule = vesting_schedule
                 };
             }

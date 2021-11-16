@@ -14,7 +14,8 @@ namespace NetCasperSDK.Types
         public BigInteger Amount { get; init; }
 
         [JsonPropertyName("bonding_purse")]
-        public string BondingPurse { get; init; }
+        [JsonConverter(typeof(URef.URefConverter))]
+        public URef BondingPurse { get; init; }
         
         /// <summary>
         /// Era in which this unbonding request was created.
@@ -26,12 +27,14 @@ namespace NetCasperSDK.Types
         /// Unbonders public key.
         /// </summary>
         [JsonPropertyName("unbonder_public_key")]
-        public string UnbonderPublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey UnbonderPublicKey { get; init; }
         
         /// <summary>
         /// Validators public key.
         /// </summary>
         [JsonPropertyName("validator_public_key")]
-        public string ValidatorPublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey ValidatorPublicKey { get; init; }
     }
 }

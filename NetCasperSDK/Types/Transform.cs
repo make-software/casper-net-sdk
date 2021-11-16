@@ -116,7 +116,7 @@ namespace NetCasperSDK.Types
                                     reader.Read(); // end object
                                     break;
                                 case TransformType.WriteWithdraw:
-                                    value = JsonSerializer.Deserialize<UnbondingPurse>(ref reader, options);
+                                    value = JsonSerializer.Deserialize<List<UnbondingPurse>>(ref reader, options);
                                     reader.Read(); // end object
                                     break;
                                 case TransformType.AddInt32:

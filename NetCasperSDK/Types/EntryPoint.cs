@@ -13,6 +13,10 @@ namespace NetCasperSDK.Types
     {
         public bool IsPublic { get; init; }
 
+        /// <summary>
+        /// Only users from the listed groups may call this method.
+        /// Note: if the list is empty then this method is not callable from outside the contract.
+        /// </summary>
         public List<string> Groups { get; init; }
 
         public class EntryPointAccessConverter : JsonConverter<EntryPointAccess>

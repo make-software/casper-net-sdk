@@ -10,11 +10,9 @@ namespace NetCasperSDK.Types
     /// </summary>
     public class ValidatorWeight
     {
-        // [JsonPropertyName("public_key")]
-        public string PublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey PublicKey { get; init; }
 
-        // [JsonPropertyName("weight")]
-        // [JsonConverter(typeof(BigIntegerConverter))]
         public BigInteger Weight { get; init; }
 
         public class ValidatorWeightConverter : JsonConverter<ValidatorWeight>
@@ -52,7 +50,7 @@ namespace NetCasperSDK.Types
 
                 return new ValidatorWeight()
                 {
-                    PublicKey = publicKey,
+                    PublicKey = PublicKey.FromHexString(publicKey),
                     Weight = weight
                 };
             }
