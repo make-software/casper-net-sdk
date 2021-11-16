@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using NetCasperSDK.Converters;
 
 namespace NetCasperSDK.Types
 {
@@ -83,7 +84,8 @@ namespace NetCasperSDK.Types
         /// Public key of the validator that proposed the block
         /// </summary>
         [JsonPropertyName("proposer")]
-        public string Proposer { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey Proposer { get; init; }
         
         /// <summary>
         /// List of Transfer hashes included in the block
@@ -101,13 +103,15 @@ namespace NetCasperSDK.Types
         /// Validator public key
         /// </summary>
         [JsonPropertyName("public_key")]
-        public string PublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey PublicKey { get; init; }
         
         /// <summary>
         /// Validator signature
         /// </summary>
         [JsonPropertyName("signature")]
-        public string Signature { get; init; }
+        [JsonConverter(typeof(Signature.SignatureConverter))]
+        public Signature Signature { get; init; }
     }
     
     /// <summary>

@@ -33,7 +33,8 @@ namespace NetCasperSDK.Types
         /// Source purse used for payment of the Deploy.
         /// </summary>
         [JsonPropertyName("source")]
-        public string Source { get; init; }
+        [JsonConverter(typeof(URef.URefConverter))]
+        public URef Source { get; init; }
         
         /// <summary>
         /// Transfer addresses performed by the Deploy.

@@ -19,7 +19,8 @@ namespace NetCasperSDK.Types
         /// Validator public key
         /// </summary>
         [JsonPropertyName("validator")]
-        public string PublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey PublicKey { get; init; }
     }
     
     /// <summary>
@@ -31,13 +32,15 @@ namespace NetCasperSDK.Types
         /// List of public keys of the equivocators
         /// </summary>
         [JsonPropertyName("equivocators")]
-        public List<string> Equivocators { get; init; }
+        [JsonConverter(typeof(GenericListConverter<PublicKey, PublicKey.PublicKeyConverter>))]
+        public List<PublicKey> Equivocators { get; init; }
         
         /// <summary>
         /// List of public keys of inactive validators
         /// </summary>
         [JsonPropertyName("inactive_validators")]
-        public List<string> InactiveValidators { get; init; }
+        [JsonConverter(typeof(GenericListConverter<PublicKey, PublicKey.PublicKeyConverter>))]
+        public List<PublicKey> InactiveValidators { get; init; }
         
         /// <summary>
         /// List of validators with rewards

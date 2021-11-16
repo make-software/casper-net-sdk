@@ -58,7 +58,8 @@ namespace NetCasperSDK.Types
         /// The public key of the validator.
         /// </summary>
         [JsonPropertyName("public_key")]
-        public string PublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey PublicKey { get; init; }
 
         /// <summary>
         /// The set of changes to the validator's status.

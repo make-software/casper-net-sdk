@@ -180,6 +180,12 @@ namespace NetCasperSDK.Types
             return VerifySignature(Hex.Decode(message), Hex.Decode(signature));
         }
         
+        #region Cast operators
+
+        public static explicit operator string(PublicKey pk) => pk.ToAccountHex();
+
+        #endregion
+        
         public class PublicKeyConverter : JsonConverter<PublicKey>
         {
             public override PublicKey Read(

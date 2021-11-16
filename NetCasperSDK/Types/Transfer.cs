@@ -45,13 +45,15 @@ namespace NetCasperSDK.Types
         /// Source purse
         /// </summary>
         [JsonPropertyName("source")]
-        public string Source { get; init; }
+        [JsonConverter(typeof(URef.URefConverter))]
+        public URef Source { get; init; }
         
         /// <summary>
         /// Target purse
         /// </summary>
         [JsonPropertyName("target")]
-        public string Target { get; init; }
+        [JsonConverter(typeof(URef.URefConverter))]
+        public URef Target { get; init; }
         
         /// <summary>
         /// Account to which funds are transferred

@@ -35,6 +35,7 @@ namespace NetCasperSDK.Types
         /// <summary>
         /// Validator node's public key
         /// </summary>
-        [JsonPropertyName("creator")] public string PublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        [JsonPropertyName("creator")] public PublicKey PublicKey { get; init; }
     }
 }

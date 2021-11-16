@@ -6,7 +6,7 @@ namespace NetCasperSDK.Types
     public class DeployApproval
     {
         [JsonPropertyName("signature")]
-        [JsonConverter(typeof(SignatureConverter))]
+        [JsonConverter(typeof(Signature.SignatureConverter))]
         public Signature Signature { get; init; }
         
         [JsonPropertyName("signer")]

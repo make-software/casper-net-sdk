@@ -54,7 +54,7 @@ namespace NetCasperSDK.Converters
                         Delegators = bid.Delegators,
                         Inactive = bid.Inactive,
                         StakedAmount = bid.StakedAmount,
-                        PublicKey = publicKey,
+                        PublicKey = PublicKey.FromHexString(publicKey),
                     };
                 bids.Add(bid);
 

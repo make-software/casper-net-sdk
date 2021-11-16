@@ -14,7 +14,8 @@ namespace NetCasperSDK.Types
         /// The purse that was used for bonding.
         /// </summary>
         [JsonPropertyName("bonding_purse")]
-        public string BondingPurse { get; init; }
+        [JsonConverter(typeof(URef.URefConverter))]
+        public URef BondingPurse { get; init; }
 
         /// <summary>
         /// The delegation rate.
@@ -47,7 +48,8 @@ namespace NetCasperSDK.Types
         /// Validator public key
         /// </summary>
         [JsonPropertyName("validator_public_key")]
-        public string PublicKey { get; init; }
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey PublicKey { get; init; }
 
         /// <summary>
         /// Vesting schedule for a genesis validator. `None` if non-genesis validator.

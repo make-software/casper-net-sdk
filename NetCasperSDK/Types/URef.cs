@@ -1,4 +1,7 @@
 using System;
+using System.Numerics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace NetCasperSDK.Types
@@ -17,8 +20,8 @@ namespace NetCasperSDK.Types
 
         public override string ToString()
         {
-            return "uref-" + Hex.ToHexString(RawBytes) + $"-{(byte)AccessRights:000}";
-        }  
+            return "uref-" + Hex.ToHexString(RawBytes) + $"-{(byte) AccessRights:000}";
+        }
 
         public static URef FromRawBytes(byte[] rawBytes, AccessRights accessRights)
         {
@@ -41,6 +44,21 @@ namespace NetCasperSDK.Types
                     "An Uref object must contain a 3 digits access rights suffix.");
 
             return new URef(Hex.Decode(parts[0]), (AccessRights) uint.Parse(parts[1]));
+        }
+
+        public class URefConverter : JsonConverter<URef>
+        {
+            public override URef Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options) =>
+                URef.FromString(reader.GetString());
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                URef value,
+                JsonSerializerOptions options) =>
+                writer.WriteStringValue(value.ToString());
         }
     }
 }
