@@ -201,6 +201,45 @@ namespace NetCasperSDK
             return await SendRpcRequestAsync<GetEraInfoBySwitchBlockResult>(method);
         }
 
+        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItem(string dictionaryItem, string stateRootHash = null)
+        {
+            if(stateRootHash == null)
+                stateRootHash = await GetStateRootHash();
+
+            var method = new GetDictionaryItem(dictionaryItem, stateRootHash);
+            return await SendRpcRequestAsync<GetDictionaryItemResult>(method);
+        }
+
+        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItemByAccount(string accountKey, string dictionaryName, 
+            string dictionaryItem, string stateRootHash = null)
+        {
+            if(stateRootHash == null)
+                stateRootHash = await GetStateRootHash();
+
+            var method = new GetDictionaryItemByAccount(accountKey, dictionaryName, dictionaryItem, stateRootHash);
+            return await SendRpcRequestAsync<GetDictionaryItemResult>(method);
+        }
+        
+        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItemByContract(string contractKey, string dictionaryName, 
+            string dictionaryItem, string stateRootHash = null)
+        {
+            if(stateRootHash == null)
+                stateRootHash = await GetStateRootHash();
+
+            var method = new GetDictionaryItemByContract(contractKey, dictionaryName, dictionaryItem, stateRootHash);
+            return await SendRpcRequestAsync<GetDictionaryItemResult>(method);
+        }
+        
+        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItemByURef(string seedURef, 
+            string dictionaryItem, string stateRootHash = null)
+        {
+            if(stateRootHash == null)
+                stateRootHash = await GetStateRootHash();
+
+            var method = new GetDictionaryItemByURef(seedURef, dictionaryItem, stateRootHash);
+            return await SendRpcRequestAsync<GetDictionaryItemResult>(method);
+        }
+        
         public async Task<RpcResponse<GetValidatorChangesResult>> GetValidatorChanges()
         {
             var method = new GetValidatorChanges();

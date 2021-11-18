@@ -243,6 +243,110 @@ namespace NetCasperSDK
         }
     }
 
+    public class GetDictionaryItem : RpcMethod
+    {
+        /// <summary>
+        /// Lookup a dictionary item via its seed URef.
+        /// </summary>
+        /// <param name="dictionaryItem">The dictionary item key.</param>
+        public GetDictionaryItem(string dictionaryItem, string state_root_hash) : base("state_get_dictionary_item")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"dictionary_identifier", new Dictionary<string, object>
+                {
+                    {"Dictionary", dictionaryItem}
+                }},
+                {"state_root_hash", state_root_hash},
+            };
+        }
+    }
+    
+    public class GetDictionaryItemByAccount : RpcMethod
+    {
+        /// <summary>
+        /// Lookup a dictionary item via an Account's named keys.
+        /// </summary>
+        /// <param name="accountKey">The account key as a formatted string whose named keys contains dictionary_name.</param>
+        /// <param name="dictionaryName">The named key under which the dictionary seed URef is stored.</param>
+        /// <param name="dictionaryItem">The dictionary item key.</param>
+        public GetDictionaryItemByAccount(string accountKey, string dictionaryName, string dictionaryItem,
+            string state_root_hash) : base("state_get_dictionary_item")
+        {
+            var accountNamedKey = new Dictionary<string, string>
+            {
+                {"key", accountKey},
+                {"dictionary_name", dictionaryName},
+                {"dictionary_item_key", dictionaryItem}
+            };
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "dictionary_identifier", new Dictionary<string, object>
+                    {
+                        {"AccountNamedKey", accountNamedKey}
+                    }
+                },
+                {"state_root_hash", state_root_hash},
+            };
+        }
+    }
+
+    public class GetDictionaryItemByContract : RpcMethod
+    {
+        /// <summary>
+        /// Lookup a dictionary item via a Contract named keys.
+        /// </summary>
+        /// <param name="contractKey">The contract key as a formatted string whose named keys contains dictionary_name.</param>
+        /// <param name="dictionaryName">The named key under which the dictionary seed URef is stored.</param>
+        /// <param name="dictionaryItem">The dictionary item key.</param>
+        public GetDictionaryItemByContract(string contractKey, string dictionaryName, string dictionaryItem, string state_root_hash) : base("state_get_dictionary_item")
+        {
+            var contractNamedKey = new Dictionary<string, string>
+            {
+                {"key", contractKey},
+                {"dictionary_name", dictionaryName},
+                {"dictionary_item_key", dictionaryItem}
+            };
+            
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"dictionary_identifier", new Dictionary<string, object>
+                {
+                    {"ContractNamedKey", contractNamedKey}
+                }},
+                {"state_root_hash", state_root_hash},
+            };
+        }
+    }
+
+    public class GetDictionaryItemByURef : RpcMethod
+    {
+        /// <summary>
+        /// Lookup a dictionary item via its seed URef.
+        /// </summary>
+        /// <param name="seed_uref">The dictionary's seed URef.</param>
+        /// <param name="dictionaryItem">The dictionary item key.</param>
+        public GetDictionaryItemByURef(string seedURef, string dictionaryItem, string state_root_hash) : base("state_get_dictionary_item")
+        {
+            var contractNamedKey = new Dictionary<string, string>
+            {
+                {"seed_uref", seedURef},
+                {"dictionary_item_key", dictionaryItem}
+            };
+            
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"dictionary_identifier", new Dictionary<string, object>
+                {
+                    {"URef", contractNamedKey}
+                }},
+                {"state_root_hash", state_root_hash},
+            };
+        }
+    }
+
     public class GetValidatorChanges : RpcMethod
     {
         public GetValidatorChanges() : base("info_get_validator_changes")
