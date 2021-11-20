@@ -66,7 +66,7 @@ namespace Casper.Network.SDK.Types
         /// Purse that can hold Casper tokens
         /// </summary>
         [JsonPropertyName("main_purse")]
-        [JsonConverter(typeof(URef.URefConverter))]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef MainPurse { get; init; }
 
         /// <summary>

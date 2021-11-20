@@ -45,14 +45,14 @@ namespace Casper.Network.SDK.Types
         /// Source purse
         /// </summary>
         [JsonPropertyName("source")]
-        [JsonConverter(typeof(URef.URefConverter))]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef Source { get; init; }
         
         /// <summary>
         /// Target purse
         /// </summary>
         [JsonPropertyName("target")]
-        [JsonConverter(typeof(URef.URefConverter))]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef Target { get; init; }
         
         /// <summary>

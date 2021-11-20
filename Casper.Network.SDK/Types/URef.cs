@@ -1,37 +1,16 @@
 using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
-    public class URef
+    public class URef : GlobalStateKey
     {
-        // ex: "uref-e65e72d685359dd21b1a7d7eff2862895c556067499ae6524e67a0e229ceb49e-007"
         public AccessRights AccessRights { get; }
+        
         public byte[] RawBytes { get; }
 
-        protected URef(byte[] rawBytes, AccessRights accessRights)
+        public URef(string value) : base(value, "uref-")
         {
-            RawBytes = rawBytes;
-            AccessRights = accessRights;
-        }
-
-        public override string ToString()
-        {
-            return "uref-" + Hex.ToHexString(RawBytes) + $"-{(byte) AccessRights:000}";
-        }
-
-        public static URef FromRawBytes(byte[] rawBytes, AccessRights accessRights)
-        {
-            return new URef(rawBytes, accessRights);
-        }
-
-        public static URef FromString(string value)
-        {
-            if (!value.StartsWith("uref-"))
-                throw new ArgumentOutOfRangeException(nameof(value), "An URef object must start with 'uref-'.");
-
             var parts = value.Substring(5).Split(new char[] {'-'});
             if (parts.Length != 2)
                 throw new ArgumentOutOfRangeException(nameof(value),
@@ -42,22 +21,20 @@ namespace Casper.Network.SDK.Types
                 throw new ArgumentOutOfRangeException(nameof(value),
                     "An Uref object must contain a 3 digits access rights suffix.");
 
-            return new URef(Hex.Decode(parts[0]), (AccessRights) uint.Parse(parts[1]));
+            RawBytes = Hex.Decode(parts[0]);
+            AccessRights = (AccessRights) uint.Parse(parts[1]);
+        }
+        
+        public URef(byte[] rawBytes, AccessRights accessRights)
+            : base($"uref-{Hex.ToHexString(rawBytes)}-{(int)accessRights:000)}", "uref-")
+        {
+            RawBytes = rawBytes;
+            AccessRights = accessRights;
         }
 
-        public class URefConverter : JsonConverter<URef>
+        public override string ToString()
         {
-            public override URef Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options) =>
-                URef.FromString(reader.GetString());
-
-            public override void Write(
-                Utf8JsonWriter writer,
-                URef value,
-                JsonSerializerOptions options) =>
-                writer.WriteStringValue(value.ToString());
+            return "uref-" + Hex.ToHexString(RawBytes) + $"-{(byte) AccessRights:000}";
         }
     }
 }

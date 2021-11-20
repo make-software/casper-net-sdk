@@ -102,7 +102,7 @@ namespace Casper.Network.SDK.Types
                 {
                     PublicKey = PublicKey.FromHexString(public_key),
                     StakedAmount = BigInteger.Parse(amount),
-                    BondingPurse = URef.FromString(bonding_purse),
+                    BondingPurse = new URef(bonding_purse),
                     Delegatee = PublicKey.FromHexString(validator_public_key),
                     VestingSchedule = vesting_schedule
                 };
