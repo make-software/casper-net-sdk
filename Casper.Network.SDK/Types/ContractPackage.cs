@@ -40,7 +40,7 @@ namespace Casper.Network.SDK.Types
         /// List of URefs associated with the group label.
         /// </summary>
         [JsonPropertyName("keys")]
-        [JsonConverter(typeof(GenericListConverter<URef, URef.URefConverter>))]
+        [JsonConverter(typeof(GenericListConverter<URef, GlobalStateKey.GlobalStateKeyConverter>))]
         public List<URef> Keys { get; init; }
     }
     
@@ -50,7 +50,7 @@ namespace Casper.Network.SDK.Types
     public class ContractPackage
     {
         [JsonPropertyName("access_key")]
-        [JsonConverter(typeof(URef.URefConverter))]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef AccessKey { get; init; }
         
         [JsonPropertyName("disabled_versions")]

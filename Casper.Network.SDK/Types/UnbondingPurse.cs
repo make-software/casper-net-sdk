@@ -14,7 +14,7 @@ namespace Casper.Network.SDK.Types
         public BigInteger Amount { get; init; }
 
         [JsonPropertyName("bonding_purse")]
-        [JsonConverter(typeof(URef.URefConverter))]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef BondingPurse { get; init; }
         
         /// <summary>

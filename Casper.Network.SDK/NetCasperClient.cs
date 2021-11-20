@@ -100,13 +100,22 @@ namespace Casper.Network.SDK
             return await SendRpcRequestAsync<GetItemResult>(method);
         }
 
-        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash,
+        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
             List<string> path = null)
-        {
+        {            
+            if (stateRootHash == null)
+                stateRootHash = await GetStateRootHash();
+            
             var method = new QueryGlobalState(key, stateRootHash, isBlockHash: false, path);
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
+        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(GlobalStateKey key, string stateRootHash = null,
+            List<string> path = null)
+        {
+            return await QueryGlobalState(key.ToString(), stateRootHash, path);
+        }
+        
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalStateWithBlockHash(string key, string blockHash,
             List<string> path = null)
         {
@@ -114,6 +123,12 @@ namespace Casper.Network.SDK
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
+        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalStateWithBlockHash(GlobalStateKey key,
+            string blockHash, List<string> path = null)
+        {
+            return await QueryGlobalStateWithBlockHash(key.ToString(), blockHash, path);
+        }
+        
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(string purseURef,
             string stateRootHash = null)
         {

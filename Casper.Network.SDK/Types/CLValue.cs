@@ -190,7 +190,7 @@ namespace Casper.Network.SDK.Types
 
         public static CLValue URef(string value)
         {
-            var uref = Types.URef.FromString(value);
+            var uref = new URef(value);
 
             byte[] bytes = new byte[33];
             Array.Copy(uref.RawBytes, 0, bytes, 0, 32);
@@ -362,29 +362,29 @@ namespace Casper.Network.SDK.Types
         {
             byte[] accountHash = publicKey.GetAccountHash();
             byte[] bytes = new byte[1 + accountHash.Length];
-            bytes[0] = (byte) KeyTag.Account;
+            bytes[0] = (byte) KeyIdentifier.Account;
             Array.Copy(accountHash, 0, bytes, 1, accountHash.Length);
 
-            return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.Account), Hex.ToHexString(bytes));
+            return new CLValue(bytes, new CLKeyTypeInfo(KeyIdentifier.Account), Hex.ToHexString(bytes));
         }
 
-        public static CLValue KeyFromHash(byte[] hash, KeyTag keyTag)
+        public static CLValue KeyFromHash(byte[] hash, KeyIdentifier keyIdentifier)
         {
             byte[] bytes = new byte[1 + hash.Length];
-            bytes[0] = (byte) keyTag;
+            bytes[0] = (byte) keyIdentifier;
             Array.Copy(hash, 0, bytes, 1, hash.Length);
 
-            return new CLValue(bytes, new CLKeyTypeInfo(keyTag), Hex.ToHexString(bytes));
+            return new CLValue(bytes, new CLKeyTypeInfo(keyIdentifier), Hex.ToHexString(bytes));
         }
 
         public static CLValue KeyFromURef(URef uRef)
         {
             byte[] bytes = new byte[1 + uRef.RawBytes.Length + 1];
-            bytes[0] = (byte) KeyTag.URef;
+            bytes[0] = (byte) KeyIdentifier.URef;
             Array.Copy(uRef.RawBytes, 0, bytes, 1, uRef.RawBytes.Length);
             bytes[1 + uRef.RawBytes.Length] = (byte) uRef.AccessRights;
 
-            return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.URef), Hex.ToHexString(bytes));
+            return new CLValue(bytes, new CLKeyTypeInfo(KeyIdentifier.URef), Hex.ToHexString(bytes));
         }
 
         public static CLValue KeyFromEraInfo(ulong era)
@@ -392,10 +392,10 @@ namespace Casper.Network.SDK.Types
             var bEra = BitConverter.GetBytes(era);
             if (!BitConverter.IsLittleEndian) Array.Reverse(bEra);
             byte[] bytes = new byte[1 + bEra.Length];
-            bytes[0] = (byte) KeyTag.EraInfo;
+            bytes[0] = (byte) KeyIdentifier.EraInfo;
             Array.Copy(bEra, 0, bytes, 1, bEra.Length);
 
-            return new CLValue(bytes, new CLKeyTypeInfo(KeyTag.EraInfo), Hex.ToHexString(bytes));
+            return new CLValue(bytes, new CLKeyTypeInfo(KeyIdentifier.EraInfo), Hex.ToHexString(bytes));
         }
 
         #region Cast operators

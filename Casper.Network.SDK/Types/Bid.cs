@@ -14,7 +14,7 @@ namespace Casper.Network.SDK.Types
         /// The purse that was used for bonding.
         /// </summary>
         [JsonPropertyName("bonding_purse")]
-        [JsonConverter(typeof(URef.URefConverter))]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef BondingPurse { get; init; }
 
         /// <summary>

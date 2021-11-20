@@ -120,6 +120,11 @@ namespace Casper.Network.SDK
                 {"key", key}
             };
         }
+
+        public QueryGlobalState(GlobalStateKey key, string hash, bool isBlockHash, List<string> path = null) :
+            this(key.ToString(), hash, isBlockHash, path)
+        {
+        }
     }
 
     public class GetBalanceMethod : RpcMethod

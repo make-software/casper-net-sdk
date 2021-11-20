@@ -33,7 +33,7 @@ namespace Casper.Network.SDK.Types
         /// Source purse used for payment of the Deploy.
         /// </summary>
         [JsonPropertyName("source")]
-        [JsonConverter(typeof(URef.URefConverter))]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef Source { get; init; }
         
         /// <summary>
