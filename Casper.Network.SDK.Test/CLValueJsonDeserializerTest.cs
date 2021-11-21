@@ -73,6 +73,15 @@ namespace NetCasperTest
             "    \"parsed\": \"uref-000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f-007\"\n" +
             "}";
 
+        private static string KEY_ACCOUNT_JSON =
+            @"{""cl_type"":""Key"",""bytes"":""00989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7"",""parsed"":{""Account"":""account-hash-989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7""}}";
+
+        private static string KEY_UREF_JSON =
+            @"{""cl_type"":""Key"",""bytes"":""02e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e407"",""parsed"":{""URef"":""uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007""}}";
+
+        private static string KEY_ERAINFO_JSON =
+            @"{""cl_type"":""Key"",""bytes"":""057d0a000000000000"",""parsed"":{""EraInfo"":""era-2685""}}";
+            
         private static string TUPLE1_JSON =
             @"{
                 ""cl_type"": {
@@ -501,5 +510,68 @@ namespace NetCasperTest
             Assert.IsTrue(json.Contains(@"""cl_type"":{""Map"":{""key"":""String"",""value"":{""Option"":""String""}}}"));
             Assert.IsTrue(json.Contains(@"""bytes"":""0300000008000000666f75727465656e01020000003134070000006669667465656e01020000003135070000007369787465656e01020000003136"""));
         }
+
+        [Test]
+        public void SerializeKeyCLValue()
+        {
+            var gsKey = GlobalStateKey.FromString(
+                "withdraw-b19223deb110bdd24316f6a3fc6bd99d0ad918aef18167a595b3cb622a410ec1");
+            var clValue = CLValue.Key(gsKey);
+            var json = JsonSerializer.Serialize(clValue).Replace(" ", "");
+            Assert.IsNotEmpty(json);
+            Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
+            Assert.IsTrue(json.Contains(@"""bytes"":""08b192"));
+            Assert.IsTrue(json.Contains(@"""parsed"":{""Withdraw"":""withdraw-b192"));
+
+            gsKey = GlobalStateKey.FromString(
+                "uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007");
+            clValue = CLValue.Key(gsKey);
+            json = JsonSerializer.Serialize(clValue).Replace(" ", "");
+            Assert.IsNotEmpty(json);
+            Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
+            Assert.IsTrue(
+                json.Contains(@"""bytes"":""02e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e407"));
+            Assert.IsTrue(json.Contains(
+                @"""parsed"":{""URef"":""uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007"));
+
+            gsKey = GlobalStateKey.FromString("era-2685");
+            clValue = CLValue.Key(gsKey);
+            json = JsonSerializer.Serialize(clValue).Replace(" ", "");
+            Assert.IsNotEmpty(json);
+            Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
+            Assert.IsTrue(json.Contains(@"""bytes"":""057d0a000000000000"));
+            Assert.IsTrue(json.Contains(@"""parsed"":{""EraInfo"":""era-2685""}"));
+        }
+
+        [Test]
+        public void DeserializeKeyCLValue()
+        {
+
+            var clValue = JsonSerializer.Deserialize<CLValue>(KEY_ACCOUNT_JSON);
+            
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(CLType.Key, clValue.TypeInfo.Type);
+            Assert.IsTrue(Hex.Decode("00989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7").SequenceEqual(clValue.Bytes));
+            if(clValue.Parsed is JsonElement jAccount)
+                Assert.AreEqual(@"{""Account"":""account-hash-989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7""}", 
+                    jAccount.GetRawText().Replace(" ",""));
+
+            clValue = JsonSerializer.Deserialize<CLValue>(KEY_UREF_JSON);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(CLType.Key, clValue.TypeInfo.Type);
+            Assert.IsTrue(Hex.Decode("02e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e407").SequenceEqual(clValue.Bytes));
+            if(clValue.Parsed is JsonElement jURef)
+                Assert.AreEqual(@"{""URef"":""uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007""}", 
+                    jURef.GetRawText().Replace(" ",""));
+            
+            clValue = JsonSerializer.Deserialize<CLValue>(KEY_ERAINFO_JSON);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(CLType.Key, clValue.TypeInfo.Type);
+            Assert.IsTrue(Hex.Decode("057d0a000000000000").SequenceEqual(clValue.Bytes));
+            if(clValue.Parsed is JsonElement jEraInfo)
+                Assert.AreEqual(@"{""EraInfo"":""era-2685""}", 
+                    jEraInfo.GetRawText().Replace(" ",""));
+        }
+
     }
 }

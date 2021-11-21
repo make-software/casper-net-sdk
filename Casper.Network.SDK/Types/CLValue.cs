@@ -5,6 +5,7 @@ using System.IO;
 using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.ByteSerializers;
 using Casper.Network.SDK.Converters;
 using Org.BouncyCastle.Utilities.Encoders;
 
@@ -366,6 +367,16 @@ namespace Casper.Network.SDK.Types
             Array.Copy(accountHash, 0, bytes, 1, accountHash.Length);
 
             return new CLValue(bytes, new CLKeyTypeInfo(KeyIdentifier.Account), Hex.ToHexString(bytes));
+        }
+
+        public static CLValue Key(GlobalStateKey key)
+        {
+            var serializer = new GlobalStateKeyByteSerializer();
+            
+            var json = "{\"" + key.KeyIdentifier.ToString() + "\":\"" + key.ToString() + "\"}";
+            
+            return new CLValue(serializer.ToBytes(key), new CLKeyTypeInfo(key.KeyIdentifier), 
+                JsonDocument.Parse(json).RootElement);
         }
 
         public static CLValue KeyFromHash(byte[] hash, KeyIdentifier keyIdentifier)

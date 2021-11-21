@@ -6,11 +6,11 @@ namespace Casper.Network.SDK.Types
     public class URef : GlobalStateKey
     {
         public AccessRights AccessRights { get; }
-        
-        public byte[] RawBytes { get; }
 
         public URef(string value) : base(value, "uref-")
         {
+            KeyIdentifier = KeyIdentifier.URef;
+
             var parts = value.Substring(5).Split(new char[] {'-'});
             if (parts.Length != 2)
                 throw new ArgumentOutOfRangeException(nameof(value),
@@ -21,15 +21,18 @@ namespace Casper.Network.SDK.Types
                 throw new ArgumentOutOfRangeException(nameof(value),
                     "An Uref object must contain a 3 digits access rights suffix.");
 
-            RawBytes = Hex.Decode(parts[0]);
             AccessRights = (AccessRights) uint.Parse(parts[1]);
         }
         
         public URef(byte[] rawBytes, AccessRights accessRights)
-            : base($"uref-{Hex.ToHexString(rawBytes)}-{(int)accessRights:000)}", "uref-")
+            : this($"uref-{Hex.ToHexString(rawBytes)}-{(int)accessRights:000)}")
         {
-            RawBytes = rawBytes;
-            AccessRights = accessRights;
+        }
+
+        protected override byte[] _GetRawBytesFromKey(string key)
+        {
+            key = key.Substring(0, key.LastIndexOf('-'));
+            return Hex.Decode(key.Substring(key.LastIndexOf('-')+1));
         }
 
         public override string ToString()
