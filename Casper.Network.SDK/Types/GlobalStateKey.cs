@@ -19,19 +19,29 @@ namespace Casper.Network.SDK.Types
         Withdraw = 0x08,
         Dictionary = 0x09
     }
-    
+
     public abstract class GlobalStateKey
     {
         protected string Key;
-        
+
+        public KeyIdentifier KeyIdentifier { get; init; }
+
+        public byte[] RawBytes { get { return _GetRawBytesFromKey(Key); } }
+
         protected GlobalStateKey(string key, string keyPrefix)
         {
-            Key = key;
-            if (!Key.StartsWith(keyPrefix))
+            if (!key.StartsWith(keyPrefix))
                 throw new ArgumentException($"Key not valid. It should start with '{keyPrefix}'.",
                     nameof(key));
+
+            Key = key;
         }
-        
+
+        protected virtual byte[] _GetRawBytesFromKey(string key)
+        {
+            return Hex.Decode(key.Substring(key.LastIndexOf('-') + 1));
+        }
+
         public static GlobalStateKey FromString(string value)
         {
             if (value.StartsWith("account-hash-"))
@@ -40,7 +50,7 @@ namespace Casper.Network.SDK.Types
                 return new HashKey(value);
             if (value.StartsWith("uref-"))
                 return new URef(value);
-            if(value.StartsWith("transfer-"))
+            if (value.StartsWith("transfer-"))
                 return new TransferKey(value);
             if (value.StartsWith("deploy-"))
                 return new DeployInfoKey(value);
@@ -54,7 +64,7 @@ namespace Casper.Network.SDK.Types
                 return new WithdrawKey(value);
             if (value.StartsWith("dictionary"))
                 return new DictionaryKey(value);
-            
+
             return null;
         }
 
@@ -62,7 +72,7 @@ namespace Casper.Network.SDK.Types
         {
             return Key;
         }
-        
+
         public class GlobalStateKeyConverter : JsonConverterFactory
         {
             public override bool CanConvert(Type typeToConvert)
@@ -79,16 +89,16 @@ namespace Casper.Network.SDK.Types
                        typeToConvert == typeof(WithdrawKey) ||
                        typeToConvert == typeof(DictionaryKey);
             }
-            
+
             public override JsonConverter CreateConverter(
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                return (JsonConverter)Activator.CreateInstance(
+                return (JsonConverter) Activator.CreateInstance(
                     typeof(GlobalStateKeyConverterInner),
                     BindingFlags.Instance | BindingFlags.Public,
                     binder: null,
-                    args: new object[] { options },
+                    args: new object[] {options},
                     culture: null);
             }
 
@@ -97,7 +107,7 @@ namespace Casper.Network.SDK.Types
                 public GlobalStateKeyConverterInner(JsonSerializerOptions options)
                 {
                 }
-                
+
                 public override GlobalStateKey Read(
                     ref Utf8JsonReader reader,
                     Type typeToConvert,
@@ -117,46 +127,61 @@ namespace Casper.Network.SDK.Types
     {
         public AccountHashKey(string key) : base(key, "account-hash-")
         {
+            KeyIdentifier = KeyIdentifier.Account;
         }
 
         public AccountHashKey(PublicKey publicKey)
-            :base("account-hash-" + Hex.ToHexString(publicKey.GetAccountHash()), "account-hash-")
+            : base("account-hash-" + Hex.ToHexString(publicKey.GetAccountHash()), "account-hash-")
         {
         }
     }
-    
+
     public class HashKey : GlobalStateKey
     {
         public HashKey(string key) : base(key, "hash-")
         {
+            KeyIdentifier = KeyIdentifier.Hash;
         }
     }
-    
+
     public class TransferKey : GlobalStateKey
     {
         public TransferKey(string key) : base(key, "transfer-")
         {
+            KeyIdentifier = KeyIdentifier.Transfer;
         }
     }
-    
+
     public class DeployInfoKey : GlobalStateKey
     {
         public DeployInfoKey(string key) : base(key, "deploy-")
         {
+            KeyIdentifier = KeyIdentifier.DeployInfo;
         }
     }
-    
+
     public class EraInfoKey : GlobalStateKey
     {
         public EraInfoKey(string key) : base(key, "era-")
         {
+            KeyIdentifier = KeyIdentifier.EraInfo;
+        }
+
+        protected override byte[] _GetRawBytesFromKey(string key)
+        {
+            var u64 = ulong.Parse(key.Substring(4));
+            byte[] bytes = BitConverter.GetBytes(u64);
+            if (!BitConverter.IsLittleEndian) Array.Reverse(bytes);
+
+            return bytes;
         }
     }
-    
+
     public class BalanceKey : GlobalStateKey
     {
         public BalanceKey(string key) : base(key, "balance-")
         {
+            KeyIdentifier = KeyIdentifier.Balance;
         }
     }
 
@@ -164,20 +189,23 @@ namespace Casper.Network.SDK.Types
     {
         public BidKey(string key) : base(key, "bid-")
         {
+            KeyIdentifier = KeyIdentifier.Bid;
         }
     }
-    
+
     public class WithdrawKey : GlobalStateKey
     {
         public WithdrawKey(string key) : base(key, "withdraw-")
         {
+            KeyIdentifier = KeyIdentifier.Withdraw;
         }
     }
-    
+
     public class DictionaryKey : GlobalStateKey
     {
         public DictionaryKey(string key) : base(key, "dictionary-")
         {
+            KeyIdentifier = KeyIdentifier.Dictionary;
         }
     }
 }
