@@ -24,8 +24,13 @@ namespace Casper.Network.SDK.Types
             AccessRights = (AccessRights) uint.Parse(parts[1]);
         }
         
+        public URef(byte[] bytes)
+            : this($"uref-{Hex.ToHexString(bytes[..32])}-{(int)bytes[32]:000}")
+        {
+        }
+        
         public URef(byte[] rawBytes, AccessRights accessRights)
-            : this($"uref-{Hex.ToHexString(rawBytes)}-{(int)accessRights:000)}")
+            : this($"uref-{Hex.ToHexString(rawBytes)}-{(int)accessRights:000}")
         {
         }
 
