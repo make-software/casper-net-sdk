@@ -27,5 +27,10 @@ namespace Casper.Network.SDK.Types
         {
             return (int)Type^(int)KeyIdentifier;
         }
+        
+        public override bool IsListCompatibleWith(object obj)
+        {
+            return !(obj == null || !this.GetType().Equals(obj.GetType())) ;
+        }
     }
 }

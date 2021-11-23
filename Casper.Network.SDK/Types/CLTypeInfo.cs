@@ -24,6 +24,16 @@ namespace Casper.Network.SDK.Types
             return (int) Type;
         }
 
+        /// <summary>
+        /// Returns true if obj can be part of the same CLValue.List. 
+        /// </summary>
+        /// <param name="obj">Object to compare with.</param>
+        /// <returns>true if obj can be part of the same CLValue list.</returns>
+        public virtual bool IsListCompatibleWith(object obj)
+        {
+            return this.Equals(obj);
+        }
+
         public override string ToString()
         {
             return Type.ToString();

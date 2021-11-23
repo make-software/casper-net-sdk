@@ -61,7 +61,7 @@ namespace Casper.Network.SDK.Types
                 Parsed = je.ValueKind switch
                 {
                     JsonValueKind.String => je.GetString(),
-                    JsonValueKind.Number => je.GetInt32(),
+                    JsonValueKind.Number => je.GetInt64(),
                     JsonValueKind.True => true,
                     JsonValueKind.False => false,
                     JsonValueKind.Null => null,
@@ -252,7 +252,7 @@ namespace Casper.Network.SDK.Types
             foreach (var clValue in values)
             {
                 ms.Write(clValue.Bytes);
-                if (!clValue.TypeInfo.Equals(typeInfo))
+                if (!clValue.TypeInfo.IsListCompatibleWith(typeInfo))
                     throw new ArgumentOutOfRangeException(nameof(values), "A list cannot contain different types");
             }
 
@@ -573,6 +573,19 @@ namespace Casper.Network.SDK.Types
         
         public static explicit operator Types.PublicKey(CLValue clValue) => clValue.ToPublicKey();
 
+        public GlobalStateKey ToGlobalStateKey()
+        {
+            if (TypeInfo.Type == CLType.Key)
+            {
+                return GlobalStateKey.FromBytes(Bytes);
+            }
+            
+            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'GlobalStateKey'.");
+        }
+        
+        public static explicit operator Types.GlobalStateKey(CLValue clValue) => clValue.ToGlobalStateKey();
+
+        
         private object ReadItem(BinaryReader reader, CLType type)
         {
             return type switch
@@ -589,6 +602,7 @@ namespace Casper.Network.SDK.Types
                 CLType.String => reader.ReadCLString(),
                 CLType.URef => reader.ReadCLURef(),
                 CLType.PublicKey => reader.ReadCLPublicKey(),
+                CLType.Key => reader.ReadCLGlobalStateKey(),
                 _ => null
             };
         }
@@ -610,7 +624,7 @@ namespace Casper.Network.SDK.Types
                 {
                     var item = ReadItem(reader, listTypeInfo.ListType.Type);
                     if(item==null)
-                        throw new FormatException($"Cannot convert to a list of '{listTypeInfo?.ListType.Type}'.");
+                        throw new FormatException($"Cannot convert to a list of '{listTypeInfo.ListType.Type}'.");
 
                     list.Add(item);
                 }
@@ -629,13 +643,40 @@ namespace Casper.Network.SDK.Types
                 Array.Copy(Bytes, 0, bytes, 0, Bytes.Length);
                 return bytes;
             }
-            
+
             throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'ByteArray'.");
         }
         
         public static explicit operator byte[](CLValue clValue) => clValue.ToByteArray();
 
+        public Dictionary<object,object> ToDictionary()
+        {
+            if (TypeInfo.Type == CLType.Map)
+            {
+                var mapTypeInfo = TypeInfo as CLMapTypeInfo;
+                if (mapTypeInfo == null)
+                    throw new Exception("Wrong inner type in CLValue of type Map");
+                
+                var reader = new BinaryReader(new MemoryStream(Bytes));
+                var length = reader.ReadInt32();
+
+                var dict = new Dictionary<object, object>(length);
+
+                for (int i = 0; i < length; i++)
+                {
+                    var key = ReadItem(reader, mapTypeInfo.KeyType.Type);
+                    var value = ReadItem(reader, mapTypeInfo.ValueType.Type);
+                    if(key==null || value==null)
+                        throw new FormatException($"Cannot convert to a map of '{mapTypeInfo.KeyType.Type},{mapTypeInfo.ValueType.Type}'.");
+
+                    dict.Add(key, value);
+                }
+
+                return dict;
+            }
+
+            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'Map'.");
+        }
         #endregion
-        
     }
 }

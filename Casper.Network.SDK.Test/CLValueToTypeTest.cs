@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Casper.Network.SDK.Types;
@@ -185,6 +186,13 @@ namespace NetCasperTest
             var pk = PublicKey.FromHexString("01b7c7c545dfa3fb853a97fb3581ce10eb4f67a5861abed6e70e5e3312fdde402c"); 
             clValue = CLValue.PublicKey(pk);
             Assert.AreEqual(pk.ToAccountHex(), (string)clValue);
+            
+            var gs1 = new AccountHashKey("account-hash-989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7");
+            clValue = CLValue.Key(gs1);
+            Assert.AreEqual(gs1.ToString(), (string)clValue);
+
+            clValue = CLValue.Key(uref);
+            Assert.AreEqual(uref.ToString(), (string)clValue);
         }
 
         [Test]
@@ -211,6 +219,25 @@ namespace NetCasperTest
         }
 
         [Test]
+        public void CLValueToGlobalStateKey()
+        {
+            var gs1 = new AccountHashKey("account-hash-989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7");
+            var clValue = CLValue.Key(gs1);
+            Assert.AreEqual(gs1.ToString(), clValue.ToGlobalStateKey().ToString());
+            Assert.AreEqual(gs1.ToString(), ((GlobalStateKey)clValue).ToString());
+            
+            var gs2 = new URef("uref-a465baf86b29c9d12b643b32beef2b9acf55dd4a820d59281ba5a1cf131ee796-000");
+            clValue = CLValue.Key(gs2);
+            Assert.AreEqual(gs2.ToString(), clValue.ToGlobalStateKey().ToString());
+            Assert.AreEqual(gs2.ToString(), ((GlobalStateKey)clValue).ToString());
+
+            var gs3 = new EraInfoKey("era-3");
+            clValue = CLValue.Key(gs3);
+            Assert.AreEqual(gs3.ToString(), clValue.ToGlobalStateKey().ToString());
+            Assert.AreEqual(gs3.ToString(), ((GlobalStateKey)clValue).ToString());
+        }
+
+        [Test]
         public void CLValueToList()
         {
             var clValue = CLValue.List(new CLValue[]
@@ -234,6 +261,20 @@ namespace NetCasperTest
             Assert.AreEqual(pk1.ToAccountHex(), ((PublicKey)list[0]).ToAccountHex());
             Assert.AreEqual(pk2.ToAccountHex(), ((PublicKey)list[1]).ToAccountHex());
             Assert.AreEqual(pk3.ToAccountHex(), ((PublicKey)list[2]).ToAccountHex());
+            
+            var gs1 = new AccountHashKey("account-hash-989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7");
+            var gs2 = new URef("uref-a465baf86b29c9d12b643b32beef2b9acf55dd4a820d59281ba5a1cf131ee796-000");
+            var gs3 = new EraInfoKey("era-3");
+            clValue = CLValue.List(new CLValue[]
+            {
+                CLValue.Key(gs1),
+                CLValue.Key(gs2),
+                CLValue.Key(gs3)
+            });
+            list = clValue.ToList();
+            Assert.AreEqual(gs1.ToString(), ((GlobalStateKey)list[0]).ToString());
+            Assert.AreEqual(gs2.ToString(), ((GlobalStateKey)list[1]).ToString());
+            Assert.AreEqual(gs3.ToString(), ((GlobalStateKey)list[2]).ToString());
         }
 
         [Test]
@@ -243,6 +284,23 @@ namespace NetCasperTest
             var clValue = CLValue.ByteArray(bytes);
             Assert.IsTrue(bytes.SequenceEqual(clValue.ToByteArray()));
             Assert.IsTrue(bytes.SequenceEqual((byte[])clValue));
+        }
+        
+        [Test]
+        public void CLValueToDictionary()
+        {
+            var dict = new Dictionary<CLValue, CLValue>()
+            {
+                {CLValue.String("fourteen"), CLValue.U8(14)},
+                {CLValue.String("fifteen"), CLValue.U8(15)},
+                {CLValue.String("sixteen"), CLValue.U8(16)},
+            };
+            var clValue = CLValue.Map(dict);
+
+            var map = clValue.ToDictionary();
+            Assert.AreEqual(14, map["fourteen"]);
+            Assert.AreEqual(15, map["fifteen"]);
+            Assert.AreEqual(16, map["sixteen"]);
         }
         
     }

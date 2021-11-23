@@ -68,6 +68,24 @@ namespace Casper.Network.SDK.Types
             return null;
         }
 
+        public static GlobalStateKey FromBytes(byte[] bytes)
+        {
+            return bytes[0] switch
+            {
+                0x00 => new AccountHashKey("account-hash-" + Hex.ToHexString(bytes[1..])),
+                0x01 => new HashKey("hash-" + Hex.ToHexString(bytes[1..])),
+                0x02 => new URef(bytes[1..]),
+                0x03 => new TransferKey("transfer-" + Hex.ToHexString(bytes[1..])),
+                0x04 => new DeployInfoKey("deploy-" + Hex.ToHexString(bytes[1..])),
+                0x05 => new EraInfoKey("era-" + BitConverter.ToInt64(bytes, 1)),
+                0x06 => new BalanceKey("balance-" + Hex.ToHexString(bytes[1..])),
+                0x07 => new BidKey("bid-" + Hex.ToHexString(bytes[1..])),
+                0x08 => new WithdrawKey("withdraw-" + Hex.ToHexString(bytes[1..])),
+                0x09 => new DictionaryKey("dictionary-" + Hex.ToHexString(bytes[1..])),
+                _ => throw new Exception($"Unknown key identifier '{bytes[0]}'")
+            };
+        }
+
         public override string ToString()
         {
             return Key;
