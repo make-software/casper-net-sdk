@@ -373,219 +373,23 @@ namespace Casper.Network.SDK.Types
         public static CLValue Key(GlobalStateKey key)
         {
             var serializer = new GlobalStateKeyByteSerializer();
-            
+
             var json = "{\"" + key.KeyIdentifier.ToString() + "\":\"" + key.ToString() + "\"}";
-            
-            return new CLValue(serializer.ToBytes(key), new CLKeyTypeInfo(key.KeyIdentifier), 
+
+            return new CLValue(serializer.ToBytes(key), new CLKeyTypeInfo(key.KeyIdentifier),
                 JsonDocument.Parse(json).RootElement);
         }
 
         #region Cast operators
-        
+
         //wrap native types in CLValue with a cast operator
         //
         public static implicit operator CLValue(string s) => CLValue.String(s);
 
         #endregion
-        
+
         #region Converter functions
 
-        public bool ToBoolean()
-        {
-            if (TypeInfo.Type == CLType.Bool)
-            {
-                return Bytes[0] == 0x01;
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'Bool'.");
-        }
-        
-        public static explicit operator bool(CLValue clValue) => clValue.ToBoolean();
-        
-        public int ToInt32()
-        {
-            if (TypeInfo.Type == CLType.I32)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return BitConverter.ToInt32(bytes);
-            }
-            if (TypeInfo.Type == CLType.U8)
-            {
-                return (int) Bytes[0];
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'Int32'.");
-        }
-        
-        public static explicit operator int(CLValue clValue) => clValue.ToInt32();
-
-        public long ToInt64()
-        {
-            if (TypeInfo.Type == CLType.I64)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return (long) BitConverter.ToInt64(bytes);
-            }
-            if (TypeInfo.Type == CLType.I32)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return (long) BitConverter.ToInt32(bytes);
-            }
-            if (TypeInfo.Type == CLType.U8)
-            {
-                return (long) Bytes[0];
-            }
-            if (TypeInfo.Type == CLType.U32)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return (long) BitConverter.ToUInt32(bytes);
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'Int64'.");
-        }
-        
-        public static explicit operator long(CLValue clValue) => clValue.ToInt64();
-
-        public byte ToByte()
-        {
-            if (TypeInfo.Type == CLType.U8)
-            {
-                return Bytes[0];
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'byte'.");
-        }
-        
-        public static explicit operator byte(CLValue clValue) => clValue.ToByte();
-
-        public uint ToUInt32()
-        {
-            if (TypeInfo.Type == CLType.U32)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return BitConverter.ToUInt32(bytes);
-            }
-            if (TypeInfo.Type == CLType.U8)
-            {
-                return (uint) Bytes[0];
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'UInt32'.");
-        }
-        
-        public static explicit operator uint(CLValue clValue) => clValue.ToUInt32();
-
-        public ulong ToUInt64()
-        {
-            if (TypeInfo.Type == CLType.U64)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return BitConverter.ToUInt64(bytes);
-            }
-            if (TypeInfo.Type == CLType.U32)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return (ulong) BitConverter.ToUInt32(bytes);
-            }
-            if (TypeInfo.Type == CLType.U8)
-            {
-                return (ulong) Bytes[0];
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'UInt64'.");
-        }
-        
-        public static explicit operator ulong(CLValue clValue) => clValue.ToUInt64();
-
-        public BigInteger ToBigInteger()
-        {
-            if (TypeInfo.Type == CLType.U128 || 
-                TypeInfo.Type == CLType.U256 ||
-                TypeInfo.Type == CLType.U512)
-            {
-                var bigInt = new BigInteger(Bytes[1..]);
-                return bigInt;
-            }
-            if (TypeInfo.Type == CLType.U64)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return new BigInteger(BitConverter.ToUInt64(bytes));
-            }
-            if (TypeInfo.Type == CLType.U32)
-            {
-                var bytes = this.Bytes;
-                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                return new BigInteger(BitConverter.ToUInt32(bytes));
-            }
-            if (TypeInfo.Type == CLType.U8)
-            {
-                return new BigInteger((uint)Bytes[0]);
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'BigInteger'.");
-        }
-        
-        public static explicit operator BigInteger(CLValue clValue) => clValue.ToBigInteger();
-
-        public override string ToString()
-        {
-            var reader = new BinaryReader(new MemoryStream(Bytes));
-
-            var item = ReadItem(reader, TypeInfo.Type);
-            if(item==null)
-                throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'String'.");
-
-            return item.ToString();
-        }
-        
-        public static explicit operator string(CLValue clValue) => clValue.ToString();
-
-        public URef ToURef()
-        {
-            if (TypeInfo.Type == CLType.URef)
-            {
-                return new URef(Bytes);
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'URef'.");
-        }
-        
-        public static explicit operator Types.URef(CLValue clValue) => clValue.ToURef();
-
-        
-        public PublicKey ToPublicKey()
-        {
-            if (TypeInfo.Type == CLType.PublicKey)
-            {
-                return Types.PublicKey.FromBytes(Bytes);
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'PublicKey'.");
-        }
-        
-        public static explicit operator Types.PublicKey(CLValue clValue) => clValue.ToPublicKey();
-
-        public GlobalStateKey ToGlobalStateKey()
-        {
-            if (TypeInfo.Type == CLType.Key)
-            {
-                return GlobalStateKey.FromBytes(Bytes);
-            }
-            
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'GlobalStateKey'.");
-        }
-        
-        public static explicit operator Types.GlobalStateKey(CLValue clValue) => clValue.ToGlobalStateKey();
-
-        
         private object ReadItem(BinaryReader reader, CLType type)
         {
             return type switch
@@ -606,24 +410,276 @@ namespace Casper.Network.SDK.Types
                 _ => null
             };
         }
-        
+
+        private void ParseResultError(byte[] Bytes, CLResultTypeInfo resultTypeInfo)
+        {
+            var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+
+            var item = ReadItem(reader, resultTypeInfo.Err.Type);
+            if (item == null)
+                throw new ResultException(Bytes, resultTypeInfo.Ok.Type, resultTypeInfo.Err.Type);
+
+            throw new ResultException(Bytes, item, resultTypeInfo.Ok.Type, resultTypeInfo.Err.Type);
+        }
+
+        private byte[] GetOkInnerTypeOrFail(ref CLTypeInfo typeInfo)
+        {
+            if (typeInfo is not CLResultTypeInfo)
+                return Bytes;
+
+            if (Bytes[0] != 0x01)
+                ParseResultError(Bytes, (CLResultTypeInfo) typeInfo);
+
+            typeInfo = ((CLResultTypeInfo) typeInfo).Ok;
+            return Bytes[1..];
+        }
+
+        public bool ToBoolean()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            if (typeInfo.Type == CLType.Bool)
+                return bytes[0] == 0x01;
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Bool'.");
+        }
+
+        public static explicit operator bool(CLValue clValue) => clValue.ToBoolean();
+
+        public int ToInt32()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type is CLType.I32)
+                return reader.ReadCLI32();
+            if (typeInfo.Type is CLType.U8)
+                return reader.ReadCLU8();
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Int32'.");
+        }
+
+        public static explicit operator int(CLValue clValue) => clValue.ToInt32();
+
+        public long ToInt64()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.I64)
+                return reader.ReadCLI64();
+            if (typeInfo.Type == CLType.I32)
+                return reader.ReadCLI32();
+            if (typeInfo.Type is CLType.U8)
+                return reader.ReadCLU8();
+            if (typeInfo.Type == CLType.U32)
+                return reader.ReadCLU32();
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Int64'.");
+        }
+
+        public static explicit operator long(CLValue clValue) => clValue.ToInt64();
+
+        public byte ToByte()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type is CLType.U8)
+                return reader.ReadCLU8();
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'byte'.");
+        }
+
+        public static explicit operator byte(CLValue clValue) => clValue.ToByte();
+
+        public uint ToUInt32()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.U32)
+                return reader.ReadCLU32();
+            if (typeInfo.Type is CLType.U8)
+                return reader.ReadCLU8();
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'UInt32'.");
+        }
+
+        public static explicit operator uint(CLValue clValue) => clValue.ToUInt32();
+
+        public ulong ToUInt64()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.U64)
+                return reader.ReadCLU64();
+            if (typeInfo.Type == CLType.U32)
+                return reader.ReadCLU32();
+            if (typeInfo.Type is CLType.U8)
+                return reader.ReadCLU8();
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'UInt64'.");
+        }
+
+        public static explicit operator ulong(CLValue clValue) => clValue.ToUInt64();
+
+        public BigInteger ToBigInteger()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.U128 ||
+                typeInfo.Type == CLType.U256 ||
+                typeInfo.Type == CLType.U512)
+                return reader.ReadCLBigInteger();
+            if (typeInfo.Type == CLType.U64)
+                return reader.ReadCLU64();
+            if (typeInfo.Type == CLType.U32)
+                return reader.ReadCLU32();
+            if (typeInfo.Type is CLType.U8)
+                return reader.ReadCLU8();
+            if (typeInfo.Type == CLType.I64)
+                return reader.ReadCLI64();
+            if (typeInfo.Type == CLType.I32)
+                return reader.ReadCLI32();
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'BigInteger'.");
+        }
+
+        public static explicit operator BigInteger(CLValue clValue) => clValue.ToBigInteger();
+
+        public override string ToString()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            // read any type, and then, convert to string
+            //
+            var item = ReadItem(reader, typeInfo.Type);
+            if (item == null)
+                throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'String'.");
+
+            return item.ToString();
+        }
+
+        public static explicit operator string(CLValue clValue) => clValue.ToString();
+
+        public URef ToURef()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            if (typeInfo.Type == CLType.URef)
+                return new URef(bytes);
+
+            if(typeInfo.Type == CLType.Key && ((CLKeyTypeInfo) typeInfo).KeyIdentifier == KeyIdentifier.URef)
+                return new URef(bytes[1..]);
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'URef'.");
+        }
+
+        public static explicit operator Types.URef(CLValue clValue) => clValue.ToURef();
+
+        public PublicKey ToPublicKey()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            if (typeInfo.Type == CLType.PublicKey)
+                return Types.PublicKey.FromBytes(bytes);
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'PublicKey'.");
+        }
+
+        public static explicit operator Types.PublicKey(CLValue clValue) => clValue.ToPublicKey();
+
+        public GlobalStateKey ToGlobalStateKey()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            if (typeInfo.Type == CLType.Key)
+                return GlobalStateKey.FromBytes(bytes);
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'GlobalStateKey'.");
+        }
+
+        public static explicit operator Types.GlobalStateKey(CLValue clValue) => clValue.ToGlobalStateKey();
+
         public List<object> ToList()
         {
-            if (TypeInfo.Type == CLType.List)
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.List)
             {
-                var listTypeInfo = TypeInfo as CLListTypeInfo;
+                var listTypeInfo = typeInfo as CLListTypeInfo;
                 if (listTypeInfo == null)
                     throw new Exception("Wrong inner type in CLValue of type List");
-                
-                var reader = new BinaryReader(new MemoryStream(Bytes));
-                var length = reader.ReadInt32();
+
+                var length = reader.ReadCLI32();
 
                 var list = new List<object>(length);
 
                 for (int i = 0; i < length; i++)
                 {
                     var item = ReadItem(reader, listTypeInfo.ListType.Type);
-                    if(item==null)
+                    if (item == null)
                         throw new FormatException($"Cannot convert to a list of '{listTypeInfo.ListType.Type}'.");
 
                     list.Add(item);
@@ -632,33 +688,46 @@ namespace Casper.Network.SDK.Types
                 return list;
             }
 
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'List'.");
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'List'.");
         }
-        
+
         public byte[] ToByteArray()
         {
-            if (TypeInfo.Type == CLType.ByteArray)
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            if (typeInfo.Type == CLType.ByteArray)
             {
-                byte[] bytes = new byte[Bytes.Length];
-                Array.Copy(Bytes, 0, bytes, 0, Bytes.Length);
-                return bytes;
+                byte[] bytearray = new byte[bytes.Length];
+                Array.Copy(bytes, 0, bytearray, 0, bytes.Length);
+                return bytearray;
             }
 
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'ByteArray'.");
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'ByteArray'.");
         }
-        
+
         public static explicit operator byte[](CLValue clValue) => clValue.ToByteArray();
 
-        public Dictionary<object,object> ToDictionary()
+        public Dictionary<object, object> ToDictionary()
         {
-            if (TypeInfo.Type == CLType.Map)
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.Map)
             {
-                var mapTypeInfo = TypeInfo as CLMapTypeInfo;
+                var mapTypeInfo = typeInfo as CLMapTypeInfo;
                 if (mapTypeInfo == null)
                     throw new Exception("Wrong inner type in CLValue of type Map");
-                
-                var reader = new BinaryReader(new MemoryStream(Bytes));
-                var length = reader.ReadInt32();
+
+                var length = reader.ReadCLI32();
 
                 var dict = new Dictionary<object, object>(length);
 
@@ -666,8 +735,9 @@ namespace Casper.Network.SDK.Types
                 {
                     var key = ReadItem(reader, mapTypeInfo.KeyType.Type);
                     var value = ReadItem(reader, mapTypeInfo.ValueType.Type);
-                    if(key==null || value==null)
-                        throw new FormatException($"Cannot convert to a map of '{mapTypeInfo.KeyType.Type},{mapTypeInfo.ValueType.Type}'.");
+                    if (key == null || value == null)
+                        throw new FormatException(
+                            $"Cannot convert to a map of '{mapTypeInfo.KeyType.Type},{mapTypeInfo.ValueType.Type}'.");
 
                     dict.Add(key, value);
                 }
@@ -675,8 +745,9 @@ namespace Casper.Network.SDK.Types
                 return dict;
             }
 
-            throw new FormatException($"Cannot convert '{TypeInfo.Type}' to 'Map'.");
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Map'.");
         }
+
         #endregion
     }
 }

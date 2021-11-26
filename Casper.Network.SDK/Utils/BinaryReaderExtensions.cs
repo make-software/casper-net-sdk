@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Numerics;
 using Casper.Network.SDK.Types;
@@ -6,6 +7,43 @@ namespace Casper.Network.SDK.Utils
 {
     public static class BinaryReaderExtensions
     {
+        public static int ReadCLI32(this BinaryReader reader)
+        {
+            var bytes = reader.ReadBytes(4);
+            if(!BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            return BitConverter.ToInt32(bytes);
+        }
+        
+        public static long ReadCLI64(this BinaryReader reader)
+        {
+            var bytes = reader.ReadBytes(8);
+            if(!BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            return BitConverter.ToInt64(bytes);
+        }
+        
+        public static byte ReadCLU8(this BinaryReader reader)
+        {
+            return reader.ReadByte();
+        }
+
+        public static uint ReadCLU32(this BinaryReader reader)
+        {
+            var bytes = reader.ReadBytes(4);
+            if(!BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            return BitConverter.ToUInt32(bytes);
+        }
+
+        public static ulong ReadCLU64(this BinaryReader reader)
+        {
+            var bytes = reader.ReadBytes(8);
+            if(!BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            return BitConverter.ToUInt64(bytes);
+        }
+        
         public static BigInteger ReadCLBigInteger(this BinaryReader reader)
         {
             var length = (int)reader.ReadByte();
