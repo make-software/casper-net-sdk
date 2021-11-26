@@ -105,7 +105,7 @@ namespace Casper.Network.SDK
 
     public class QueryGlobalState : RpcMethod
     {
-        public QueryGlobalState(string key, string hash, bool isBlockHash, List<string> path = null) :
+        public QueryGlobalState(string key, string hash, bool isBlockHash, string[] path = null) :
             base("query_global_state")
         {
             Dictionary<string, string> stateIdentifier = new Dictionary<string, string>
@@ -116,12 +116,12 @@ namespace Casper.Network.SDK
             this.Parameters = new Dictionary<string, object>
             {
                 {"state_identifier", stateIdentifier},
-                {"path", path ?? new List<string>()},
+                {"path", path ?? new string[] {}},
                 {"key", key}
             };
         }
 
-        public QueryGlobalState(GlobalStateKey key, string hash, bool isBlockHash, List<string> path = null) :
+        public QueryGlobalState(GlobalStateKey key, string hash, bool isBlockHash, string[] path = null) :
             this(key.ToString(), hash, isBlockHash, path)
         {
         }
