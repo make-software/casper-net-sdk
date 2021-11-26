@@ -17,6 +17,7 @@ namespace Casper.Network.SDK.Types
         /// The value of the entry: a casper `Key` type.
         /// </summary>
         [JsonPropertyName("key")]
-        public string Key { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public GlobalStateKey Key { get; init; }
     }
 }

@@ -26,7 +26,8 @@ namespace Casper.Network.SDK.Types
         /// Account hash from which transfer was executed
         /// </summary>
         [JsonPropertyName("from")]
-        public string From { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public AccountHashKey From { get; init; }
         
         /// <summary>
         /// Gas
@@ -59,6 +60,7 @@ namespace Casper.Network.SDK.Types
         /// Account to which funds are transferred
         /// </summary>
         [JsonPropertyName("to")]
-        public string To { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public AccountHashKey To { get; init; }
     }
 }

@@ -36,7 +36,8 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The formatted string of the `Key`.
         /// </summary>
-        public string Key { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public GlobalStateKey Key { get; init; }
 
         /// <summary>
         /// The type of transform
@@ -158,7 +159,7 @@ namespace Casper.Network.SDK.Types
                 {
                     return new Transform()
                     {
-                        Key = key,
+                        Key = GlobalStateKey.FromString(key),
                         Type = type ?? TransformType.Identity,
                         Value = value
                     };

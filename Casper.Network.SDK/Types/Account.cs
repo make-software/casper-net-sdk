@@ -30,7 +30,8 @@ namespace Casper.Network.SDK.Types
         /// Hash derived from the public key
         /// </summary>
         [JsonPropertyName("account_hash")]
-        public string AccountHash { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public AccountHashKey AccountHash { get; init; }
 
         /// <summary>
         /// Weight of the associated key 
@@ -48,7 +49,8 @@ namespace Casper.Network.SDK.Types
         /// Account identity key
         /// </summary>
         [JsonPropertyName("account_hash")]
-        public string AccountHash { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public AccountHashKey AccountHash { get; init; }
 
         /// <summary>
         /// Thresholds that have to be met when executing an action of a certain type.

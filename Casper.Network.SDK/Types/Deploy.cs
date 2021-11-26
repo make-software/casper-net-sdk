@@ -13,7 +13,8 @@ namespace Casper.Network.SDK.Types
 {
     public class Deploy
     {
-        [JsonPropertyName("approvals")] public List<DeployApproval> Approvals { get; } = new List<DeployApproval>();
+        [JsonPropertyName("approvals")] 
+        public List<DeployApproval> Approvals { get; } = new List<DeployApproval>();
 
         /// <summary>
         /// A hash over the header of the deploy.

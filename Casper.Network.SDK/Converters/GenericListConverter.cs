@@ -19,20 +19,35 @@ namespace Casper.Network.SDK.Converters
             reader.Read(); // Start array
 
             List<T> list = new List<T>();
-
-            var tConverter = Activator.CreateInstance(typeof(TConverter)) as JsonConverter;
             
-            while (reader.TokenType == JsonTokenType.StartObject ||
-                   reader.TokenType == JsonTokenType.StartArray ||
-                   (tConverter is IDeserializeAsList && reader.TokenType == JsonTokenType.PropertyName))
+            var tConverter = Activator.CreateInstance(typeof(TConverter)) as JsonConverter;
+
+            if (reader.TokenType is JsonTokenType.StartArray or JsonTokenType.StartObject or JsonTokenType.PropertyName)
             {
-                var element = JsonSerializer.Deserialize<T>(ref reader, new JsonSerializerOptions()
+                while (reader.TokenType == JsonTokenType.StartObject ||
+                       reader.TokenType == JsonTokenType.StartArray ||
+                       (tConverter is IDeserializeAsList && reader.TokenType == JsonTokenType.PropertyName))
                 {
-                    Converters = { tConverter }
-                });
-                reader.Read(); // end object/array
+                    var element = JsonSerializer.Deserialize<T>(ref reader, new JsonSerializerOptions()
+                    {
+                        Converters = { tConverter }
+                    });
+                    reader.Read(); // end object/array
                 
-                list.Add(element);
+                    list.Add(element);
+                }
+            }
+            else
+            {
+                while (reader.TokenType != JsonTokenType.EndArray)
+                {
+                    var element = JsonSerializer.Deserialize<T>(ref reader, new JsonSerializerOptions()
+                    {
+                        Converters = { tConverter }
+                    });
+                    list.Add(element);
+                    reader.Read();
+                }
             }
 
             return list;
