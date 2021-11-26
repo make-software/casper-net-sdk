@@ -22,7 +22,8 @@ namespace Casper.Network.SDK.Types
         /// The formatted string of the `Key`.
         /// </summary>
         [JsonPropertyName("key")]
-        public string Key { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public GlobalStateKey Key { get; init; }
 
         /// <summary>
         /// The type of operation.

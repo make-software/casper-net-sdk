@@ -42,11 +42,12 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         /// <returns></returns>
         [JsonPropertyName("transfers")]
-        public List<string> Transfers { get; init; }
+        [JsonConverter(typeof(GenericListConverter<TransferKey, GlobalStateKey.GlobalStateKeyConverter>))]
+        public List<TransferKey> Transfers { get; init; }
 
         public ExecutionResult()
         {
-            Transfers = new List<string>();
+            Transfers = new List<TransferKey>();
         }
         
         public class ExecutionResultConverter : JsonConverter<ExecutionResult>

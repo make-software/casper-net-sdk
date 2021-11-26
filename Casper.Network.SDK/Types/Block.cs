@@ -66,7 +66,8 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The block timestamp.
         /// </summary>
-        [JsonPropertyName("timestamp")] public string Timestamp { get; init; }
+        [JsonPropertyName("timestamp")] 
+        public string Timestamp { get; init; }
     }
 
     /// <summary>
