@@ -101,30 +101,30 @@ namespace Casper.Network.SDK
         }
 
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
-            List<string> path = null)
+            string path = null)
         {            
             if (stateRootHash == null)
                 stateRootHash = await GetStateRootHash();
-            
-            var method = new QueryGlobalState(key, stateRootHash, isBlockHash: false, path);
+
+            var method = new QueryGlobalState(key, stateRootHash, isBlockHash: false, path?.Split(new char[] {'/'}));
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(GlobalStateKey key, string stateRootHash = null,
-            List<string> path = null)
+            string path = null)
         {
             return await QueryGlobalState(key.ToString(), stateRootHash, path);
         }
         
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalStateWithBlockHash(string key, string blockHash,
-            List<string> path = null)
+            string path = null)
         {
-            var method = new QueryGlobalState(key, blockHash, isBlockHash: true, path);
+            var method = new QueryGlobalState(key, blockHash, isBlockHash: true, path?.Split(new char[] {'/'}));
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalStateWithBlockHash(GlobalStateKey key,
-            string blockHash, List<string> path = null)
+            string blockHash, string path = null)
         {
             return await QueryGlobalStateWithBlockHash(key.ToString(), blockHash, path);
         }
