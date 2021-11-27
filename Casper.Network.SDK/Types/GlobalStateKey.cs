@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Org.BouncyCastle.Utilities.Encoders;
@@ -26,7 +28,10 @@ namespace Casper.Network.SDK.Types
 
         public KeyIdentifier KeyIdentifier { get; init; }
 
-        public byte[] RawBytes { get { return _GetRawBytesFromKey(Key); } }
+        public byte[] RawBytes
+        {
+            get { return _GetRawBytesFromKey(Key); }
+        }
 
         protected GlobalStateKey(string key, string keyPrefix)
         {
@@ -48,6 +53,12 @@ namespace Casper.Network.SDK.Types
                 return new AccountHashKey(value);
             if (value.StartsWith("hash-"))
                 return new HashKey(value);
+            if (value.StartsWith("contract-package-wasm"))
+                return new HashKey(value.Replace("contract-package-wasm", "hash-"));
+            if (value.StartsWith("contract-wasm-"))
+                return new HashKey(value.Replace("contract-wasm-", "hash-"));
+            if (value.StartsWith("contract-"))
+                return new HashKey(value.Replace("contract-", "hash-"));
             if (value.StartsWith("uref-"))
                 return new URef(value);
             if (value.StartsWith("transfer-"))

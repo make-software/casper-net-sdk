@@ -143,12 +143,33 @@ namespace NetCasperTest
         }
 
         [Test]
+        public void DeserializeI32CLValue()
+        {
+            var json = @"{""cl_type"":""I32"",""bytes"":""00000080"",""parsed"":-2147483648}";
+            var clValue = JsonSerializer.Deserialize<CLValue>(json);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(int.MinValue, BitConverter.ToInt32(clValue.Bytes));
+            Assert.AreEqual(int.MinValue, clValue.Parsed);
+        }
+        
+        [Test]
         public void SerializeU64CLValue()
         {
             var clValue = CLValue.U64(123456789012345);
             Assert.AreEqual(Hex.Decode("79df0d8648700000"), clValue.Bytes);
             Assert.AreEqual(new CLTypeInfo(CLType.U64), clValue.TypeInfo);
             Assert.AreEqual(123456789012345, (UInt64) clValue.Parsed);
+        }
+        
+        [Test]
+        public void DeserializeU64CLValue()
+        {
+            var json = @"{""cl_type"":""U64"",""bytes"":""ffffffffffffffff"",""parsed"":18446744073709551615}";
+            var clValue = JsonSerializer.Deserialize<CLValue>(json);
+            Assert.IsNotNull(clValue);
+            Assert.AreEqual(CLType.U64, clValue.TypeInfo.Type);
+            Assert.AreEqual(ulong.MaxValue, BitConverter.ToUInt64(clValue.Bytes));
+            Assert.AreEqual(ulong.MaxValue, clValue.Parsed);
         }
 
         [Test]

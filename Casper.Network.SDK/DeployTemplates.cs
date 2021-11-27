@@ -89,8 +89,8 @@ namespace Casper.Network.SDK
             return deploy;
         }
         
-        public static Deploy ContractCallWithHash(
-            string contractHash,
+        public static Deploy ContractCall(
+            HashKey contractHash,
             string sessionEntryPoint,
             List<NamedArg> args,
             KeyPair fromKey,
@@ -109,7 +109,63 @@ namespace Casper.Network.SDK
                 GasPrice = gasPrice
             };
             var payment = new ModuleBytesDeployItem(paymentAmount);
-            var session = new StoredContractByHashDeployItem(contractHash, sessionEntryPoint, args);
+            var session = new StoredContractByHashDeployItem(contractHash.RawBytes, sessionEntryPoint, args);
+            
+            var deploy = new Deploy(header, payment, session);
+            return deploy;
+        }
+        
+        public static Deploy VersionedContractCall(
+            string sessionName,
+            uint version,
+            string sessionEntryPoint,
+            List<NamedArg> args,
+            KeyPair fromKey,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            var header = new DeployHeader()
+            {
+                Account = fromKey.PublicKey,
+                Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
+                Ttl = ttl,
+                ChainName = chainName,
+                GasPrice = gasPrice
+            };
+            var payment = new ModuleBytesDeployItem(paymentAmount);
+            var session = new StoredVersionedContractByNameDeployItem(sessionName, version, 
+                sessionEntryPoint, args);
+            
+            var deploy = new Deploy(header, payment, session);
+            return deploy;
+        }
+        
+        public static Deploy VersionedContractCall(
+            HashKey contractHash,
+            uint version,
+            string sessionEntryPoint,
+            List<NamedArg> args,
+            KeyPair fromKey,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            var header = new DeployHeader()
+            {
+                Account = fromKey.PublicKey,
+                Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
+                Ttl = ttl,
+                ChainName = chainName,
+                GasPrice = gasPrice
+            };
+            var payment = new ModuleBytesDeployItem(paymentAmount);
+            var session = new StoredVersionedContractByHashDeployItem(contractHash.RawBytes, version, 
+                sessionEntryPoint, args);
             
             var deploy = new Deploy(header, payment, session);
             return deploy;

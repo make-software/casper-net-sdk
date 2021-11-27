@@ -10,14 +10,14 @@ namespace Casper.Network.SDK.Types
         
         public object ErrorValue { get; init; }
         
-        public ResultException(byte[] bytes, object err, CLType okType, CLType errType) 
+        public ResultException(byte[] bytes, object err, CLTypeInfo okType, CLTypeInfo errType) 
             : base($"Result({okType},{errType}) variable contains an error.")
         {
             Bytes = bytes;
             ErrorValue = err;
         }
 
-        public ResultException(byte[] bytes, CLType okType, CLType errType) 
+        public ResultException(byte[] bytes, CLTypeInfo okType, CLTypeInfo errType) 
             : base($"Cannot convert {Hex.ToHexString(bytes[1..])}' to '{errType}'.")
         {
             Bytes = bytes;

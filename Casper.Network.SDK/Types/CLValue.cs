@@ -61,7 +61,15 @@ namespace Casper.Network.SDK.Types
                 Parsed = je.ValueKind switch
                 {
                     JsonValueKind.String => je.GetString(),
-                    JsonValueKind.Number => je.GetInt64(),
+                    JsonValueKind.Number => typeInfo.Type switch 
+                        {
+                            CLType.I32 => je.GetInt32(),
+                            CLType.I64 => je.GetInt64(),
+                            CLType.U8 => je.GetByte(),
+                            CLType.U32 => je.GetUInt32(),
+                            CLType.U64 => je.GetUInt64(),
+                            _ => je
+                        },
                     JsonValueKind.True => true,
                     JsonValueKind.False => false,
                     JsonValueKind.Null => null,
@@ -417,20 +425,20 @@ namespace Casper.Network.SDK.Types
 
             var item = ReadItem(reader, resultTypeInfo.Err.Type);
             if (item == null)
-                throw new ResultException(Bytes, resultTypeInfo.Ok.Type, resultTypeInfo.Err.Type);
+                throw new ResultException(Bytes, resultTypeInfo.Ok, resultTypeInfo.Err);
 
-            throw new ResultException(Bytes, item, resultTypeInfo.Ok.Type, resultTypeInfo.Err.Type);
+            throw new ResultException(Bytes, item, resultTypeInfo.Ok, resultTypeInfo.Err);
         }
 
         private byte[] GetOkInnerTypeOrFail(ref CLTypeInfo typeInfo)
         {
-            if (typeInfo is not CLResultTypeInfo)
+            if (typeInfo is not CLResultTypeInfo resultTypeInfo)
                 return Bytes;
 
             if (Bytes[0] != 0x01)
-                ParseResultError(Bytes, (CLResultTypeInfo) typeInfo);
+                ParseResultError(Bytes, resultTypeInfo);
 
-            typeInfo = ((CLResultTypeInfo) typeInfo).Ok;
+            typeInfo = resultTypeInfo.Ok;
             return Bytes[1..];
         }
 
@@ -622,7 +630,7 @@ namespace Casper.Network.SDK.Types
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'URef'.");
         }
 
-        public static explicit operator Types.URef(CLValue clValue) => clValue.ToURef();
+        public static explicit operator URef(CLValue clValue) => clValue.ToURef();
 
         public PublicKey ToPublicKey()
         {
@@ -638,7 +646,7 @@ namespace Casper.Network.SDK.Types
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'PublicKey'.");
         }
 
-        public static explicit operator Types.PublicKey(CLValue clValue) => clValue.ToPublicKey();
+        public static explicit operator PublicKey(CLValue clValue) => clValue.ToPublicKey();
 
         public GlobalStateKey ToGlobalStateKey()
         {
@@ -654,7 +662,7 @@ namespace Casper.Network.SDK.Types
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'GlobalStateKey'.");
         }
 
-        public static explicit operator Types.GlobalStateKey(CLValue clValue) => clValue.ToGlobalStateKey();
+        public static explicit operator GlobalStateKey(CLValue clValue) => clValue.ToGlobalStateKey();
 
         public List<object> ToList()
         {

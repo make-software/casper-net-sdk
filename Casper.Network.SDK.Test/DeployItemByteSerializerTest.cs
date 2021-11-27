@@ -34,12 +34,12 @@ namespace NetCasperTest
         [Test]
         public void StoredContractByHashSerialization()
         {
-            var hash = "0102030401020304010203040102030401020304010203040102030401020304";
+            var hash = new HashKey("hash-0102030401020304010203040102030401020304010203040102030401020304");
             var storedContract =
-                new StoredContractByHashDeployItem(hash,
+                new StoredContractByHashDeployItem(hash.RawBytes,
                     "counter_inc");
             
-            Assert.AreEqual(hash, Hex.ToHexString(storedContract.Hash));
+            Assert.AreEqual(Hex.ToHexString(hash.RawBytes), Hex.ToHexString(storedContract.Hash));
             Assert.AreEqual("counter_inc", storedContract.EntryPoint);
             Assert.IsNotNull(storedContract.RuntimeArgs);
             Assert.AreEqual(0, storedContract.RuntimeArgs.Count);
@@ -66,11 +66,11 @@ namespace NetCasperTest
         [Test]
         public void StoredVersionedContractByHashSerialization()
         {
-            var hash = "0102030401020304010203040102030401020304010203040102030401020304";
+            var hash = new HashKey("hash-0102030401020304010203040102030401020304010203040102030401020304");
             var storedContract =
-                new StoredVersionedContractByHashDeployItem(hash, 1, "counter_inc");
+                new StoredVersionedContractByHashDeployItem(hash.RawBytes, 1, "counter_inc");
             
-            Assert.AreEqual(hash, Hex.ToHexString(storedContract.Hash));
+            Assert.AreEqual(Hex.ToHexString(hash.RawBytes), Hex.ToHexString(storedContract.Hash));
             Assert.AreEqual(1, storedContract.Version);
             Assert.AreEqual("counter_inc", storedContract.EntryPoint);
             Assert.IsNotNull(storedContract.RuntimeArgs);

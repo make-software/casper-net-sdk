@@ -28,5 +28,10 @@ namespace Casper.Network.SDK.Types
         {
             return ((int)Type^(int)Ok.Type)^(int)Err.Type;
         }
+
+        public override string ToString()
+        {
+            return $"Result({Ok},{Err})";
+        }
     }
 }

@@ -25,5 +25,10 @@ namespace Casper.Network.SDK.Types
         {
             return (int)Type^(int)ListType.Type;
         }
+        
+        public override string ToString()
+        {
+            return $"List({ListType.ToString()})";
+        }
     }
 }
