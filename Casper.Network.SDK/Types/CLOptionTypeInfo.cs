@@ -26,6 +26,9 @@ namespace Casper.Network.SDK.Types
             return (int)Type^(int)OptionType.Type;
         }
         
-        
+        public override string ToString()
+        {
+            return $"Option({OptionType.ToString()})";
+        }
     }
 }

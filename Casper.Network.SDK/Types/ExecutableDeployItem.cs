@@ -58,9 +58,9 @@ namespace Casper.Network.SDK.Types
         {
         }
         
-        public StoredContractByHashDeployItem(string hash, string entryPoint, List<NamedArg> args = null)
+        public StoredContractByHashDeployItem(byte[] hash, string entryPoint, List<NamedArg> args = null)
         {
-            Hash = Hex.Decode(hash);
+            Hash = hash;
             EntryPoint = entryPoint;
             RuntimeArgs = args ?? new List<NamedArg>();
         }
@@ -106,10 +106,10 @@ namespace Casper.Network.SDK.Types
         {
         }
         
-        public StoredVersionedContractByHashDeployItem(string hash, uint? version, string entryPoint,
+        public StoredVersionedContractByHashDeployItem(byte[] hash, uint? version, string entryPoint,
             List<NamedArg> args = null)
         {
-            Hash = Hex.Decode(hash);
+            Hash = hash;
             Version = version;
             EntryPoint = entryPoint;
             RuntimeArgs = args ?? new List<NamedArg>();

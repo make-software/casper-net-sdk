@@ -401,6 +401,40 @@ namespace NetCasperTest
             Assert.AreEqual(15, map["fifteen"]);
             Assert.AreEqual(16, map["sixteen"]);
         }
-        
+
+        [Test]
+        public void CLResultWithErrorTest()
+        {
+            var clValue = CLValue.Err(CLValue.String("Error 1"), new CLTypeInfo(CLType.U8));
+
+            var ex = Assert.Catch<ResultException>(() => clValue.ToByte());
+            Assert.IsTrue(ex?.Message.Equals("Result(U8,String) variable contains an error."));
+            Assert.IsTrue(ex?.ErrorValue.Equals("Error 1"));
+            
+            clValue = CLValue.Err(CLValue.I32(-1), new CLTypeInfo(CLType.String));
+            ex = Assert.Catch<ResultException>(() => clValue.ToByte());
+            Assert.IsTrue(ex?.Message.Equals("Result(String,I32) variable contains an error."));
+            Assert.IsTrue(ex?.ErrorValue.Equals(-1));
+            
+            clValue = CLValue.Err(CLValue.I32(int.MinValue), new CLKeyTypeInfo(KeyIdentifier.Account));
+            ex = Assert.Catch<ResultException>(() => clValue.ToByte());
+            Assert.IsTrue(ex?.Message.Equals("Result(Key(Account),I32) variable contains an error."));
+            Assert.IsTrue(ex?.ErrorValue.Equals(int.MinValue));
+            
+            clValue = CLValue.Err(CLValue.I32(int.MaxValue), new CLOptionTypeInfo(new CLTypeInfo(CLType.String)));
+            ex = Assert.Catch<ResultException>(() => clValue.ToByte());
+            Assert.IsTrue(ex?.Message.Equals("Result(Option(String),I32) variable contains an error."));
+            Assert.IsTrue(ex?.ErrorValue.Equals(int.MaxValue));
+            
+            clValue = CLValue.Err(CLValue.I32(int.MaxValue), new CLListTypeInfo(new CLTypeInfo(CLType.String)));
+            ex = Assert.Catch<ResultException>(() => clValue.ToByte());
+            Assert.IsTrue(ex?.Message.Equals("Result(List(String),I32) variable contains an error."));
+            Assert.IsTrue(ex?.ErrorValue.Equals(int.MaxValue));
+            
+            clValue = CLValue.Err(CLValue.I32(int.MaxValue), new CLMapTypeInfo(new CLTypeInfo(CLType.String), new CLOptionTypeInfo(new CLTypeInfo(CLType.U512))));
+            ex = Assert.Catch<ResultException>(() => clValue.ToByte());
+            Assert.IsTrue(ex?.Message.Equals("Result(Map(String,Option(U512)),I32) variable contains an error."));
+            Assert.IsTrue(ex?.ErrorValue.Equals(int.MaxValue));
+        }
     }
 }

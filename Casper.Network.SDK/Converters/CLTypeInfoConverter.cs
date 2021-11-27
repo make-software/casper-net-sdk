@@ -155,6 +155,10 @@ namespace Casper.Network.SDK.Converters
 
             private void WriteCLType(Utf8JsonWriter writer, CLTypeInfo typeInfo)
             {
+                if (typeInfo is CLKeyTypeInfo clKey)
+                {
+                    writer.WriteStringValue("Key");
+                }
                 if (typeInfo is CLOptionTypeInfo clOption)
                 {
                     writer.WriteStartObject();

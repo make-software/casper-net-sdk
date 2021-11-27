@@ -32,5 +32,10 @@ namespace Casper.Network.SDK.Types
         {
             return !(obj == null || !this.GetType().Equals(obj.GetType())) ;
         }
+
+        public override string ToString()
+        {
+            return $"Key({KeyIdentifier})";
+        }
     }
 }

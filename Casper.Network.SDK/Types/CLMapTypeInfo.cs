@@ -28,5 +28,10 @@ namespace Casper.Network.SDK.Types
         {
             return ((int)Type^(int)KeyType.Type)^(int)ValueType.Type;
         }
+        
+        public override string ToString()
+        {
+            return $"Map({KeyType.ToString()},{ValueType.ToString()})";
+        }
     }
 }

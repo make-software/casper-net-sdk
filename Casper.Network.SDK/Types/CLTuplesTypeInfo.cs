@@ -25,6 +25,11 @@ namespace Casper.Network.SDK.Types
         {
             return (int)Type^(int)1;
         }
+
+        public override string ToString()
+        {
+            return $"Tuple1({Type0})";
+        }
     }
     
     public class CLTuple2TypeInfo : CLTypeInfo
@@ -54,6 +59,11 @@ namespace Casper.Network.SDK.Types
         public override int GetHashCode()
         {
             return (int)Type^(int)2;
+        }
+
+        public override string ToString()
+        {
+            return $"Tuple2({Type0},{Type1})";
         }
     }
     
@@ -87,6 +97,11 @@ namespace Casper.Network.SDK.Types
         public override int GetHashCode()
         {
             return (int)Type^(int)3;
+        }
+
+        public override string ToString()
+        {
+            return $"Tuple3({Type0},{Type1},{Type2})";
         }
     }
 }
