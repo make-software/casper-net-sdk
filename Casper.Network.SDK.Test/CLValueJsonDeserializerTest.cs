@@ -551,9 +551,9 @@ namespace NetCasperTest
             Assert.IsNotEmpty(json);
             Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
             Assert.IsTrue(
-                json.ToLower().Contains(@"""bytes"":""02e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e407"));
+                json.Contains(@"""bytes"":""02E48935C79E96C490c01E1e8800DE5Ec5f4A857A57dB0dCffED1E1E2b5d29b5E407"));
             Assert.IsTrue(json.Contains(
-                @"""parsed"":{""URef"":""uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007"));
+                @"""parsed"":{""URef"":""uref-e48935c79E96c490c01e1E8800DE5ec5f4A857a57dB0dCffeD1e1E2B5D29b5e4-007"));
 
             gsKey = GlobalStateKey.FromString("era-2685");
             clValue = CLValue.Key(gsKey);

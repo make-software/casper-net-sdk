@@ -87,7 +87,10 @@ namespace NetCasperTest
             var key = GlobalStateKey.FromString(eraInfoKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is EraInfoKey);
-            Assert.AreEqual(eraInfoKey, key.ToString());            
+            Assert.AreEqual(eraInfoKey, key.ToString());
+
+            var ex = Assert.Catch(() => GlobalStateKey.FromString("era-AAAAA"));
+            Assert.IsNotNull(ex);
         }
 
         [Test]
@@ -147,6 +150,19 @@ namespace NetCasperTest
             {
                 Assert.Fail("ArgumentException expected but received: " + e.Message);
             }
+        }
+
+        [Test]
+        public void HashKeyJsonDeserializeTest()
+        {
+            const string json = @"{""key"":""hash-9824D60dc3a5c44a20B9FD260A412437933835B52fC683D8AE36e4ec2114843e"",""kind"":""Read""}";
+            var op = JsonSerializer.Deserialize<Operation>(json);
+            Assert.IsNotNull(op);
+            
+            const string invalidJson = @"{""key"":""hash-aaaaD60dc3a5c44a20B9FD260A412437933835B52fC683D8AE36e4ec2114843e"",""kind"":""Read""}";
+            var ex = Assert.Catch(() => JsonSerializer.Deserialize<Operation>(invalidJson));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.Contains("checksum mismatch"));
         }
     }
 }

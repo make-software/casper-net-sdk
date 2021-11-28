@@ -52,18 +52,18 @@ namespace NetCasperTest
 
             Assert.AreEqual(10, results.Effect.Operations.Count);
             Assert.AreEqual("hash-efef434ae3cea598a8871ac40ac5d5b00f0f4babe8f7b49a05f87d203d1c8391",
-                results.Effect.Operations[0].Key.ToString());
+                results.Effect.Operations[0].Key.ToString().ToLower());
             Assert.AreEqual(OpKind.Read, results.Effect.Operations[0].Kind);
             Assert.AreEqual("balance-d86ed76303a691d12cf121e4b4cb4fd875484f28a33c2edf14aad56c01c8c601",
-                results.Effect.Operations[9].Key.ToString());
+                results.Effect.Operations[9].Key.ToString().ToLower());
             Assert.AreEqual(OpKind.Write, results.Effect.Operations[9].Kind);
 
             Assert.AreEqual(10, results.Effect.Transforms.Count);
             Assert.AreEqual("hash-98eca31f263ff3176518b6dcbb6af54c7469b60192749feee073d20618a389e6",
-                results.Effect.Transforms[0].Key.ToString()
+                results.Effect.Transforms[0].Key.ToString().ToLower()
             );
             Assert.AreEqual("uref-a3a79be7bd922c0846ed406b01f2430dd6ba367a2703b8d75109a9f41fdc336b-000",
-                results.Effect.Transforms[9].Key.ToString()
+                results.Effect.Transforms[9].Key.ToString().ToLower()
             );
         }
         

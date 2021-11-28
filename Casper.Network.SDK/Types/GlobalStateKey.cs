@@ -37,12 +37,21 @@ namespace Casper.Network.SDK.Types
             get { return _GetRawBytesFromKey(Key); }
         }
 
+        protected GlobalStateKey(string key)
+        {
+            Key = key;
+        }
+        
         protected GlobalStateKey(string key, string keyPrefix)
         {
             if (!key.StartsWith(keyPrefix))
                 throw new ArgumentException($"Key not valid. It should start with '{keyPrefix}'.",
                     nameof(key));
 
+            CEP57Checksum.Decode(key.Substring(key.LastIndexOf('-') + 1), out int checksumResult);
+            if (checksumResult == CEP57Checksum.InvalidChecksum)
+                throw new ArgumentException("Global State Key checksum mismatch.");
+            
             Key = key;
         }
 
@@ -139,8 +148,19 @@ namespace Casper.Network.SDK.Types
                 public override GlobalStateKey Read(
                     ref Utf8JsonReader reader,
                     Type typeToConvert,
-                    JsonSerializerOptions options) =>
-                    GlobalStateKey.FromString(reader.GetString());
+                    JsonSerializerOptions options)
+                {
+                    {
+                        try
+                        {
+                            return  GlobalStateKey.FromString(reader.GetString());
+                        }
+                        catch (Exception e)
+                        {
+                            throw new JsonException(e.Message);
+                        }
+                    }
+                }
 
                 public override void Write(
                     Utf8JsonWriter writer,
@@ -202,9 +222,17 @@ namespace Casper.Network.SDK.Types
 
     public class EraInfoKey : GlobalStateKey
     {
-        public EraInfoKey(string key) : base(key, "era-")
+        public EraInfoKey(string key) : base(key)
         {
             KeyIdentifier = KeyIdentifier.EraInfo;
+            
+            if (!key.StartsWith("era-"))
+                throw new ArgumentException($"Key not valid. It should start with 'era-'.",
+                    nameof(key));
+            
+            if(!long.TryParse(key.Substring(4), out var eraNum))
+                throw new ArgumentException($"Key not valid. Cannot parse era number.",
+                    nameof(key));
         }
 
         protected override byte[] _GetRawBytesFromKey(string key)
