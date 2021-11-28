@@ -196,19 +196,19 @@ namespace NetCasperTest
             Assert.AreEqual("24500000000", doc.RootElement.GetProperty("parsed").GetString());
 
             clValue = CLValue.U512(15000000000);
-            json = JsonSerializer.Serialize(clValue);
+            json = JsonSerializer.Serialize(clValue).ToLower();
             Assert.IsNotNull(json);
             Assert.IsTrue(json.Contains("\"0500d6117e03\""));
             Assert.IsTrue(json.Contains("\"parsed\":\"15000000000\""));
 
             clValue = CLValue.U512(BigInteger.Parse("15000000000"));
-            json = JsonSerializer.Serialize(clValue);
+            json = JsonSerializer.Serialize(clValue).ToLower();
             Assert.IsNotNull(json);
             Assert.IsTrue(json.Contains("\"0500d6117e03\""));
             Assert.IsTrue(json.Contains("\"parsed\":\"15000000000\""));
 
             clValue = CLValue.U512(0);
-            json = JsonSerializer.Serialize(clValue);
+            json = JsonSerializer.Serialize(clValue).ToLower();
             Assert.IsNotNull(json);
             Assert.IsTrue(json.Contains("\"bytes\":\"00\""));
             Assert.IsTrue(json.Contains("\"parsed\":\"0\""));
@@ -443,13 +443,13 @@ namespace NetCasperTest
             var clValue = CLValue.PublicKey("381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771",
                 KeyAlgo.ED25519);
             var json = JsonSerializer.Serialize(clValue);
-            Assert.IsTrue(json.Contains(@"""01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771"""));
+            Assert.IsTrue(json.ToLower().Contains(@"""01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771"""));
             Assert.IsTrue(json.Contains(@"""cl_type"":""PublicKey"""));
 
             clValue = CLValue.PublicKey("037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e",
                 KeyAlgo.SECP256K1);
             json = JsonSerializer.Serialize(clValue);
-            Assert.IsTrue(json.Contains(@"""02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e"""));
+            Assert.IsTrue(json.ToLower().Contains(@"""02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e"""));
             Assert.IsTrue(json.Contains(@"""cl_type"":""PublicKey"""));
         }
 
@@ -529,7 +529,7 @@ namespace NetCasperTest
             var json = JsonSerializer.Serialize(map).Replace(" ", "");
             Assert.IsNotEmpty(json);
             Assert.IsTrue(json.Contains(@"""cl_type"":{""Map"":{""key"":""String"",""value"":{""Option"":""String""}}}"));
-            Assert.IsTrue(json.Contains(@"""bytes"":""0300000008000000666f75727465656e01020000003134070000006669667465656e01020000003135070000007369787465656e01020000003136"""));
+            Assert.IsTrue(json.ToLower().Contains(@"""bytes"":""0300000008000000666f75727465656e01020000003134070000006669667465656e01020000003135070000007369787465656e01020000003136"""));
         }
 
         [Test]
@@ -551,7 +551,7 @@ namespace NetCasperTest
             Assert.IsNotEmpty(json);
             Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
             Assert.IsTrue(
-                json.Contains(@"""bytes"":""02e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e407"));
+                json.ToLower().Contains(@"""bytes"":""02e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e407"));
             Assert.IsTrue(json.Contains(
                 @"""parsed"":{""URef"":""uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007"));
 
@@ -560,7 +560,7 @@ namespace NetCasperTest
             json = JsonSerializer.Serialize(clValue).Replace(" ", "");
             Assert.IsNotEmpty(json);
             Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
-            Assert.IsTrue(json.Contains(@"""bytes"":""057d0a000000000000"));
+            Assert.IsTrue(json.ToLower().Contains(@"""bytes"":""057d0a000000000000"));
             Assert.IsTrue(json.Contains(@"""parsed"":{""EraInfo"":""era-2685""}"));
         }
 

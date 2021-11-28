@@ -21,7 +21,7 @@ namespace Casper.Network.SDK.Types
 
         // Byte array representation of underlying data
         [JsonPropertyName("bytes")]
-        [JsonConverter(typeof(HexBytesConverter))]
+        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
         public byte[] Bytes { get; }
 
         // The optional parsed value of the bytes used when testing

@@ -1,52 +1,102 @@
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Casper types, i.e. types which can be stored and manipulated by smart contracts.
+    /// Provides a description of the underlying data type of a `CLValue`.
+    /// </summary>
     public enum CLType : byte
     {
-        /** boolean primitive */
+        /// <summary>
+        /// Boolean primitive.
+        /// </summary>
         Bool =  0,
-        /** signed 32-bit integer primitive */
+        /// <summary>
+        /// Signed 32-bit integer primitive.
+        /// </summary>
         I32 =  1,
-        /** signed 64-bit integer primitive */
+        /// <summary>
+        /// Signed 64-bit integer primitive.
+        /// </summary>
         I64 =  2,
-        /** unsigned 8-bit integer primitive */
+        /// <summary>
+        /// Unsigned 8-bit integer primitive.
+        /// </summary>
         U8 =  3,
-        /** unsigned 32-bit integer primitive */
+        /// <summary>
+        /// Unsigned 32-bit integer primitive.
+        /// </summary>
         U32 =  4,
-        /** unsigned 64-bit integer primitive */
+        /// <summary>
+        /// Unsigned 64-bit integer primitive.
+        /// </summary>
         U64 =  5,
-        /** unsigned 128-bit integer primitive */
+        /// <summary>
+        /// Unsigned 128-bit integer primitive.
+        /// </summary>
         U128 =  6,
-        /** unsigned 256-bit integer primitive */
+        /// <summary>
+        /// Unsigned 256-bit integer primitive.
+        /// </summary>
         U256 =  7,
-        /** unsigned 512-bit integer primitive */
+        /// <summary>
+        /// Unsigned 512-bit integer primitive.
+        /// </summary>
         U512 =  8,
-        /** singleton value without additional semantics */
+        /// <summary>
+        /// Singleton value without additional semantics.
+        /// </summary>
         Unit = 9,
-        /** e.g. "Hello, World!" */
+        /// <summary>
+        /// A string. e.g. "Hello, World!".
+        /// </summary>
         String = 10,
-        /** global state key */
+        /// <summary>
+        /// Global state key.
+        /// </summary>
         Key = 11,
-        /** unforgeable reference */
+        /// <summary>
+        /// Unforgeable reference.
+        /// </summary>
         URef = 12,
-        /** optional value of the given type Option(CLType) */
+        /// <summary>
+        /// Optional value of the given type Option(CLType).
+        /// </summary>
         Option = 13,
-        /** List of values of the given type (e.g. Vec in rust). List(CLType) */
+        /// <summary>
+        /// Variable-length list of values of a single `CLType` List(CLType).
+        /// </summary>
         List = 14,
-        /** Byte array prefixed with U32 length (FixedList) */
+        /// <summary>
+        /// Fixed-length list of a single `CLType` (normally a Byte).
+        /// </summary>
         ByteArray = 15,
-        /** co-product of the the given types; one variant meaning success, the other failure */
+        /// <summary>
+        /// Co-product of the the given types; one variant meaning success, the other failure.
+        /// </summary>
         Result = 16,
-        /** Map(CLType, CLType), // key-value association where keys and values have the given types */
+        /// <summary>
+        /// Key-value association where keys and values have the given types Map(CLType, CLType).
+        /// </summary>
         Map = 17,
-        /** Tuple1(CLType) single value of the given type */
+        /// <summary>
+        /// Single value of the given type Tuple1(CLType).
+        /// </summary>
         Tuple1 = 18,
-        /** Tuple2(CLType, CLType), // pair consisting of elements of the given types */
+        /// <summary>
+        /// Pair consisting of elements of the given types Tuple2(CLType, CLType).
+        /// </summary>
         Tuple2 = 19,
-        /** Tuple3(CLType, CLType, CLType), // triple consisting of elements of the given types */
+        /// <summary>
+        /// Triple consisting of elements of the given types Tuple3(CLType, CLType, CLType).
+        /// </summary>
         Tuple3 = 20,
-        /** Indicates the type is not known */
+        /// <summary>
+        /// Indicates the type is not known.
+        /// </summary>
         Any = 21,
-        /** Public key */
+        /// <summary>
+        /// A Public key.
+        /// </summary>
         PublicKey = 22
     }
 }

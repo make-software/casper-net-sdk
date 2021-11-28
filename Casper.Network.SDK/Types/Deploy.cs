@@ -20,7 +20,7 @@ namespace Casper.Network.SDK.Types
         /// A hash over the header of the deploy.
         /// </summary>
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(HexBytesConverter))]
+        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
         public byte[] Hash { get; }
 
         /// <summary>

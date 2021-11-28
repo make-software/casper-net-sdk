@@ -31,9 +31,9 @@ namespace NetCasperTest
             Assert.IsNotNull(deploy);
             Assert.IsTrue(deploy.ValidateHashes(out string msg));
             Assert.AreEqual(1, deploy.Approvals.Count);
-            Assert.AreEqual("017b8058863aad49c7b89c77019cef3a4d863bdf1c0c61499776f94b18465810f7", 
+            Assert.AreEqual("017b8058863aAd49c7b89C77019CEF3a4D863BDf1C0c61499776F94B18465810f7", 
                 deploy.Approvals[0].Signer.ToAccountHex());
-            Assert.AreEqual("012a0c5896ab9d6cf029268cf454ba9d42bcd40bd909c984890f326739eef13201d1d2a9a95938b2a966f2e650d1bdd80931f0374e3a92403e025b806aa1065109", 
+            Assert.AreEqual("012A0c5896aB9d6CF029268cf454BA9D42BCD40Bd909C984890F326739eEF13201D1d2A9a95938B2A966F2e650d1bdd80931f0374e3A92403E025b806AA1065109", 
                 deploy.Approvals[0].Signature.ToHexString());
         }
 
@@ -46,9 +46,9 @@ namespace NetCasperTest
             Assert.IsNotNull(deploy);
             Assert.IsTrue(deploy.ValidateHashes(out string msg));
             Assert.AreEqual(1, deploy.Approvals.Count);
-            Assert.AreEqual("017b8058863aad49c7b89c77019cef3a4d863bdf1c0c61499776f94b18465810f7", 
+            Assert.AreEqual("017b8058863aAd49c7b89C77019CEF3a4D863BDf1C0c61499776F94B18465810f7", 
                 deploy.Approvals[0].Signer.ToAccountHex());
-            Assert.AreEqual("012a0c5896ab9d6cf029268cf454ba9d42bcd40bd909c984890f326739eef13201d1d2a9a95938b2a966f2e650d1bdd80931f0374e3a92403e025b806aa1065109", 
+            Assert.AreEqual("012A0c5896aB9d6CF029268cf454BA9D42BCD40Bd909C984890F326739eEF13201D1d2A9a95938B2A966F2e650d1bdd80931f0374e3A92403E025b806AA1065109", 
                 deploy.Approvals[0].Signature.ToHexString());
         }
 

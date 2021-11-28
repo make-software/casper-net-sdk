@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Asn1.X9;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math.EC;
@@ -25,7 +26,18 @@ namespace Casper.Network.SDK.Types
 
         public static PublicKey FromHexString(string hexBytes)
         {
-            return FromBytes(Hex.Decode(hexBytes));
+            var rawBytes = CEP57Checksum.Decode(hexBytes.Substring(2), out var checksumResult);
+
+            if (checksumResult == CEP57Checksum.InvalidChecksum)
+                throw new ArgumentException("Wrong public key checksum!", nameof(hexBytes));
+
+            KeyAlgo algo = hexBytes.Substring(0, 2) switch
+            {
+                "01" => KeyAlgo.ED25519,
+                "02" => KeyAlgo.SECP256K1,
+                _ => throw new ArgumentException("Wrong public key algorithm identifier", nameof(hexBytes))
+            };
+            return FromRawBytes(rawBytes, algo);
         }
 
         public static PublicKey FromPem(string filePath)
@@ -80,6 +92,17 @@ namespace Casper.Network.SDK.Types
 
         public static PublicKey FromRawBytes(byte[] rawBytes, KeyAlgo keyAlgo)
         {
+            int expectedPublicKeySize = keyAlgo switch
+            {
+                KeyAlgo.ED25519 => KeyAlgo.ED25519.GetKeySizeInBytes() - 1, // -1 because we have rawBytes here
+                KeyAlgo.SECP256K1 => KeyAlgo.SECP256K1.GetKeySizeInBytes() - 1,
+                _ => throw new ArgumentException("Wrong public key algorithm identifier", nameof(keyAlgo))
+            };
+
+            if (rawBytes.Length != expectedPublicKeySize)
+                throw new ArgumentException($"Wrong public key format. Expected length is {expectedPublicKeySize}",
+                    nameof(rawBytes));
+
             return new PublicKey(rawBytes, keyAlgo);
         }
 
@@ -105,6 +128,7 @@ namespace Casper.Network.SDK.Types
                     writer.WriteObject(pk);
                     return;
                 }
+
                 throw new Exception("Unsupported key type.");
             }
         }
@@ -130,7 +154,7 @@ namespace Casper.Network.SDK.Types
                 KeyAlgo.ED25519 => "01",
                 KeyAlgo.SECP256K1 => "02",
                 _ => throw new Exception("Wrong key type")
-            } + Hex.ToHexString(RawBytes);
+            } + CEP57Checksum.Encode(RawBytes);
         }
 
         public override string ToString()
@@ -159,6 +183,7 @@ namespace Casper.Network.SDK.Types
                 Ed25519PublicKeyParameters edPk = new Ed25519PublicKeyParameters(RawBytes, 0);
                 return Ed25519.Verify(signature, 0, RawBytes, 0, message, 0, message.Length);
             }
+
             if (KeyAlgorithm == KeyAlgo.SECP256K1)
             {
                 var curve = ECNamedCurveTable.GetByName("secp256k1");
@@ -166,12 +191,13 @@ namespace Casper.Network.SDK.Types
 
                 ECPoint q = curve.Curve.DecodePoint(RawBytes);
                 ECPublicKeyParameters pk = new ECPublicKeyParameters(q, domainParams);
-                
+
                 var signer = SignerUtilities.GetSigner("SHA-256withPLAIN-ECDSA");
                 signer.Init(forSigning: false, pk);
                 signer.BlockUpdate(message, 0, message.Length);
                 return signer.VerifySignature(signature);
             }
+
             throw new Exception("Unsupported key type.");
         }
 
@@ -179,13 +205,13 @@ namespace Casper.Network.SDK.Types
         {
             return VerifySignature(Hex.Decode(message), Hex.Decode(signature));
         }
-        
+
         #region Cast operators
 
         public static explicit operator string(PublicKey pk) => pk.ToAccountHex();
 
         #endregion
-        
+
         public class PublicKeyConverter : JsonConverter<PublicKey>
         {
             public override PublicKey Read(
@@ -194,7 +220,7 @@ namespace Casper.Network.SDK.Types
                 JsonSerializerOptions options)
             {
                 var hex = reader.GetString();
-                
+
                 return PublicKey.FromHexString(hex);
             }
 

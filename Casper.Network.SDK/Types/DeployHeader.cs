@@ -25,7 +25,7 @@ namespace Casper.Network.SDK.Types
         public ulong GasPrice { get; set; }
         
         [JsonPropertyName("body_hash")]
-        [JsonConverter(typeof(HexBytesConverter))]
+        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
         public byte[] BodyHash { get; set; }
         
         [JsonPropertyName("chain_name")]
