@@ -108,7 +108,7 @@ namespace NetCasperTest
                       ED25519publicKey.Substring(32);
             var ex1 = Assert.Catch<ArgumentException>(() => PublicKey.FromHexString(hex));
             Assert.IsNotNull(ex1);
-            Assert.IsTrue(ex1.Message.Contains("Wrong public key checksum"));
+            Assert.IsTrue(ex1.Message.Contains("Public key checksum mismatch"));
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace NetCasperTest
                       SECP256K1publicKey.Substring(32);
             var ex1 = Assert.Catch<ArgumentException>(() => PublicKey.FromHexString(hex));
             Assert.IsNotNull(ex1);
-            Assert.IsTrue(ex1.Message.Contains("Wrong public key checksum"));
+            Assert.IsTrue(ex1.Message.Contains("Public key checksum mismatch"));
         }
 
         [Test]

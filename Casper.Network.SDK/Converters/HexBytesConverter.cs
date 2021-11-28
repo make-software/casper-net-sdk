@@ -25,8 +25,15 @@ namespace Casper.Network.SDK.Converters
         public override byte[] Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
-            JsonSerializerOptions options) =>
-            Org.BouncyCastle.Utilities.Encoders.Hex.Decode(reader.GetString());
+            JsonSerializerOptions options)
+        {
+            var hex = reader.GetString();
+            var bytes = CEP57Checksum.Decode(hex, out var checksumResult);
+            if (checksumResult == CEP57Checksum.InvalidChecksum)
+                throw new JsonException("Wrong checksum in hexadecimal string.");
+
+            return bytes;
+        }
 
         public override void Write(
             Utf8JsonWriter writer,

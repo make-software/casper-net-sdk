@@ -40,16 +40,24 @@ namespace Casper.Network.SDK.Types
         public static Deploy Load(string filename)
         {
             var data = File.ReadAllText(filename);
-            var deploy = JsonSerializer.Deserialize<Deploy>(data);
-
-            return deploy;
+            return Deploy.Parse(data);
         }
 
         public static Deploy Parse(string json)
         {
-            var deploy = JsonSerializer.Deserialize<Deploy>(json);
+            try
+            {
+                var deploy = JsonSerializer.Deserialize<Deploy>(json);
 
-            return deploy;
+                return deploy;
+            }
+            catch (JsonException e)
+            {
+                var message = $"The JSON value could not be converted to a Deploy object. " +
+                              $"{e.Message} Path: {e.Path} | LineNumber: {e.LineNumber} | " +
+                              $"BytePositionInLine: {e.BytePositionInLine}.";
+                throw new Exception(message);
+            }
         }
 
         public void Save(string filename)
@@ -72,7 +80,7 @@ namespace Casper.Network.SDK.Types
             this.Session = session;
             this.Approvals = approvals;
         }
-        
+
         public Deploy(DeployHeader header,
             ExecutableDeployItem payment,
             ExecutableDeployItem session)

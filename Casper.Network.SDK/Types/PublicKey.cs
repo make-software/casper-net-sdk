@@ -29,13 +29,13 @@ namespace Casper.Network.SDK.Types
             var rawBytes = CEP57Checksum.Decode(hexBytes.Substring(2), out var checksumResult);
 
             if (checksumResult == CEP57Checksum.InvalidChecksum)
-                throw new ArgumentException("Wrong public key checksum!", nameof(hexBytes));
+                throw new ArgumentException("Public key checksum mismatch.");
 
             KeyAlgo algo = hexBytes.Substring(0, 2) switch
             {
                 "01" => KeyAlgo.ED25519,
                 "02" => KeyAlgo.SECP256K1,
-                _ => throw new ArgumentException("Wrong public key algorithm identifier", nameof(hexBytes))
+                _ => throw new ArgumentException("Wrong public key algorithm identifier")
             };
             return FromRawBytes(rawBytes, algo);
         }
@@ -219,9 +219,14 @@ namespace Casper.Network.SDK.Types
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                var hex = reader.GetString();
-
-                return PublicKey.FromHexString(hex);
+                try
+                {
+                    return PublicKey.FromHexString(reader.GetString());
+                }
+                catch (Exception e)
+                {
+                    throw new JsonException(e.Message);
+                }
             }
 
             public override void Write(

@@ -19,7 +19,19 @@ namespace Casper.Network.SDK.Types
 
         public static Signature FromHexString(string signature)
         {
-            return FromBytes(Hex.Decode(signature));
+            var rawBytes = CEP57Checksum.Decode(signature.Substring(2), out var checksumResult);
+
+            if (checksumResult == CEP57Checksum.InvalidChecksum)
+                throw new ArgumentException("Signature checksum mismatch.");
+            
+            KeyAlgo algo = signature.Substring(0, 2) switch
+            {
+                "01" => KeyAlgo.ED25519,
+                "02" => KeyAlgo.SECP256K1,
+                _ => throw new ArgumentException("Wrong public key algorithm identifier")
+            };
+            
+            return FromRawBytes(rawBytes, algo);
         }
         
         public static Signature FromBytes(byte[] bytes)
@@ -62,8 +74,19 @@ namespace Casper.Network.SDK.Types
             public override Signature Read(
                 ref Utf8JsonReader reader,
                 Type typeToConvert,
-                JsonSerializerOptions options) =>
-                Signature.FromHexString(reader.GetString());
+                JsonSerializerOptions options)
+            {
+                {
+                    try
+                    {
+                        return Signature.FromHexString(reader.GetString());
+                    }
+                    catch (Exception e)
+                    {
+                        throw new JsonException(e.Message);
+                    }
+                }
+            }
 
             public override void Write(
                 Utf8JsonWriter writer,
