@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
@@ -24,9 +25,12 @@ namespace Casper.Network.SDK.Types
 
     public abstract class GlobalStateKey
     {
-        protected string Key;
+        protected readonly string Key;
 
         public KeyIdentifier KeyIdentifier { get; init; }
+
+        protected virtual byte[] _GetRawBytesFromKey(string key) =>
+            Hex.Decode(key.Substring(key.LastIndexOf('-') + 1));
 
         public byte[] RawBytes
         {
@@ -40,11 +44,6 @@ namespace Casper.Network.SDK.Types
                     nameof(key));
 
             Key = key;
-        }
-
-        protected virtual byte[] _GetRawBytesFromKey(string key)
-        {
-            return Hex.Decode(key.Substring(key.LastIndexOf('-') + 1));
         }
 
         public static GlobalStateKey FromString(string value)
@@ -160,7 +159,7 @@ namespace Casper.Network.SDK.Types
         }
 
         public AccountHashKey(PublicKey publicKey)
-            : base("account-hash-" + Hex.ToHexString(publicKey.GetAccountHash()), "account-hash-")
+            : base("account-hash-" + CEP57Checksum.Encode(publicKey.GetAccountHash()), "account-hash-")
         {
         }
     }
@@ -171,6 +170,10 @@ namespace Casper.Network.SDK.Types
         {
             KeyIdentifier = KeyIdentifier.Hash;
         }
+
+        public HashKey(byte[] key) : this("hash-" + CEP57Checksum.Encode(key))
+        {
+        }
     }
 
     public class TransferKey : GlobalStateKey
@@ -179,6 +182,10 @@ namespace Casper.Network.SDK.Types
         {
             KeyIdentifier = KeyIdentifier.Transfer;
         }
+        
+        public TransferKey(byte[] key) : this("transfer-" + CEP57Checksum.Encode(key))
+        {
+        }
     }
 
     public class DeployInfoKey : GlobalStateKey
@@ -186,6 +193,10 @@ namespace Casper.Network.SDK.Types
         public DeployInfoKey(string key) : base(key, "deploy-")
         {
             KeyIdentifier = KeyIdentifier.DeployInfo;
+        }
+        
+        public DeployInfoKey(byte[] key) : this("deploy-" + CEP57Checksum.Encode(key))
+        {
         }
     }
 
@@ -212,6 +223,10 @@ namespace Casper.Network.SDK.Types
         {
             KeyIdentifier = KeyIdentifier.Balance;
         }
+        
+        public BalanceKey(byte[] key) : this("balance-" + CEP57Checksum.Encode(key))
+        {
+        }
     }
 
     public class BidKey : GlobalStateKey
@@ -219,6 +234,10 @@ namespace Casper.Network.SDK.Types
         public BidKey(string key) : base(key, "bid-")
         {
             KeyIdentifier = KeyIdentifier.Bid;
+        }
+        
+        public BidKey(byte[] key) : this("bid-" + CEP57Checksum.Encode(key))
+        {
         }
     }
 
@@ -228,6 +247,10 @@ namespace Casper.Network.SDK.Types
         {
             KeyIdentifier = KeyIdentifier.Withdraw;
         }
+        
+        public WithdrawKey(byte[] key) : this("withdraw-" + CEP57Checksum.Encode(key))
+        {
+        }
     }
 
     public class DictionaryKey : GlobalStateKey
@@ -235,6 +258,10 @@ namespace Casper.Network.SDK.Types
         public DictionaryKey(string key) : base(key, "dictionary-")
         {
             KeyIdentifier = KeyIdentifier.Dictionary;
+        }
+
+        public DictionaryKey(byte[] key) : this("dictionary-" + CEP57Checksum.Encode(key))
+        {
         }
     }
 }

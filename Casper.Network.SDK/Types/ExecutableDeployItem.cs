@@ -49,7 +49,7 @@ namespace Casper.Network.SDK.Types
     public class StoredContractByHashDeployItem : ExecutableDeployItem
     {
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(HexBytesConverter))]
+        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
         public byte[] Hash { get; init; }
 
         [JsonPropertyName("entry_point")] public string EntryPoint { get; init; } = "";
@@ -95,7 +95,7 @@ namespace Casper.Network.SDK.Types
     public class StoredVersionedContractByHashDeployItem : ExecutableDeployItem
     {
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(HexBytesConverter))]
+        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
         public byte[] Hash { get; init; }
 
         [JsonPropertyName("version")] public uint? Version { get; init; }

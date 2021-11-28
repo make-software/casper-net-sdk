@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
@@ -46,9 +47,9 @@ namespace Casper.Network.SDK.Types
         public string ToHexString()
         {
             if (KeyAlgorithm == KeyAlgo.ED25519)
-                return "01" + Hex.ToHexString(RawBytes);
+                return "01" + CEP57Checksum.Encode(RawBytes);
             else
-                return "02" + Hex.ToHexString(RawBytes);
+                return "02" + CEP57Checksum.Encode(RawBytes);
         }
         
         public override string ToString()
