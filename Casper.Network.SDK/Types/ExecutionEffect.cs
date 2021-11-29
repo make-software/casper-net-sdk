@@ -5,7 +5,7 @@ using Casper.Network.SDK.Converters;
 namespace Casper.Network.SDK.Types
 {
     /// <summary>
-    /// The effect of executing a single deploy.
+    /// The journal of execution transforms from a single deploy.
     /// </summary>
     public class ExecutionEffect
     {
@@ -16,7 +16,7 @@ namespace Casper.Network.SDK.Types
         public List<Operation> Operations { get; init; }
 
         /// <summary>
-        /// The resulting transformations.
+        /// The journal of execution transforms.
         /// </summary>
         [JsonPropertyName("transforms")]
         [JsonConverter(typeof(GenericListConverter<Transform, Transform.TransformConverter>))]
