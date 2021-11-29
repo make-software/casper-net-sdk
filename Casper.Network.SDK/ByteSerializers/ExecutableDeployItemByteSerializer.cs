@@ -43,10 +43,14 @@ namespace Casper.Network.SDK.ByteSerializers
                 var item = (StoredVersionedContractByHashDeployItem) source;
 
                 WriteBytes(ms, item.Hash);
+                // Version serializes as Option(U32). ie. 0x00 or 0x01xxxxxxxx
                 if(item.Version == null) 
                     ms.WriteByte(0x00);
                 else
-                    WriteUInteger(ms, item.Version??0);
+                {
+                    WriteByte(ms,0x01);
+                    WriteUInteger(ms, (uint)item.Version);
+                }
                 WriteString(ms, item.EntryPoint);
             }
             else if (source is StoredVersionedContractByNameDeployItem)
@@ -54,13 +58,13 @@ namespace Casper.Network.SDK.ByteSerializers
                 var item = (StoredVersionedContractByNameDeployItem) source;
 
                 WriteString(ms, item.Name);
+                // Version serializes as Option(U32). ie. 0x00 or 0x01xxxxxxxx
                 if(item.Version == null) 
                     ms.WriteByte(0x00);
                 else
                 {
-                    byte[] bytes = BitConverter.GetBytes(item.Version??0);
-                    if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
-                    WriteBytes(ms, bytes);
+                    WriteByte(ms,0x01);
+                    WriteUInteger(ms, (uint)item.Version);
                 }
                 WriteString(ms, item.EntryPoint);
             }

@@ -117,7 +117,7 @@ namespace Casper.Network.SDK
         
         public static Deploy VersionedContractCall(
             string sessionName,
-            uint version,
+            uint? version,
             string sessionEntryPoint,
             List<NamedArg> args,
             KeyPair fromKey,
@@ -145,7 +145,7 @@ namespace Casper.Network.SDK
         
         public static Deploy VersionedContractCall(
             HashKey contractHash,
-            uint version,
+            uint? version,
             string sessionEntryPoint,
             List<NamedArg> args,
             KeyPair fromKey,
