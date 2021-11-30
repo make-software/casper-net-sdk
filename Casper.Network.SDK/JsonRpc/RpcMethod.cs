@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -6,15 +7,19 @@ using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.JsonRpc
 {
-    public class RpcMethod
+    public abstract class RpcMethod
     {
-        [JsonPropertyName("jsonrpc")] public string JsonRpc { get; } = "2.0";
+        [JsonPropertyName("jsonrpc")] 
+        public string JsonRpc { get; } = "2.0";
 
-        [JsonPropertyName("id")] public uint Id { get; private set; } = 1;
+        [JsonPropertyName("id")] 
+        public uint Id { get; set; } = 1;
 
-        [JsonPropertyName("method")] public string Method { get; private set; }
+        [JsonPropertyName("method")] 
+        public string Method { get; private set; }
 
-        [JsonPropertyName("params")] public Dictionary<string, object> Parameters { get; protected set; }
+        [JsonPropertyName("params")] 
+        public Dictionary<string, object> Parameters { get; protected set; }
 
         public static JsonSerializerOptions SerializerOptions
         {
@@ -32,10 +37,9 @@ namespace Casper.Network.SDK.JsonRpc
             }
         }
         
-        public RpcMethod(string method, Dictionary<string, object> parameters = null)
+        public RpcMethod(string method)
         {
             this.Method = method;
-            this.Parameters = parameters;
         }
 
         public string Serialize()

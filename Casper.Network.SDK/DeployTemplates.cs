@@ -67,7 +67,7 @@ namespace Casper.Network.SDK
             string sessionName,
             string sessionEntryPoint,
             List<NamedArg> args,
-            KeyPair fromKey,
+            PublicKey fromKey,
             BigInteger paymentAmount,
             string chainName,
             ulong gasPrice = 1,
@@ -76,7 +76,7 @@ namespace Casper.Network.SDK
         {
             var header = new DeployHeader()
             {
-                Account = fromKey.PublicKey,
+                Account = fromKey,
                 Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
                 Ttl = ttl,
                 ChainName = chainName,
@@ -93,7 +93,7 @@ namespace Casper.Network.SDK
             HashKey contractHash,
             string sessionEntryPoint,
             List<NamedArg> args,
-            KeyPair fromKey,
+            PublicKey fromKey,
             BigInteger paymentAmount,
             string chainName,
             ulong gasPrice = 1,
@@ -102,7 +102,7 @@ namespace Casper.Network.SDK
         {
             var header = new DeployHeader()
             {
-                Account = fromKey.PublicKey,
+                Account = fromKey,
                 Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
                 Ttl = ttl,
                 ChainName = chainName,
@@ -120,7 +120,7 @@ namespace Casper.Network.SDK
             uint? version,
             string sessionEntryPoint,
             List<NamedArg> args,
-            KeyPair fromKey,
+            PublicKey fromKey,
             BigInteger paymentAmount,
             string chainName,
             ulong gasPrice = 1,
@@ -129,7 +129,7 @@ namespace Casper.Network.SDK
         {
             var header = new DeployHeader()
             {
-                Account = fromKey.PublicKey,
+                Account = fromKey,
                 Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
                 Ttl = ttl,
                 ChainName = chainName,
@@ -148,7 +148,7 @@ namespace Casper.Network.SDK
             uint? version,
             string sessionEntryPoint,
             List<NamedArg> args,
-            KeyPair fromKey,
+            PublicKey fromKey,
             BigInteger paymentAmount,
             string chainName,
             ulong gasPrice = 1,
@@ -157,7 +157,7 @@ namespace Casper.Network.SDK
         {
             var header = new DeployHeader()
             {
-                Account = fromKey.PublicKey,
+                Account = fromKey,
                 Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
                 Ttl = ttl,
                 ChainName = chainName,
