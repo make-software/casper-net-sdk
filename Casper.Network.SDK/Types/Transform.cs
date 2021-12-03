@@ -97,7 +97,7 @@ namespace Casper.Network.SDK.Types
                                     reader.Read(); // end object
                                     break;
                                 case TransformType.WriteAccount:
-                                    value = JsonSerializer.Deserialize<Account>(ref reader, options);
+                                    value = GlobalStateKey.FromString(reader.GetString());
                                     reader.Read(); // end object
                                     break;
                                 case TransformType.WriteDeployInfo:

@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
@@ -40,6 +41,10 @@ namespace Casper.Network.SDK.Types
         {
         }
         
+        public NamedArg(string name, BigInteger value) : this(name, CLValue.U512(value))
+        {
+        }
+        
         public NamedArg(string name, string value) : this(name, CLValue.String(value))
         {
         }
@@ -53,6 +58,10 @@ namespace Casper.Network.SDK.Types
         }
         
         public NamedArg(string name, PublicKey value) : this(name, CLValue.PublicKey(value))
+        {
+        }
+        
+        public NamedArg(string name, GlobalStateKey value) : this(name, CLValue.Key(value))
         {
         }
         

@@ -9,7 +9,7 @@ namespace Casper.Network.SDK
     public class DeployTemplates
     {
         public static Deploy StandardTransfer(
-            KeyPair fromKey,
+            PublicKey fromKey,
             PublicKey toKey,
             BigInteger amount,
             BigInteger paymentAmount,
@@ -22,7 +22,7 @@ namespace Casper.Network.SDK
         {
             var header = new DeployHeader()
             {
-                Account = fromKey.PublicKey,
+                Account = fromKey,
                 Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
                 Ttl = ttl,
                 ChainName = chainName,
@@ -41,7 +41,7 @@ namespace Casper.Network.SDK
 
         public static Deploy ContractDeploy(
             byte[] wasmBytes,
-            KeyPair fromKey,
+            PublicKey fromKey,
             BigInteger paymentAmount,
             string chainName,
             ulong gasPrice = 1,
@@ -50,7 +50,7 @@ namespace Casper.Network.SDK
         {
             var header = new DeployHeader()
             {
-                Account = fromKey.PublicKey,
+                Account = fromKey,
                 Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
                 Ttl = ttl,
                 ChainName = chainName,
@@ -173,7 +173,7 @@ namespace Casper.Network.SDK
         
         public static Deploy DelegateTokens(
             byte[] delegateContractWasmBytes,
-            KeyPair fromKey,
+            PublicKey fromKey,
             PublicKey validatorPK,
             BigInteger amount,
             BigInteger paymentAmount,
@@ -184,7 +184,7 @@ namespace Casper.Network.SDK
         {
             var header = new DeployHeader()
             {
-                Account = fromKey.PublicKey,
+                Account = fromKey,
                 Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
                 Ttl = ttl,
                 ChainName = chainName,
@@ -198,7 +198,7 @@ namespace Casper.Network.SDK
             session.RuntimeArgs.Add(new NamedArg("amount",
                 CLValue.U512(amount)));
             session.RuntimeArgs.Add(new NamedArg("delegator",
-                CLValue.PublicKey(fromKey.PublicKey)));
+                CLValue.PublicKey(fromKey)));
             
             var deploy = new Deploy(header, payment, session);
             return deploy;
@@ -206,7 +206,7 @@ namespace Casper.Network.SDK
 
         public static Deploy UndelegateTokens(
             byte[] undelegateContractWasmBytes,
-            KeyPair fromKey,
+            PublicKey fromKey,
             PublicKey validatorPK,
             BigInteger amount,
             BigInteger paymentAmount,
