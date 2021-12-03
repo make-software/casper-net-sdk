@@ -21,17 +21,16 @@ namespace CounterContract
 
         static NetCasperClient casperSdk;
 
-        static KeyPair faucetAcct = KeyPair.FromPem("/tmp/faucetact.pem");
+        static KeyPair faucetAcct = KeyPair.FromPem("./faucetact.pem");
 
-        static KeyPair myAccount = KeyPair.FromPem("/tmp/myaccount2.pem");
+        static KeyPair myAccount = KeyPair.FromPem("./myaccount.pem");
 
-        static PublicKey myAccountPK =
-            PublicKey.FromPem("/tmp/myaccount2_pk.pem");
+        static PublicKey myAccountPK = PublicKey.FromPem("./myaccount_pk.pem");
 
         public static async Task FundAccount()
         {
             var deploy = DeployTemplates.StandardTransfer(
-                faucetAcct,
+                faucetAcct.PublicKey,
                 myAccountPK,
                 2500_000_000_000,
                 100_000_000,
@@ -55,7 +54,7 @@ namespace CounterContract
 
             var deploy = DeployTemplates.ContractDeploy(
                 wasmBytes,
-                myAccount,
+                myAccountPK,
                 50_000_000_000,
                 chainName);
             deploy.Sign(myAccount);
@@ -139,7 +138,7 @@ namespace CounterContract
                 Console.WriteLine("FundAccount() completed. Press a key to continue...");
                 Console.ReadLine();
                 
-                await DeployContract("/tmp/counter-define.wasm");
+                await DeployContract("./counter-define.wasm");
                 Console.WriteLine("DeployContract() completed. Press a key to continue...");
                 Console.ReadLine();
 
@@ -160,7 +159,7 @@ namespace CounterContract
                 Console.ReadLine();
                 
                 await DeployContract(
-                    "/tmp/counter_call.wasm");
+                    "./counter_call.wasm");
                 Console.WriteLine("DeployContract() completed. Press a key to continue...");
                 Console.ReadLine();
                 

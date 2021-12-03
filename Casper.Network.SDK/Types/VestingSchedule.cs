@@ -11,7 +11,7 @@ namespace Casper.Network.SDK.Types
         public ulong InitialReleaseTimestampMillis { get; init; }
 
         [JsonPropertyName("locked_amounts")] 
-        [JsonConverter(typeof(BigIntegerConverter))]
+        [JsonConverter(typeof(GenericListConverter<BigInteger,BigIntegerConverter>))]
         public List<BigInteger> LockedAmounts { get; init; }
     }
 }

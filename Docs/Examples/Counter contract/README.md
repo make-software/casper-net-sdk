@@ -9,7 +9,9 @@ Using the Casper .NET SDK, we'll show you how to:
 - Read the counter value.
 - Call the `counter_inc` contract entry point to increase the counter.
 
-NOTE: We use a local network in this example. Learn [here](https://casper.network/docs/dapp-dev-guide/setup-nctl) how to install your own local network. Alternatively, you can easily adapt the example to use the casper-test network. But then you need to skip the transfer from faucet step.
+NOTE: We use a local network in this example. Learn [here](https://casper.network/docs/dapp-dev-guide/setup-nctl) 
+how to install your own local network. Alternatively, you can easily adapt the code in this example 
+to use the casper-test network. In this case, skip the transfer from faucet step.
 
 ### Step 1. Get a new instance of the Casper client
 
@@ -37,7 +39,7 @@ Take the `deploy_hash` from the response and make a call to `GetDeploy` with a t
 public static async Task FundAccount()
 {
   var deploy = DeployTemplates.StandardTransfer(
-      faucetAcct,
+      faucetAcct.PublicKey,
       myAccountPK,
       2500_000_000_000,
       100_000_000,
@@ -63,8 +65,10 @@ If you haven't done yet, get a copy of the repository and build the contract fol
 ```
 git clone https://github.com/casper-ecosystem/counter
 cd counter
-cat README
+make build-contract
 ```
+
+As a result you will get the contract compiled at `target/wasm32-unknown-unknown/release/`. Copy the `contract-define.wasm` to your working directory.
 
 Next, use the `ContractDeploy` deploy template to prepare a `Deploy` object. Sign it and deploy it.
 
@@ -98,11 +102,13 @@ public static async Task DeployContract(string wasmFile)
 
 ### Step 4. Get the counter value
 
-The deploy of the contract creates a `Named Key` in the caller account named `counter`. Its key value is the new contract hash. 
+The deploy of the contract creates a `Named Key` in the caller account named `counter`. Its key value is the new 
+contract hash. 
 
 The contract itself also has a `Named Key` called `count` that stores the value of the counter.
 
-Combining both, we form the path `counter/count`. We can send the `QueryGlobalState` method to the network to get the current value of the counter.
+Combining both, we form the path `counter/count`. We can send the `QueryGlobalState` method to the network to get 
+the current value of the counter.
 
 ```csharp
 public static async Task QueryState()
