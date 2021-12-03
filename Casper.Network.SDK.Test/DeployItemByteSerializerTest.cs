@@ -77,7 +77,7 @@ namespace NetCasperTest
             Assert.AreEqual(0, storedContract.RuntimeArgs.Count);
             
             byte[] bytes = serializer.ToBytes(storedContract);
-            Assert.AreEqual("030102030401020304010203040102030401020304010203040102030401020304010000000b000000636f756e7465725f696e6300000000", Hex.ToHexString(bytes));
+            Assert.AreEqual("03010203040102030401020304010203040102030401020304010203040102030401010000000b000000636f756e7465725f696e6300000000", Hex.ToHexString(bytes));
         }
         
         [Test]
@@ -93,7 +93,7 @@ namespace NetCasperTest
             Assert.AreEqual(0, storedContract.RuntimeArgs.Count);
             
             byte[] bytes = serializer.ToBytes(storedContract);
-            Assert.AreEqual("0407000000636f756e7465720f0000000b000000636f756e7465725f696e6300000000", Hex.ToHexString(bytes));
+            Assert.AreEqual("0407000000636f756e746572010f0000000b000000636f756e7465725f696e6300000000", Hex.ToHexString(bytes));
         }
         
         [Test]
