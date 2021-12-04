@@ -166,5 +166,14 @@ namespace NetCasperTest
             var pk2 = PublicKey.FromPem(tmpfile);
             Assert.AreEqual(SECP256K1publicKey, pk2.ToAccountHex());
         }
+
+        [Test]
+        public void TestPublicKeyEquality()
+        {
+            var pk1 = PublicKey.FromHexString(ED25519publicKey);
+            
+            Assert.IsTrue(pk1.Equals(PublicKey.FromBytes(pk1.GetBytes())));
+            Assert.IsFalse(pk1.Equals(PublicKey.FromHexString("01b7c7c545dfa3fb853a97fb3581ce10eb4f67a5861abed6e70e5e3312fdde402c")));
+        }
     }
 }

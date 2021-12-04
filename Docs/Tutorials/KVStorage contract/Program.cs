@@ -14,7 +14,7 @@ using Casper.Network.SDK.Types;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
-namespace KVStorageContract
+namespace Casper.Network.SDK.Tutorials
 {
     public static class KeyValueStorageContract
     {
@@ -96,7 +96,7 @@ namespace KVStorageContract
                 new NamedArg("name", "IsSunday"),
                 new NamedArg("value", true)
             };
-
+                
             await StoreKeyValue("store_bool", namedArgs, "res_StoreBool.json");
         }
 
@@ -134,31 +134,31 @@ namespace KVStorageContract
             await StoreKeyValue("store_u512", namedArgs, "res_StoreU512.json");
         }
 
-public async static Task StoreString(HashKey contractHash = null)
-{
-    var namedArgs = new List<NamedArg>()
-    {
-        new NamedArg("name", "WorkingOn"),
-        new NamedArg("value", "Casper .NET SDK")
-    };
+        public async static Task StoreString(HashKey contractHash = null)
+        {
+            var namedArgs = new List<NamedArg>()
+            {
+                new NamedArg("name", "WorkingOn"),
+                new NamedArg("value", "Casper .NET SDK")
+            };
 
-    var deploy = DeployTemplates.ContractCall(contractHash,
-        "store_string",
-        namedArgs,
-        myAccountPK,
-        500_000_000,
-        chainName);
+            var deploy = DeployTemplates.ContractCall(contractHash,
+                "store_string",
+                namedArgs,
+                myAccountPK,
+                500_000_000,
+                chainName);
 
-    deploy.Sign(myAccount);
+            deploy.Sign(myAccount);
 
-    var response = await casperSdk.PutDeploy(deploy);
-    var deployHash = response.GetDeployHash();
+            var response = await casperSdk.PutDeploy(deploy);
+            var deployHash = response.GetDeployHash();
 
-    var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
-    var deployResponse = await casperSdk.GetDeploy(deployHash, tokenSource.Token);
+            var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
+            var deployResponse = await casperSdk.GetDeploy(deployHash, tokenSource.Token);
 
-    File.WriteAllText("res_StoreString.json", deployResponse.Result.GetRawText());
-}
+            File.WriteAllText("res_StoreString.json", deployResponse.Result.GetRawText());
+        }
 
         public async static Task StorePublicKey()
         {
@@ -235,6 +235,7 @@ public async static Task StoreString(HashKey contractHash = null)
         {
             var list = CLValue.List(new[]
                 {CLValue.U8(0x10), CLValue.U8(0x20), CLValue.U8(0x30), CLValue.U8(0x40)});
+            
             var namedArgs = new List<NamedArg>()
             {
                 new NamedArg("name", "MyListOfBytes"),
@@ -253,6 +254,7 @@ public async static Task StoreString(HashKey contractHash = null)
                 CLValue.OptionNone(CLType.String),
                 CLValue.Option("String4"),
             });
+            
             var namedArgs = new List<NamedArg>()
             {
                 new NamedArg("name", "MyListOption"),
@@ -270,6 +272,7 @@ public async static Task StoreString(HashKey contractHash = null)
 
             var list = CLValue.List(new[]
                 {CLValue.PublicKey(pk1), CLValue.PublicKey(pk2), CLValue.PublicKey(pk3)});
+            
             var namedArgs = new List<NamedArg>()
             {
                 new NamedArg("name", "MyListOfPKs"),
@@ -290,6 +293,7 @@ public async static Task StoreString(HashKey contractHash = null)
             };
 
             var map = CLValue.Map(dict);
+            
             var namedArgs = new List<NamedArg>()
             {
                 new NamedArg("name", "MyMap"),

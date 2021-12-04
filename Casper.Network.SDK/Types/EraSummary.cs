@@ -20,15 +20,22 @@ namespace Casper.Network.SDK.Types
         public ulong EraId { get; init; }
         
         /// <summary>
-        /// The merkle proof.
+        /// Hex-encoded hash of the state root.
         /// </summary>
-        [JsonPropertyName("merkle_proof")]
-        public string MerkleProof { get; init; }
+        [JsonPropertyName("stored_value")]
+        [JsonConverter(typeof(StoredValue.StoredValueConverter))]
+        public StoredValue StoredValue { get; init; }
         
         /// <summary>
         /// Hex-encoded hash of the state root.
         /// </summary>
         [JsonPropertyName("state_root_hash")]
         public string StateRootHash { get; init; }
+        
+        /// <summary>
+        /// The merkle proof.
+        /// </summary>
+        [JsonPropertyName("merkle_proof")]
+        public string MerkleProof { get; init; }
     }
 }

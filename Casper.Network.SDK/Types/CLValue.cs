@@ -236,6 +236,30 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        public static CLValue Option(int innerValue) => CLValue.Option(CLValue.I32(innerValue));
+
+        public static CLValue Option(long innerValue) => CLValue.Option(CLValue.I64(innerValue));
+
+        public static CLValue Option(byte innerValue) => CLValue.Option(CLValue.U8(innerValue));
+
+        public static CLValue Option(uint innerValue) => CLValue.Option(CLValue.U32(innerValue));
+
+        public static CLValue Option(ulong innerValue) => CLValue.Option(CLValue.U64(innerValue));
+
+        public static CLValue Option(string innerValue) => CLValue.Option(CLValue.String(innerValue));
+        
+        public static CLValue Option(URef innerValue) => CLValue.Option(CLValue.URef(innerValue));
+
+        public static CLValue Option(PublicKey innerValue) => CLValue.Option(CLValue.PublicKey(innerValue));
+
+        public static CLValue Option(GlobalStateKey innerValue) => CLValue.Option(CLValue.Key(innerValue));
+        
+        public static CLValue Option(byte[] innerValue) => CLValue.Option(CLValue.ByteArray(innerValue));
+        
+        public static CLValue Option(CLValue[] innerValue) => CLValue.Option(CLValue.List(innerValue));
+
+        public static CLValue Option(Dictionary<CLValue,CLValue> innerValue) => CLValue.Option(CLValue.Map(innerValue));
+        
         public static CLValue OptionNone(CLTypeInfo innerTypeInfo)
         {
             byte[] bytes = new byte[1];
