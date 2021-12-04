@@ -12,7 +12,7 @@ using Casper.Network.SDK.Types;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
-namespace CounterContract
+namespace Casper.Network.SDK.Tutorials
 {
     public static class DeployCounterContract
     {

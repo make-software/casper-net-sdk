@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Utils;
@@ -160,6 +161,21 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return ToAccountHex();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            //Check for null and compare run-time types.
+            if (obj == null || !GetType().Equals(obj.GetType()))
+                return false;
+
+            var pk = (PublicKey) obj;
+            return pk.GetBytes().SequenceEqual(this.GetBytes());
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ToAccountHex().ToLower().GetHashCode();
         }
 
         public byte[] GetBytes()
