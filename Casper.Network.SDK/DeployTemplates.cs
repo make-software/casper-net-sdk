@@ -109,7 +109,7 @@ namespace Casper.Network.SDK
                 GasPrice = gasPrice
             };
             var payment = new ModuleBytesDeployItem(paymentAmount);
-            var session = new StoredContractByHashDeployItem(contractHash.RawBytes, sessionEntryPoint, args);
+            var session = new StoredContractByHashDeployItem(contractHash.ToHexString(), sessionEntryPoint, args);
             
             var deploy = new Deploy(header, payment, session);
             return deploy;
@@ -164,7 +164,7 @@ namespace Casper.Network.SDK
                 GasPrice = gasPrice
             };
             var payment = new ModuleBytesDeployItem(paymentAmount);
-            var session = new StoredVersionedContractByHashDeployItem(contractHash.RawBytes, version, 
+            var session = new StoredVersionedContractByHashDeployItem(contractHash.ToHexString(), version, 
                 sessionEntryPoint, args);
             
             var deploy = new Deploy(header, payment, session);

@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Utils
@@ -111,6 +113,28 @@ namespace Casper.Network.SDK.Utils
             checksumResult = computed.Equals(hex) ? ValidChecksum : InvalidChecksum; 
             
             return bytes;
+        }
+        
+        public class HashWithChecksumConverter : JsonConverter<string>
+        {
+            public override string Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                var hex = reader.GetString();
+                CEP57Checksum.Decode(hex, out var checksumResult);
+                if (checksumResult == CEP57Checksum.InvalidChecksum)
+                    throw new JsonException("Wrong checksum in hexadecimal string.");
+
+                return hex;
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                string hash,
+                JsonSerializerOptions options) =>
+                writer.WriteStringValue(hash);
         }
     }
 }

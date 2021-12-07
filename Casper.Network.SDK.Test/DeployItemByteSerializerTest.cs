@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using Casper.Network.SDK.ByteSerializers;
 using Casper.Network.SDK.Types;
+using Casper.Network.SDK.Utils;
 using NUnit.Framework;
 using Org.BouncyCastle.Utilities.Encoders;
 
@@ -36,10 +37,10 @@ namespace NetCasperTest
         {
             var hash = new HashKey("hash-0102030401020304010203040102030401020304010203040102030401020304");
             var storedContract =
-                new StoredContractByHashDeployItem(hash.RawBytes,
+                new StoredContractByHashDeployItem(hash.ToHexString(),
                     "counter_inc");
             
-            Assert.AreEqual(Hex.ToHexString(hash.RawBytes), Hex.ToHexString(storedContract.Hash));
+            Assert.AreEqual(CEP57Checksum.Encode(hash.RawBytes), storedContract.Hash);
             Assert.AreEqual("counter_inc", storedContract.EntryPoint);
             Assert.IsNotNull(storedContract.RuntimeArgs);
             Assert.AreEqual(0, storedContract.RuntimeArgs.Count);
@@ -68,9 +69,9 @@ namespace NetCasperTest
         {
             var hash = new HashKey("hash-0102030401020304010203040102030401020304010203040102030401020304");
             var storedContract =
-                new StoredVersionedContractByHashDeployItem(hash.RawBytes, 1, "counter_inc");
+                new StoredVersionedContractByHashDeployItem(hash.ToHexString(), 1, "counter_inc");
             
-            Assert.AreEqual(Hex.ToHexString(hash.RawBytes), Hex.ToHexString(storedContract.Hash));
+            Assert.AreEqual(CEP57Checksum.Encode(hash.RawBytes), storedContract.Hash);
             Assert.AreEqual(1, storedContract.Version);
             Assert.AreEqual("counter_inc", storedContract.EntryPoint);
             Assert.IsNotNull(storedContract.RuntimeArgs);
@@ -107,7 +108,6 @@ namespace NetCasperTest
 
             Assert.AreEqual(3, transfer.RuntimeArgs.Count);
             
-            var serializer = new ExecutableDeployItemByteSerializer();
             var bytes = serializer.ToBytes(transfer);
             var hex = Hex.ToHexString(bytes);
             Assert.AreEqual("05" + "03000000" + "06000000616d6f756e74060000000500d6117e0308" +

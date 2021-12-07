@@ -55,6 +55,11 @@ namespace Casper.Network.SDK.Types
             Key = key;
         }
 
+        public string ToHexString()
+        {
+            return CEP57Checksum.Encode(RawBytes);
+        }
+
         public static GlobalStateKey FromString(string value)
         {
             if (value.StartsWith("account-hash-"))
@@ -179,7 +184,7 @@ namespace Casper.Network.SDK.Types
         }
 
         public AccountHashKey(PublicKey publicKey)
-            : base("account-hash-" + CEP57Checksum.Encode(publicKey.GetAccountHash()), "account-hash-")
+            : base(publicKey.GetAccountHash(), "account-hash-")
         {
         }
     }

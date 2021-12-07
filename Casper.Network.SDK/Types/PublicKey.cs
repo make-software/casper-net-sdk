@@ -134,7 +134,7 @@ namespace Casper.Network.SDK.Types
             }
         }
 
-        public byte[] GetAccountHash()
+        public string GetAccountHash()
         {
             var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
             string algo = KeyAlgorithm.ToString().ToLower();
@@ -145,7 +145,7 @@ namespace Casper.Network.SDK.Types
             var hash = new byte[bcBl2bdigest.GetDigestSize()];
             bcBl2bdigest.DoFinal(hash, 0);
 
-            return hash;
+            return "account-hash-" + CEP57Checksum.Encode(hash);
         }
 
         public string ToAccountHex()
@@ -163,7 +163,7 @@ namespace Casper.Network.SDK.Types
             return ToAccountHex();
         }
 
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             //Check for null and compare run-time types.
             if (obj == null || !GetType().Equals(obj.GetType()))

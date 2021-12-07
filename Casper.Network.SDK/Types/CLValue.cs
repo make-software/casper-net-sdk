@@ -394,7 +394,7 @@ namespace Casper.Network.SDK.Types
 
         public static CLValue KeyFromPublicKey(PublicKey publicKey)
         {
-            byte[] accountHash = publicKey.GetAccountHash();
+            byte[] accountHash = new AccountHashKey(publicKey.GetAccountHash()).RawBytes;
             byte[] bytes = new byte[1 + accountHash.Length];
             bytes[0] = (byte) KeyIdentifier.Account;
             Array.Copy(accountHash, 0, bytes, 1, accountHash.Length);

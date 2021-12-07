@@ -1,9 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using Casper.Network.SDK.Converters;
+using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.SSE
 {
@@ -25,7 +31,8 @@ namespace Casper.Network.SDK.SSE
         DeployProcessed,
         Fault,
         Step,
-        FinalitySignature
+        FinalitySignature,
+        DeployExpired
     }
 
     internal struct EventData
@@ -62,6 +69,7 @@ namespace Casper.Network.SDK.SSE
                 {EventType.Fault, ChannelType.Main},
                 {EventType.Step, ChannelType.Main},
                 {EventType.FinalitySignature, ChannelType.Sigs},
+                {EventType.DeployExpired, ChannelType.Main}
             };
             _runningTasks = new Dictionary<ChannelType, Tuple<Task, CancellationTokenSource>>();
         }
@@ -130,6 +138,7 @@ namespace Casper.Network.SDK.SSE
                     var tokenSource = new CancellationTokenSource();
                     var task = ListenChannelAsync(channelType.Key, channelType.Value, tokenSource.Token);
                     _runningTasks.Add(channelType.Key, new Tuple<Task, CancellationTokenSource>(task, tokenSource));
+                    Thread.Sleep(3000);
                 }
             }
         }
@@ -174,15 +183,19 @@ namespace Casper.Network.SDK.SSE
                     {
                         var uriBuilder = new UriBuilder("http", _host, _port,
                             $"events/{channelType.ToString().ToLower()}");
-                        if (startFrom != null)
-                            uriBuilder.Query = $"start_from={startFrom}";
 
+                        if (startFrom != null && startFrom != int.MaxValue)
+                            uriBuilder.Query = $"start_from={startFrom}";
+                        else
+                            uriBuilder.Query = $"start_from={0}";
+                            
                         using (var streamReader =
                             new StreamReader(await client.GetStreamAsync(uriBuilder.Uri, cancelToken)))
                         {
                             while (!streamReader.EndOfStream && !cancelToken.IsCancellationRequested)
                             {
                                 var message = await streamReader.ReadLineAsync();
+                         
                                 if (ParseStream(message, ref eventData))
                                 {
                                     EmitEvent(eventData);
@@ -226,7 +239,8 @@ namespace Casper.Network.SDK.SSE
                 {
                     eventData.EventType = evt;
                     eventData.Id = 0;
-                    eventData.Payload = line.Trim().Substring(5);;
+                    eventData.Payload = line.Trim().Substring(5);
+                    ;
                 }
 
                 // id needed to complete the event
@@ -249,14 +263,26 @@ namespace Casper.Network.SDK.SSE
 
         private void EmitEvent(EventData eventData)
         {
+            JsonDocument jsonDoc = null;
+
             foreach (var callback in _callbacks)
             {
                 try
                 {
                     if (callback.EventType == EventType.All || callback.EventType == eventData.EventType)
-                        callback.CallbackFn(eventData.EventType, eventData.Id, eventData.Payload);
+                    {
+                        if (jsonDoc == null)
+                            jsonDoc = JsonDocument.Parse(eventData.Payload);
+
+                        callback.CallbackFn(new SSEvent()
+                        {
+                            EventType = eventData.EventType,
+                            Id = eventData.Id,
+                            Result = jsonDoc.RootElement
+                        });
+                    }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     // ignored
                 }

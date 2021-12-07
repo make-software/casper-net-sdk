@@ -27,15 +27,15 @@ namespace NetCasperTest
             Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
 
             var pk = PublicKey.FromRawBytes(bytes, KeyAlgo.ED25519);
-            var accountHash = CEP57Checksum.Encode(pk.GetAccountHash());
-            Assert.AreEqual(ED25519hash, accountHash);
+            var accountHash = pk.GetAccountHash();
+            Assert.AreEqual(ED25519hash, accountHash.Substring("account-hash-".Length));
             
             bytes = CEP57Checksum.Decode(SECP256K1publicKey.Substring(2), out result);
             Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
 
             pk = PublicKey.FromRawBytes(bytes, KeyAlgo.SECP256K1);
-            accountHash = CEP57Checksum.Encode(pk.GetAccountHash());
-            Assert.AreEqual(SECP256K1hash, accountHash);
+            accountHash = pk.GetAccountHash();
+            Assert.AreEqual(SECP256K1hash, accountHash.Substring("account-hash-".Length));
         }
         
         [Test]

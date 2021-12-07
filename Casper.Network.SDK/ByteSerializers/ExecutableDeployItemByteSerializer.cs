@@ -28,7 +28,7 @@ namespace Casper.Network.SDK.ByteSerializers
             {
                 var item = (StoredContractByHashDeployItem) source;
 
-                WriteBytes(ms, item.Hash);
+                WriteBytes(ms, Hex.Decode(item.Hash));
                 WriteString(ms, item.EntryPoint);
             }
             else if (source is StoredContractByNameDeployItem)
@@ -42,7 +42,7 @@ namespace Casper.Network.SDK.ByteSerializers
             {
                 var item = (StoredVersionedContractByHashDeployItem) source;
 
-                WriteBytes(ms, item.Hash);
+                WriteBytes(ms, Hex.Decode(item.Hash));
                 // Version serializes as Option(U32). ie. 0x00 or 0x01xxxxxxxx
                 if(item.Version == null) 
                     ms.WriteByte(0x00);
