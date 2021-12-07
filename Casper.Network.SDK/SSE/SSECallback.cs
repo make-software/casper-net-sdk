@@ -1,6 +1,6 @@
 namespace Casper.Network.SDK.SSE
 {
-    public delegate void EventCallback(EventType eventType, int id, string payload);
+    public delegate void EventCallback(SSEvent evt);
 
     internal class SSECallback
     {

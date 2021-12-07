@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Casper.Network.SDK.Types;
+using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.ByteSerializers
 {
@@ -20,11 +21,11 @@ namespace Casper.Network.SDK.ByteSerializers
 
             WriteULong(ms, source.GasPrice);
             
-            WriteBytes(ms, source.BodyHash);
+            WriteBytes(ms, Hex.Decode(source.BodyHash));
             
             WriteInteger(ms, source.Dependencies.Count);
             foreach (var dependency in source.Dependencies)
-                WriteBytes(ms, dependency);
+                WriteBytes(ms, Hex.Decode(dependency));
 
             WriteString(ms, source.ChainName);
 
@@ -40,7 +41,7 @@ namespace Casper.Network.SDK.ByteSerializers
 
             WriteBytes(ms, ToBytes(source.Header));
             
-            WriteBytes(ms, source.Hash);
+            WriteBytes(ms, Hex.Decode(source.Hash));
 
             WriteBytes(ms, itemSerializer.ToBytes(source.Payment));
             

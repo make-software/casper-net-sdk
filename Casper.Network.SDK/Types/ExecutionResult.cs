@@ -62,6 +62,7 @@ namespace Casper.Network.SDK.Types
 
                 string blockHash = null;
                 string result = null;
+                bool readResult = false;
                 ExecutionResult executionResult = null;
                 
                 while (reader.TokenType == JsonTokenType.PropertyName)
@@ -76,13 +77,12 @@ namespace Casper.Network.SDK.Types
                             reader.Read();
                             break;
                         case "result":
+                            readResult = true;
                             reader.Read(); //skip start object
-                            
-                            result = (reader.TokenType == JsonTokenType.PropertyName) ? reader.GetString() : null;
-                            reader.Read();
-                            
-                            if (result == null || !(result.Equals("Success") || result.Equals("Failure")))
-                                throw new JsonException("Either 'Success' or 'Failure' expect during ExecutionResult deserialization");
+                            break;
+                        case "success": 
+                        case "failure":
+                            result = property;
 
                             if (reader.TokenType != JsonTokenType.StartObject)
                                 throw new JsonException($"Object expected after '{result}' during ExecutionResult deserialization");
@@ -90,7 +90,11 @@ namespace Casper.Network.SDK.Types
                             executionResult = JsonSerializer.Deserialize<ExecutionResult>(ref reader);
 
                             reader.Read(); // end Success/Failure object
-                            reader.Read(); // end Result object
+                            
+                            // skip the EndObject for "result" json object if it was read only
+                            // DeployProcessed.ExecutionResult does not read it
+                            if(readResult)
+                                reader.Read(); 
 
                             break;
                     }
@@ -102,7 +106,7 @@ namespace Casper.Network.SDK.Types
                 return new ExecutionResult
                 {
                     BlockHash = blockHash,
-                    IsSuccess = result.Equals("Success"),
+                    IsSuccess = result.Equals("Success", StringComparison.InvariantCultureIgnoreCase),
                     Cost = executionResult.Cost,
                     Effect = executionResult.Effect,
                     ErrorMessage = executionResult.ErrorMessage,

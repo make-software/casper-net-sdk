@@ -19,6 +19,10 @@ namespace Casper.Network.SDK.Converters
             reader.Read(); // Start array
 
             List<T> list = new List<T>();
+
+            if (reader.TokenType == JsonTokenType.EndObject ||
+                reader.TokenType == JsonTokenType.EndArray)
+                return list; //this is an empty list, just return...
             
             var tConverter = Activator.CreateInstance(typeof(TConverter)) as JsonConverter;
 

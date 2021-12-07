@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Numerics;
 using Casper.Network.SDK.Converters;
+using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
@@ -49,8 +50,8 @@ namespace Casper.Network.SDK.Types
     public class StoredContractByHashDeployItem : ExecutableDeployItem
     {
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
-        public byte[] Hash { get; init; }
+        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
+        public string Hash { get; init; }
 
         [JsonPropertyName("entry_point")] public string EntryPoint { get; init; } = "";
 
@@ -58,7 +59,7 @@ namespace Casper.Network.SDK.Types
         {
         }
         
-        public StoredContractByHashDeployItem(byte[] hash, string entryPoint, List<NamedArg> args = null)
+        public StoredContractByHashDeployItem(string hash, string entryPoint, List<NamedArg> args = null)
         {
             Hash = hash;
             EntryPoint = entryPoint;
@@ -95,8 +96,8 @@ namespace Casper.Network.SDK.Types
     public class StoredVersionedContractByHashDeployItem : ExecutableDeployItem
     {
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
-        public byte[] Hash { get; init; }
+        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
+        public string Hash { get; init; }
 
         [JsonPropertyName("version")] public uint? Version { get; init; }
 
@@ -106,7 +107,7 @@ namespace Casper.Network.SDK.Types
         {
         }
         
-        public StoredVersionedContractByHashDeployItem(byte[] hash, uint? version, string entryPoint,
+        public StoredVersionedContractByHashDeployItem(string hash, uint? version, string entryPoint,
             List<NamedArg> args = null)
         {
             Hash = hash;
@@ -154,11 +155,11 @@ namespace Casper.Network.SDK.Types
         
         public TransferDeployItem(BigInteger amount, PublicKey target, CLValue sourcePurse, ulong? id = null)
         {
-            var targetHash = target.GetAccountHash();
+            var targetHash = new AccountHashKey(target.GetAccountHash());
 
             RuntimeArgs = new List<NamedArg>();
             RuntimeArgs.Add(new NamedArg("amount", CLValue.U512(amount)));
-            RuntimeArgs.Add(new NamedArg("target", CLValue.ByteArray(targetHash)));
+            RuntimeArgs.Add(new NamedArg("target", CLValue.ByteArray(targetHash.RawBytes)));
 
             var optionValue = id == null ? CLValue.OptionNone(new CLTypeInfo(CLType.U64)) : CLValue.Option(CLValue.U64((ulong) id));
             RuntimeArgs.Add(new NamedArg("id", optionValue));

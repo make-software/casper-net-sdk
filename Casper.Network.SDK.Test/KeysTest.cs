@@ -25,7 +25,7 @@ namespace NetCasperTest
             Assert.IsTrue(Hex.Decode(ED25519publicKey)[1..].SequenceEqual(publicKey.RawBytes));
             
             var hash = publicKey.GetAccountHash();
-            Assert.AreEqual(Hex.ToHexString(hash), ED25519hash, "Unexpected ED25519 hash value");
+            Assert.AreEqual(ED25519hash, hash.Substring("account-hash-".Length).ToLower(), "Unexpected ED25519 hash value");
 
             var pk2 = PublicKey.FromBytes(Hex.Decode(ED25519publicKey));
             Assert.AreEqual(KeyAlgo.ED25519, pk2.KeyAlgorithm);
@@ -46,7 +46,7 @@ namespace NetCasperTest
             Assert.IsTrue(Hex.Decode(ED25519publicKey).SequenceEqual(pk4.GetBytes()));
             
             var hash3 = pk4.GetAccountHash();
-            Assert.AreEqual(Hex.ToHexString(hash3), ED25519hash, "Unexpected SECP256K1 hash value");
+            Assert.AreEqual(ED25519hash, hash3.Substring("account-hash-".Length).ToLower(), "Unexpected SECP256K1 hash value");
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace NetCasperTest
             Assert.AreEqual(KeyAlgo.SECP256K1, publicKey.KeyAlgorithm);
             
             var hash = publicKey.GetAccountHash();
-            Assert.AreEqual(Hex.ToHexString(hash), SECP256K1hash, "Unexpected SECP256K1hash value");
+            Assert.AreEqual(SECP256K1hash, hash.Substring("account-hash-".Length).ToLower(), "Unexpected SECP256K1hash value");
             
             var pk2 = PublicKey.FromBytes(Hex.Decode(SECP256K1publicKey));
             Assert.AreEqual(KeyAlgo.SECP256K1, pk2.KeyAlgorithm);
@@ -77,7 +77,7 @@ namespace NetCasperTest
             Assert.IsTrue(Hex.Decode(SECP256K1publicKey).SequenceEqual(pk4.GetBytes()));
             
             var hash3 = pk4.GetAccountHash();
-            Assert.AreEqual(Hex.ToHexString(hash3), SECP256K1hash, "Unexpected SECP256K1hash value");
+            Assert.AreEqual(SECP256K1hash, hash3.Substring("account-hash-".Length).ToLower( ), "Unexpected SECP256K1hash value");
         }
         
         [Test]
