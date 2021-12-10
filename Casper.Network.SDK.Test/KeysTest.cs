@@ -9,12 +9,12 @@ namespace NetCasperTest
 {
     public class KeysTest
     {
-        private static  string ED25519publicKey = "01381B36CD07aD85348607FFe0fa3A2d033Ea941d14763358EbeACe9c8ad3CB771";
+        private static  string ED25519publicKey = "01381b36cd07Ad85348607ffE0fA3A2d033eA941D14763358eBEacE9C8aD3cB771";
 
-        private static  string ED25519hash = "07b30fdd279f21d29ab1922313b56ad3905e7dd6a654344b8012e0be9fefa51b";
+        private static  string ED25519hash = "07b30Fdd279f21D29Ab1922313b56ad3905e7dd6A654344B8012e0Be9fefA51B";
 
-        private static  string SECP256K1publicKey = "0203B2F8c0613d2d866948c46e296F09FAED9b029110D424D19D488a0C39A811eBBC";
-        private static  string SECP256K1hash = "aebf6cf44f8d7a633b4e2084ce3be3bbe3db2cec62e49afe103dca79f7818d43";
+        private static  string SECP256K1publicKey = "0203b2F8c0613d2d866948c46e296F09faEd9b029110d424d19d488A0C39a811ebBC";
+        private static  string SECP256K1hash = "aeBf6cf44F8d7a633b4E2084CE3bE3BbE3Db2ceC62e49AFe103DCA79f7818D43";
 
         [Test]
         public void TestValidBlakeEd25519()
@@ -25,7 +25,7 @@ namespace NetCasperTest
             Assert.IsTrue(Hex.Decode(ED25519publicKey)[1..].SequenceEqual(publicKey.RawBytes));
             
             var hash = publicKey.GetAccountHash();
-            Assert.AreEqual(ED25519hash, hash.Substring("account-hash-".Length).ToLower(), "Unexpected ED25519 hash value");
+            Assert.AreEqual(ED25519hash, hash.Substring("account-hash-".Length), "Unexpected ED25519 hash value");
 
             var pk2 = PublicKey.FromBytes(Hex.Decode(ED25519publicKey));
             Assert.AreEqual(KeyAlgo.ED25519, pk2.KeyAlgorithm);
@@ -46,7 +46,7 @@ namespace NetCasperTest
             Assert.IsTrue(Hex.Decode(ED25519publicKey).SequenceEqual(pk4.GetBytes()));
             
             var hash3 = pk4.GetAccountHash();
-            Assert.AreEqual(ED25519hash, hash3.Substring("account-hash-".Length).ToLower(), "Unexpected SECP256K1 hash value");
+            Assert.AreEqual(ED25519hash, hash3.Substring("account-hash-".Length), "Unexpected SECP256K1 hash value");
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace NetCasperTest
             Assert.AreEqual(KeyAlgo.SECP256K1, publicKey.KeyAlgorithm);
             
             var hash = publicKey.GetAccountHash();
-            Assert.AreEqual(SECP256K1hash, hash.Substring("account-hash-".Length).ToLower(), "Unexpected SECP256K1hash value");
+            Assert.AreEqual(SECP256K1hash, hash.Substring("account-hash-".Length), "Unexpected SECP256K1hash value");
             
             var pk2 = PublicKey.FromBytes(Hex.Decode(SECP256K1publicKey));
             Assert.AreEqual(KeyAlgo.SECP256K1, pk2.KeyAlgorithm);
@@ -77,7 +77,7 @@ namespace NetCasperTest
             Assert.IsTrue(Hex.Decode(SECP256K1publicKey).SequenceEqual(pk4.GetBytes()));
             
             var hash3 = pk4.GetAccountHash();
-            Assert.AreEqual(SECP256K1hash, hash3.Substring("account-hash-".Length).ToLower( ), "Unexpected SECP256K1hash value");
+            Assert.AreEqual(SECP256K1hash, hash3.Substring("account-hash-".Length), "Unexpected SECP256K1hash value");
         }
         
         [Test]

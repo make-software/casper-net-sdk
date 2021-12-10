@@ -10,9 +10,9 @@ namespace NetCasperTest
     public class DeployJsonSerializer
     {
         private string deploy1 = TestContext.CurrentContext.TestDirectory + "/TestData/transfer-deploy.json";
-        private string signer1 = "017b8058863aAd49c7b89C77019CEF3a4D863BDf1C0c61499776F94B18465810f7";
+        private string signer1 = "017b8058863Aad49c7b89c77019ceF3a4D863BDf1c0c61499776F94b18465810F7";
         private string signature1 =
-            "012A0c5896aB9d6CF029268cf454BA9D42BCD40Bd909C984890F326739eEF13201D1d2A9a95938B2A966F2e650d1bdd80931f0374e3A92403E025b806AA1065109";
+            "012a0c5896aB9D6Cf029268Cf454Ba9D42bcD40Bd909C984890F326739EeF13201d1d2a9a95938B2a966F2E650D1bDd80931F0374e3A92403e025B806Aa1065109";
         
         [Test]
         public void LoadDeployFromFileTest()

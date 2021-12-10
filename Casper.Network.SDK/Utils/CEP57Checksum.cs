@@ -77,7 +77,7 @@ namespace Casper.Network.SDK.Utils
             
             var nibbles = _bytes_to_nibbles(input);
 
-            var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(512);
+            var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
             bcBl2bdigest.BlockUpdate(input, 0, input.Length);
             var hash = new byte[bcBl2bdigest.GetDigestSize()];
             bcBl2bdigest.DoFinal(hash, 0);

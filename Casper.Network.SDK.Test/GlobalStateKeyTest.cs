@@ -155,11 +155,11 @@ namespace NetCasperTest
         [Test]
         public void HashKeyJsonDeserializeTest()
         {
-            const string json = @"{""key"":""hash-9824D60dc3a5c44a20B9FD260A412437933835B52fC683D8AE36e4ec2114843e"",""kind"":""Read""}";
+            const string json = @"{""key"":""hash-98d945f5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6"",""kind"":""Read""}";
             var op = JsonSerializer.Deserialize<Operation>(json);
             Assert.IsNotNull(op);
             
-            const string invalidJson = @"{""key"":""hash-aaaaD60dc3a5c44a20B9FD260A412437933835B52fC683D8AE36e4ec2114843e"",""kind"":""Read""}";
+            const string invalidJson = @"{""key"":""hash-aaaaa5f5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6"",""kind"":""Read""}";
             var ex = Assert.Catch(() => JsonSerializer.Deserialize<Operation>(invalidJson));
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex.Message.Contains("checksum mismatch"));
