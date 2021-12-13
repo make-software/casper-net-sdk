@@ -262,13 +262,11 @@ namespace Casper.Network.SDK.Types
         {
         }
         
-        public TransferDeployItem(BigInteger amount, PublicKey target, CLValue sourcePurse, ulong? id = null)
+        public TransferDeployItem(BigInteger amount, AccountHashKey targetAccountHash, ulong? id = null)
         {
-            var targetHash = new AccountHashKey(target.GetAccountHash());
-
             RuntimeArgs = new List<NamedArg>();
             RuntimeArgs.Add(new NamedArg("amount", CLValue.U512(amount)));
-            RuntimeArgs.Add(new NamedArg("target", CLValue.ByteArray(targetHash.RawBytes)));
+            RuntimeArgs.Add(new NamedArg("target", CLValue.ByteArray(targetAccountHash.RawBytes)));
 
             var optionValue = id == null ? CLValue.OptionNone(new CLTypeInfo(CLType.U64)) : CLValue.Option(CLValue.U64((ulong) id));
             RuntimeArgs.Add(new NamedArg("id", optionValue));

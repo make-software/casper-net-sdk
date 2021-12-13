@@ -16,8 +16,7 @@ namespace Casper.Network.SDK
             string chainName,
             ulong? idTransfer = null,
             ulong gasPrice = 1,
-            ulong ttl = 1800000, //30m
-            string sourcePurse = null
+            ulong ttl = 1800000 //30m
         )
         {
             var header = new DeployHeader()
@@ -31,8 +30,7 @@ namespace Casper.Network.SDK
             var payment = new ModuleBytesDeployItem(paymentAmount);
             var session = new TransferDeployItem(
                 amount,
-                toKey,
-                sourcePurse==null ? null : CLValue.URef(sourcePurse),
+                new AccountHashKey(toKey),
                 idTransfer);
             
             var deploy = new Deploy(header, payment, session);

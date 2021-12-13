@@ -30,13 +30,13 @@ namespace NetCasperTest
                 ChainName = "casper-test",
                 GasPrice = 1
             };
-            
+
+            var tgtKey = PublicKey.FromHexString("01027c04a0210afdf4a83328d57e8c2a12247a86d872fb53367f22a84b1b53d2a9");
             var bigInt1000 = new BigInteger(1000);
             var payment = new ModuleBytesDeployItem(bigInt1000);
             var session = new TransferDeployItem(
                 15000000000,
-                PublicKey.FromHexString("01027c04a0210afdf4a83328d57e8c2a12247a86d872fb53367f22a84b1b53d2a9"),
-                null,
+                new AccountHashKey(tgtKey),
                 123456789012345);
 
             var deploy = new Deploy(header, payment, session);
