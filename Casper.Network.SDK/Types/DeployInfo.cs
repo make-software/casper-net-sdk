@@ -11,7 +11,7 @@ namespace Casper.Network.SDK.Types
     public class DeployInfo
     {
         /// <summary>
-        /// The relevant Deploy.
+        /// The Deploy hash.
         /// </summary>
         [JsonPropertyName("deploy_hash")]
         public string DeployHash { get; init; }
@@ -20,7 +20,8 @@ namespace Casper.Network.SDK.Types
         /// Account identifier of the creator of the Deploy.
         /// </summary>
         [JsonPropertyName("from")]
-        public string From { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public AccountHashKey From { get; init; }
         
         /// <summary>
         /// Gas cost of executing the Deploy.
@@ -40,6 +41,7 @@ namespace Casper.Network.SDK.Types
         /// Transfer addresses performed by the Deploy.
         /// </summary>
         [JsonPropertyName("transfers")]
-        public List<string> Transfers { get; init; }
+        [JsonConverter(typeof(GenericListConverter<TransferKey, GlobalStateKey.GlobalStateKeyConverter>))]
+        public List<TransferKey> Transfers { get; init; }
     }
 }

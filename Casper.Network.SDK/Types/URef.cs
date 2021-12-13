@@ -1,9 +1,15 @@
 using System;
+using System.IO;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Unforgeable Reference. This key type is used for storing any type of value
+    /// except Account. Additionally, URefs used in contracts carry permission information
+    /// to prevent unauthorized usage of the value stored under the key.
+    /// </summary>
     public class URef : GlobalStateKey
     {
         public AccessRights AccessRights { get; }
@@ -29,11 +35,17 @@ namespace Casper.Network.SDK.Types
             AccessRights = (AccessRights) uint.Parse(parts[1]);
         }
         
+        /// <summary>
+        /// Creates an URef from a 33 bytes array. Last byte corresponds to the access rights.
+        /// </summary>
         public URef(byte[] bytes)
             : this($"uref-{Hex.ToHexString(bytes[..32])}-{(int)bytes[32]:000}")
         {
         }
         
+        /// <summary>
+        /// Creates an URef from a 32 bytes array and the access rights.
+        /// </summary>
         public URef(byte[] rawBytes, AccessRights accessRights)
             : this($"uref-{Hex.ToHexString(rawBytes)}-{(int)accessRights:000}")
         {
@@ -43,6 +55,16 @@ namespace Casper.Network.SDK.Types
         {
             key = key.Substring(0, key.LastIndexOf('-'));
             return Hex.Decode(key.Substring(key.LastIndexOf('-')+1));
+        }
+        
+        public override byte[] GetBytes()
+        {
+            var ms = new MemoryStream(34);
+            ms.WriteByte((byte)this.KeyIdentifier);
+            ms.Write(this.RawBytes);
+            ms.WriteByte((byte)this.AccessRights);
+            
+            return ms.ToArray();
         }
 
         public override string ToString()

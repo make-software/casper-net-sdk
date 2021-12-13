@@ -1,3 +1,5 @@
+using System;
+
 namespace Casper.Network.SDK.Types
 {
     public class CLOptionTypeInfo : CLTypeInfo
@@ -29,6 +31,13 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return $"Option({OptionType.ToString()})";
+        }
+
+        public override Type GetFrameworkType()
+        {
+            Type optionType = this.OptionType.GetFrameworkType();
+
+            return optionType;
         }
     }
 }

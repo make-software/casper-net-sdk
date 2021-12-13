@@ -29,12 +29,22 @@ namespace Casper.Network.SDK.Types
         {
         }
 
-        public ModuleBytesDeployItem(byte[] moduleBytes)
+        /// <summary>
+        /// Creates a deploy item with binary code to execute and a list of named arguments.
+        /// </summary>
+        /// <param name="moduleBytes"></param>
+        /// <param name="args"></param>
+        public ModuleBytesDeployItem(byte[] moduleBytes, List<NamedArg> args = null)
         {
-            RuntimeArgs = new List<NamedArg>();
             ModuleBytes = moduleBytes;
+            RuntimeArgs = args ?? new List<NamedArg>();
         }
 
+        /// <summary>
+        /// Creates a deploy item to specify a payment amount with origin the main purse
+        /// of the caller's account.
+        /// </summary>
+        /// <param name="amount">Payment amount in motes</param>
         public ModuleBytesDeployItem(BigInteger amount)
         {
             RuntimeArgs = new List<NamedArg>();

@@ -1,3 +1,5 @@
+using System;
+
 namespace Casper.Network.SDK.Types
 {
 
@@ -36,6 +38,11 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return $"Key({KeyIdentifier})";
+        }
+
+        public override Type GetFrameworkType()
+        {
+            return typeof(GlobalStateKey);
         }
     }
 }

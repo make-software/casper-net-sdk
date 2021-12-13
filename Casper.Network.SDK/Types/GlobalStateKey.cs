@@ -1,28 +1,66 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.JsonRpc.ResultTypes;
 using Casper.Network.SDK.Utils;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Keys in the global state store information about different data types.
+    /// <see cref="https://casper.network/docs/design/serialization-standard#serialization-standard-state-keys"/>
+    /// </summary>
     public enum KeyIdentifier
     {
+        /// <summary>
+        /// AccountHash keys store accounts in the global state. 
+        /// </summary>
         Account = 0x00,
+        /// <summary>
+        /// Hash keys store contracts immutably in the global state.
+        /// </summary>
         Hash = 0x01,
+        /// <summary>
+        /// URef keys store values and manage permissions to interact with the value stored under the URef.
+        /// </summary>
         URef = 0x02,
+        /// <summary>
+        /// Transfer keys store transfers in the global state.
+        /// </summary>
         Transfer = 0x03,
+        /// <summary>
+        /// DeployInfo keys store information related to deploys in the global state.
+        /// </summary>
         DeployInfo = 0x04,
+        /// <summary>
+        /// EraInfo keys store information related to the Auction metadata for a particular era.
+        /// </summary>
         EraInfo = 0x05,
+        /// <summary>
+        /// Balance keys store information related to the balance of a given purse.
+        /// </summary>
         Balance = 0x06,
+        /// <summary>
+        /// Bid keys store information related to auction bids in the global state.
+        /// </summary>
         Bid = 0x07,
+        /// <summary>
+        /// Withdraw keys store information related to auction withdraws in the global state.
+        /// </summary>
         Withdraw = 0x08,
+        /// <summary>
+        /// Dictionary keys store dictionary items.
+        /// </summary>
         Dictionary = 0x09
     }
 
+    /// <summary>
+    /// Base class for the different global state keys. 
+    /// </summary>
     public abstract class GlobalStateKey
     {
         protected readonly string Key;
@@ -48,11 +86,11 @@ namespace Casper.Network.SDK.Types
                 throw new ArgumentException($"Key not valid. It should start with '{keyPrefix}'.",
                     nameof(key));
 
-            CEP57Checksum.Decode(key.Substring(key.LastIndexOf('-') + 1), out int checksumResult);
+            var bytes = CEP57Checksum.Decode(key.Substring(key.LastIndexOf('-') + 1), out int checksumResult);
             if (checksumResult == CEP57Checksum.InvalidChecksum)
                 throw new ArgumentException("Global State Key checksum mismatch.");
             
-            Key = key;
+            Key = keyPrefix + CEP57Checksum.Encode(bytes);
         }
 
         public string ToHexString()
@@ -60,6 +98,9 @@ namespace Casper.Network.SDK.Types
             return CEP57Checksum.Encode(RawBytes);
         }
 
+        /// <summary>
+        /// Converts a global state key from string to its specific key object. 
+        /// </summary>
         public static GlobalStateKey FromString(string value)
         {
             if (value.StartsWith("account-hash-"))
@@ -92,22 +133,35 @@ namespace Casper.Network.SDK.Types
             return null;
         }
 
+        /// <summary>
+        /// Converts a global state key from a byte array to its specific key object. First
+        /// byte in the array indicates the Key identifier.
+        /// </summary>
         public static GlobalStateKey FromBytes(byte[] bytes)
         {
             return bytes[0] switch
             {
-                0x00 => new AccountHashKey("account-hash-" + Hex.ToHexString(bytes[1..])),
-                0x01 => new HashKey("hash-" + Hex.ToHexString(bytes[1..])),
+                0x00 => new AccountHashKey("account-hash-" + CEP57Checksum.Encode(bytes[1..])),
+                0x01 => new HashKey("hash-" + CEP57Checksum.Encode(bytes[1..])),
                 0x02 => new URef(bytes[1..]),
-                0x03 => new TransferKey("transfer-" + Hex.ToHexString(bytes[1..])),
-                0x04 => new DeployInfoKey("deploy-" + Hex.ToHexString(bytes[1..])),
+                0x03 => new TransferKey("transfer-" + CEP57Checksum.Encode(bytes[1..])),
+                0x04 => new DeployInfoKey("deploy-" + CEP57Checksum.Encode(bytes[1..])),
                 0x05 => new EraInfoKey("era-" + BitConverter.ToInt64(bytes, 1)),
-                0x06 => new BalanceKey("balance-" + Hex.ToHexString(bytes[1..])),
-                0x07 => new BidKey("bid-" + Hex.ToHexString(bytes[1..])),
-                0x08 => new WithdrawKey("withdraw-" + Hex.ToHexString(bytes[1..])),
-                0x09 => new DictionaryKey("dictionary-" + Hex.ToHexString(bytes[1..])),
+                0x06 => new BalanceKey("balance-" + CEP57Checksum.Encode(bytes[1..])),
+                0x07 => new BidKey("bid-" + CEP57Checksum.Encode(bytes[1..])),
+                0x08 => new WithdrawKey("withdraw-" + CEP57Checksum.Encode(bytes[1..])),
+                0x09 => new DictionaryKey("dictionary-" + CEP57Checksum.Encode(bytes[1..])),
                 _ => throw new Exception($"Unknown key identifier '{bytes[0]}'")
             };
+        }
+
+        public virtual byte[] GetBytes()
+        {
+            var ms = new MemoryStream();
+            ms.WriteByte((byte)this.KeyIdentifier);
+            ms.Write(this.RawBytes);
+
+            return ms.ToArray();
         }
 
         public override string ToString()
@@ -176,6 +230,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores an account in the global state.
+    /// Format: 32-byte length with prefix 'account-hash-'.
+    /// </summary>
     public class AccountHashKey : GlobalStateKey
     {
         public AccountHashKey(string key) : base(key, "account-hash-")
@@ -189,6 +247,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores a contract inmutably in the global state.
+    /// Format: 32-byte length with prefix 'hash-'.
+    /// </summary>
     public class HashKey : GlobalStateKey
     {
         public HashKey(string key) : base(key, "hash-")
@@ -201,6 +263,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores information for a transfer in the global state.
+    /// Format: 32-byte length with prefix 'transfer-'.
+    /// </summary>
     public class TransferKey : GlobalStateKey
     {
         public TransferKey(string key) : base(key, "transfer-")
@@ -213,6 +279,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores information for a Deploy in the global state.
+    /// Format: 32-byte length with prefix 'deploy-'.
+    /// </summary>
     public class DeployInfoKey : GlobalStateKey
     {
         public DeployInfoKey(string key) : base(key, "deploy-")
@@ -225,6 +295,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores information related to the Auction metadata for a particular era..
+    /// Format: u64 number with prefix 'era-' (e.g. 'era-3407').
+    /// </summary>
     public class EraInfoKey : GlobalStateKey
     {
         public EraInfoKey(string key) : base(key)
@@ -248,8 +322,21 @@ namespace Casper.Network.SDK.Types
 
             return bytes;
         }
+
+        public override byte[] GetBytes()
+        {
+            var ms = new MemoryStream(9);
+            ms.WriteByte((byte)this.KeyIdentifier);
+            ms.Write(this.RawBytes);
+
+            return ms.ToArray();
+        }
     }
 
+    /// <summary>
+    /// Stores information related to the balance of a given purse.
+    /// Format: 32-byte length with prefix 'balance-'.
+    /// </summary>
     public class BalanceKey : GlobalStateKey
     {
         public BalanceKey(string key) : base(key, "balance-")
@@ -262,6 +349,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores information related to auction bids in the global state.
+    /// Format: 32-byte length with prefix 'bid-'.
+    /// </summary>
     public class BidKey : GlobalStateKey
     {
         public BidKey(string key) : base(key, "bid-")
@@ -274,6 +365,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores information related to auction withdraws in the global state.
+    /// Format: 32-byte length with prefix 'withdraw-'.
+    /// </summary>
     public class WithdrawKey : GlobalStateKey
     {
         public WithdrawKey(string key) : base(key, "withdraw-")
@@ -286,6 +381,10 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Stores dictionary items in the global state.
+    /// Format: 32-byte length with prefix 'dictionary-'.
+    /// </summary>
     public class DictionaryKey : GlobalStateKey
     {
         public DictionaryKey(string key) : base(key, "dictionary-")

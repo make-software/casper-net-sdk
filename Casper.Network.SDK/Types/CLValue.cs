@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml;
 using Casper.Network.SDK.ByteSerializers;
 using Casper.Network.SDK.Converters;
 using Casper.Network.SDK.Utils;
@@ -14,18 +17,25 @@ namespace Casper.Network.SDK.Types
 {
     public class CLValue
     {
-        // Type of the value. Can be simple or constructed 
+        /// <summary>
+        /// Type of the value. Can be simple or constructed 
+        /// </summary>
         [JsonPropertyName("cl_type")]
         [JsonConverter(typeof(CLTypeInfoConverter))]
         public CLTypeInfo TypeInfo { get; }
 
-        // Byte array representation of underlying data
+        /// <summary>
+        /// Byte array representation of underlying data 
+        /// </summary>
         [JsonPropertyName("bytes")]
         [JsonConverter(typeof(HexBytesWithChecksumConverter))]
         public byte[] Bytes { get; }
 
-        // The optional parsed value of the bytes used when testing
-        [JsonPropertyName("parsed")] public object Parsed { get; }
+        /// <summary>
+        /// The optional parsed value of the bytes used when testing 
+        /// </summary>
+        [JsonPropertyName("parsed")]
+        public object Parsed { get; }
 
         public CLValue(byte[] bytes, CLType clType) :
             this(bytes, new CLTypeInfo(clType))
@@ -61,15 +71,15 @@ namespace Casper.Network.SDK.Types
                 Parsed = je.ValueKind switch
                 {
                     JsonValueKind.String => je.GetString(),
-                    JsonValueKind.Number => typeInfo.Type switch 
-                        {
-                            CLType.I32 => je.GetInt32(),
-                            CLType.I64 => je.GetInt64(),
-                            CLType.U8 => je.GetByte(),
-                            CLType.U32 => je.GetUInt32(),
-                            CLType.U64 => je.GetUInt64(),
-                            _ => je
-                        },
+                    JsonValueKind.Number => typeInfo.Type switch
+                    {
+                        CLType.I32 => je.GetInt32(),
+                        CLType.I64 => je.GetInt64(),
+                        CLType.U8 => je.GetByte(),
+                        CLType.U32 => je.GetUInt32(),
+                        CLType.U64 => je.GetUInt64(),
+                        _ => je
+                    },
                     JsonValueKind.True => true,
                     JsonValueKind.False => false,
                     JsonValueKind.Null => null,
@@ -80,12 +90,18 @@ namespace Casper.Network.SDK.Types
                 Parsed = parsed;
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a boolean type.
+        /// </summary>
         public static CLValue Bool(bool value)
         {
             var bytes = new byte[] {value ? (byte) 0x01 : (byte) 0x00};
             return new CLValue(bytes, new CLTypeInfo(CLType.Bool), value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an Int32 type.
+        /// </summary>
         public static CLValue I32(int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -95,6 +111,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, CLType.I32, value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an Int64 type.
+        /// </summary>
         public static CLValue I64(long value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -104,6 +123,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, CLType.I64, value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an U8/byte type.
+        /// </summary>
         public static CLValue U8(byte value)
         {
             byte[] bytes = new byte[1];
@@ -111,6 +133,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, CLType.U8, value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an UInt32 type.
+        /// </summary>
         public static CLValue U32(UInt32 value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -120,6 +145,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, CLType.U32, value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an UInt64 type.
+        /// </summary>
         public static CLValue U64(UInt64 value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -129,39 +157,51 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, CLType.U64, value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an U128 type.
+        /// </summary>
         public static CLValue U128(BigInteger value)
         {
-            byte[] bytes = value.ToByteArray();
+            var bytes = value.ToByteArray();
             var len = bytes.Length;
 
-            byte[] b = new byte[1 + len];
+            var b = new byte[1 + len];
             b[0] = (byte) len;
             Array.Copy(bytes, 0, b, 1, len);
             return new CLValue(b, CLType.U128, value.ToString());
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an U256 type.
+        /// </summary>
         public static CLValue U256(BigInteger value)
         {
-            byte[] bytes = value.ToByteArray();
+            var bytes = value.ToByteArray();
             var len = bytes.Length;
 
-            byte[] b = new byte[1 + len];
+            var b = new byte[1 + len];
             b[0] = (byte) len;
             Array.Copy(bytes, 0, b, 1, len);
             return new CLValue(b, CLType.U256, value.ToString());
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an U512 type.
+        /// </summary>
         public static CLValue U512(BigInteger value)
         {
-            byte[] bytes = value.ToByteArray();
+            var bytes = value.ToByteArray();
             var len = bytes.Length;
 
-            byte[] b = new byte[1 + len];
+            var b = new byte[1 + len];
             b[0] = (byte) len;
             Array.Copy(bytes, 0, b, 1, len);
             return new CLValue(b, CLType.U512, value.ToString());
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with an U512 type.
+        /// </summary>
         public static CLValue U512(UInt64 value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
@@ -172,17 +212,23 @@ namespace Casper.Network.SDK.Types
                 if (bytes[nonZeros - 1] != 0x00)
                     break;
 
-            byte[] b = new byte[1 + nonZeros];
+            var b = new byte[1 + nonZeros];
             b[0] = (byte) nonZeros;
             Array.Copy(bytes, 0, b, 1, nonZeros);
             return new CLValue(b, CLType.U512, value.ToString());
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a Unit type.
+        /// </summary>
         public static CLValue Unit()
         {
             return new CLValue(Array.Empty<byte>(), CLType.Unit, null);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a String type.
+        /// </summary>
         public static CLValue String(string value)
         {
             var bValue = System.Text.Encoding.UTF8.GetBytes(value);
@@ -198,6 +244,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, new CLTypeInfo(CLType.String), value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a URef type.
+        /// </summary>
         public static CLValue URef(string value)
         {
             var uref = new URef(value);
@@ -208,6 +257,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, new CLTypeInfo(CLType.URef), value);
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a URef type.
+        /// </summary>
         public static CLValue URef(URef value)
         {
             byte[] bytes = new byte[33];
@@ -216,24 +268,17 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, new CLTypeInfo(CLType.URef), value.ToString());
         }
 
+        /// <summary>
+        /// Wraps a `CLValue` object into an Option `CLValue`.
+        /// </summary>
         public static CLValue Option(CLValue innerValue)
         {
             byte[] bytes;
-            if (innerValue == null)
-            {
-                bytes = new byte[1];
-                bytes[0] = 0x00;
+            bytes = new byte[1 + innerValue.Bytes.Length];
+            bytes[0] = 0x01;
+            Array.Copy(innerValue.Bytes, 0, bytes, 1, innerValue.Bytes.Length);
 
-                return new CLValue(bytes, new CLOptionTypeInfo(null), null);
-            }
-            else
-            {
-                bytes = new byte[1 + innerValue.Bytes.Length];
-                bytes[0] = 0x01;
-                Array.Copy(innerValue.Bytes, 0, bytes, 1, innerValue.Bytes.Length);
-
-                return new CLValue(bytes, new CLOptionTypeInfo(innerValue.TypeInfo), innerValue.Parsed);
-            }
+            return new CLValue(bytes, new CLOptionTypeInfo(innerValue.TypeInfo), innerValue.Parsed);
         }
 
         public static CLValue Option(int innerValue) => CLValue.Option(CLValue.I32(innerValue));
@@ -247,19 +292,20 @@ namespace Casper.Network.SDK.Types
         public static CLValue Option(ulong innerValue) => CLValue.Option(CLValue.U64(innerValue));
 
         public static CLValue Option(string innerValue) => CLValue.Option(CLValue.String(innerValue));
-        
+
         public static CLValue Option(URef innerValue) => CLValue.Option(CLValue.URef(innerValue));
 
         public static CLValue Option(PublicKey innerValue) => CLValue.Option(CLValue.PublicKey(innerValue));
 
         public static CLValue Option(GlobalStateKey innerValue) => CLValue.Option(CLValue.Key(innerValue));
-        
+
         public static CLValue Option(byte[] innerValue) => CLValue.Option(CLValue.ByteArray(innerValue));
-        
+
         public static CLValue Option(CLValue[] innerValue) => CLValue.Option(CLValue.List(innerValue));
 
-        public static CLValue Option(Dictionary<CLValue,CLValue> innerValue) => CLValue.Option(CLValue.Map(innerValue));
-        
+        public static CLValue Option(Dictionary<CLValue, CLValue> innerValue) =>
+            CLValue.Option(CLValue.Map(innerValue));
+
         public static CLValue OptionNone(CLTypeInfo innerTypeInfo)
         {
             byte[] bytes = new byte[1];
@@ -268,6 +314,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, new CLOptionTypeInfo(innerTypeInfo), null);
         }
 
+        /// <summary>
+        /// Returns a List `CLValue` object.
+        /// </summary>
         public static CLValue List(CLValue[] values)
         {
             if (values.Length == 0)
@@ -275,7 +324,7 @@ namespace Casper.Network.SDK.Types
 
             var ms = new MemoryStream();
 
-            byte[] bytes = BitConverter.GetBytes(values.Length);
+            var bytes = BitConverter.GetBytes(values.Length);
             if (!BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
             ms.Write(bytes);
@@ -288,20 +337,30 @@ namespace Casper.Network.SDK.Types
                     throw new ArgumentOutOfRangeException(nameof(values), "A list cannot contain different types");
             }
 
-            return new CLValue(ms.ToArray(), new CLListTypeInfo(typeInfo), "null");
+            return new CLValue(ms.ToArray(), new CLListTypeInfo(typeInfo), "");
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a ByteArray type.
+        /// </summary>
         public static CLValue ByteArray(byte[] bytes)
         {
             return new CLValue(bytes, new CLByteArrayTypeInfo(bytes.Length), Hex.ToHexString(bytes));
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a ByteArray type.
+        /// </summary>
         public static CLValue ByteArray(string hex)
         {
             var bytes = Hex.Decode(hex);
             return new CLValue(bytes, new CLByteArrayTypeInfo(bytes.Length), hex);
         }
 
+        /// <summary>
+        /// Returns a Result `CLValue` with wrapped OK value inside.
+        /// To be complete, it must be indicated the type for an err value
+        /// </summary>
         public static CLValue Ok(CLValue ok, CLTypeInfo errTypeInfo)
         {
             var typeInfo = new CLResultTypeInfo(ok.TypeInfo, errTypeInfo);
@@ -312,6 +371,10 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, typeInfo, null);
         }
 
+        /// <summary>
+        /// Returns a Result `CLValue` with wrapped Err value inside.
+        /// To be complete, it must be indicated the type for an ok value
+        /// </summary>
         public static CLValue Err(CLValue err, CLTypeInfo okTypeInfo)
         {
             var typeInfo = new CLResultTypeInfo(okTypeInfo, err.TypeInfo);
@@ -322,6 +385,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, typeInfo, null);
         }
 
+        /// <summary>
+        /// Returns a Map `CLValue` object.
+        /// </summary>
         public static CLValue Map(Dictionary<CLValue, CLValue> dict)
         {
             CLMapTypeInfo mapTypeInfo = null;
@@ -347,11 +413,17 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes.ToArray(), mapTypeInfo, null);
         }
 
+        /// <summary>
+        /// Returns a Tuple1 `CLValue` object.
+        /// </summary>
         public static CLValue Tuple1(CLValue t0)
         {
             return new CLValue(t0.Bytes, new CLTuple1TypeInfo(t0.TypeInfo), t0.Parsed);
         }
 
+        /// <summary>
+        /// Returns a Tuple2 `CLValue` object.
+        /// </summary>
         public static CLValue Tuple2(CLValue t0, CLValue t1)
         {
             var bytes = new byte[t0.Bytes.Length + t1.Bytes.Length];
@@ -361,6 +433,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, new CLTuple2TypeInfo(t0.TypeInfo, t1.TypeInfo), Hex.ToHexString(bytes));
         }
 
+        /// <summary>
+        /// Returns a Tuple3 `CLValue` object.
+        /// </summary>
         public static CLValue Tuple3(CLValue t0, CLValue t1, CLValue t2)
         {
             var bytes = new byte[t0.Bytes.Length + t1.Bytes.Length + t2.Bytes.Length];
@@ -372,12 +447,18 @@ namespace Casper.Network.SDK.Types
                 Hex.ToHexString(bytes));
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a PublicKey type.
+        /// </summary>
         public static CLValue PublicKey(PublicKey publicKey)
         {
             return new CLValue(publicKey.GetBytes(), new CLTypeInfo(CLType.PublicKey),
                 Hex.ToHexString(publicKey.GetBytes()));
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a PublicKey type.
+        /// </summary>
         public static CLValue PublicKey(byte[] value, KeyAlgo keyAlgorithm)
         {
             var bytes = new byte[1 + value.Length];
@@ -387,11 +468,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, new CLTypeInfo(CLType.PublicKey), Hex.ToHexString(bytes));
         }
 
-        public static CLValue PublicKey(string value, KeyAlgo keyAlgorithm)
-        {
-            return PublicKey(Hex.Decode(value), keyAlgorithm);
-        }
-
+        /// <summary>
+        /// Converts a public key into an account hash an returns it wrapped into a Key `CLValue`
+        /// </summary>
         public static CLValue KeyFromPublicKey(PublicKey publicKey)
         {
             byte[] accountHash = new AccountHashKey(publicKey.GetAccountHash()).RawBytes;
@@ -402,6 +481,9 @@ namespace Casper.Network.SDK.Types
             return new CLValue(bytes, new CLKeyTypeInfo(KeyIdentifier.Account), Hex.ToHexString(bytes));
         }
 
+        /// <summary>
+        /// Returns a `CLValue` object with a GlobalStateKey in it 
+        /// </summary>
         public static CLValue Key(GlobalStateKey key)
         {
             var serializer = new GlobalStateKeyByteSerializer();
@@ -422,36 +504,15 @@ namespace Casper.Network.SDK.Types
 
         #region Converter functions
 
-        private object ReadItem(BinaryReader reader, CLType type)
-        {
-            return type switch
-            {
-                CLType.Bool => reader.ReadByte() != 0x00,
-                CLType.I32 => reader.ReadInt32(),
-                CLType.I64 => reader.ReadInt64(),
-                CLType.U8 => reader.ReadByte(),
-                CLType.U32 => reader.ReadUInt32(),
-                CLType.U64 => reader.ReadUInt64(),
-                CLType.U128 => reader.ReadCLBigInteger(),
-                CLType.U256 => reader.ReadCLBigInteger(),
-                CLType.U512 => reader.ReadCLBigInteger(),
-                CLType.String => reader.ReadCLString(),
-                CLType.URef => reader.ReadCLURef(),
-                CLType.PublicKey => reader.ReadCLPublicKey(),
-                CLType.Key => reader.ReadCLGlobalStateKey(),
-                _ => null
-            };
-        }
-
         private void ParseResultError(byte[] Bytes, CLResultTypeInfo resultTypeInfo)
         {
             var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
 
-            var item = ReadItem(reader, resultTypeInfo.Err.Type);
+            var item = reader.ReadCLItem(resultTypeInfo.Err, null);
             if (item == null)
-                throw new ResultException(Bytes, resultTypeInfo.Ok, resultTypeInfo.Err);
+                throw new CLValueException(Bytes, resultTypeInfo.Ok, resultTypeInfo.Err);
 
-            throw new ResultException(Bytes, item, resultTypeInfo.Ok, resultTypeInfo.Err);
+            throw new CLValueException(Bytes, item, resultTypeInfo.Ok, resultTypeInfo.Err);
         }
 
         private byte[] GetOkInnerTypeOrFail(ref CLTypeInfo typeInfo)
@@ -466,6 +527,9 @@ namespace Casper.Network.SDK.Types
             return Bytes[1..];
         }
 
+        /// <summary>
+        /// Converts a `CLValue`to a boolean 
+        /// </summary>
         public bool ToBoolean()
         {
             var bytes = Bytes;
@@ -482,6 +546,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator bool(CLValue clValue) => clValue.ToBoolean();
 
+        /// <summary>
+        /// Converts a `CLValue`to a Int32 
+        /// </summary>
         public int ToInt32()
         {
             var bytes = Bytes;
@@ -502,6 +569,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator int(CLValue clValue) => clValue.ToInt32();
 
+        /// <summary>
+        /// Converts a `CLValue`to a Int64 
+        /// </summary>
         public long ToInt64()
         {
             var bytes = Bytes;
@@ -526,6 +596,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator long(CLValue clValue) => clValue.ToInt64();
 
+        /// <summary>
+        /// Converts a `CLValue`to a U8/byte 
+        /// </summary>
         public byte ToByte()
         {
             var bytes = Bytes;
@@ -544,6 +617,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator byte(CLValue clValue) => clValue.ToByte();
 
+        /// <summary>
+        /// Converts a `CLValue`to a UInt32 
+        /// </summary>
         public uint ToUInt32()
         {
             var bytes = Bytes;
@@ -564,6 +640,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator uint(CLValue clValue) => clValue.ToUInt32();
 
+        /// <summary>
+        /// Converts a `CLValue`to a UInt64 
+        /// </summary>
         public ulong ToUInt64()
         {
             var bytes = Bytes;
@@ -586,6 +665,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator ulong(CLValue clValue) => clValue.ToUInt64();
 
+        /// <summary>
+        /// Converts a `CLValue`to a BigInteger 
+        /// </summary>
         public BigInteger ToBigInteger()
         {
             var bytes = Bytes;
@@ -616,6 +698,29 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator BigInteger(CLValue clValue) => clValue.ToBigInteger();
 
+        /// <summary>
+        /// Converts Unit CLValue to Unit.
+        /// </summary>
+        public Unit ToUnit()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            if (typeInfo.Type == CLType.Unit)
+                return Types.Unit.Default;
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Unit'.");
+        }
+        
+        public static explicit operator Unit(CLValue clValue) => clValue.ToUnit();
+
+        
+        /// <summary>
+        /// Converts a `CLValue`to a String 
+        /// </summary>
         public override string ToString()
         {
             var bytes = Bytes;
@@ -628,7 +733,7 @@ namespace Casper.Network.SDK.Types
 
             // read any type, and then, convert to string
             //
-            var item = ReadItem(reader, typeInfo.Type);
+            var item = reader.ReadCLItem(typeInfo, null);
             if (item == null)
                 throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'String'.");
 
@@ -637,6 +742,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator string(CLValue clValue) => clValue.ToString();
 
+        /// <summary>
+        /// Converts a `CLValue`to a URef 
+        /// </summary>
         public URef ToURef()
         {
             var bytes = Bytes;
@@ -648,7 +756,7 @@ namespace Casper.Network.SDK.Types
             if (typeInfo.Type == CLType.URef)
                 return new URef(bytes);
 
-            if(typeInfo.Type == CLType.Key && ((CLKeyTypeInfo) typeInfo).KeyIdentifier == KeyIdentifier.URef)
+            if (typeInfo.Type == CLType.Key && ((CLKeyTypeInfo) typeInfo).KeyIdentifier == KeyIdentifier.URef)
                 return new URef(bytes[1..]);
 
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'URef'.");
@@ -656,6 +764,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator URef(CLValue clValue) => clValue.ToURef();
 
+        /// <summary>
+        /// Converts a `CLValue`to a PublicKey 
+        /// </summary>
         public PublicKey ToPublicKey()
         {
             var bytes = Bytes;
@@ -672,6 +783,9 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator PublicKey(CLValue clValue) => clValue.ToPublicKey();
 
+        /// <summary>
+        /// Converts a `CLValue` to a GlobalStateKey 
+        /// </summary>
         public GlobalStateKey ToGlobalStateKey()
         {
             var bytes = Bytes;
@@ -688,7 +802,10 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator GlobalStateKey(CLValue clValue) => clValue.ToGlobalStateKey();
 
-        public List<object> ToList()
+        /// <summary>
+        /// Converts a List `CLValue` to a List&lt;&gt;.
+        /// </summary>
+        public IList ToList()
         {
             var bytes = Bytes;
             var typeInfo = TypeInfo;
@@ -700,29 +817,39 @@ namespace Casper.Network.SDK.Types
 
             if (typeInfo.Type == CLType.List)
             {
-                var listTypeInfo = typeInfo as CLListTypeInfo;
-                if (listTypeInfo == null)
-                    throw new Exception("Wrong inner type in CLValue of type List");
-
-                var length = reader.ReadCLI32();
-
-                var list = new List<object>(length);
-
-                for (int i = 0; i < length; i++)
-                {
-                    var item = ReadItem(reader, listTypeInfo.ListType.Type);
-                    if (item == null)
-                        throw new FormatException($"Cannot convert to a list of '{listTypeInfo.ListType.Type}'.");
-
-                    list.Add(item);
-                }
-
-                return list;
+                var dict = reader.ReadCLItem(typeInfo, null);
+                return (IList) dict;
             }
 
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'List'.");
         }
 
+        /// <summary>
+        /// Converts a List `CLValue` to a List&lt;T&gt;.
+        /// </summary>
+        public List<T> ToList<T>()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.List)
+            {
+                var fwType = typeof(List<>).MakeGenericType(new[] {typeof(T)});
+                var dict = reader.ReadCLItem(typeInfo, fwType);
+                return (List<T>) dict;
+            }
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'List'.");
+        }
+
+        /// <summary>
+        /// Converts ByteArray `CLValue` to a byte[] 
+        /// </summary>
         public byte[] ToByteArray()
         {
             var bytes = Bytes;
@@ -733,9 +860,9 @@ namespace Casper.Network.SDK.Types
 
             if (typeInfo.Type == CLType.ByteArray)
             {
-                byte[] bytearray = new byte[bytes.Length];
-                Array.Copy(bytes, 0, bytearray, 0, bytes.Length);
-                return bytearray;
+                var reader = new BinaryReader(new MemoryStream(bytes));
+
+                return (byte[]) reader.ReadCLItem(typeInfo, typeof(byte[]));
             }
 
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'ByteArray'.");
@@ -743,7 +870,10 @@ namespace Casper.Network.SDK.Types
 
         public static explicit operator byte[](CLValue clValue) => clValue.ToByteArray();
 
-        public Dictionary<object, object> ToDictionary()
+        /// <summary>
+        /// Converts Map CLValue to Dictionary&lt;CLValue,CLValue&gt;.
+        /// </summary>
+        public IDictionary ToDictionary()
         {
             var bytes = Bytes;
             var typeInfo = TypeInfo;
@@ -755,29 +885,130 @@ namespace Casper.Network.SDK.Types
 
             if (typeInfo.Type == CLType.Map)
             {
-                var mapTypeInfo = typeInfo as CLMapTypeInfo;
-                if (mapTypeInfo == null)
-                    throw new Exception("Wrong inner type in CLValue of type Map");
-
-                var length = reader.ReadCLI32();
-
-                var dict = new Dictionary<object, object>(length);
-
-                for (int i = 0; i < length; i++)
-                {
-                    var key = ReadItem(reader, mapTypeInfo.KeyType.Type);
-                    var value = ReadItem(reader, mapTypeInfo.ValueType.Type);
-                    if (key == null || value == null)
-                        throw new FormatException(
-                            $"Cannot convert to a map of '{mapTypeInfo.KeyType.Type},{mapTypeInfo.ValueType.Type}'.");
-
-                    dict.Add(key, value);
-                }
-
-                return dict;
+                return (IDictionary) reader.ReadCLItem(typeInfo, null);
             }
 
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Map'.");
+        }
+
+        /// <summary>
+        /// Converts Map CLValue to Dictionary&lt;TKey,TValue&gt;.
+        /// </summary>
+        public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.Map)
+            {
+                var fwType = typeof(Dictionary<,>).MakeGenericType(new[] {typeof(TKey), typeof(TValue)});
+                var dict = reader.ReadCLItem(typeInfo, fwType);
+                return (Dictionary<TKey, TValue>) dict;
+            }
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Map'.");
+        }
+
+        /// <summary>
+        /// Converts Tuple1 CLValue to Tuple&ltT1;&gt;.
+        /// </summary>
+        public Tuple<T1> ToTuple1<T1>()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.Tuple1)
+            {
+                var fwType = typeof(Tuple<>).MakeGenericType(new[] {typeof(T1)});
+                var tuple = reader.ReadCLItem(typeInfo, fwType);
+                return (Tuple<T1>) tuple;
+            }
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Tuple'.");
+        }
+
+        /// <summary>
+        /// Converts Tuple2 CLValue to Tuple&ltT1,T2;&gt;.
+        /// </summary>
+        public Tuple<T1, T2> ToTuple2<T1, T2>()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.Tuple2)
+            {
+                var fwType = typeof(Tuple<,>).MakeGenericType(new[] {typeof(T1), typeof(T2)});
+                var tuple = reader.ReadCLItem(typeInfo, fwType);
+                return (Tuple<T1,T2>) tuple;
+            }
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Tuple'.");
+        }
+
+        /// <summary>
+        /// Converts Tuple2 CLValue to Tuple&ltT1,T2,T3;&gt;.
+        /// </summary>
+        public Tuple<T1, T2, T3> ToTuple3<T1, T2, T3>()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type == CLType.Result)
+                bytes = GetOkInnerTypeOrFail(ref typeInfo);
+
+            var reader = new BinaryReader(new MemoryStream(bytes));
+
+            if (typeInfo.Type == CLType.Tuple3)
+            {
+                var fwType = typeof(Tuple<,,>).MakeGenericType(new[] {typeof(T1), typeof(T2), typeof(T3)});
+                var tuple = reader.ReadCLItem(typeInfo, fwType);
+                return (Tuple<T1,T2,T3>) tuple;
+            }
+
+            throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Tuple'.");
+        }
+
+        /// <summary>
+        /// Converts Result CLValue to Result&ltTOk,TErr;&gt;.
+        /// </summary>
+        public Result<TOk, TErr> ToResult<TOk, TErr>()
+        {
+            var bytes = Bytes;
+            var typeInfo = TypeInfo;
+
+            if (typeInfo.Type != CLType.Result)
+                throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'Result'.");
+
+            if (typeInfo is not CLResultTypeInfo resultTypeInfo)
+                throw new FormatException($"Cannot convert '{typeInfo.GetType()}' to 'CLResultTypeInfo'.");
+
+            if (Bytes[0] == 0x01)
+            {
+                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                var v = reader.ReadCLItem(resultTypeInfo.Ok, typeof(TOk));
+                return Result<TOk, TErr>.Ok((TOk) v);
+            }
+            else
+            {
+                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                var v = reader.ReadCLItem(resultTypeInfo.Err, typeof(TErr));
+                return Result<TOk, TErr>.Fail((TErr)v);
+            }
         }
 
         #endregion

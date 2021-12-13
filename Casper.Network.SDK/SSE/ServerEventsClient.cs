@@ -282,7 +282,7 @@ namespace Casper.Network.SDK.SSE
                         });
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     // ignored
                 }

@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Casper.Network.SDK.Types
 {
@@ -62,6 +64,28 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return Type.ToString();
+        }
+
+        public virtual Type GetFrameworkType()
+        {
+            return Type switch
+            {
+                CLType.Bool => typeof(bool),
+                CLType.I32 => typeof(int),
+                CLType.I64 => typeof(long),
+                CLType.U8 => typeof(byte),
+                CLType.U32 => typeof(uint),
+                CLType.U64 => typeof(ulong),
+                CLType.U128 => typeof(BigInteger),
+                CLType.U256 => typeof(BigInteger),
+                CLType.U512 => typeof(BigInteger),
+                CLType.Unit => typeof(Unit),
+                CLType.String => typeof(string),
+                CLType.URef => typeof(URef),
+                CLType.PublicKey => typeof(PublicKey),
+                CLType.Key => typeof(GlobalStateKey),
+                _ => throw new FormatException($"Unknown CLType '{typeof(Type)}'")
+            };
         }
     }
 }

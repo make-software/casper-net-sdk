@@ -26,5 +26,10 @@ namespace Casper.Network.SDK.Types
         {
             return (int)Type^Size;
         }
+
+        public override Type GetFrameworkType()
+        {
+            return typeof(byte[]);
+        }
     }
 }

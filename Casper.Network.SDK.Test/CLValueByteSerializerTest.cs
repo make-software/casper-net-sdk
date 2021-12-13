@@ -51,8 +51,14 @@ namespace NetCasperTest
             bytes = serializer.ToBytes(CLValue.Option(CLValue.U512(10)));
             Assert.AreEqual("0300000001010a0d08", Hex.ToHexString(bytes));
 
+            bytes = serializer.ToBytes(CLValue.Option(CLValue.U512(ulong.MaxValue)));
+            Assert.AreEqual("0a0000000108ffffffffffffffff0d08", Hex.ToHexString(bytes));
+            
             bytes = serializer.ToBytes(CLValue.Option(CLValue.U64(10)));
             Assert.AreEqual("09000000010a000000000000000d05", Hex.ToHexString(bytes));
+            
+            bytes = serializer.ToBytes(CLValue.Option(CLValue.U64(ulong.MaxValue)));
+            Assert.AreEqual("0900000001ffffffffffffffff0d05", Hex.ToHexString(bytes));
 
             bytes = serializer.ToBytes(CLValue.OptionNone(CLType.String));
             Assert.AreEqual("01000000000d0a", Hex.ToHexString(bytes));

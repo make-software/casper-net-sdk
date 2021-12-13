@@ -1,0 +1,157 @@
+{
+  "cl_type": {
+    "Map": {
+      "key": "String",
+      "value": {
+        "Tuple3": [
+          "I32",
+          {
+            "Map": {
+              "key": "String",
+              "value": {
+                "Tuple3": [
+                  "I32",
+                  "Bool",
+                  {
+                    "Map": {
+                      "key": "String",
+                      "value": {
+                        "Tuple3": [
+                          "I32",
+                          "Bool",
+                          "URef"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "Bool"
+        ]
+      }
+    }
+  },
+  "bytes": "02000000080000006d6170336b6579310b00000002000000080000006d6170326b6579310100000001020000000500000066697273747b00000001cdd5422295f6a61e86a4d3229b28dac2e67523c41e2aafed3a041362df7a843207060000007365636f6e64e703000000b11f5df2e2399a1fb7d7749cef879fbda267895d119c923359d882f05ac189be07080000006d6170326b6579320200000000020000000500000066697273747b00000001cdd5422295f6a61e86a4d3229b28dac2e67523c41e2aafed3a041362df7a843207060000007365636f6e64e703000000b11f5df2e2399a1fb7d7749cef879fbda267895d119c923359d882f05ac189be0701080000006d6170336b6579321600000002000000080000006d6170326b6579310100000001020000000500000066697273747b00000001cdd5422295f6a61e86a4d3229b28dac2e67523c41e2aafed3a041362df7a843207060000007365636f6e64e703000000b11f5df2e2399a1fb7d7749cef879fbda267895d119c923359d882f05ac189be07080000006d6170326b6579320200000000020000000500000066697273747b00000001cdd5422295f6a61e86a4d3229b28dac2e67523c41e2aafed3a041362df7a843207060000007365636f6e64e703000000b11f5df2e2399a1fb7d7749cef879fbda267895d119c923359d882f05ac189be0700",
+  "parsed": [
+    {
+      "key": "map3key1",
+      "value": [
+        11,
+        [
+          {
+            "key": "map2key1",
+            "value": [
+              1,
+              true,
+              [
+                {
+                  "key": "first",
+                  "value": [
+                    123,
+                    true,
+                    "uref-cDd5422295F6A61e86a4D3229B28DAC2e67523c41e2AAfed3A041362DF7a8432-007"
+                  ]
+                },
+                {
+                  "key": "second",
+                  "value": [
+                    999,
+                    false,
+                    "uref-b11f5dF2E2399A1Fb7D7749ceF879FBda267895d119c923359d882F05AC189Be-007"
+                  ]
+                }
+              ]
+            ]
+          },
+          {
+            "key": "map2key2",
+            "value": [
+              2,
+              false,
+              [
+                {
+                  "key": "first",
+                  "value": [
+                    123,
+                    true,
+                    "uref-cDd5422295F6A61e86a4D3229B28DAC2e67523c41e2AAfed3A041362DF7a8432-007"
+                  ]
+                },
+                {
+                  "key": "second",
+                  "value": [
+                    999,
+                    false,
+                    "uref-b11f5dF2E2399A1Fb7D7749ceF879FBda267895d119c923359d882F05AC189Be-007"
+                  ]
+                }
+              ]
+            ]
+          }
+        ],
+        true
+      ]
+    },
+    {
+      "key": "map3key2",
+      "value": [
+        22,
+        [
+          {
+            "key": "map2key1",
+            "value": [
+              1,
+              true,
+              [
+                {
+                  "key": "first",
+                  "value": [
+                    123,
+                    true,
+                    "uref-cDd5422295F6A61e86a4D3229B28DAC2e67523c41e2AAfed3A041362DF7a8432-007"
+                  ]
+                },
+                {
+                  "key": "second",
+                  "value": [
+                    999,
+                    false,
+                    "uref-b11f5dF2E2399A1Fb7D7749ceF879FBda267895d119c923359d882F05AC189Be-007"
+                  ]
+                }
+              ]
+            ]
+          },
+          {
+            "key": "map2key2",
+            "value": [
+              2,
+              false,
+              [
+                {
+                  "key": "first",
+                  "value": [
+                    123,
+                    true,
+                    "uref-cDd5422295F6A61e86a4D3229B28DAC2e67523c41e2AAfed3A041362DF7a8432-007"
+                  ]
+                },
+                {
+                  "key": "second",
+                  "value": [
+                    999,
+                    false,
+                    "uref-b11f5dF2E2399A1Fb7D7749ceF879FBda267895d119c923359d882F05AC189Be-007"
+                  ]
+                }
+              ]
+            ]
+          }
+        ],
+        false
+      ]
+    }
+  ]
+}

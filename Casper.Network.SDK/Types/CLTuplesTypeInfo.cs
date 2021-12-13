@@ -1,3 +1,5 @@
+using System;
+
 namespace Casper.Network.SDK.Types
 {
     public class CLTuple1TypeInfo : CLTypeInfo
@@ -29,6 +31,15 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return $"Tuple1({Type0})";
+        }
+
+        public override Type GetFrameworkType()
+        {
+            Type t0Type = this.Type0.GetFrameworkType();
+
+            var resultType = typeof(Tuple<>).MakeGenericType(new[] {t0Type});
+            
+            return resultType;
         }
     }
     
@@ -64,6 +75,16 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return $"Tuple2({Type0},{Type1})";
+        }
+
+        public override Type GetFrameworkType()
+        {
+            Type t0Type = this.Type0.GetFrameworkType();
+            Type t1Type = this.Type1.GetFrameworkType();
+
+            var resultType = typeof(Tuple<,>).MakeGenericType(new[] {t0Type, t1Type});
+            
+            return resultType;
         }
     }
     
@@ -102,6 +123,17 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return $"Tuple3({Type0},{Type1},{Type2})";
+        }
+
+        public override Type GetFrameworkType()
+        {
+            Type t0Type = this.Type0.GetFrameworkType();
+            Type t1Type = this.Type1.GetFrameworkType();
+            Type t2Type = this.Type2.GetFrameworkType();
+
+            var resultType = typeof(Tuple<,,>).MakeGenericType(new[] {t0Type, t1Type,t2Type});
+            
+            return resultType;
         }
     }
 }

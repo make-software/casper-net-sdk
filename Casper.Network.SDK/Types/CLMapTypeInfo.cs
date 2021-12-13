@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Casper.Network.SDK.Types
 {
     public class CLMapTypeInfo : CLTypeInfo
@@ -33,5 +36,15 @@ namespace Casper.Network.SDK.Types
         {
             return $"Map({KeyType.ToString()},{ValueType.ToString()})";
         }
+
+        public override Type GetFrameworkType()
+        {
+            Type keyType = this.KeyType.GetFrameworkType();
+            Type valueType = this.ValueType.GetFrameworkType();
+            var dictType = typeof(Dictionary<,>).MakeGenericType(new[] {keyType, valueType});
+            
+            return dictType;
+        }
+
     }
 }

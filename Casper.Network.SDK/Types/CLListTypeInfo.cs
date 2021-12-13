@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Casper.Network.SDK.Types
 {
     public class CLListTypeInfo : CLTypeInfo
@@ -29,6 +32,14 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return $"List({ListType.ToString()})";
+        }
+
+        public override Type GetFrameworkType()
+        {
+            Type valueType = this.ListType.GetFrameworkType();
+            var listType = typeof(List<>).MakeGenericType(new[] {valueType});
+            
+            return listType;
         }
     }
 }

@@ -323,12 +323,12 @@ namespace NetCasperTest
         public void DeserializeListCLValue()
         {
             var json = "{\"cl_type\":{\"List\":\"String\"}," +
-                       "\"bytes\":\"020000000400000041414141050000004242424242\",\"parsed\":\"null\"}";
+                       "\"bytes\":\"020000000400000041414141050000004242424242\",\"parsed\":\"\"}";
             var clValue = JsonSerializer.Deserialize<CLValue>(json);
             Assert.IsNotNull(clValue);
             Assert.AreEqual(new CLListTypeInfo(new CLTypeInfo(CLType.String)), clValue.TypeInfo);
             Assert.AreEqual("020000000400000041414141050000004242424242", Hex.ToHexString(clValue.Bytes));
-            Assert.AreEqual("null", clValue.Parsed);
+            Assert.AreEqual("", clValue.Parsed);
         }
 
         [Test]
@@ -440,14 +440,14 @@ namespace NetCasperTest
         [Test]
         public void SerializePublicKeyCLValue()
         {
-            var clValue = CLValue.PublicKey("381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771",
-                KeyAlgo.ED25519);
+            var pk = PublicKey.FromHexString("01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771");
+            var clValue = CLValue.PublicKey(pk);
             var json = JsonSerializer.Serialize(clValue);
             Assert.IsTrue(json.ToLower().Contains(@"""01381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb771"""));
             Assert.IsTrue(json.Contains(@"""cl_type"":""PublicKey"""));
 
-            clValue = CLValue.PublicKey("037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e",
-                KeyAlgo.SECP256K1);
+            pk = PublicKey.FromHexString("02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e");
+            clValue = CLValue.PublicKey(pk);
             json = JsonSerializer.Serialize(clValue);
             Assert.IsTrue(json.ToLower().Contains(@"""02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e"""));
             Assert.IsTrue(json.Contains(@"""cl_type"":""PublicKey"""));
@@ -542,7 +542,7 @@ namespace NetCasperTest
             Assert.IsNotEmpty(json);
             Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
             Assert.IsTrue(json.Contains(@"""bytes"":""08b192"));
-            Assert.IsTrue(json.Contains(@"""parsed"":{""Withdraw"":""withdraw-b192"));
+            Assert.IsTrue(json.Contains(@"""parsed"":{""Withdraw"":""withdraw-B192"));
 
             gsKey = GlobalStateKey.FromString(
                 "uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007");

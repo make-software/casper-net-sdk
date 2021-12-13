@@ -1,0 +1,12 @@
+{
+    "cl_type": {
+        "Result": {
+            "ok": "Unit",
+            "err": "String"
+        }
+    },
+    "bytes": "000b0000007468697369736572726f72",
+    "parsed": {
+        "Err": "thisiserror"
+    }
+}

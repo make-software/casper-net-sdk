@@ -1,3 +1,5 @@
+using System;
+
 namespace Casper.Network.SDK.Types
 {
     public class CLResultTypeInfo : CLTypeInfo
@@ -32,6 +34,16 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return $"Result({Ok},{Err})";
+        }
+
+        public override Type GetFrameworkType()
+        {
+            Type okType = this.Ok.GetFrameworkType();
+            Type errType = this.Err.GetFrameworkType();
+
+            var resultType = typeof(Result<,>).MakeGenericType(new[] {okType, errType});
+            
+            return resultType;
         }
     }
 }
