@@ -2,9 +2,18 @@ using System;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Enumeration of the different key algorithms supported
+    /// </summary>
     public enum KeyAlgo
     {
+        /// <summary>
+        /// Belonging to Curve25519 elliptic curve.
+        /// </summary>
         ED25519 = 1,
+        /// <summary>
+        /// Belonging to secp256k1 elliptic curve.
+        /// </summary>
         SECP256K1 = 2
     }
 

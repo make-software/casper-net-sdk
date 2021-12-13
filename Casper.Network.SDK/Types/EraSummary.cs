@@ -20,7 +20,7 @@ namespace Casper.Network.SDK.Types
         public ulong EraId { get; init; }
         
         /// <summary>
-        /// Hex-encoded hash of the state root.
+        /// The StoredValue containing era information.
         /// </summary>
         [JsonPropertyName("stored_value")]
         [JsonConverter(typeof(StoredValue.StoredValueConverter))]

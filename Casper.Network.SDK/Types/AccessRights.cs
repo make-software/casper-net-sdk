@@ -2,23 +2,42 @@ using System;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Access Rights associated with an URef address.
+    /// </summary>
     public enum AccessRights : byte
     {
-        // No permissions
+        /// <summary>
+        /// No permissions 
+        /// </summary>
         NONE = 0b00,
-        // Permission to read the value under the associated [[URef]].
+        /// <summary>
+        /// Permission to read the value under the associated URef.
+        /// </summary>
         READ = 0b01,
-        // Permission to write a value under the associated [[URef]].
+        /// <summary>
+        /// Permission to write a value under the associated URef.
+        /// </summary>
         WRITE = 0b10,
-        // Permission to add to the value under the associated [[URef]].
+        /// <summary>
+        /// Permission to add to the value under the associated URef.
+        /// </summary>
         ADD = 0b100,
-        // Permission to read or write the value under the associated [[URef]].
+        /// <summary>
+        /// Permission to read or write the value under the associated URef.
+        /// </summary>
         READ_WRITE = 0b11,
-        // Permission to read or add to the value under the associated [[URef]].
+        /// <summary>
+        /// Permission to read or add to the value under the associated URef.
+        /// </summary>
         READ_ADD = 0b101,
-        // Permission to add to, or write the value under the associated [[URef]].
+        /// <summary>
+        /// Permission to add to, or write the value under the associated URef.
+        /// </summary>
         ADD_WRITE = 0b110,
-        // Permission to read, add to, or write the value under the associated [[URef]].
+        /// <summary>
+        /// Permission to read, add to, or write the value under the associated URef.
+        /// </summary>
         READ_ADD_WRITE = 0b111
     }
 }

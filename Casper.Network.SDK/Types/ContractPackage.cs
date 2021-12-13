@@ -4,8 +4,14 @@ using Casper.Network.SDK.Converters;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A disabled version of a contract.
+    /// </summary>
     public class DisabledVersion
     {
+        /// <summary>
+        /// Contract version.
+        /// </summary>
         [JsonPropertyName("contract_version")]
         public uint Version { get; init; }
         
@@ -13,11 +19,20 @@ namespace Casper.Network.SDK.Types
         public uint ProtocolVersionMajor { get; init; }
     }
     
+    /// <summary>
+    /// Information related to an active version of a contract.
+    /// </summary>
     public class ContractVersion
     {
+        /// <summary>
+        /// Hash for this version of the contract.
+        /// </summary>
         [JsonPropertyName("contract_hash")]
         public string Hash { get; init; }
         
+        /// <summary>
+        /// Contract version.
+        /// </summary>
         [JsonPropertyName("contract_version")]
         public uint Version { get; init; }
         
@@ -53,6 +68,9 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef AccessKey { get; init; }
         
+        /// <summary>
+        /// List of disabled versions of a contract.
+        /// </summary>
         [JsonPropertyName("disabled_versions")]
         public List<DisabledVersion> DisabledVersions { get; init; }
         
@@ -64,6 +82,9 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("groups")]
         public List<Group> Groups { get; init; }
         
+        /// <summary>
+        /// List of active versions of a contract.
+        /// </summary>
         [JsonPropertyName("versions")]
         public List<ContractVersion> Versions { get; init; }
     }

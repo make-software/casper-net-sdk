@@ -10,12 +10,24 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class SeigniorageAllocation
     {
+        /// <summary>
+        /// True if a delegator reward allocation.
+        /// </summary>
         public bool IsDelegator { get; init; }
 
+        /// <summary>
+        /// Public key of the delegator (null if not a delegator reward allocation).
+        /// </summary>
         public PublicKey DelegatorPublicKey { get; init; }
 
+        /// <summary>
+        /// Public key of the validator
+        /// </summary>
         public PublicKey ValidatorPublicKey { get; init; }
 
+        /// <summary>
+        /// Amount allocated as a reward.
+        /// </summary>
         public BigInteger Amount { get; init; }
 
         public class SeigniorageAllocationConverter : JsonConverter<SeigniorageAllocation>

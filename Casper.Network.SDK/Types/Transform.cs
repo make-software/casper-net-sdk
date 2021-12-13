@@ -6,6 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Enumeration of transformation types used in the execution of a deploy.
+    /// </summary>
     public enum TransformType
     {
         Identity,

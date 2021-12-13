@@ -79,9 +79,15 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class Parameter
     {
+        /// <summary>
+        /// The name of the parameter in the entry point.
+        /// </summary>
         [JsonPropertyName("name")] 
         public string Name { get; init; }
 
+        /// <summary>
+        /// The type of the parameter in the entry point.
+        /// </summary>
         [JsonPropertyName("cl_type")]
         [JsonConverter(typeof(CLTypeInfoConverter))]
         public CLTypeInfo CLType { get; init; }

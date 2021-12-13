@@ -5,28 +5,31 @@ using System.Text.Json.Serialization;
 
 namespace Casper.Network.SDK.Types
 {
- public class StoredValue
+    /// <summary>
+    /// A wrapper class for different types of values stored in the global state.
+    /// </summary>
+    public class StoredValue
     {
         public Contract Contract { get; init; }
 
         public CLValue CLValue { get; init; }
-        
+
         public Account Account { get; init; }
-        
+
         public string ContractWasm { get; init; }
 
         public ContractPackage ContractPackage { get; init; }
 
         public Transfer Transfer { get; init; }
-        
+
         public DeployInfo DeployInfo { get; init; }
-        
+
         public EraInfo EraInfo { get; init; }
-        
+
         public Bid Bid { get; init; }
-        
+
         public List<UnbondingPurse> Withdraw { get; init; }
-        
+
         public class StoredValueConverter : JsonConverter<StoredValue>
         {
             public override StoredValue Read(
@@ -135,6 +138,7 @@ namespace Casper.Network.SDK.Types
                         Withdraw = withdraw
                     };
                 }
+
                 throw new JsonException("Cannot deserialize StoredValue. Inner object not yet supported");
             }
 

@@ -9,6 +9,9 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class EraInfo
     {
+        /// <summary>
+        /// List of rewards allocated to delegators and validators.
+        /// </summary>
         [JsonPropertyName("seigniorage_allocations")]
         [JsonConverter(typeof(GenericListConverter<SeigniorageAllocation,SeigniorageAllocation.SeigniorageAllocationConverter>))]
         public List<SeigniorageAllocation> SeigniorageAllocations { get; init; }

@@ -8,6 +8,9 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
     /// </summary>
     public class GetEraInfoBySwitchBlockResult : RpcResult
     {
+        /// <summary>
+        /// The Era summary.
+        /// </summary>
         [JsonPropertyName("era_summary")]
         public EraSummary EraSummary { get; init; }
     }

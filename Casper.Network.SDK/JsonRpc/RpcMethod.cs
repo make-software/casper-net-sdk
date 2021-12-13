@@ -7,6 +7,9 @@ using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.JsonRpc
 {
+    /// <summary>
+    /// Wrapper class for an RPC call method that can be serialized to JSON.
+    /// </summary>
     public abstract class RpcMethod
     {
         [JsonPropertyName("jsonrpc")] 

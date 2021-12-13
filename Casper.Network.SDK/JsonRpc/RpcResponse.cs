@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Casper.Network.SDK.JsonRpc
 {
+    /// <summary>
+    /// Wrapper class for an RPC Response that can be deserialized from JSON.
+    /// </summary>
     public class RpcResponse<TRpcResult>
     {
         [JsonPropertyName("jsonrpc")] public string JsonRpc { get; init; }

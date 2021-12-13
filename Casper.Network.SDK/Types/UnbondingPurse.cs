@@ -4,6 +4,9 @@ using Casper.Network.SDK.Converters;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Information of an unbonding or delegation withdrawal
+    /// </summary>
     public class UnbondingPurse
     {
         /// <summary>
@@ -24,7 +27,7 @@ namespace Casper.Network.SDK.Types
         public ulong EraOfCreation { get; init; }
         
         /// <summary>
-        /// Unbonders public key.
+        /// Unbonder public key.
         /// </summary>
         [JsonPropertyName("unbonder_public_key")]
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]

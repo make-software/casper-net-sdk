@@ -3,18 +3,20 @@ using System.Text.Json.Serialization;
 namespace Casper.Network.SDK.Types
 {
     /// <summary>
-    /// Network node
+    /// A node in the network.
     /// </summary>
     public class Peer
     {
         /// <summary>
-        /// Node Id
+        /// Node Id.
         /// </summary>
-        [JsonPropertyName("node_id")] public string NodeId { get; init; }
+        [JsonPropertyName("node_id")] 
+        public string NodeId { get; init; }
 
         /// <summary>
-        /// Node IP and port
+        /// Node IP and port.
         /// </summary>
-        [JsonPropertyName("address")] public string Address { get; init; }
+        [JsonPropertyName("address")] 
+        public string Address { get; init; }
     }
 }

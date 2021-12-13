@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Information, entry points and named keys belonging to a Contract
+    /// </summary>
     public class Contract
     {
         /// <summary>

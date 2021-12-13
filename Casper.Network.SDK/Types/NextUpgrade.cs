@@ -12,11 +12,13 @@ namespace Casper.Network.SDK.Types
         /// Era Id when the next upgrade will be activated.
         /// According to rpc schema, it can be also a Timestamp
         /// </summary>
-        [JsonPropertyName("activation_point")] public ulong ActivationPoint { get; init; }
+        [JsonPropertyName("activation_point")] 
+        public ulong ActivationPoint { get; init; }
 
         /// <summary>
         /// The protocol version of the next upgrade
         /// </summary>
-        [JsonPropertyName("protocol_version")] public string ProtocolVersion { get; init; }
+        [JsonPropertyName("protocol_version")] 
+        public string ProtocolVersion { get; init; }
     }
 }

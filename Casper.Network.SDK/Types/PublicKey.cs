@@ -14,9 +14,16 @@ using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A wrapper for a Public Key. Provides signature verification functionality.
+    /// </summary>
     public class PublicKey
     {
+        /// <summary>
+        /// Byte array without the Key algorithm identifier.
+        /// </summary>
         public byte[] RawBytes { get; }
+        
         public KeyAlgo KeyAlgorithm { get; }
 
         protected PublicKey(byte[] rawBytes, KeyAlgo keyAlgorithm)
@@ -25,6 +32,10 @@ namespace Casper.Network.SDK.Types
             KeyAlgorithm = keyAlgorithm;
         }
 
+        /// <summary>
+        /// Creates a PublicKey object from an hexadecimal string (containing the
+        /// Key algorithm identifier).
+        /// </summary>
         public static PublicKey FromHexString(string hexBytes)
         {
             var rawBytes = CEP57Checksum.Decode(hexBytes.Substring(2), out var checksumResult);
@@ -41,6 +52,9 @@ namespace Casper.Network.SDK.Types
             return FromRawBytes(rawBytes, algo);
         }
 
+        /// <summary>
+        /// Loads a PublicKey from a PEM file 
+        /// </summary>
         public static PublicKey FromPem(string filePath)
         {
             using (TextReader textReader = new StringReader(File.ReadAllText(filePath)))
@@ -66,6 +80,10 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        /// <summary>
+        /// Creates a PublicKey object from a byte array. First byte in the array must contain the
+        /// key algorithm identifier.
+        /// </summary>
         public static PublicKey FromBytes(byte[] bytes)
         {
             if (bytes.Length < 1)
@@ -91,6 +109,9 @@ namespace Casper.Network.SDK.Types
             return new PublicKey(rawBytes, algoIdent == 0x01 ? KeyAlgo.ED25519 : KeyAlgo.SECP256K1);
         }
 
+        /// <summary>
+        /// Creates a PublicKey object from a byte array and the key algorithm identifier. 
+        /// </summary>
         public static PublicKey FromRawBytes(byte[] rawBytes, KeyAlgo keyAlgo)
         {
             int expectedPublicKeySize = keyAlgo switch
@@ -107,6 +128,9 @@ namespace Casper.Network.SDK.Types
             return new PublicKey(rawBytes, keyAlgo);
         }
 
+        /// <summary>
+        /// Saves the public key to a PEM file.
+        /// </summary>
         public void WriteToPem(string filePath)
         {
             using (var textWriter = File.CreateText(filePath))
@@ -134,6 +158,9 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        /// <summary>
+        /// Returns the Account Hash associated to this Public Key.
+        /// </summary>
         public string GetAccountHash()
         {
             var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
@@ -148,6 +175,9 @@ namespace Casper.Network.SDK.Types
             return "account-hash-" + CEP57Checksum.Encode(hash);
         }
 
+        /// <summary>
+        /// Returns the key as an hexadecimal string, including the key algorithm in the first position.
+        /// </summary>
         public string ToAccountHex()
         {
             return KeyAlgorithm switch
@@ -178,6 +208,9 @@ namespace Casper.Network.SDK.Types
             return this.ToAccountHex().ToLower().GetHashCode();
         }
 
+        /// <summary>
+        /// Returns the bytes of the public key, including the Key algorithm as the first byte.
+        /// </summary>
         public byte[] GetBytes()
         {
             byte[] bytes = new byte[1 + RawBytes.Length];
@@ -192,6 +225,9 @@ namespace Casper.Network.SDK.Types
             return bytes;
         }
 
+        /// <summary>
+        /// Verifies the signature given its value and the original message.
+        /// </summary>
         public bool VerifySignature(byte[] message, byte[] signature)
         {
             if (KeyAlgorithm == KeyAlgo.ED25519)
@@ -217,6 +253,9 @@ namespace Casper.Network.SDK.Types
             throw new Exception("Unsupported key type.");
         }
 
+        /// <summary>
+        /// Verifies the signature given its value and the original message.
+        /// </summary>
         public bool VerifySignature(string message, string signature)
         {
             return VerifySignature(Hex.Decode(message), Hex.Decode(signature));

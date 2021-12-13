@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 namespace Casper.Network.SDK.Types
 {
     /// <summary>
-    /// A named key.
+    /// A named key in an Account or Contract.
     /// </summary>
     public class NamedKey
     {

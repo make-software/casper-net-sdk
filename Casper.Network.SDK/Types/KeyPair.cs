@@ -13,6 +13,9 @@ using PemWriter = Org.BouncyCastle.OpenSsl.PemWriter;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A Private key. Provides signing functionality.
+    /// </summary>
     public class KeyPair
     {
         public PublicKey PublicKey { get; private set; }
@@ -20,6 +23,9 @@ namespace Casper.Network.SDK.Types
         private AsymmetricKeyParameter _publicKey;
         private AsymmetricKeyParameter _privateKey;
 
+        /// <summary>
+        /// Loads a key pair from a PEM file containing a private key.
+        /// </summary>
         public static KeyPair FromPem(string filePath)
         {
             using (TextReader textReader = new StringReader(File.ReadAllText(filePath)))
@@ -64,6 +70,9 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        /// <summary>
+        /// Creates a new key pair with the specified elliptic curve.
+        /// </summary>
         public static KeyPair CreateNew(KeyAlgo keyAlgorithm)
         {
             if (keyAlgorithm == KeyAlgo.ED25519)
@@ -104,6 +113,9 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        /// <summary>
+        /// Saves the private key to a PEM file.
+        /// </summary>
         public void WriteToPem(string filePath)
         {
             if (PublicKey.KeyAlgorithm == KeyAlgo.ED25519)
@@ -130,6 +142,9 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        /// <summary>
+        /// Saves the public key to a PEM file.
+        /// </summary>
         public void WritePublicKeyToPem(string filePath)
         {
             using (var textWriter = File.CreateText(filePath))
@@ -139,6 +154,9 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        /// <summary>
+        /// Signs a message and returns the signature.
+        /// </summary>
         public byte[] Sign(byte[] message)
         {
             if (PublicKey.KeyAlgorithm == KeyAlgo.ED25519)

@@ -14,6 +14,9 @@ namespace Casper.Network.SDK.Types
 {
     public class Deploy
     {
+        /// <summary>
+        /// List of signers and signatures for this Deploy.
+        /// </summary>
         [JsonPropertyName("approvals")] 
         public List<DeployApproval> Approvals { get; } = new List<DeployApproval>();
 
@@ -30,20 +33,32 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("header")]
         public DeployHeader Header { get; }
 
+        /// <summary>
+        /// Contains the payment amount for the deploy.
+        /// </summary>
         [JsonPropertyName("payment")]
         [JsonConverter(typeof(ExecutableDeployItemConverter))]
         public ExecutableDeployItem Payment { get; }
 
+        /// <summary>
+        /// Contains the session information for the deploy.
+        /// </summary>
         [JsonPropertyName("session")]
         [JsonConverter(typeof(ExecutableDeployItemConverter))]
         public ExecutableDeployItem Session { get; }
 
+        /// <summary>
+        /// Loads and deserializes a Deploy from a file.
+        /// </summary>
         public static Deploy Load(string filename)
         {
             var data = File.ReadAllText(filename);
             return Deploy.Parse(data);
         }
 
+        /// <summary>
+        /// Parses a Deploy from a file.
+        /// </summary>
         public static Deploy Parse(string json)
         {
             try
@@ -61,11 +76,17 @@ namespace Casper.Network.SDK.Types
             }
         }
 
+        /// <summary>
+        /// Saves a deploy object to a file.
+        /// </summary>
         public void Save(string filename)
         {
             File.WriteAllText(filename, JsonSerializer.Serialize(this));
         }
 
+        /// <summary>
+        /// Returns a json string with the deploy.
+        /// </summary>
         public string SerializeToJson()
         {
             return JsonSerializer.Serialize(this);
@@ -102,6 +123,9 @@ namespace Casper.Network.SDK.Types
             this.Session = session;
         }
 
+        /// <summary>
+        /// Signs the deploy with a private key and adds a new Approval to it.
+        /// </summary>
         public void Sign(KeyPair keyPair)
         {
             byte[] signature = keyPair.Sign(Hex.Decode(this.Hash));
@@ -113,11 +137,19 @@ namespace Casper.Network.SDK.Types
             });
         }
 
+        /// <summary>
+        /// Adds an approval to the deploy. No check is done to the approval signature.
+        /// </summary>
         public void AddApproval(DeployApproval approval)
         {
             this.Approvals.Add(approval);
         }
 
+        /// <summary>
+        /// Validates the body and header hashes in the deploy.
+        /// </summary>
+        /// <param name="message">output string with a validation error message if validation fails. empty otherwise.</param>
+        /// <returns>false if the validation of hashes is not successful</returns>
         public bool ValidateHashes(out string message)
         {
             var computedHash = ComputeBodyHash(this.Payment, this.Session);
@@ -142,6 +174,11 @@ namespace Casper.Network.SDK.Types
             return true;
         }
 
+        /// <summary>
+        /// Verifies the signatures in the list of approvals.
+        /// </summary>
+        /// <param name="message">an output string with the signer which signature could not be verified. empty if verification succeeds.</param>
+        /// <returns>false if the verification of a signature fails.</returns>
         public bool VerifySignatures(out string message)
         {
             message = string.Empty;
@@ -159,6 +196,9 @@ namespace Casper.Network.SDK.Types
             return true;
         }
 
+        /// <summary>
+        /// returns the number of bytes resulting from the binary serialization of the Deploy.
+        /// </summary>
         public int GetDeploySizeInBytes()
         {
             var serializer = new DeployByteSerializer();

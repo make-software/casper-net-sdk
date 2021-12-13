@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Casper.Network.SDK.JsonRpc
 {
+    /// <summary>
+    /// Attach an RpcLoggingHandler to an instance of the RpcClient class to log
+    /// request and response data to a writer stream.
+    /// </summary>
     public class RpcLoggingHandler : DelegatingHandler
     {
         public StreamWriter LoggerStream { get; init; }
