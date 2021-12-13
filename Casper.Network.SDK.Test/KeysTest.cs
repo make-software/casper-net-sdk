@@ -148,8 +148,10 @@ namespace NetCasperTest
         [Test]
         public void TestWriteToPemEd25519()
         {
-            var publicKey = PublicKey.FromHexString(ED25519publicKey);
             var tmpfile = Path.GetTempFileName();
+            File.Delete(tmpfile);
+            
+            var publicKey = PublicKey.FromHexString(ED25519publicKey);
             publicKey.WriteToPem(tmpfile);
 
             var pk2 = PublicKey.FromPem(tmpfile);
@@ -159,8 +161,10 @@ namespace NetCasperTest
         [Test]
         public void TestWriteToPemSECP256K1()
         {
-            var publicKey = PublicKey.FromHexString(SECP256K1publicKey);
             var tmpfile = Path.GetTempFileName();
+            File.Delete(tmpfile);
+            
+            var publicKey = PublicKey.FromHexString(SECP256K1publicKey);
             publicKey.WriteToPem(tmpfile);
 
             var pk2 = PublicKey.FromPem(tmpfile);

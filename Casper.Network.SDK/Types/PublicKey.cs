@@ -133,6 +133,10 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public void WriteToPem(string filePath)
         {
+            if (File.Exists(filePath))
+                throw new Exception("Target file already exists. Will not overwrite." +
+                                    Environment.NewLine + "File: " + filePath);
+            
             using (var textWriter = File.CreateText(filePath))
             {
                 var writer = new PemWriter(textWriter);
