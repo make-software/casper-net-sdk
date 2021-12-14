@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal --settings NetCasperTest/test.runsettings
+      run: dotnet test --no-build --verbosity normal --settings Casper.Net.SDK.Test/test.runsettings
