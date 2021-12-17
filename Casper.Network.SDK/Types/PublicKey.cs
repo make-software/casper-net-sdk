@@ -271,6 +271,9 @@ namespace Casper.Network.SDK.Types
 
         #endregion
 
+        /// <summary>
+        /// Json converter class to serialize/deserialize a PublicKey to/from Json
+        /// </summary>
         public class PublicKeyConverter : JsonConverter<PublicKey>
         {
             public override PublicKey Read(

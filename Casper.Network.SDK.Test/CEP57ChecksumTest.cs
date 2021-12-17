@@ -1,57 +1,17 @@
-using System;
-using System.Linq;
-using System.Net;
 using Casper.Network.SDK.Types;
 using Casper.Network.SDK.Utils;
-using NuGet.Frameworks;
 using NUnit.Framework;
-using Org.BouncyCastle.Utilities.Encoders;
 
 namespace NetCasperTest
 {
     public class GlobalStateKeyTests
     {
-        private static  string ED25519publicKey = "019E7B8bDEc03bA83BE4f5443D9F7F9111C77fEC984cE9bb5BB7eB3Da1e689C02D";
-        private static  string ED25519hash = "6922Db800a8772a734eCCef19cE6C445eE3ebC984205053eadafa6c71191b0d1";
-        private static  string SECP256K1publicKey = "020286F410e0c587E88e3b3297Fc860aa236D2De252675A6b1CdF3Fc0fdc430e4183";
-        private static  string SECP256K1hash = "584aA5C753397A42a8AA2c7e4936d476042AFc445FF718Ea8C20dA23434BDc80";
-
-        [Test]
-        public void CEP57PublicKeyTest()
-        {
-            int result; 
-            
-            // public key checksums are calculated without the algo identifier (ie. wo first byte)
-            //
-            var bytes = CEP57Checksum.Decode(ED25519publicKey.Substring(2), out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-
-            var pk = PublicKey.FromRawBytes(bytes, KeyAlgo.ED25519);
-            var accountHash = pk.GetAccountHash();
-            Assert.AreEqual(ED25519hash, accountHash.Substring("account-hash-".Length));
-            
-            bytes = CEP57Checksum.Decode(SECP256K1publicKey.Substring(2), out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-
-            pk = PublicKey.FromRawBytes(bytes, KeyAlgo.SECP256K1);
-            accountHash = pk.GetAccountHash();
-            Assert.AreEqual(SECP256K1hash, accountHash.Substring("account-hash-".Length));
-        }
-        
-        [Test]
-        public void TestAccountHash()
-        {
-            var sPublicKey = "01a35887f3962a6A232e8E11fA7D4567B6866D68850974AaD7289Ef287676825F6";
-            var sAccountHash = "account-hash-dE959c60bDc834AcbD35244B6293c761f39a42c25A0dd09590a32274DD8582cC";
-            
-            var publicKey = PublicKey.FromHexString(sPublicKey);
-            var accountHash = new AccountHashKey(publicKey).ToString();
-            Assert.AreEqual(sAccountHash, accountHash);
-        }
-
         [Test]
         public void CEP57LongByteArray()
         {
+            // checksum is not computed nor validated for hex strings longer
+            // than 75 bytes (150 hex chars).
+            
             var longHex = "0300000001381B36CD07aD85348607FFe0fa3A2d033Ea941d14763358EbeACe9c8ad3CB771" +
                           "01381B36CD07aD85348607FFe0fa3A2d033Ea941d14763358EbeACe9c8ad3CB771" +
                           "01381B36cd07ad85348607ffe0fa3A2d033Ea941d14763358EbeACe9c8ad3CB771";

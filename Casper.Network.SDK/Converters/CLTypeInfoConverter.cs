@@ -159,7 +159,7 @@ namespace Casper.Network.SDK.Converters
                 {
                     writer.WriteStringValue("Key");
                 }
-                if (typeInfo is CLOptionTypeInfo clOption)
+                else if (typeInfo is CLOptionTypeInfo clOption)
                 {
                     writer.WriteStartObject();
                     writer.WritePropertyName("Option");

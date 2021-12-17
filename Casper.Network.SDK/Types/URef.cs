@@ -18,6 +18,10 @@ namespace Casper.Network.SDK.Types
         {
             KeyIdentifier = KeyIdentifier.URef;
 
+            if (!value.StartsWith("uref-"))
+                throw new ArgumentException($"Key not valid. It should start with 'uref-'.",
+                    nameof(value));
+            
             var parts = value.Substring(5).Split(new char[] {'-'});
             if (parts.Length != 2)
                 throw new ArgumentOutOfRangeException(nameof(value),

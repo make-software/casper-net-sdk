@@ -3,9 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Casper.Network.SDK.JsonRpc.ResultTypes;
 using Casper.Network.SDK.Utils;
-using Org.BouncyCastle.Asn1.X509.Qualified;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
@@ -130,7 +128,7 @@ namespace Casper.Network.SDK.Types
             if (value.StartsWith("dictionary"))
                 return new DictionaryKey(value);
 
-            return null;
+            throw new ArgumentException($"Key not valid. Unknown key prefix.");
         }
 
         /// <summary>
@@ -151,7 +149,7 @@ namespace Casper.Network.SDK.Types
                 0x07 => new BidKey("bid-" + CEP57Checksum.Encode(bytes[1..])),
                 0x08 => new WithdrawKey("withdraw-" + CEP57Checksum.Encode(bytes[1..])),
                 0x09 => new DictionaryKey("dictionary-" + CEP57Checksum.Encode(bytes[1..])),
-                _ => throw new Exception($"Unknown key identifier '{bytes[0]}'")
+                _ => throw new ArgumentException($"Unknown key identifier '{bytes[0]}'")
             };
         }
 
@@ -164,11 +162,18 @@ namespace Casper.Network.SDK.Types
             return ms.ToArray();
         }
 
+        /// <summary>
+        /// Converts a key object to a string with the right prefix 
+        /// </summary>
         public override string ToString()
         {
             return Key;
         }
 
+        /// <summary>
+        /// Json converter class to serialize/deserialize an object derived from
+        /// GlobalStateKey to/from Json
+        /// </summary>
         public class GlobalStateKeyConverter : JsonConverterFactory
         {
             public override bool CanConvert(Type typeToConvert)

@@ -1,4 +1,3 @@
-using System;
 using Casper.Network.SDK.Types;
 using NUnit.Framework;
 

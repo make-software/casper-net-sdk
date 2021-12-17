@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 namespace Casper.Network.SDK.JsonRpc
 {
     /// <summary>
-    /// Wrapper class for an RPC Response that can be deserialized from JSON.
+    /// Wrapper class for an RPC Response. For a successful response the Result property
+    /// contains the returned data as a JSON object. If an error occurs
     /// </summary>
     public class RpcResponse<TRpcResult>
     {

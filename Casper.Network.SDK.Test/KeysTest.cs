@@ -10,7 +10,6 @@ namespace NetCasperTest
     public class KeysTest
     {
         private static  string ED25519publicKey = "01381b36cd07Ad85348607ffE0fA3A2d033eA941D14763358eBEacE9C8aD3cB771";
-
         private static  string ED25519hash = "07b30Fdd279f21D29Ab1922313b56ad3905e7dd6A654344B8012e0Be9fefA51B";
 
         private static  string SECP256K1publicKey = "0203b2F8c0613d2d866948c46e296F09faEd9b029110d424d19d488A0C39a811ebBC";
@@ -125,28 +124,34 @@ namespace NetCasperTest
         public void TestVerifySignatureEd25519()
         {
             var signer = "01b7c7c545dfa3fb853a97fb3581ce10eb4f67a5861abed6e70e5e3312fdde402c";
-            var signature =
-                "ff70e0fd0653d4cc6c7e67b14c0872db3f74eec6f50d409a7e9129c577237751a1f924680e48cd87a27999c08f422a003867fae09f95f36012289f7bfb7f6f0b";
-            var hash = "ef91b6cef0e94a7ab2ffeb896b8266b01ab8003a578f4744d4ee64718771d8da";
+            var signature = Hex.Decode(
+                "ff70e0fd0653d4cc6c7e67b14c0872db3f74eec6f50d409a7e9129c577237751a1f924680e48cd87a27999c08f422a003867fae09f95f36012289f7bfb7f6f0b");
+            var hash = Hex.Decode("ef91b6cef0e94a7ab2ffeb896b8266b01ab8003a578f4744d4ee64718771d8da");
 
             var pk = PublicKey.FromHexString(signer);
-            Assert.IsTrue(pk.VerifySignature(Hex.Decode(hash), Hex.Decode(signature)));
+            Assert.IsTrue(pk.VerifySignature(hash, signature));
+            
+            var pk2 = PublicKey.FromHexString(ED25519publicKey);
+            Assert.IsFalse(pk2.VerifySignature(hash, signature));
         }
         
         [Test]
         public void TestVerifySignatureSECP256K1()
         {
             var signer = "02037292af42f13f1f49507c44afe216b37013e79a062d7e62890f77b8adad60501e";
-            var signature =
-                "f03831c61d147204c4456f9b47c3561a8b83496b760a040c901506ec54c54ab357a009d5d4d0b65e40729f7bbbbf042ab8d579d090e7a7aaa98f4aaf2651392e";
-            var hash = "d204b74d902e044563764f62e86353923c9328201c82c28fe75bf9fc0c4bbfbc";
+            var signature = Hex.Decode(
+                "f03831c61d147204c4456f9b47c3561a8b83496b760a040c901506ec54c54ab357a009d5d4d0b65e40729f7bbbbf042ab8d579d090e7a7aaa98f4aaf2651392e");
+            var hash = Hex.Decode("d204b74d902e044563764f62e86353923c9328201c82c28fe75bf9fc0c4bbfbc");
 
             var pk = PublicKey.FromHexString(signer);
-            Assert.IsTrue(pk.VerifySignature(Hex.Decode(hash), Hex.Decode(signature)));
+            Assert.IsTrue(pk.VerifySignature(hash, signature));
+
+            var pk2 = PublicKey.FromHexString(SECP256K1publicKey);
+            Assert.IsFalse(pk2.VerifySignature(hash, signature));
         }
 
         [Test]
-        public void TestWriteToPemEd25519()
+        public void TestWritePublicKeyToPemEd25519()
         {
             var tmpfile = Path.GetTempFileName();
             File.Delete(tmpfile);
@@ -159,7 +164,7 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void TestWriteToPemSECP256K1()
+        public void TestWritePublicKeyToPemSECP256K1()
         {
             var tmpfile = Path.GetTempFileName();
             File.Delete(tmpfile);
@@ -172,12 +177,79 @@ namespace NetCasperTest
         }
 
         [Test]
-        public void TestPublicKeyEquality()
+        public void WritePublicKeyToPemFailsForExistingFile()
+        {
+            var tmpfile = Path.GetTempFileName();
+            var publicKey = PublicKey.FromHexString(SECP256K1publicKey);
+            
+            var ex =Assert.Catch<Exception>(() => publicKey.WriteToPem(tmpfile));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.StartsWith("Target file already exists."));
+        }
+
+        [Test]
+        public void PublicKeyEquality()
         {
             var pk1 = PublicKey.FromHexString(ED25519publicKey);
             
             Assert.IsTrue(pk1.Equals(PublicKey.FromBytes(pk1.GetBytes())));
             Assert.IsFalse(pk1.Equals(PublicKey.FromHexString("01b7c7c545dfa3fb853a97fb3581ce10eb4f67a5861abed6e70e5e3312fdde402c")));
+        }
+
+        [Test]
+        public void WritePrivateKeyToPemEd25519()
+        {
+            var keyPair = KeyPair.CreateNew(KeyAlgo.ED25519);
+            Assert.IsNotNull(keyPair);
+            Assert.IsNotNull(keyPair.PublicKey);
+
+            var tmpfile = Path.GetTempFileName();
+            File.Delete(tmpfile);
+            
+            keyPair.WriteToPem(tmpfile);
+
+            var keyPair2 = KeyPair.FromPem(tmpfile);
+            
+            Assert.AreEqual(keyPair.PublicKey, keyPair2.PublicKey);
+            
+            byte[] message = Hex.Decode("000102030405060708090A0B0C0D0E0F10111213");
+            var signature = keyPair2.Sign(message);
+            Assert.IsNotNull(signature);
+            Assert.IsTrue(keyPair2.PublicKey.VerifySignature(message, signature));
+        }
+        
+        [Test]
+        public void WritePrivateKeyToPemSecp256K1()
+        {
+            var keyPair = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            Assert.IsNotNull(keyPair);
+            Assert.IsNotNull(keyPair.PublicKey);
+
+            var tmpfile = Path.GetTempFileName();
+            File.Delete(tmpfile);
+            
+            keyPair.WriteToPem(tmpfile);
+
+            var keyPair2 = KeyPair.FromPem(tmpfile);
+            
+            Assert.AreEqual(keyPair.PublicKey, keyPair2.PublicKey);
+            
+            byte[] message = Hex.Decode("000102030405060708090A0B0C0D0E0F10111213");
+            var signature = keyPair2.Sign(message);
+            Assert.IsNotNull(signature);
+            Assert.IsTrue(keyPair2.PublicKey.VerifySignature(message, signature));
+        }
+        
+        [Test]
+        public void WritePrivateKeyToPemFailsForExistingFile()
+        {
+            var tmpfile = Path.GetTempFileName();
+            var keyPair = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            Assert.IsNotNull(keyPair);
+            
+            var ex =Assert.Catch<Exception>(() => keyPair.WriteToPem(tmpfile));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.StartsWith("Target file already exists."));
         }
     }
 }
