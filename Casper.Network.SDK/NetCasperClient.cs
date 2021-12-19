@@ -280,10 +280,13 @@ namespace Casper.Network.SDK
         
         /// <summary>
         /// Request a Deploy object from the network by the deploy hash.
+        /// When a cancellation token is included this method waits until the deploy is
+        /// executed, i.e. until the deploy contains the execution results information.
         /// </summary>
         /// <param name="deployHash">Hash of the deploy to retrieve.</param>
-        /// <param name="cancellationToken">A CancellationToken.</param>
-        /// <exception cref="TaskCanceledException"></exception>
+        /// <param name="cancellationToken">A CancellationToken. Do not include this parameter to return
+        /// with the first deploy object returned by the network, even it's not executed.</param>
+        /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
         public async Task<RpcResponse<GetDeployResult>> GetDeploy(string deployHash,
             CancellationToken cancellationToken = default(CancellationToken))
         {
