@@ -1,0 +1,10 @@
+- name: Tutorials
+  href: index.md
+  items:
+  - name: Counter contract
+    href: counter-contract/README.md
+  - name: KVStorage contract
+    href: kvstorage-contract/README.md
+  - name: ERC20 contract
+    href: erc20-contract/README.md
+

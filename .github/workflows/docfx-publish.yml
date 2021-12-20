@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+
+name: DocFX Generation
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  generate_and_publish_docs:
+    runs-on: ubuntu-latest
+    name: Generate and publish the docs
+    steps:
+    - uses: actions/checkout@v1
+      name: Checkout code
+    - uses: davidatwhiletrue/docfx-action@v1.0.0
+      name: Build and Publish Documentation
+      with:
+        args: Docs/docfx.json
+      env:
+        BUILD_DIR: Docs/_site # docfx's default output directory is _site
+        GH_PAT: ${{ secrets.GH_PAT }} # See https://github.com/maxheld83/ghpages
+
