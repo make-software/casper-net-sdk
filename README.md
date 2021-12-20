@@ -15,7 +15,7 @@ dotnet build --configuration Release
 To run the tests, use this command:
 
 ```
-dotnet test --settings NetCasperTest/test.runsettings
+dotnet test --settings Casper.Network.SDK.Test/test.runsettings
 ```
 
 ### Create a workspace in Gitpod
@@ -26,16 +26,13 @@ Click the button to start coding in Gitpod with an online IDE.
 
 ## Usage Examples
 
-* [Counter contract tutorial with C#](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/SJBnPCdVt)
-* [Key-Value storage tutorial with C#](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/HyX8i0WBt)
-* [Key management](https://hackmd.io/@K48d9TN9T2q7ERX4H27ysw/HkvV-MMBt)
-
+* [Counter contract tutorial with C#](./Docs/Tutorials/Counter%20Contract/README.md)
+* [Key-Value storage tutorial with C#](./Docs/Tutorials/KVStorage%20Contract/README.md)
+* [Key management](./Docs/KeyManagement.md)
+* [Working with CLValue](./Docs/WorkingWithCLValue.md)
 
 ## TODO
 
-* Implement proper typing for all RPC responses
-* Implement Casper Node 1.4.x RPC changes/additions
-* Use native C# types and data structures to create deploy arguments and use CLValues for non-native types only.
 * Provide native documentation.
 * Review compatibility with previous versions of .NET.
 * Increase test coverage with new Unit Tests.

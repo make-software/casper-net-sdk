@@ -1,0 +1,14 @@
+{
+  "block_hash": "2796f604b26a1020f2a04f4c5657a2e88caede248cec3cd7e6a4366a9e1730aa",
+  "result": {
+    "Failure": {
+      "effect": {
+        "operations": [],
+        "transforms": []
+      },
+      "transfers": [],
+      "cost": "0",
+      "error_message": "Wasm preprocessing error: Encountered operation forbidden by gas rules. Consult instruction -> metering config map"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyVersion>0.9.4.0</AssemblyVersion>
+        <FileVersion>0.9.4</FileVersion>
+        <PackageVersion>0.9.4-beta</PackageVersion>
+        <Title>Casper.Network.SDK</Title>
+        <Authors>make-software</Authors>
+        <PackageProjectUrl>https://github.com/make-software/casper-net-sdk</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/make-software/casper-net-sdk</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Casper NetCasperSDK</PackageTags>
+        <PackageReadmeFile>README_nuget.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <Description>
+          Casper .NET SDK is a C# SDK to interact with the Casper network.
+        </Description>
+        <RootNamespace>Casper.Network.SDK</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
+      <PackageReference Include="Humanizer" Version="2.11.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="README_nuget.md" Pack="true" PackagePath="\" />
+      <None Include="..\LICENSE" Pack="true" PackagePath="\" />
+    </ItemGroup>
+</Project>
