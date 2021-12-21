@@ -24,12 +24,12 @@ Click the button to start coding in Gitpod with an online IDE.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/make-software/casper-net-sdk)
 
-## Usage Examples
+## Usage Examples (WIP)
 
-* [Counter contract tutorial with C#](./Docs/Tutorials/Counter%20Contract/README.md)
-* [Key-Value storage tutorial with C#](./Docs/Tutorials/KVStorage%20Contract/README.md)
-* [Key management](./Docs/KeyManagement.md)
-* [Working with CLValue](./Docs/WorkingWithCLValue.md)
+* [Counter contract tutorial with C#](./Docs/Tutorials/counter-contract/README.md)
+* [Key-Value storage tutorial with C#](./Docs/Tutorials/kvstorage-contract/README.md)
+* [Key management](./Docs/Articles/KeyManagement.md )
+* [Working with CLValue](./Docs/Articles/WorkingWithCLValue.md)
 
 ## TODO
 
