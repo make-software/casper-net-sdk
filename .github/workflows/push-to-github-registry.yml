@@ -17,6 +17,6 @@ jobs:
     - name: Create nuget package
       run: dotnet pack --configuration Release -o out
     - name: Publish Nuget to GitHub registry
-      run: dotnet nuget push ./out/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/davidatwhiletrue/index.json --skip-duplicate --no-symbols true
+      run: dotnet nuget push ./out/*.nupkg -k ${GITHUBPUBLISH_TOKEN} -s https://nuget.pkg.github.com/make-software/index.json --skip-duplicate --no-symbols true
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUBPUBLISH_TOKEN }}
