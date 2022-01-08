@@ -15,10 +15,24 @@ dotnet build --configuration Release
 To run the tests, use this command:
 
 ```
-dotnet test --settings Casper.Network.SDK.Test/test.runsettings
+dotnet test --filter "TestCategory!~NCTL"
 ```
 
-### Create a workspace in Gitpod
+### Integration tests
+
+The command above excludes integration tests. If you're running a Casper network locally with NCTL, follow these steps to run the integrations tests:
+
+1. Copy the faucet key from your NCTL environment to `Casper.Network.SDK.Test/TestData/faucetact.pem`.
+
+2. Adjust, if needed, the IPs and ports in the file `Casper.Network.SDK.Test/TestData/test.runsettings`.
+
+3. Run the tests:
+
+```
+dotnet test --settings Casper.Network.SDK.Test/test.runsettings --filter "TestCategory~NCTL"
+```
+
+## Create a workspace in Gitpod
 
 Click the button to start coding in Gitpod with an online IDE.
 
@@ -33,7 +47,5 @@ Click the button to start coding in Gitpod with an online IDE.
 
 ## TODO
 
-* Provide native documentation.
 * Review compatibility with previous versions of .NET.
-* Increase test coverage with new Unit Tests.
 * Implement new deploy templates for more complex use cases.
