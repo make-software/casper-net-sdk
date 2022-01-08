@@ -8,8 +8,11 @@ namespace Casper.Network.SDK.JsonRpc
     /// <summary>
     /// The RPC client to send and receive data to the Casper network.
     /// </summary>
-    public class RpcClient
+    public class RpcClient : IDisposable
     {
+        private volatile bool _disposed;
+        private volatile bool _ownHttpClient;
+        
         private HttpClient httpClient;
 
         /// <summary>
@@ -22,6 +25,17 @@ namespace Casper.Network.SDK.JsonRpc
                 httpClient = new HttpClient(loggingHandler);
             else
                 httpClient = new HttpClient();
+            _ownHttpClient = true;
+            httpClient.BaseAddress = new Uri(nodeAddress);
+            httpClient.DefaultRequestHeaders
+                .Accept
+                .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")); //ACCEPT header
+        }
+
+        public RpcClient(string nodeAddress, HttpClient client)
+        {
+            httpClient = client;
+            _ownHttpClient = false;
             httpClient.BaseAddress = new Uri(nodeAddress);
             httpClient.DefaultRequestHeaders
                 .Accept
@@ -36,7 +50,7 @@ namespace Casper.Network.SDK.JsonRpc
             var rpcResponse = await SendAsync<TRpcResult>(method);
 
             if (rpcResponse.Error != null)
-                throw new RpcClientException("Error in request. Check inner RpcError object.", rpcResponse.Error);
+                throw new RpcClientException("Error in request. " + rpcResponse.Error.ToString(), rpcResponse.Error);
             
             return rpcResponse;
         }
@@ -90,6 +104,25 @@ namespace Casper.Network.SDK.JsonRpc
             catch (Exception e)
             {
                 throw new RpcClientException(e.Message, e);
+            }
+        }
+        
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                _disposed = true;
+
+                if (_ownHttpClient)
+                {
+                    httpClient.Dispose();
+                }
             }
         }
     }

@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Casper.Network.SDK.JsonRpc;
 
 namespace Casper.Network.SDK.Utils
