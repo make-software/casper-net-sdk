@@ -1,13 +1,13 @@
 using System.IO;
 using System.Numerics;
 using System.Text.Json;
-using Casper.Network.SDK.Converters;
+using Casper.Network.SDK.JsonRpc.ResultTypes;
 using Casper.Network.SDK.Types;
 using NUnit.Framework;
 
 namespace NetCasperTest
 {
-    public class RpcResultSerializerTest
+    public class RpcResultTest
     {
         [Test]
         public void AccountDeserializerTest()
@@ -41,7 +41,7 @@ namespace NetCasperTest
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
                 WriteIndented = true,
-                Converters = {new ExecutionResult.ExecutionResultConverter() }
+                Converters = {new ExecutionResult.ExecutionResultConverter()}
             };
             var results = JsonSerializer.Deserialize<ExecutionResult>(json, options);
             Assert.IsNotNull(results);
@@ -66,7 +66,7 @@ namespace NetCasperTest
                 results.Effect.Transforms[9].Key.ToString().ToLower()
             );
         }
-        
+
         [Test]
         public void FailureExecutionResultDeserializerTest()
         {
@@ -76,18 +76,46 @@ namespace NetCasperTest
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
                 WriteIndented = true,
-                Converters = {new ExecutionResult.ExecutionResultConverter() }
+                Converters = {new ExecutionResult.ExecutionResultConverter()}
             };
             var results = JsonSerializer.Deserialize<ExecutionResult>(json, options);
             Assert.IsNotNull(results);
             Assert.IsFalse(results.IsSuccess);
             Assert.IsNotNull(results.ErrorMessage);
-            Assert.AreEqual("Wasm preprocessing error: Encountered operation forbidden by gas rules. Consult instruction -> metering config map",
+            Assert.AreEqual(
+                "Wasm preprocessing error: Encountered operation forbidden by gas rules. Consult instruction -> metering config map",
                 results.ErrorMessage);
             Assert.AreEqual(BigInteger.Zero, results.Cost);
             Assert.AreEqual(0, results.Transfers.Count);
             Assert.AreEqual(0, results.Effect.Operations.Count);
             Assert.AreEqual(0, results.Effect.Transforms.Count);
+        }
+
+        [Test]
+        public void RpcResultLoadTest()
+        {
+            var result = RpcResult.Load<GetAccountInfoResult>(TestContext.CurrentContext.TestDirectory +
+                                                              "/TestData/rpc-result.json");
+            Assert.IsNotNull(result);
+            Assert.AreEqual("1.0.0", result.ApiVersion);
+            Assert.AreEqual("account-hash-29e1d9b2fa30d946ffec1a7cc3d2f6852a72227d6dc089edc93bf7c74ad0a444",
+                result.Account.AccountHash.ToString().ToLower());
+            Assert.AreEqual(3, result.Account.NamedKeys.Count);
+        }
+        
+        [Test]
+        public void RpcResultParseTest()
+        {
+            string json = File.ReadAllText(TestContext.CurrentContext.TestDirectory +
+                                           "/TestData/rpc-result.json");
+            
+            var result = RpcResult.Parse<GetAccountInfoResult>(json);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("uref-0d1054710fe5fb8c2ae758996f32df6e5cac2d6bfd1be8c859ab07aaa5128d7b-007",
+                result.Account.MainPurse.ToString().ToLower());
+            Assert.AreEqual(1, result.Account.AssociatedKeys.Count);
+            Assert.AreEqual(result.Account.AccountHash.ToString(), 
+                result.Account.AssociatedKeys[0].AccountHash.ToString());
         }
     }
 }

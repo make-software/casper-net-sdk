@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.Json;
 using Casper.Network.SDK.Converters;
 using Casper.Network.SDK.Types;
@@ -6,7 +7,7 @@ using Org.BouncyCastle.Utilities.Encoders;
 
 namespace NetCasperTest
 {
-    public class NamedArgJsonDeserializerTest
+    public class NamedArgJsonSerializerTest
     {
         private string NAMEDARG_TARGET = @"[
           ""target"",
@@ -42,13 +43,20 @@ namespace NetCasperTest
         [Test]
         public void SerializeNamedArgTarget()
         {
-            var clValue = new CLValue("989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7",
-                new CLByteArrayTypeInfo(32), "989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7");
-
+            var clValue = CLValue.ByteArray("989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7");
             var namedArg = new NamedArg("target", clValue);
 
-            var json = JsonSerializer.Serialize(namedArg, _options);
-            Assert.IsNotNull(json);
+            var strJson = JsonSerializer.Serialize(namedArg, _options);
+            Assert.IsNotNull(strJson);
+
+            var json = JsonDocument.Parse(strJson).RootElement;
+            Assert.AreEqual(JsonValueKind.Array, json.ValueKind);
+            Assert.AreEqual(2, json.EnumerateArray().Count());
+            Assert.AreEqual("target", json.EnumerateArray().First().GetString());
+            Assert.AreEqual(JsonValueKind.Object, json.EnumerateArray().Last().ValueKind);
+
+            var clValue2 = JsonSerializer.Deserialize<CLValue>(json.EnumerateArray().Last().GetRawText());
+            Assert.IsNotNull(clValue2);
         }
     }
 }

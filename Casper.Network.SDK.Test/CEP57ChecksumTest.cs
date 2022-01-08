@@ -1,3 +1,4 @@
+using System;
 using Casper.Network.SDK.Types;
 using Casper.Network.SDK.Utils;
 using NUnit.Framework;
@@ -74,6 +75,22 @@ namespace NetCasperTest
 
             key = new WithdrawKey(bytes);
             Assert.AreEqual($"withdraw-{hash}", key.ToString());
+        }
+
+        [Test]
+        public void CEP57HasChecksum()
+        {
+            const string hash = "010c3Fe81B7b862E50C77EF9A958a05BfA98444F26f96f23d37A13c96244cFB7";
+            
+            Assert.IsTrue(CEP57Checksum.HasChecksum(hash));
+            Assert.IsFalse(CEP57Checksum.HasChecksum(hash.ToUpper()));
+            Assert.IsFalse(CEP57Checksum.HasChecksum(hash.ToLower()));
+            
+            const string wrongHash = "nothexastring";
+
+            var ex = Assert.Catch<Exception>(() => CEP57Checksum.HasChecksum(wrongHash));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.Contains("Input is not an hexadecimal string"));
         }
     }
 }
