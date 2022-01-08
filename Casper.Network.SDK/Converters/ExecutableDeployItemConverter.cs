@@ -25,9 +25,9 @@ namespace Casper.Network.SDK.Converters
                 item = JsonSerializer.Deserialize<StoredContractByHashDeployItem>(ref reader, options);
             else if (name == "StoredContractByName")
                 item = JsonSerializer.Deserialize<StoredContractByNameDeployItem>(ref reader, options);
-            else if (name == "StoredVersionContractByHash")
+            else if (name == "StoredVersionedContractByHash")
                 item = JsonSerializer.Deserialize<StoredVersionedContractByHashDeployItem>(ref reader, options);
-            else if (name == "StoredVersionContractByName")
+            else if (name == "StoredVersionedContractByName")
                 item = JsonSerializer.Deserialize<StoredVersionedContractByNameDeployItem>(ref reader, options);
             else if (name == "Transfer")
                 item = JsonSerializer.Deserialize<TransferDeployItem>(ref reader, options);
