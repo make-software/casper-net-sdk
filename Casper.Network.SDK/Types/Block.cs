@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Casper.Network.SDK.Converters;
 
 namespace Casper.Network.SDK.Types
 {

@@ -162,7 +162,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public static CLValue U128(BigInteger value)
         {
-            var bytes = value.ToByteArray();
+            var bytes = value.ToByteArray(true);
             var len = bytes.Length;
 
             var b = new byte[1 + len];
@@ -176,7 +176,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public static CLValue U256(BigInteger value)
         {
-            var bytes = value.ToByteArray();
+            var bytes = value.ToByteArray(true);
             var len = bytes.Length;
 
             var b = new byte[1 + len];
@@ -190,7 +190,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public static CLValue U512(BigInteger value)
         {
-            var bytes = value.ToByteArray();
+            var bytes = value.ToByteArray(true);
             var len = bytes.Length;
 
             var b = new byte[1 + len];
