@@ -328,5 +328,112 @@ namespace Casper.Network.SDK
                 gasPrice,
                 ttl);
         }
+
+
+        private static Deploy CallAuctionContract(
+            HashKey contractHash,
+            string entryPoint,
+            PublicKey fromKey,
+            PublicKey validatorPK,
+            BigInteger amount,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            var header = new DeployHeader()
+            {
+                Account = fromKey,
+                Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow),
+                Ttl = ttl,
+                ChainName = chainName,
+                GasPrice = gasPrice
+            };
+            var payment = new ModuleBytesDeployItem(paymentAmount);
+
+            var runtimeArgs = new List<NamedArg>
+            {
+                new NamedArg("validator", CLValue.PublicKey(validatorPK)),
+                new NamedArg("amount", CLValue.U512(amount)),
+                new NamedArg("delegator", CLValue.PublicKey(fromKey))
+            };
+            var session = new StoredContractByHashDeployItem(contractHash.ToHexString(),
+                entryPoint, runtimeArgs);
+            
+            var deploy = new Deploy(header, payment, session);
+            return deploy;
+        }
+        
+        
+        /// <summary>
+        /// Creates a Deploy object to call the auction contract to delegate tokens to a validator for staking.
+        /// Make sure you use the correct contract hash for the network you're sending the deploy!
+        /// </summary>
+        /// <param name="contractHash">Hash of the delegation contract in the network.</param>
+        /// <param name="fromKey">Public key of the account that delegates the tokens.</param>
+        /// <param name="validatorPK">Public key of the validator to which the tokens are delegated for staking.</param>
+        /// <param name="amount">Amount of $CSPR (in motes) to delegate.</param>
+        /// <param name="paymentAmount">Amount of $CSPR (in motes) to pay for the delegation deployment.</param>
+        /// <param name="chainName">Name of the network that will execute the Deploy.</param>
+        /// <param name="gasPrice">Gas price. Use 1 unless you need a different value.</param>
+        /// <param name="ttl">Validity of the Deploy since the creation (in milliseconds).</param>
+        /// <returns>A deploy configured to delegate tokens to a validator for staking.</returns>
+        public static Deploy DelegateTokens(
+            HashKey contractHash,
+            PublicKey fromKey,
+            PublicKey validatorPK,
+            BigInteger amount,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            return CallAuctionContract(contractHash,
+                "delegate",
+                fromKey,
+                validatorPK,
+                amount,
+                paymentAmount,
+                chainName,
+                gasPrice,
+                ttl);
+        }
+        
+        /// <summary>
+        /// Creates a Deploy object to call the auction contract to delegate tokens to a validator for staking.
+        /// Make sure you use the correct contract hash for the network you're sending the deploy!
+        /// </summary>
+        /// <param name="contractHash">Hash of the delegation contract in the network.</param>
+        /// <param name="fromKey">Public key of the account that delegates the tokens.</param>
+        /// <param name="validatorPK">Public key of the validator to which the tokens are delegated for staking.</param>
+        /// <param name="amount">Amount of $CSPR (in motes) to delegate.</param>
+        /// <param name="paymentAmount">Amount of $CSPR (in motes) to pay for the delegation deployment.</param>
+        /// <param name="chainName">Name of the network that will execute the Deploy.</param>
+        /// <param name="gasPrice">Gas price. Use 1 unless you need a different value.</param>
+        /// <param name="ttl">Validity of the Deploy since the creation (in milliseconds).</param>
+        /// <returns>A deploy configured to delegate tokens to a validator for staking.</returns>
+        public static Deploy UndelegateTokens(
+            HashKey contractHash,
+            PublicKey fromKey,
+            PublicKey validatorPK,
+            BigInteger amount,
+            BigInteger paymentAmount,
+            string chainName,
+            ulong gasPrice = 1,
+            ulong ttl = 1800000 //30m
+        )
+        {
+            return CallAuctionContract(contractHash,
+                "undelegate",
+                fromKey,
+                validatorPK,
+                amount,
+                paymentAmount,
+                chainName,
+                gasPrice,
+                ttl);
+        }
     }
 }
