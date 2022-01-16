@@ -11,6 +11,9 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class EntryPointAccess
     {
+        /// <summary>
+        /// When public, anyone can call this method (no access controls).
+        /// </summary>
         public bool IsPublic { get; init; }
 
         /// <summary>
@@ -68,9 +71,18 @@ namespace Casper.Network.SDK.Types
         }
     }
 
+    /// <summary>
+    /// Defines whether the code runs in the contract's or the session context.
+    /// </summary>
     public enum EntryPointType
     {
+        /// <summary>
+        /// Runs as session code
+        /// </summary>
         Session,
+        /// <summary>
+        /// Runs within contract’s context
+        /// </summary>
         Contract
     }
 

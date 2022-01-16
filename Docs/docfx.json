@@ -10,7 +10,8 @@
       ],
       "dest": "api",
       "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "disableDefaultFilter": false,
+      "filter": "filterConfig.yml"
     }
   ],
   "build": {
@@ -30,9 +31,9 @@
           "Examples/**.md",
           "Examples/toc.yml",
           "Tutorials/**.md",
-          "Tutorials/toc.yml",
+          "Tutorials/toc.yml"
         ]
-      },
+      }
     ],
     "resource": [
       {
@@ -53,6 +54,10 @@
       }
     ],
     "dest": "_site",
+    "globalMetadata": {
+      "_appTitle": "C#/.Net SDK for the Casper Network",
+      "_appFooter": "Maintained by MAKE Technology LLC"
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [

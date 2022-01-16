@@ -7,6 +7,11 @@ using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Utils
 {
+    /// <summary>
+    /// CEP 0057 introduces a checksum for hex-encoded values based on the capitalization
+    /// of letters in an hexadecimal string. 
+    /// </summary>
+    /// <seealso href="https://github.com/casper-network/ceps/blob/master/text/0057-checksummed-addresses.md">CEP 0057 Checksummed Addresses</seealso>
     public class CEP57Checksum
     {
         private const int SMALL_BYTES_COUNT = 75;
@@ -52,6 +57,11 @@ namespace Casper.Network.SDK.Utils
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
         };
 
+        /// <summary>
+        /// Returns true if the input hexadecimal string includes the CEP57 checksum.
+        /// An string includes checksum when letters are mixed-cased.
+        /// </summary>
+        /// <exception cref="ArgumentException">This method trhows an exception if the string is not hexadecimal.</exception>
         public static bool HasChecksum(string hex)
         {
             int mix = 0;
@@ -70,6 +80,10 @@ namespace Casper.Network.SDK.Utils
             return mix > 2;
         }
 
+        /// <summary>
+        /// Encodes an array of bytes into an hexadecimal string with CEP57 checksum.
+        /// Arrays longer than 75 bytes do not include the checksum.
+        /// </summary>
         public static string Encode(byte[] input)
         {
             if (input.Length > SMALL_BYTES_COUNT)
@@ -98,6 +112,12 @@ namespace Casper.Network.SDK.Utils
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Converts an hexadecimal string to an array of bytes.
+        /// If the string contains a valid checksum, `checksumResult` returns `CEP57Checksum.ValidChecksum`.
+        /// If the string contains an invalid checksum, `checksumResult`returns `CEP57Checksum.InvalidChecksum`.
+        /// `checkumResult`returns `CEP57Checksum.NoChecksum` if the string does not include CEP57 checksum.
+        /// </summary>
         public static byte[] Decode(string hex, out int checksumResult)
         {
             var bytes = Hex.Decode(hex);

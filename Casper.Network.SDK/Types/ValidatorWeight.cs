@@ -10,9 +10,15 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class ValidatorWeight
     {
+        /// <summary>
+        /// Validator's Public Key.
+        /// </summary>
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey PublicKey { get; init; }
 
+        /// <summary>
+        /// Validator's weight.
+        /// </summary>
         public BigInteger Weight { get; init; }
 
         public class ValidatorWeightConverter : JsonConverter<ValidatorWeight>

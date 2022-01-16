@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A `CLTypeInfo` specific for maps.
+    /// </summary>
     public class CLMapTypeInfo : CLTypeInfo
     {
         public CLTypeInfo KeyType { get; }

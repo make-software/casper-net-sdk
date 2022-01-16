@@ -1,4 +1,4 @@
-- name: Tutorials
+- name: Introduction
   href: index.md
   items:
   - name: Counter contract

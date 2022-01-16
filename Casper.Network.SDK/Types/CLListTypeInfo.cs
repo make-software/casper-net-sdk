@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A `CLTypeInfo` specific for lists.
+    /// </summary>
     public class CLListTypeInfo : CLTypeInfo
     {
         public CLTypeInfo ListType { get; }

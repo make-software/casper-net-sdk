@@ -4,14 +4,33 @@ using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.SSE
 {
+    /// <summary>
+    /// An occurrence of a server side event delivered via callback method
+    /// </summary>
     public class SSEvent
     {
+        /// <summary>
+        /// The type of the event.
+        /// </summary>
         public EventType EventType { get; init; }
 
+        /// <summary>
+        /// The incremental id number of the event from the node.
+        /// </summary>
         public int Id { get; init; }
 
+        /// <summary>
+        /// JSON object before parsing.
+        /// Call the <see cref="Parse{T}"/> method to get a typed object with the event.
+        /// </summary>
         public JsonElement Result { get; init; }
 
+        /// <summary>
+        /// Parses the json event and returns a typed object with the data.
+        /// If T is not the correct type for the event this method throws an exception.
+        /// </summary>
+        /// <typeparam name="T">One of BlockAdded, DeployAccepted, DeployExpired, DeployProcessed,
+        /// Fault, FinalitySignature or Step.</typeparam>
         public T Parse<T>()
         {
             string json = null;

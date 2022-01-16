@@ -15,6 +15,10 @@ using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// The type used in deploy input arguments. And it can also be returned as a
+    /// result of a query to the network or a contract call.
+    /// </summary>
     public class CLValue
     {
         /// <summary>

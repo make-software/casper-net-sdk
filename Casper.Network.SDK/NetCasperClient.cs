@@ -274,7 +274,7 @@ namespace Casper.Network.SDK
         /// Send a Deploy to the network for its execution.
         /// </summary>
         /// <param name="deploy">The deploy object.</param>
-        /// <exception cref="Exception">Throws an exception if the deploy is not signed.</exception>
+        /// <exception cref="System.Exception">Throws an exception if the deploy is not signed.</exception>
         public async Task<RpcResponse<PutDeployResult>> PutDeploy(Deploy deploy)
         {
             if (deploy.Approvals.Count == 0)
