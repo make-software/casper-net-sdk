@@ -1,8 +1,30 @@
 # Casper .NET SDK
 
+[![GitHub version](https://badge.fury.io/gh/make-software%2Fcasper-net-sdk.svg)](https://badge.fury.io/gh/make-software%2Fcasper-net-sdk)  [![NuGet version](https://badge.fury.io/nu/casper.network.sdk.svg)](https://badge.fury.io/nu/casper.network.sdk)
+
 ![build-and-test workflow](https://github.com/make-software/casper-net-sdk/actions/workflows/build-and-test.yml/badge.svg)
 
 The Casper .NET SDK allows developers to interact with the Casper Network using the .NET languages. The project itself is being developed with C#.
+
+## Documentation
+
+The SDK documentation, examples and tutorials can be found [here](https://make-software.github.io/casper-net-sdk/).
+
+## Get started
+
+The Casper.Network.SDK for .NET is published as a nuget package in [nuget.org](https://www.nuget.org/packages/Casper.Network.SDK).
+
+To add a reference to the SDK in your project, use the Package Manager in Visual Studio or the `dotnet` cli tool.
+
+### Package Manager (Windows)
+```
+Install-Package Casper.Network.SDK
+``` 
+
+### dotnet cli tool (Windows/Mac/Linux)
+```
+dotnet add package Casper.Network.SDK
+``` 
 
 ## Build/Test instructions
 
@@ -38,14 +60,3 @@ Click the button to start coding in Gitpod with an online IDE.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/make-software/casper-net-sdk)
 
-## Usage Examples (WIP)
-
-* [Counter contract tutorial with C#](./Docs/Tutorials/counter-contract/README.md)
-* [Key-Value storage tutorial with C#](./Docs/Tutorials/kvstorage-contract/README.md)
-* [Key management](./Docs/Articles/KeyManagement.md )
-* [Working with CLValue](./Docs/Articles/WorkingWithCLValue.md)
-
-## TODO
-
-* Review compatibility with previous versions of .NET.
-* Implement new deploy templates for more complex use cases.
