@@ -14,7 +14,7 @@ namespace Casper.Network.SDK.Tutorials
 {
     public static class Erc20Contract
     {
-        static string nodeAddress = "http://207.154.217.88:11101/rpc";
+        static string nodeAddress = "http://127.0.0.1:11101/rpc";
         static string chainName = "casper-net-1";
 
         static NetCasperClient casperSdk;
@@ -96,14 +96,24 @@ namespace Casper.Network.SDK.Tutorials
         {
             var accountHash = new AccountHashKey(publicKey);
             var dictItem = Convert.ToBase64String(accountHash.GetBytes());
-            
-            var response = await casperSdk.GetDictionaryItemByContract(contractHash, "balances", dictItem);
 
-            File.WriteAllText("res_ReadBalance.json", response.Result.GetRawText());
+            try
+            {
+                var response = await casperSdk.GetDictionaryItemByContract(contractHash, "balances", dictItem);
 
-            var result = response.Parse();
-            var balance = result.StoredValue.CLValue.ToBigInteger();
-            Console.WriteLine("Balance: " + balance.ToString() + " $CSSDK");
+                File.WriteAllText("res_ReadBalance.json", response.Result.GetRawText());
+
+                var result = response.Parse();
+                var balance = result.StoredValue.CLValue.ToBigInteger();
+                Console.WriteLine("Balance: " + balance.ToString() + " $CSSDK");
+            }
+            catch (RpcClientException e)
+            {
+                if (e.RpcError.Code == -32003)
+                    Console.WriteLine("Allowance not found!");
+                else
+                    throw;
+            }
         }
 
         public static async Task ReadAllowance(string contractHash, PublicKey ownerPk, PublicKey spenderPk)
