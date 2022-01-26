@@ -345,6 +345,19 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
+        /// Returns a `CLValue` object with an empty list for a defined type.
+        /// </summary>
+        public static CLValue EmptyList(CLTypeInfo innerTypeInfo)
+        {
+            var ms = new MemoryStream();
+
+            var bytes = BitConverter.GetBytes(0);
+            ms.Write(bytes);
+
+            return new CLValue(ms.ToArray(), new CLListTypeInfo(innerTypeInfo), "");
+        }
+
+        /// <summary>
         /// Returns a `CLValue` object with a ByteArray type.
         /// </summary>
         public static CLValue ByteArray(byte[] bytes)
@@ -413,6 +426,19 @@ namespace Casper.Network.SDK.Types
                 bytes.Write(kv.Key.Bytes);
                 bytes.Write(kv.Value.Bytes);
             }
+
+            return new CLValue(bytes.ToArray(), mapTypeInfo, null);
+        }
+
+        /// <summary>
+        /// Returns a `CLValue` object with an empty map for a defined key/value types.
+        /// </summary>
+        public static CLValue EmptyMap(CLTypeInfo keyTypeInfo, CLTypeInfo valueTypeInfo)
+        {
+            CLMapTypeInfo mapTypeInfo = new CLMapTypeInfo(keyTypeInfo, valueTypeInfo);
+            
+            MemoryStream bytes = new MemoryStream();
+            bytes.Write(BitConverter.GetBytes(0));
 
             return new CLValue(bytes.ToArray(), mapTypeInfo, null);
         }

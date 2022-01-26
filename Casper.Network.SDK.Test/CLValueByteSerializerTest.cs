@@ -252,6 +252,14 @@ namespace NetCasperTest
             bytes = serializer.ToBytes(CLValue.OptionNone(new CLListTypeInfo(CLType.U32)));
             Assert.AreEqual("01000000000d0e04", Hex.ToHexString(bytes));
         }
+
+        [Test]
+        public void EmptyListByteSerializerTest()
+        {
+            var list = CLValue.EmptyList(new CLKeyTypeInfo(KeyIdentifier.Hash));
+            var bytes = serializer.ToBytes(list);
+            Assert.AreEqual("04000000000000000e0b", Hex.ToHexString(bytes));
+        }
         
         [Test]
         public void ByteArrayKeyByteSerializerTest()
@@ -286,6 +294,14 @@ namespace NetCasperTest
             
             bytes = serializer.ToBytes(CLValue.OptionNone(new CLMapTypeInfo(CLType.String, CLType.U32)));
             Assert.AreEqual("01000000000d110a04", Hex.ToHexString(bytes));
+        }
+        
+        [Test]
+        public void EmptyMapByteSerializerTest()
+        {
+            var list = CLValue.EmptyMap(CLType.String, new CLKeyTypeInfo(KeyIdentifier.Hash));
+            var bytes = serializer.ToBytes(list);
+            Assert.AreEqual("0400000000000000110a0b", Hex.ToHexString(bytes));
         }
         
         [Test]
