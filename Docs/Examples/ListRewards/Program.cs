@@ -8,12 +8,12 @@ namespace ListRewards
 {
     public static class ListRewards
     {
-        static string nodeAddress = "http://88.99.30.92:7777/rpc";
+        static string nodeAddress = "http://testnet-node.make.services:7777/rpc";
         static NetCasperClient casperSdk;
 
         public async static Task GetEraSummary()
         {
-            var rpcResponse = await casperSdk.GetEraInfoBySwitchBlock(360_362);
+            var rpcResponse = await casperSdk.GetEraInfoBySwitchBlock(435_733);
             var eraSummary = rpcResponse.Parse().EraSummary;
 
             Console.WriteLine("Block Hash: " + eraSummary.BlockHash);

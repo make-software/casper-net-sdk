@@ -16,7 +16,7 @@ namespace Casper.Network.SDK.Tutorials
 {
     public static class DeployCounterContract
     {
-        static string nodeAddress = "http://207.154.217.11:11101/rpc";
+        static string nodeAddress = "http://127.0.0.1:11101/rpc";
         static string chainName = "casper-net-1";
 
         static NetCasperClient casperSdk;

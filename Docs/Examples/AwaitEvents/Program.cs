@@ -8,14 +8,10 @@ namespace Casper.NET.SDK.Examples
 {
     public static class AwaitEvents
     {
-        // Testnet ip + host
-        private static string localNetHost = "65.108.8.45";
-        private static int localNetPort = 9999;
+        // Testnet node and port
+        private static string localNetHost = "testnet-node.make.services";
+        private static int localNetPort = 9999; // use 18101 with NCTL
         
-        // NCTL ip + host        
-        // private static string localNetHost = "207.154.217.11";
-        // private static int localNetPort = 18101;
-
         static NetCasperClient casperSdk;
 
         // Listen to deploys channel
