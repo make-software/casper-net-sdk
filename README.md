@@ -26,6 +26,18 @@ Install-Package Casper.Network.SDK
 dotnet add package Casper.Network.SDK
 ``` 
 
+## Run a Casper node locally with NCTL
+
+[NCTL](https://github.com/casper-network/casper-node/tree/release-1.4.3/utils/nctl) is a CLI application to control one or multiple Casper networks locally. Many developers wish to spin up relatively small test networks to localize their testing before deploying to the blockchain.
+
+To simplify even more the set up of a local network, you may run NCTL within a docker container. To start a container exposing the ports of one node, write the following command:
+
+```bash
+docker run --rm -it --name mynctl -d -p 11101:11101 -p 14101:14101 -p 18101:18101 makesoftware/casper-nctl
+```
+
+Refer to the [`casper-nctl-docker`](https://github.com/make-software/casper-nctl-docker/) repository for further details on how to use NCTL with docker.
+
 ## Build/Test instructions
 
 To build this library, install .NET 5.0 or higher and build with command:
@@ -37,21 +49,21 @@ dotnet build --configuration Release
 To run the tests, use this command:
 
 ```
-dotnet test --filter "TestCategory!~NCTL"
+dotnet test --filter 'TestCategory!~NCTL'
 ```
 
 ### Integration tests
 
 The command above excludes integration tests. If you're running a Casper network locally with NCTL, follow these steps to run the integrations tests:
 
-1. Copy the faucet key from your NCTL environment to `Casper.Network.SDK.Test/TestData/faucetact.pem`.
+1. Copy the faucet key from your NCTL environment to `Casper.Network.SDK.Test/TestData/faucetact.pem`. If you're running the NCTL docker image, activate nctl commands and run `nctl-view-faucet-secret-key > Casper.Network.SDK.Test/TestData/faucetact.pem`.
 
 2. Adjust, if needed, the IPs and ports in the file `Casper.Network.SDK.Test/TestData/test.runsettings`.
 
 3. Run the tests:
 
 ```
-dotnet test --settings Casper.Network.SDK.Test/test.runsettings --filter "TestCategory~NCTL"
+dotnet test --settings Casper.Network.SDK.Test/test.runsettings --filter 'TestCategory~NCTL'
 ```
 
 ## Create a workspace in Gitpod
