@@ -10,6 +10,7 @@ The Casper .NET SDK allows developers to interact with the Casper Network using 
 ## Articles
 
 * [Getting started](./Articles/GettingStarted.md)
+* [Running a local Casper network with NCTL](./Articles/RunningNctlLocally.md)
 * [Key management](./Articles/KeyManagement.md)
 * [Working with CLValue](./Articles/WorkingWithCLValue.md)
 

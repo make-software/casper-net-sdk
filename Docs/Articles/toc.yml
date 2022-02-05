@@ -3,6 +3,8 @@
   items:
   - name: Getting started
     href: GettingStarted.md
+  - name: Running a local Casper network with NCTL
+    href: RunningNctlLocally.md
   - name: Key Management
     href: KeyManagement.md
   - name: Working with CLValue

@@ -30,7 +30,7 @@ dotnet add package Casper.Network.SDK
 
 [NCTL](https://github.com/casper-network/casper-node/tree/release-1.4.3/utils/nctl) is a CLI application to control one or multiple Casper networks locally. Many developers wish to spin up relatively small test networks to localize their testing before deploying to the blockchain.
 
-To simplify even more the set up of a local network, you may run NCTL within a docker container. To start a container exposing the ports of one node, write the following command:
+To simplify even more the set up of a local network, you may run NCTL within a docker container. To start a container and publish the ports of one the nodes, write the following command:
 
 ```bash
 docker run --rm -it --name mynctl -d -p 11101:11101 -p 14101:14101 -p 18101:18101 makesoftware/casper-nctl
@@ -51,6 +51,8 @@ To run the tests, use this command:
 ```
 dotnet test --filter 'TestCategory!~NCTL'
 ```
+
+On Windows use a PowerShell terminal to run the tests.
 
 ### Integration tests
 
