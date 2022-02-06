@@ -2,6 +2,9 @@ using System;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A `CLTypeInfo` specific for the Tuple1 CLType.
+    /// </summary>
     public class CLTuple1TypeInfo : CLTypeInfo
     {
         public CLTypeInfo Type0 { get; }
@@ -43,6 +46,9 @@ namespace Casper.Network.SDK.Types
         }
     }
     
+    /// <summary>
+    /// A `CLTypeInfo` specific for the Tuple2 CLType.
+    /// </summary>
     public class CLTuple2TypeInfo : CLTypeInfo
     {
         public CLTypeInfo Type0 { get; }
@@ -88,6 +94,9 @@ namespace Casper.Network.SDK.Types
         }
     }
     
+    /// <summary>
+    /// A `CLTypeInfo` specific for the Tuple3 CLType.
+    /// </summary>
     public class CLTuple3TypeInfo : CLTypeInfo
     {
         public CLTypeInfo Type0 { get; }

@@ -14,6 +14,8 @@ namespace Casper.Network.SDK.JsonRpc
     {
         public StreamWriter LoggerStream { get; init; }
 
+        private volatile bool _disposed;
+
         public RpcLoggingHandler(HttpMessageHandler innerHandler)
             : base(innerHandler)
         {
@@ -27,16 +29,17 @@ namespace Casper.Network.SDK.JsonRpc
                 LoggerStream.Flush();
             }
         }
-        
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
             Log("Request:");
             Log(request.ToString());
-            if (request.Content != null && LoggerStream!=null)
+            if (request.Content != null && LoggerStream != null)
             {
-               Log(await request.Content.ReadAsStringAsync());
+                Log(await request.Content.ReadAsStringAsync());
             }
+
             Log(string.Empty);
 
             HttpResponseMessage response;
@@ -52,13 +55,28 @@ namespace Casper.Network.SDK.JsonRpc
 
             Log("Response:");
             Log(response.ToString());
-            if (LoggerStream!=null)
+            if (LoggerStream != null)
             {
                 Log(await response.Content.ReadAsStringAsync());
             }
+
             Log(string.Empty);
 
             return response;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                _disposed = true;
+                if (LoggerStream != null)
+                {
+                    LoggerStream.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

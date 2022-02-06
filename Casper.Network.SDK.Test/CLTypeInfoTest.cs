@@ -1,3 +1,4 @@
+using System;
 using Casper.Network.SDK.Types;
 using NUnit.Framework;
 
@@ -85,16 +86,14 @@ namespace NetCasperTest
         [Test]
         public void CLTypeInfoInvalidCastTest()
         {
-            CLTypeInfo cltype = null;
-            try
+            CLTypeInfo clType = null;
+            var ex = Assert.Catch<Exception>(() =>
             {
-                cltype = CLType.Key;
-                Assert.Fail("Exception expected for an invalid cast");
-            }
-            catch 
-            {
-                Assert.IsNull(cltype);
-            }
+                clType = CLType.Key;
+            });
+            Assert.IsNull(clType);
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("Implicit cast not supported for CLType 'Key'.", ex.Message);
         }
         
         [Test]

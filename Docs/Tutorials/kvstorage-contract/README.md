@@ -9,7 +9,7 @@ Using the Casper .NET SDK, we'll show you how to:
 - Call an entry point in the contract to store a value with a given named key.
 - Read the previously stored value. 
 
-Read first the [Counter tutorial](../Counter%20Contract/README.md) to prepare your environment and one account with
+Read first the [Counter tutorial](../counter-contract/README.md) to prepare your environment and one account with
 enough $CSPR to make deploys.
 
 NOTE: We use a local network in this example. Learn [here](https://casper.network/docs/dapp-dev-guide/setup-nctl) 

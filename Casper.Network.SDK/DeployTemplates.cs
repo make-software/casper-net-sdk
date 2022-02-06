@@ -7,8 +7,9 @@ using Casper.Network.SDK.Utils;
 namespace Casper.Network.SDK
 {
     /// <summary>
-    /// Create a Deploy based on one of the existing templates for the most common
-    /// actions: transfers, contract deployment, contract call, delegation and undelegation.
+    /// Create a <see cref="Deploy">Deploy</see> based on one of the existing templates for
+    /// the most common actions: transfers, contract deployment, contract call, delegation
+    /// and undelegation.
     /// </summary>
     public class DeployTemplates
     {

@@ -4,6 +4,10 @@ using System.Runtime.CompilerServices;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Extends the information of a CLType and provides conversion helpers. Used also
+    /// as a base class for ByteArrays, Keys, Lists, Maps, Options, Results and Tuples.
+    /// </summary>
     public class CLTypeInfo
     {
         public CLType Type { get; }

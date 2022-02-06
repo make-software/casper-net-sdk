@@ -1,0 +1,16 @@
+apiRules:
+- exclude:
+    uidRegex: Casper\.Network\.SDK\.Types\..+Converter$
+    type: Class
+- exclude:
+    uidRegex: Casper\.Network\.SDK\.Types\.KeyAlgoExtensions$
+    type: Class
+- exclude:
+    uidRegex: Casper\.Network\.SDK\.Utils\..+Converter$
+    type: Class
+- exclude:
+    uidRegex: Casper\.Network\.SDK\.SSE\.EventData
+    type: Struct
+- exclude:
+    uidRegex: Caper\.Network\.SDK\.Converters
+    type: Namespace

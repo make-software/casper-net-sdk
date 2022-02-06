@@ -15,6 +15,10 @@ using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// The type used in deploy input arguments. And it can also be returned as a
+    /// result of a query to the network or a contract call.
+    /// </summary>
     public class CLValue
     {
         /// <summary>
@@ -162,7 +166,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public static CLValue U128(BigInteger value)
         {
-            var bytes = value.ToByteArray();
+            var bytes = value.ToByteArray(true);
             var len = bytes.Length;
 
             var b = new byte[1 + len];
@@ -176,7 +180,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public static CLValue U256(BigInteger value)
         {
-            var bytes = value.ToByteArray();
+            var bytes = value.ToByteArray(true);
             var len = bytes.Length;
 
             var b = new byte[1 + len];
@@ -190,7 +194,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public static CLValue U512(BigInteger value)
         {
-            var bytes = value.ToByteArray();
+            var bytes = value.ToByteArray(true);
             var len = bytes.Length;
 
             var b = new byte[1 + len];
@@ -341,6 +345,19 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
+        /// Returns a `CLValue` object with an empty list for a defined type.
+        /// </summary>
+        public static CLValue EmptyList(CLTypeInfo innerTypeInfo)
+        {
+            var ms = new MemoryStream();
+
+            var bytes = BitConverter.GetBytes(0);
+            ms.Write(bytes);
+
+            return new CLValue(ms.ToArray(), new CLListTypeInfo(innerTypeInfo), "");
+        }
+
+        /// <summary>
         /// Returns a `CLValue` object with a ByteArray type.
         /// </summary>
         public static CLValue ByteArray(byte[] bytes)
@@ -409,6 +426,19 @@ namespace Casper.Network.SDK.Types
                 bytes.Write(kv.Key.Bytes);
                 bytes.Write(kv.Value.Bytes);
             }
+
+            return new CLValue(bytes.ToArray(), mapTypeInfo, null);
+        }
+
+        /// <summary>
+        /// Returns a `CLValue` object with an empty map for a defined key/value types.
+        /// </summary>
+        public static CLValue EmptyMap(CLTypeInfo keyTypeInfo, CLTypeInfo valueTypeInfo)
+        {
+            CLMapTypeInfo mapTypeInfo = new CLMapTypeInfo(keyTypeInfo, valueTypeInfo);
+            
+            MemoryStream bytes = new MemoryStream();
+            bytes.Write(BitConverter.GetBytes(0));
 
             return new CLValue(bytes.ToArray(), mapTypeInfo, null);
         }

@@ -14,8 +14,10 @@ namespace Casper.Network.SDK
     /// <summary>
     /// Client to communicate with a Casper node.
     /// </summary>
-    public class NetCasperClient
+    public class NetCasperClient : IDisposable
     {
+        private volatile bool _disposed;
+
         private readonly RpcClient _rpcClient;
 
         /// <summary>
@@ -29,6 +31,11 @@ namespace Casper.Network.SDK
         public NetCasperClient(string nodeAddress, RpcLoggingHandler loggingHandler = null)
         {
             _rpcClient = new RpcClient(nodeAddress, loggingHandler);
+        }
+        
+        public NetCasperClient(string nodeAddress, HttpClient httpClient)
+        {
+            _rpcClient = new RpcClient(nodeAddress, httpClient);
         }
 
         private Task<RpcResponse<TRpcResult>> SendRpcRequestAsync<TRpcResult>(RpcMethod method)
@@ -267,7 +274,7 @@ namespace Casper.Network.SDK
         /// Send a Deploy to the network for its execution.
         /// </summary>
         /// <param name="deploy">The deploy object.</param>
-        /// <exception cref="Exception">Throws an exception if the deploy is not signed.</exception>
+        /// <exception cref="System.Exception">Throws an exception if the deploy is not signed.</exception>
         public async Task<RpcResponse<PutDeployResult>> PutDeploy(Deploy deploy)
         {
             if (deploy.Approvals.Count == 0)
@@ -477,7 +484,7 @@ namespace Casper.Network.SDK
             }
             catch (Exception ex)
             {
-                throw new Exception($"Could not retrive metrics from {nodeAddress}", ex);
+                throw new Exception($"Could not retrieve metrics from {nodeAddress}", ex);
             }
         }
 
@@ -490,6 +497,21 @@ namespace Casper.Network.SDK
         {
             var uriBuilder = new UriBuilder("http", host, port, "metrics");
             return await GetNodeMetrics(uriBuilder.Uri.ToString());
+        }
+        
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                _disposed = true;
+                _rpcClient.Dispose();
+            }
         }
     }
 }

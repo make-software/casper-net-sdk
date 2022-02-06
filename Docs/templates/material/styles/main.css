@@ -100,6 +100,19 @@ article h4 {
 }
 
 /* NAVBAR */
+a.navbar-brand {
+  font-weight: bold;
+  padding-top: 14px;
+  padding-right: 61px;
+  font-size: 21px;
+  color: white !important;
+}
+.navbar-brand > svg {
+  display:none;
+  /*width: 120px;*/
+  /*margin-top: 8px;*/
+  /*margin-right: 20px;*/
+}
 
 .navbar-brand > img {
   color: var(--header-ft-color);

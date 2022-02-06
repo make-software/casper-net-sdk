@@ -2,8 +2,9 @@ using System;
 
 namespace Casper.Network.SDK.Types
 {
-
-    
+    /// <summary>
+    /// A `CLTypeInfo` specific for keys.
+    /// </summary>
     public class CLKeyTypeInfo : CLTypeInfo
     {
         public KeyIdentifier KeyIdentifier { get; }

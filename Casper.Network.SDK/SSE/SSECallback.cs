@@ -1,5 +1,8 @@
 namespace Casper.Network.SDK.SSE
 {
+    /// <summary>
+    /// A delegate method to handle emitted events.
+    /// </summary>
     public delegate void EventCallback(SSEvent evt);
 
     internal class SSECallback

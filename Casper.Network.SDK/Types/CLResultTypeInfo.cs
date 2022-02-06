@@ -2,6 +2,9 @@ using System;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A `CLTypeInfo` specific for the Result CLType.
+    /// </summary>
     public class CLResultTypeInfo : CLTypeInfo
     {
         public CLTypeInfo Ok { get; }

@@ -5,23 +5,29 @@ namespace Casper.Network.SDK.Utils
 {
     public class DateUtils
     {
-        public static DateTime FromString(string datetime)
-        {
-            return DateTime.Parse(datetime);
-        }
-
+        /// <summary>
+        /// Converts an ISO formatted date string to epoch timestamp.
+        /// </summary>
         public static ulong ToEpochTime(string datetime)
         {
-            TimeSpan t = DateTime.Parse(datetime, null, DateTimeStyles.AdjustToUniversal) - new DateTime(1970, 1, 1);
-            return (ulong)t.TotalSeconds * 1000;
+            TimeSpan t = DateTime.Parse(datetime, null, DateTimeStyles.AdjustToUniversal) 
+                         - new DateTime(1970, 1, 1);
+            
+            return  (ulong)t.TotalMilliseconds;
         }
 
+        /// <summary>
+        /// Converts a DateTime object to epoch timestamp.
+        /// </summary>
         public static ulong ToEpochTime(DateTime datetime)
         {
             TimeSpan t = datetime - new DateTime(1970, 1, 1);
-            return (ulong)t.TotalSeconds * 1000;
+            return (ulong)t.TotalMilliseconds;
         }
         
+        /// <summary>
+        /// Converts an epoc timestamp (in milliseconds) to an ISO formatted date string.
+        /// </summary>
         public static string ToISOString(ulong epochTimeInMillis)
         {
             return DateTime.UnixEpoch

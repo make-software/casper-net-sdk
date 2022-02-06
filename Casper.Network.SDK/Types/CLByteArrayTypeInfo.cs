@@ -2,6 +2,9 @@ using System;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A `CLTypeInfo` specific for byte arrays.
+    /// </summary>
     public class CLByteArrayTypeInfo : CLTypeInfo
     {
         public int Size { get; }

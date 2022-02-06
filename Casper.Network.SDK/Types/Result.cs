@@ -1,5 +1,12 @@
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// Equivalent to the `Result` type in Rust. It can wrap a value with type `TOk` when the
+    /// returning method returns successfully. Or an error with type `TErr` when the method
+    /// needs to return an error. 
+    /// </summary>
+    /// <typeparam name="TOk">Type of the object returned with Ok result.</typeparam>
+    /// <typeparam name="TErr">Type of the object returned with Error result.</typeparam>
     public class Result<TOk, TErr>
     {
         public bool Success { get; init; }

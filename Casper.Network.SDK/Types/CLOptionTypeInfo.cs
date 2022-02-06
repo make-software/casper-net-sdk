@@ -2,6 +2,9 @@ using System;
 
 namespace Casper.Network.SDK.Types
 {
+    /// <summary>
+    /// A `CLTypeInfo` specific for the Option CLType.
+    /// </summary>
     public class CLOptionTypeInfo : CLTypeInfo
     {
         public CLTypeInfo OptionType { get; }
