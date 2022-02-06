@@ -1,0 +1,37 @@
+name: Integration testing
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  integration-test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      casper-nctl:
+        # Docker Hub image
+        image: makesoftware/casper-nctl:latest
+        options: --name casper-nctl
+        ports:
+          # Opens RPC, REST and events ports on the host and service container
+          - 11101:11101
+          - 14101:14101
+          - 18101:18101
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Obtain faucet secret key from container
+        run: docker exec -t casper-nctl cat /home/casper/casper-node/utils/nctl/assets/net-1/faucet/secret_key.pem > Casper.Network.SDK.Test/TestData/faucetact.pem
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --settings Casper.Network.SDK.Test/test.runsettings --filter="TestCategory=NCTL"
