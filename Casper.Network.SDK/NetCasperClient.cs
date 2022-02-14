@@ -267,7 +267,7 @@ namespace Casper.Network.SDK
             var response = await GetAccountInfo(publicKey);
             var purseUref = response.Result.GetProperty("account")
                 .GetProperty("main_purse").GetString();
-            return GetAccountBalance(purseUref, stateRootHash).Result;
+            return await GetAccountBalance(purseUref, stateRootHash);
         }
         
         /// <summary>
