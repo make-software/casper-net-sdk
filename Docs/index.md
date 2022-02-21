@@ -23,3 +23,12 @@ See the complete list of examples [here](./Examples/index.md).
 * [Counter contract tutorial with C#](./Tutorials/counter-contract/README.md)
 * [Key-Value storage tutorial with C#](./Tutorials/kvstorage-contract/README.md)
 * [ERC-20 tutorial with C#](./Tutorials/erc20-contract/README.md)
+
+## API Documentation
+
+* [API Documentation](./api/index.md)
+
+## Links
+
+* [GitHub repository](https://github.com/make-software/casper-net-sdk)
+* [Nuget package](https://www.nuget.org/packages/Casper.Network.SDK/)
