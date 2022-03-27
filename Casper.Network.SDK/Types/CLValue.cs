@@ -1042,5 +1042,71 @@ namespace Casper.Network.SDK.Types
         }
 
         #endregion
+        
+        #region "Unwrap Option CLValue"
+
+        /// <summary>
+        /// Returns `true`if the object has `Option` type with `None` value. False otherwise.
+        /// </summary>
+        public bool IsNone()
+        {
+            return TypeInfo.Type == CLType.Option && Bytes[0] == 0x00;
+        }
+        
+        /// <summary>
+        /// Returns `true`if the object has `Option` type with `Some` value. False otherwise.
+        /// </summary>
+        public bool IsSome()
+        {
+            return TypeInfo.Type == CLType.Option && Bytes[0] == 0x01;
+        }
+
+        /// <summary>
+        /// Unwraps the value in an `Option` object with `Some` value.
+        /// </summary>
+        /// <param name="value">A .NET object unwrapped from `Option.Some()`.</param>
+        /// <returns>True if a value has been unwrapped. False otherwise.</returns>
+        public bool Some(out object value)
+        {
+            value = null;
+            
+            if (IsSome())
+            {
+                var typeInfo = TypeInfo as CLOptionTypeInfo;
+                if(typeInfo==null)
+                    throw new ArgumentException(nameof(value), $"value is not an 'Option' CLValue.");
+
+                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                value = reader.ReadCLItem(typeInfo.OptionType, null);
+            }
+
+            return value != null;
+        }
+
+        /// <summary>
+        /// Unwraps the value in an `Option` object with `Some` value.
+        /// </summary>
+        /// <param name="value">An object with type `T` unwrapped from `Option.Some()`.</param>
+        /// <returns>True if a value has been unwrapped. False otherwise.</returns>
+        public bool Some<T>(out T value)
+        {
+            value = default(T);
+            
+            if (IsSome())
+            {
+                var typeInfo = TypeInfo as CLOptionTypeInfo;
+                if(typeInfo==null)
+                    throw new ArgumentException(nameof(value), $"value is not an 'Option' CLValue.");
+
+                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                value = (T) reader.ReadCLItem(typeInfo.OptionType, typeof(T));
+                
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }

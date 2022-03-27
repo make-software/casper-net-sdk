@@ -179,20 +179,27 @@ var option3 = CLValue.Option(int.MinValue);
 var option4 = CLValue.Option(publicKey);
 ```
 
-To encode `None`, indicate the `CLType` that represents:
+To encode `None`, indicate the `CLType` that is wrapping:
 
 ```csharp
 var option4 = CLValue.OptionNone(CLType.String);
 ```
 
-To extract the value of an `Option(CLType)` use the `.ToXXX()` that corresponds to the correct `CLType` (or the explicit cast):
+Call the methods `IsSome()` and `IsNone()` to get whether an `Option(CLType)` is wrapping a value or not, respectively.
 
 ```csharp
-var value1 = option1.ToString();
-var value3 = (int) option3;
-PublicKey pk = option4.ToPublicKey();
+option1.IsSome(); //returns true
+option1.IsNone(); //returns false
 
-string value5 = (string) option5; // value5 = null
+option4.IsSome(); //returns false
+option4.IsNone(); //returns true
+```
+
+To extract the value of an `Option(CLType)` use the `Some()` method:
+
+```csharp
+if(option1.Some(out string str1))
+  Console.WriteLine($"option1 = {str1}");
 ```
 
 ## Working with `PublicKey`s and `URef`s

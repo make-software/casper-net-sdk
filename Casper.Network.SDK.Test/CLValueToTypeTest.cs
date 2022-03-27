@@ -30,6 +30,14 @@ namespace NetCasperTest
             Assert.AreEqual(true, clValue.ToBoolean());
             Assert.AreEqual(true, (bool) clValue);
 
+            clValue = CLValue.Option(CLValue.Bool(true));
+            Assert.IsTrue(clValue.Some(out bool b1));
+            Assert.IsTrue(b1);
+
+            clValue = CLValue.Option(CLValue.Bool(false));
+            Assert.IsTrue(clValue.Some(out bool b2));
+            Assert.IsFalse(b2);
+
             clValue = CLValue.I32(0);
             var ex = Assert.Catch<FormatException>(() => clValue.ToBoolean());
             Assert.IsTrue(ex?.Message.Contains("I32"));
@@ -66,6 +74,14 @@ namespace NetCasperTest
             Assert.AreEqual(255, clValue.ToInt32());
             Assert.AreEqual(255, (int) clValue);
 
+            clValue = CLValue.Option(CLValue.I32(int.MaxValue));
+            Assert.IsTrue(clValue.Some(out int i32));
+            Assert.AreEqual(int.MaxValue, i32);
+
+            clValue = CLValue.Option(CLValue.I32(int.MinValue));
+            Assert.IsTrue(clValue.Some(out int ii32));
+            Assert.AreEqual(int.MinValue, ii32);
+
             clValue = CLValue.I64(0);
             var ex = Assert.Catch<FormatException>(() => clValue.ToBoolean());
             Assert.IsTrue(ex?.Message.Contains("I64"));
@@ -101,6 +117,14 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.I64(long.MaxValue), new CLTypeInfo(CLType.String));
             Assert.AreEqual(long.MaxValue, clValue.ToInt64());
             Assert.AreEqual(long.MaxValue, (long) clValue);
+
+            clValue = CLValue.Option(CLValue.I64(long.MaxValue));
+            Assert.IsTrue(clValue.Some(out long i64));
+            Assert.AreEqual(long.MaxValue, i64);
+
+            clValue = CLValue.Option(CLValue.I64(long.MinValue));
+            Assert.IsTrue(clValue.Some(out long ii64));
+            Assert.AreEqual(long.MinValue, ii64);
         }
 
         [Test]
@@ -117,6 +141,10 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.U8(byte.MaxValue), new CLTypeInfo(CLType.String));
             Assert.AreEqual(byte.MaxValue, clValue.ToByte());
             Assert.AreEqual(byte.MaxValue, (byte) clValue);
+
+            clValue = CLValue.Option(CLValue.U8(byte.MaxValue));
+            Assert.IsTrue(clValue.Some(out byte u8));
+            Assert.AreEqual(byte.MaxValue, u8);
         }
 
         [Test]
@@ -137,6 +165,10 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.U32(uint.MaxValue), new CLTypeInfo(CLType.String));
             Assert.AreEqual(uint.MaxValue, clValue.ToUInt32());
             Assert.AreEqual(uint.MaxValue, (uint) clValue);
+
+            clValue = CLValue.Option(CLValue.U32(uint.MaxValue));
+            Assert.IsTrue(clValue.Some(out uint u32));
+            Assert.AreEqual(uint.MaxValue, u32);
         }
 
         [Test]
@@ -161,6 +193,10 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.U64(ulong.MaxValue), new CLTypeInfo(CLType.String));
             Assert.AreEqual(ulong.MaxValue, clValue.ToUInt64());
             Assert.AreEqual(ulong.MaxValue, (ulong) clValue);
+
+            clValue = CLValue.Option(CLValue.U64(ulong.MaxValue));
+            Assert.IsTrue(clValue.Some(out ulong u64));
+            Assert.AreEqual(ulong.MaxValue, u64);
         }
 
         [Test]
@@ -206,6 +242,10 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.U512(5123456789012), new CLTypeInfo(CLType.String));
             Assert.AreEqual(new BigInteger(5123456789012), clValue.ToBigInteger());
             Assert.AreEqual(new BigInteger(5123456789012), (BigInteger) clValue);
+
+            clValue = CLValue.Option(CLValue.U512(5123456789012));
+            Assert.IsTrue(clValue.Some(out BigInteger u512));
+            Assert.AreEqual(new BigInteger(5123456789012), u512);
         }
 
         [Test]
@@ -218,10 +258,14 @@ namespace NetCasperTest
             Assert.AreEqual(Unit.Default, (Unit)clValue);
 
             clValue = CLValue.Ok(CLValue.Unit(), CLType.String);
-            
+
             Assert.IsNotNull(clValue);
             Assert.AreEqual(Unit.Default, clValue.ToUnit());
             Assert.AreEqual(Unit.Default, (Unit)clValue);
+            
+            clValue = CLValue.Option(CLValue.Unit());
+            Assert.IsTrue(clValue.Some(out Unit unit));
+            Assert.AreEqual(Unit.Default, unit);
         }
         
         [Test]
@@ -274,6 +318,10 @@ namespace NetCasperTest
 
             clValue = CLValue.Ok(CLValue.Key(uref), new CLTypeInfo(CLType.String));
             Assert.AreEqual(uref.ToString(), (string) clValue);
+
+            clValue = CLValue.Option(CLValue.String("Casper Network!"));
+            Assert.IsTrue(clValue.Some(out string str));
+            Assert.AreEqual("Casper Network!", str);
         }
 
         [Test]
@@ -287,6 +335,15 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.Key(uref), new CLTypeInfo(CLType.String));
             Assert.IsTrue(uref.RawBytes.SequenceEqual(clValue.ToURef().RawBytes));
             Assert.AreEqual(uref.AccessRights, ((URef) clValue).AccessRights);
+
+            clValue = CLValue.Option(CLValue.Key(uref));
+            Assert.IsTrue(clValue.Some(out GlobalStateKey gskey));
+            Assert.IsTrue(uref.RawBytes.SequenceEqual(gskey.RawBytes));
+            Assert.AreEqual(uref.AccessRights, ((URef) gskey).AccessRights);
+            
+            Assert.IsTrue(clValue.Some(out URef uref1));
+            Assert.IsTrue(uref.RawBytes.SequenceEqual(uref1.RawBytes));
+            Assert.AreEqual(uref.AccessRights, uref1.AccessRights);
         }
 
         [Test]
@@ -305,6 +362,10 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.PublicKey(pk), new CLTypeInfo(CLType.String));
             Assert.AreEqual(pk.ToAccountHex(), clValue.ToPublicKey().ToAccountHex());
             Assert.AreEqual(pk.ToAccountHex(), ((PublicKey) clValue).ToAccountHex());
+
+            clValue = CLValue.Option(CLValue.PublicKey(pk));
+            Assert.IsTrue(clValue.Some(out PublicKey pk1));
+            Assert.AreEqual(pk.ToAccountHex(), pk1.ToAccountHex());
         }
 
         [Test]
@@ -338,6 +399,14 @@ namespace NetCasperTest
             clValue = CLValue.Ok(CLValue.Key(gs3), new CLTypeInfo(CLType.String));
             Assert.AreEqual(gs3.ToString(), clValue.ToGlobalStateKey().ToString());
             Assert.AreEqual(gs3.ToString(), ((GlobalStateKey) clValue).ToString());
+
+            clValue = CLValue.Option(CLValue.Key(gs1));
+            Assert.IsTrue(clValue.Some(out GlobalStateKey gs11));
+            Assert.AreEqual(gs1.ToString(), gs11.ToString());
+
+            clValue = CLValue.Option(CLValue.Key(gs3));
+            Assert.IsTrue(clValue.Some(out GlobalStateKey gs33));
+            Assert.AreEqual(gs3.ToString(), gs33.ToString());
         }
 
         [Test]
@@ -380,11 +449,17 @@ namespace NetCasperTest
             Assert.AreEqual(gs2.ToString(), ((GlobalStateKey) list[1]).ToString());
             Assert.AreEqual(gs3.ToString(), ((GlobalStateKey) list[2]).ToString());
 
-            clValue = CLValue.Ok(clValue, new CLTypeInfo(CLType.String));
-            list = clValue.ToList();
+            var clValue1 = CLValue.Ok(clValue, new CLTypeInfo(CLType.String));
+            list = clValue1.ToList();
             Assert.AreEqual(gs1.ToString(), ((GlobalStateKey) list[0]).ToString());
             Assert.AreEqual(gs2.ToString(), ((GlobalStateKey) list[1]).ToString());
             Assert.AreEqual(gs3.ToString(), ((GlobalStateKey) list[2]).ToString());
+
+            var clValue2 = CLValue.Option(clValue);
+            Assert.IsTrue(clValue2.Some(out List<GlobalStateKey> list1));
+            Assert.AreEqual(gs1.ToString(), ((GlobalStateKey) list1[0]).ToString());
+            Assert.AreEqual(gs2.ToString(), ((GlobalStateKey) list1[1]).ToString());
+            Assert.AreEqual(gs3.ToString(), ((GlobalStateKey) list1[2]).ToString());
         }
 
         [Test]
@@ -395,9 +470,13 @@ namespace NetCasperTest
             Assert.IsTrue(bytes.SequenceEqual(clValue.ToByteArray()));
             Assert.IsTrue(bytes.SequenceEqual((byte[]) clValue));
 
-            clValue = CLValue.Ok(clValue, new CLTypeInfo(CLType.String));
-            Assert.IsTrue(bytes.SequenceEqual(clValue.ToByteArray()));
-            Assert.IsTrue(bytes.SequenceEqual((byte[]) clValue));
+            var clValue1 = CLValue.Ok(clValue, new CLTypeInfo(CLType.String));
+            Assert.IsTrue(bytes.SequenceEqual(clValue1.ToByteArray()));
+            Assert.IsTrue(bytes.SequenceEqual((byte[]) clValue1));
+
+            var clValue2 = CLValue.Option(clValue);
+            Assert.IsTrue(clValue2.Some(out byte[] bytes2));
+            Assert.IsTrue(bytes.SequenceEqual(bytes2));
         }
 
         [Test]
@@ -416,11 +495,17 @@ namespace NetCasperTest
             Assert.AreEqual(15, map["fifteen"]);
             Assert.AreEqual(16, map["sixteen"]);
 
-            clValue = CLValue.Ok(clValue, new CLTypeInfo(CLType.String));
-            map = clValue.ToDictionary();
+            var clValue1 = CLValue.Ok(clValue, new CLTypeInfo(CLType.String));
+            map = clValue1.ToDictionary();
             Assert.AreEqual(14, map["fourteen"]);
             Assert.AreEqual(15, map["fifteen"]);
             Assert.AreEqual(16, map["sixteen"]);
+
+            var clValue2 = CLValue.Option(clValue);
+            Assert.IsTrue(clValue2.Some(out Dictionary<string, byte> dict2));
+            Assert.AreEqual(14, dict2["fourteen"]);
+            Assert.AreEqual(15, dict2["fifteen"]);
+            Assert.AreEqual(16, dict2["sixteen"]);
         }
 
         [Test]
@@ -472,6 +557,14 @@ namespace NetCasperTest
             Assert.IsNull(result.Error);
             Assert.AreEqual(long.MaxValue, result.Value);
 
+            clValue = CLValue.Ok(CLValue.Option(cl1), CLType.String);
+            result = clValue.ToResult<long, string>();
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Success);
+            Assert.IsFalse(result.IsFailure);
+            Assert.IsNull(result.Error);
+            Assert.AreEqual(long.MaxValue, result.Value);
+            
             var dict = new Dictionary<CLValue, CLValue>()
             {
                 {CLValue.String("fourteen"), CLValue.U8(14)},
@@ -482,7 +575,21 @@ namespace NetCasperTest
 
             var res2 = clValue.ToResult<IDictionary, string>();
             Assert.IsNotNull(res2);
-
+            var map2 = res2.Value;
+            Assert.IsNotNull(map2);
+            Assert.AreEqual(14, map2["fourteen"]);
+            Assert.AreEqual(15, map2["fifteen"]);
+            Assert.AreEqual(16, map2["sixteen"]);
+            
+            clValue = CLValue.Ok(CLValue.Option(CLValue.Map(dict)), CLType.String);
+            res2 = clValue.ToResult<IDictionary, string>();
+            Assert.IsNotNull(res2);
+            map2 = res2.Value;
+            Assert.IsNotNull(map2);
+            Assert.AreEqual(14, map2["fourteen"]);
+            Assert.AreEqual(15, map2["fifteen"]);
+            Assert.AreEqual(16, map2["sixteen"]);
+            
             var gs1 = new AccountHashKey(
                 "account-hash-989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b7");
             var gs2 = new URef("uref-a465baf86b29c9d12b643b32beef2b9acf55dd4a820d59281ba5a1cf131ee796-000");
@@ -533,6 +640,13 @@ namespace NetCasperTest
             Assert.AreEqual(14, dict["fourteen"]);
             Assert.AreEqual(15, dict["fifteen"]);
             Assert.AreEqual(16, dict["sixteen"]);
+
+            var clOption = CLValue.Option(clValue);
+            Assert.IsTrue(clOption.Some(out Tuple<Dictionary<string, byte>> tuple1));
+            var dict2 = tuple1.Item1;
+            Assert.AreEqual(14, dict2["fourteen"]);
+            Assert.AreEqual(15, dict2["fifteen"]);
+            Assert.AreEqual(16, dict2["sixteen"]);
         }
 
         [Test]
@@ -565,13 +679,13 @@ namespace NetCasperTest
                 {CLValue.String("fifteen"), CLValue.U8(15)},
                 {CLValue.String("sixteen"), CLValue.U8(16)},
             });
-            var cl2 = CLValue.U32(uint.MaxValue);
+            var cl2 = CLValue.Option(CLValue.U32(uint.MaxValue));
             var cl3 = CLValue.List(new[]
             {
                 CLValue.U8(0x010), CLValue.U8(0x020)
             });
             var clValue = CLValue.Tuple3(cl1, cl2, cl3);
-
+            
             var tuple = clValue.ToTuple3<Dictionary<string, byte>, uint, List<byte>>();
             Assert.IsNotNull(tuple);
 
@@ -586,6 +700,32 @@ namespace NetCasperTest
             Assert.IsNotNull(list);
             Assert.AreEqual(0x10, list[0]);
             Assert.AreEqual(0x20, list[1]);
+        }
+
+        [Test]
+        public void CLValueOptionNoneTest()
+        {
+            var clValue = CLValue.OptionNone(CLType.U256);
+            Assert.IsTrue(clValue.IsNone());
+            Assert.IsFalse(clValue.IsSome());
+            Assert.IsFalse(clValue.Some(out BigInteger u256));
+            Assert.AreEqual(default(BigInteger), u256);
+            
+            clValue = CLValue.OptionNone(new CLKeyTypeInfo(KeyIdentifier.URef));
+            Assert.IsTrue(clValue.IsNone());
+            Assert.IsFalse(clValue.IsSome());
+            Assert.IsFalse(clValue.Some(out GlobalStateKey key));
+            Assert.IsNull(key);
+        }
+
+        [Test]
+        public void IsSomeNoneFalseTest()
+        {
+            var clValue = CLValue.I64(long.MaxValue);
+            Assert.IsFalse(clValue.IsNone());
+            Assert.IsFalse(clValue.IsSome());
+            Assert.IsFalse(clValue.Some(out long i64));
+            Assert.AreEqual(default(long), i64);
         }
     }
 }
