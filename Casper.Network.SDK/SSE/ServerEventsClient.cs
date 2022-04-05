@@ -209,7 +209,7 @@ namespace Casper.Network.SDK.SSE
                     var tokenSource = new CancellationTokenSource();
                     var task = ListenChannelAsync(channelType.Key, channelType.Value, tokenSource.Token);
                     _runningTasks.Add(channelType.Key, new Tuple<Task, CancellationTokenSource>(task, tokenSource));
-                    Thread.Sleep(3000);
+                    Task.Delay(3000).Wait();
                 }
             }
         }
@@ -285,7 +285,7 @@ namespace Casper.Network.SDK.SSE
                     {
                         Console.WriteLine($"Error: {ex.Message}");
                         Console.WriteLine("Retrying in 5 seconds");
-                        Thread.Sleep(5000);
+                        await Task.Delay(5000, cancelToken);
                     }
                 }
             }, cancelToken);

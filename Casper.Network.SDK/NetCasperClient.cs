@@ -305,7 +305,7 @@ namespace Casper.Network.SDK
                 if (!cancellationToken.CanBeCanceled ||
                     response.Result.GetProperty("execution_results").GetArrayLength() > 0)
                     return response;
-                Thread.Sleep(10000);
+                await Task.Delay(10000);
             }
 
             throw new TaskCanceledException("GetDeploy operation canceled");
