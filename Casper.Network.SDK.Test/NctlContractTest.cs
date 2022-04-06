@@ -31,7 +31,9 @@ namespace NetCasperTest
                 wasmBytes,
                 _faucetKey.PublicKey,
                 50_000_000_000,
-                _chainName);
+                _chainName,
+                1, //gasPrice=1
+                45011500); //ttl='12h 30m 11s 500ms'
             deploy.Sign(_faucetKey);
 
             var putResponse = await _client.PutDeploy(deploy);
@@ -87,7 +89,9 @@ namespace NetCasperTest
                 null,
                 _faucetKey.PublicKey,
                 15_000_000,
-                _chainName);
+                _chainName,
+                1, //gasPrice=1
+                24*3_600_000); //ttl='1day'
             deploy.Sign(_faucetKey);
 
             var putResponse = await _client.PutDeploy(deploy);

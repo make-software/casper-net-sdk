@@ -1,9 +1,7 @@
 using System;
-using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Humanizer;
-using Humanizer.Localisation;
+using Casper.Network.SDK.Utils;
 
 namespace Casper.Network.SDK.Converters
 {
@@ -14,32 +12,10 @@ namespace Casper.Network.SDK.Converters
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-            ulong ttl = 0;
-
             string humanizedTtl = reader.GetString();
             if (humanizedTtl is null) return 0;
-            
-            string[] parts = humanizedTtl.Split(new char[] {' '});
 
-            foreach (var xUnit in parts)
-            {
-                if (xUnit.Contains("ms"))
-                    ttl += ulong.Parse(xUnit.Replace("ms", ""));
-                else if(xUnit.Contains("s"))
-                    ttl += ulong.Parse(xUnit.Replace("s", ""))*1000;
-                else if(xUnit.Contains("m"))
-                    ttl += ulong.Parse(xUnit.Replace("m", ""))*60*1000;
-                else if(xUnit.Contains("h"))
-                    ttl += ulong.Parse(xUnit.Replace("h", ""))*3600*1000;
-                else if(xUnit.Contains("day"))
-                    ttl += ulong.Parse(xUnit.Replace("day", ""))*24*3600*1000;
-                else if(xUnit.Contains("d"))
-                    ttl += ulong.Parse(xUnit.Replace("d", ""))*24*3600*1000;
-                else
-                    throw new Exception($"Unsupported TTL part {xUnit}");
-            }
-
-            return ttl;
+            return DurationUtils.StringToMilliseconds(humanizedTtl);
         }
 
         public override void Write(
@@ -47,21 +23,7 @@ namespace Casper.Network.SDK.Converters
             ulong ttlInMillis,
             JsonSerializerOptions options)
         {
-            var ttlStr = TimeSpan.FromMilliseconds(ttlInMillis)
-                .Humanize(5, CultureInfo.InvariantCulture,
-                    TimeUnit.Day, TimeUnit.Millisecond, ",");
-            ttlStr = ttlStr.Replace("milliseconds", "ms")
-                .Replace("millisecond", "ms")
-                .Replace("seconds", "s")
-                .Replace("second", "s")
-                .Replace("minutes", "m")
-                .Replace("minute", "m")
-                .Replace("hours", "h")
-                .Replace("hour", "h")
-                .Replace("days", "d")
-                .Replace("day", "d")
-                .Replace(" ", "")
-                .Replace(",", " ");
+            var ttlStr = DurationUtils.MillisecondsToString(ttlInMillis);
 
             writer.WriteStringValue(ttlStr);
         }
