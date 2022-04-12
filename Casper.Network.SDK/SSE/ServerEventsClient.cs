@@ -92,26 +92,20 @@ namespace Casper.Network.SDK.SSE
     /// Refer to the <see href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Examples/AwaitEvents/Program.cs">AwaitEvents</see>
     /// for a practical example that shows how to use this class. 
     /// </remarks>
-    public class ServerEventsClient
+    public class ServerEventsClient : ISSEClient
     {
-        private readonly Dictionary<EventType, ChannelType> _evt2Channel;
+        private Dictionary<EventType, ChannelType> _evt2Channel;
         private Dictionary<ChannelType, int> _channels;
 
         private readonly List<SSECallback> _callbacks;
 
-        private readonly string _host;
-        private readonly int _port;
         private readonly Dictionary<ChannelType, Tuple<Task, CancellationTokenSource>> _runningTasks;
 
-        /// <summary>
-        /// Instantiate the class indicating the host and the port of a node.
-        /// </summary>
-        /// <param name="host">IP or domain name of the node.</param>
-        /// <param name="port">Event stream port.</param>
-        public ServerEventsClient(string host, int port)
+        protected string _host;
+        protected int _port;
+        
+        public ServerEventsClient()
         {
-            _host = host;
-            _port = port;
             _callbacks = new List<SSECallback>();
 
             _evt2Channel = new Dictionary<EventType, ChannelType>()
@@ -125,6 +119,17 @@ namespace Casper.Network.SDK.SSE
                 {EventType.DeployExpired, ChannelType.Main}
             };
             _runningTasks = new Dictionary<ChannelType, Tuple<Task, CancellationTokenSource>>();
+        }
+        
+        /// <summary>
+        /// Instantiate the class indicating the host and the port of a node.
+        /// </summary>
+        /// <param name="host">IP or domain name of the node.</param>
+        /// <param name="port">Event stream port.</param>
+        public ServerEventsClient(string host, int port) : this()
+        {
+            _host = host;
+            _port = port;
         }
 
         /// <summary>
@@ -245,11 +250,23 @@ namespace Casper.Network.SDK.SSE
             Task.WhenAll(tasks).Wait();
         }
 
+        /// <summary>
+        /// Returns an instance of an HttpClient. Derived classes can override this method to get
+        /// the client object from an HttpClientFactory, for example.
+        /// </summary>
+        /// <returns>a new or recycled instance of HttpClient</returns>
+        protected virtual HttpClient _getHttpClient()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"http://{_host}:{_port}");
+            return client;
+        }
+
         private Task ListenChannelAsync(ChannelType channelType, int? startFrom, CancellationToken cancelToken)
         {
             var task = Task.Run(async () =>
             {
-                var client = new HttpClient();
+                var client = _getHttpClient();
                 client.Timeout = TimeSpan.FromSeconds(5);
 
                 var eventData = new EventData();
@@ -258,8 +275,8 @@ namespace Casper.Network.SDK.SSE
                 {
                     try
                     {
-                        var uriBuilder = new UriBuilder("http", _host, _port,
-                            $"events/{channelType.ToString().ToLower()}");
+                        var uriBuilder = new UriBuilder(new Uri(client.BaseAddress +
+                            $"events/{channelType.ToString().ToLower()}"));
 
                         if (startFrom != null && startFrom != int.MaxValue)
                             uriBuilder.Query = $"start_from={startFrom}";

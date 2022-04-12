@@ -16,6 +16,8 @@ jobs:
         # Docker Hub image
         image: makesoftware/casper-nctl:latest
         options: --name casper-nctl
+        env:
+          DEPLOY_DELAY: '5sec'          
         ports:
           # Opens RPC, REST and events ports on the host and service container
           - 11101:11101
