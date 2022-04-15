@@ -223,12 +223,18 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves a Deploy from the network.
         /// </summary>
         /// <param name="deployHash">Hash of the deploy to retrieve.</param>
-        public GetDeploy(string deployHash) : base("info_get_deploy")
+        /// <param name="finalizedApprovals">Whether to return the deploy with the finalized approvals
+        /// substituted. If `false` or omitted, returns the deploy with the approvals that were originally
+        /// received by the node.</param>
+        public GetDeploy(string deployHash, bool finalizedApprovals = false) : base("info_get_deploy")
         {
             this.Parameters = new Dictionary<string, object>
             {
                 {"deploy_hash", deployHash}
             };
+            
+            if(finalizedApprovals)
+                this.Parameters.Add("finalized_approvals", true);
         }
     }
 
