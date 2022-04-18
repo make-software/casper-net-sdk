@@ -14,7 +14,7 @@ namespace Casper.Network.SDK
     /// <summary>
     /// Client to communicate with a Casper node.
     /// </summary>
-    public class NetCasperClient : IDisposable
+    public class NetCasperClient : ICasperClient, IDisposable
     {
         private volatile bool _disposed;
 

@@ -146,7 +146,7 @@ namespace NetCasperTest
                 wasmBytes,
                 _myAccount.PublicKey,
                 validatorPk,
-                100_000_000_000,
+                600_000_000_000,
                 5_000_000_000,
                 _chainName);
             deploy.Sign(_myAccount);
