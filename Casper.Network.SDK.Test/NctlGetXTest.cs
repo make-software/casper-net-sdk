@@ -57,6 +57,14 @@ namespace NetCasperTest
                 var response3 = await _client.GetAccountBalance(accountInfo.Account.MainPurse);
                 var accountBalance2 = response3.Parse();
                 Assert.AreEqual(accountBalance.BalanceValue, accountBalance2.BalanceValue);
+                
+                var response4 = await _client.GetAccountBalance(accountInfo.Account.MainPurse.ToString());
+                var accountBalance3 = response4.Parse();
+                Assert.AreEqual(accountBalance.BalanceValue, accountBalance3.BalanceValue);
+                
+                var response5 = await _client.GetAccountBalance(new AccountHashKey(_faucetKey.PublicKey));
+                var accountBalance4 = response5.Parse();
+                Assert.AreEqual(accountBalance.BalanceValue, accountBalance4.BalanceValue);
             }
             catch (RpcClientException e)
             {

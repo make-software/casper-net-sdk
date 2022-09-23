@@ -227,7 +227,7 @@ namespace Casper.Network.SDK
         /// Request a purse's balance from the network.
         /// </summary>
         /// <param name="purseURef">Purse URef formatted as a string.</param>
-        /// <param name="stateRootHash">Hash of the state root.</param>
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(string purseURef,
             string stateRootHash = null)
         {
@@ -238,10 +238,9 @@ namespace Casper.Network.SDK
                     .GetProperty("main_purse").GetString();
             }
 
-            if (stateRootHash == null)
-                stateRootHash = await GetStateRootHash();
+            var uref = new URef(purseURef);
 
-            var method = new GetBalance(purseURef, stateRootHash);
+            var method = new GetBalance(uref, stateRootHash, isBlockHash:false);
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
 
@@ -249,26 +248,74 @@ namespace Casper.Network.SDK
         /// Request a purse's balance from the network.
         /// </summary>
         /// <param name="purseURef">Purse URef key.</param>
-        /// <param name="stateRootHash">Hash of the state root.</param>
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
             string stateRootHash = null)
         {
-            return await GetAccountBalance(purseURef.ToString(), stateRootHash);
+            var method = new GetBalance(purseURef, stateRootHash, isBlockHash:false);
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its account hash key.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account to request the balance.</param>
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
+            string stateRootHash = null)
+        {
+            var method = new GetBalance(accountHash, stateRootHash, isBlockHash:false);
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
 
         /// <summary>
         /// Request the balance information of an account given its public key.
         /// </summary>
         /// <param name="publicKey">The public key of the account to request the balance.</param>
-        /// <param name="stateRootHash">Hash of the state root.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey,
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
             string stateRootHash = null)
         {
-            var response = await GetAccountInfo(publicKey);
-            var purseUref = response.Result.GetProperty("account")
-                .GetProperty("main_purse").GetString();
-            return await GetAccountBalance(purseUref, stateRootHash);
+            var method = new GetBalance(publicKey, stateRootHash, isBlockHash:false);
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
+        
+        /// <summary>
+        /// Request a purse's balance from the network.
+        /// </summary>
+        /// <param name="purseURef">Purse URef key.</param>
+        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(URef purseURef,
+            string blockHash = null)
+        {
+            var method = new GetBalance(purseURef, blockHash, isBlockHash:true);
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its account hash key.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account to request the balance.</param>
+        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(AccountHashKey accountHash, 
+            string blockHash = null)
+        {
+            var method = new GetBalance(accountHash, blockHash, isBlockHash:true);
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its public key.
+        /// </summary>
+        /// <param name="publicKey">The public key of the account to request the balance.</param>
+        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(PublicKey publicKey, 
+            string blockHash = null)
+        {
+            var method = new GetBalance(publicKey, blockHash, isBlockHash:true);
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
         
         /// <summary>
         /// Send a Deploy to the network for its execution.

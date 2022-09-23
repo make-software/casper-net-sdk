@@ -146,6 +146,63 @@ namespace Casper.Network.SDK.JsonRpc
                 {"purse_uref", purseURef}
             };
         }
+
+        public GetBalance(URef uref, string hash, bool isBlockHash) : base("query_balance")
+        {
+            Dictionary<string, string> mainPurse = new Dictionary<string, string>
+            {
+                {"purse_uref", uref.ToString()}
+            };
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"purse_identifier", mainPurse}
+            };
+            if (hash != null)
+            {
+                this.Parameters.Add("state_identifier", new Dictionary<string, string>
+                {
+                    {isBlockHash ? "BlockHash" : "StateRootHash", hash}
+                });                
+            }
+        }
+        
+        public GetBalance(AccountHashKey key, string hash, bool isBlockHash) : base("query_balance")
+        {
+            Dictionary<string, string> mainPurse = new Dictionary<string, string>
+            {
+                {"main_purse_under_account_hash", key.ToString()}
+            };
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"purse_identifier", mainPurse}
+            };
+            if (hash != null)
+            {
+                this.Parameters.Add("state_identifier", new Dictionary<string, string>
+                {
+                    {isBlockHash ? "BlockHash" : "StateRootHash", hash}
+                });                
+            }
+        }
+        
+        public GetBalance(PublicKey key, string hash, bool isBlockHash) : base("query_balance")
+        {
+            Dictionary<string, string> mainPurse = new Dictionary<string, string>
+            {
+                {"main_purse_under_public_key", key.ToString()}
+            };
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"purse_identifier", mainPurse}
+            };
+            if (hash != null)
+            {
+                this.Parameters.Add("state_identifier", new Dictionary<string, string>
+                {
+                    {isBlockHash ? "BlockHash" : "StateRootHash", hash}
+                });                
+            }
+        }
     }
 
     public class PutDeploy : RpcMethod
