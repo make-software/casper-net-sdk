@@ -57,6 +57,40 @@ namespace Casper.Network.SDK.JsonRpc
             this.Method = method;
         }
 
+        public RpcMethod(string method, string blockHash)
+        {
+            this.Method = method;
+
+            this.Parameters = blockHash switch
+            {
+                null => new Dictionary<string, object>(),
+                _ => new Dictionary<string, object>
+                {
+                    {
+                        "block_identifier", new Dictionary<string, string>
+                        {
+                            {"Hash", blockHash}
+                        }
+                    }
+                }
+            };
+        }
+
+        public RpcMethod(string method, int blockHeight)
+        {
+            this.Method = method;
+
+            var blockIdentifier = new Dictionary<string, int>
+            {
+                {"Height", blockHeight}
+            };
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"block_identifier", blockIdentifier}
+            };
+        }
+
         /// <summary>
         /// Converts an RpcMethod derived object a JSON string that can be sent to the network  
         /// </summary>
