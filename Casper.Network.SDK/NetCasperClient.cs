@@ -493,7 +493,6 @@ namespace Casper.Network.SDK
         /// <param name="seedURef">The dictionary's seed URef.</param>
         /// <param name="dictionaryItem">The dictionary item key.</param>
         /// <param name="stateRootHash">Hash of the state root.</param>
-        /// <returns></returns>
         public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItemByURef(string seedURef, 
             string dictionaryItem, string stateRootHash = null)
         {
@@ -521,6 +520,42 @@ namespace Casper.Network.SDK
             var method = new GetRpcSchema();
             var response = await SendRpcRequestAsync<RpcResult>(method);
             return response.Result.GetRawText();
+        }
+
+        /// <summary>
+        /// Sends a "deploy dry run" to the network. It will execute the deploy on top of the specified block and return
+        /// the results of the execution to the caller. The effects of the execution won't be committed to the trie
+        /// (blockchain database/GlobalState).
+        /// This method runs in a different port of the network (e.g.: 7778) and can be used for debugging, discovery.
+        /// For example price estimation.
+        /// </summary>
+        /// <param name="deploy">The deploy to execute.</param>
+        /// <param name="stateRootHash">Hash of the state root. null if deploy is to be executed on top of the latest block.</param>
+        public async Task<RpcResponse<SpeculativeExecutionResult>> SpeceulativeExecution(Deploy deploy, string stateRootHash = null)
+        {
+            if (deploy.Approvals.Count == 0)
+                throw new Exception("Sign the deploy before sending it to the network.");
+
+            var method = new SpeculativeExecution(deploy, stateRootHash, isBlockHash: false );
+            return await SendRpcRequestAsync<SpeculativeExecutionResult>(method);
+        }
+
+        /// <summary>
+        /// Sends a "deploy dry run" to the network. It will execute the deploy on top of the specified block and return
+        /// the results of the execution to the caller. The effects of the execution won't be committed to the trie
+        /// (blockchain database/GlobalState).
+        /// This method runs in a different port of the network (e.g.: 7778) and can be used for debugging, discovery.
+        /// For example price estimation.
+        /// </summary>
+        /// <param name="deploy">The deploy to execute.</param>
+        /// <param name="blockHash">Hash of the block on top of which the deploy is executed.</param>
+        public async Task<RpcResponse<PutDeployResult>> SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null)
+        {
+            if (deploy.Approvals.Count == 0)
+                throw new Exception("Sign the deploy before sending it to the network.");
+
+            var method = new SpeculativeExecution(deploy, blockHash, isBlockHash: true );
+            return await SendRpcRequestAsync<PutDeployResult>(method);
         }
 
         /// <summary>

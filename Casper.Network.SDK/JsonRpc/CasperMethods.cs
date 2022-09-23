@@ -425,4 +425,28 @@ namespace Casper.Network.SDK.JsonRpc
         {
         }
     }
+    
+    public class SpeculativeExecution : RpcMethod
+    {
+        /// <summary>
+        /// Sends a "deploy dry run" to the network. It will execute the deploy on top of the specified block and return
+        /// the results of the execution to the caller. The effects of the execution won't be committed to the trie
+        /// (blockchain database/GlobalState).
+        /// Endpoint can be used for debugging, discovery - for example price estimation.
+        /// </summary>
+        public SpeculativeExecution(Deploy deploy, string hash, bool isBlockHash) : base("speculative_exec")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"deploy", deploy}
+            };
+            if (hash != null)
+            {
+                this.Parameters.Add("state_identifier", new Dictionary<string, string>
+                {
+                    {isBlockHash ? "BlockHash" : "StateRootHash", hash}
+                });                
+            }
+        }
+    }
 }
