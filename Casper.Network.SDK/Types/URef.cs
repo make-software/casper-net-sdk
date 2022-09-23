@@ -12,14 +12,16 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class URef : GlobalStateKey
     {
+        public static string KEYPREFIX = "uref-";
+
         public AccessRights AccessRights { get; }
 
         public URef(string value) : base(value)
         {
             KeyIdentifier = KeyIdentifier.URef;
 
-            if (!value.StartsWith("uref-"))
-                throw new ArgumentException($"Key not valid. It should start with 'uref-'.",
+            if (!value.StartsWith(KEYPREFIX))
+                throw new ArgumentException($"Key not valid. It should start with '{KEYPREFIX}'.",
                     nameof(value));
             
             var parts = value.Substring(5).Split(new char[] {'-'});
@@ -43,7 +45,7 @@ namespace Casper.Network.SDK.Types
         /// Creates an URef from a 33 bytes array. Last byte corresponds to the access rights.
         /// </summary>
         public URef(byte[] bytes)
-            : this($"uref-{Hex.ToHexString(bytes[..32])}-{(int)bytes[32]:000}")
+            : this($"{KEYPREFIX}{Hex.ToHexString(bytes[..32])}-{(int)bytes[32]:000}")
         {
         }
         
@@ -51,7 +53,7 @@ namespace Casper.Network.SDK.Types
         /// Creates an URef from a 32 bytes array and the access rights.
         /// </summary>
         public URef(byte[] rawBytes, AccessRights accessRights)
-            : this($"uref-{Hex.ToHexString(rawBytes)}-{(int)accessRights:000}")
+            : this($"{KEYPREFIX}{Hex.ToHexString(rawBytes)}-{(int)accessRights:000}")
         {
         }
 
@@ -73,7 +75,7 @@ namespace Casper.Network.SDK.Types
 
         public override string ToString()
         {
-            return "uref-" + CEP57Checksum.Encode(RawBytes) + $"-{(byte) AccessRights:000}";
+            return KEYPREFIX + CEP57Checksum.Encode(RawBytes) + $"-{(byte) AccessRights:000}";
         }
     }
 }

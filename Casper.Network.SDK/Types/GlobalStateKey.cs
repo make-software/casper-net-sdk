@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -53,7 +54,29 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Dictionary keys store dictionary items.
         /// </summary>
-        Dictionary = 0x09
+        Dictionary = 0x09,
+        /// <summary>
+        /// A `Key` variant under which system contract hashes are stored.
+        /// </summary>
+        SystemContractRegistry = 0x0a,
+        /// <summary>
+        /// A `Key` under which we store unbond information.
+        /// </summary>
+        Unbond = 0x0b,
+        /// <summary>
+        /// A `Key` variant under which chainspec and other hashes are stored.
+        /// </summary>
+        ChainspecRegistry = 0x0c,
+        /// <summary>
+        /// A `Key` variant under which we store the root hash of a Merkle tree containing the
+        /// execution results for the block at this height.
+        /// </summary>
+        BlockEffectsRootHash = 0x0d,
+        /// <summary>
+        /// A `Key` variant under which we store the root hash of a Merkle tree containing the
+        /// approvals for all the deploys in the block at this height.
+        /// </summary>
+        DeployApprovalsRootHash = 0x0e,
     }
 
     /// <summary>
@@ -107,6 +130,8 @@ namespace Casper.Network.SDK.Types
                 return new HashKey(value);
             if (value.StartsWith("contract-package-wasm"))
                 return new HashKey(value.Replace("contract-package-wasm", "hash-"));
+            if (value.StartsWith("contract-package-"))
+                return new HashKey(value.Replace("contract-package-", "hash-"));
             if (value.StartsWith("contract-wasm-"))
                 return new HashKey(value.Replace("contract-wasm-", "hash-"));
             if (value.StartsWith("contract-"))
@@ -115,8 +140,6 @@ namespace Casper.Network.SDK.Types
                 return new URef(value);
             if (value.StartsWith("transfer-"))
                 return new TransferKey(value);
-            if (value.StartsWith("deploy-"))
-                return new DeployInfoKey(value);
             if (value.StartsWith("era-"))
                 return new EraInfoKey(value);
             if (value.StartsWith("balance-"))
@@ -127,8 +150,20 @@ namespace Casper.Network.SDK.Types
                 return new WithdrawKey(value);
             if (value.StartsWith("dictionary"))
                 return new DictionaryKey(value);
-
-            throw new ArgumentException($"Key not valid. Unknown key prefix.");
+            if (value.StartsWith("system-contract-registry-"))
+                return new SystemContractRegistryKey(value);
+            if (value.StartsWith("unbond-"))
+                return new UnbondKey(value);
+            if (value.StartsWith("chainspec-registry-"))
+                return new ChainspecRegistryKey(value);
+            if (value.StartsWith("block-effects-root-hash-"))
+                return new BlockEffectsRootHashKey(value);
+            if (value.StartsWith("deploy-approvals-root-hash-"))
+                return new DeployApprovalsRootHashKey(value);
+            if (value.StartsWith("deploy-"))
+                return new DeployInfoKey(value);
+            
+            throw new ArgumentException($"Key not valid. Unknown key prefix in \"{value}\".");
         }
 
         /// <summary>
@@ -149,6 +184,11 @@ namespace Casper.Network.SDK.Types
                 0x07 => new BidKey("bid-" + CEP57Checksum.Encode(bytes[1..])),
                 0x08 => new WithdrawKey("withdraw-" + CEP57Checksum.Encode(bytes[1..])),
                 0x09 => new DictionaryKey("dictionary-" + CEP57Checksum.Encode(bytes[1..])),
+                0x0a => new SystemContractRegistryKey("system-contract-registry-" + CEP57Checksum.Encode(bytes[1..])),
+                0x0b => new UnbondKey("unbond-" + CEP57Checksum.Encode(bytes[1..])),
+                0x0c => new ChainspecRegistryKey("chainspec-registry-" + CEP57Checksum.Encode(bytes[1..])),
+                0x0d => new BlockEffectsRootHashKey("block-effects-root-hash-" + BitConverter.ToInt64(bytes, 1)),
+                0x0e => new DeployApprovalsRootHashKey("deploy-approvals-root-hash-" + BitConverter.ToInt64(bytes, 1)),
                 _ => throw new ArgumentException($"Unknown key identifier '{bytes[0]}'")
             };
         }
@@ -188,7 +228,12 @@ namespace Casper.Network.SDK.Types
                        typeToConvert == typeof(BalanceKey) ||
                        typeToConvert == typeof(BidKey) ||
                        typeToConvert == typeof(WithdrawKey) ||
-                       typeToConvert == typeof(DictionaryKey);
+                       typeToConvert == typeof(DictionaryKey) ||
+                       typeToConvert == typeof(SystemContractRegistryKey) ||
+                       typeToConvert == typeof(UnbondKey) ||
+                       typeToConvert == typeof(ChainspecRegistryKey) ||
+                       typeToConvert == typeof(BlockEffectsRootHashKey) ||
+                       typeToConvert == typeof(DeployApprovalsRootHashKey);
             }
 
             public override JsonConverter CreateConverter(
@@ -241,13 +286,15 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class AccountHashKey : GlobalStateKey
     {
-        public AccountHashKey(string key) : base(key, "account-hash-")
+        public static string KEYPREFIX = "account-hash-";
+
+        public AccountHashKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.Account;
         }
 
         public AccountHashKey(PublicKey publicKey)
-            : base(publicKey.GetAccountHash(), "account-hash-")
+            : base(publicKey.GetAccountHash(), KEYPREFIX)
         {
         }
     }
@@ -258,12 +305,14 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class HashKey : GlobalStateKey
     {
-        public HashKey(string key) : base(key, "hash-")
+        public static string KEYPREFIX = "hash-";
+
+        public HashKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.Hash;
         }
 
-        public HashKey(byte[] key) : this("hash-" + CEP57Checksum.Encode(key))
+        public HashKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
         }
     }
@@ -274,12 +323,14 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class TransferKey : GlobalStateKey
     {
-        public TransferKey(string key) : base(key, "transfer-")
+        public static string KEYPREFIX = "transfer-";
+
+        public TransferKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.Transfer;
         }
         
-        public TransferKey(byte[] key) : this("transfer-" + CEP57Checksum.Encode(key))
+        public TransferKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
         }
     }
@@ -290,38 +341,27 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class DeployInfoKey : GlobalStateKey
     {
-        public DeployInfoKey(string key) : base(key, "deploy-")
+        public static string KEYPREFIX = "deploy-";
+
+        public DeployInfoKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.DeployInfo;
         }
         
-        public DeployInfoKey(byte[] key) : this("deploy-" + CEP57Checksum.Encode(key))
+        public DeployInfoKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
         }
     }
 
-    /// <summary>
-    /// Stores information related to the Auction metadata for a particular era..
-    /// Format: u64 number with prefix 'era-' (e.g. 'era-3407').
-    /// </summary>
-    public class EraInfoKey : GlobalStateKey
+    public abstract class U64GlobalStateKey : GlobalStateKey
     {
-        public EraInfoKey(string key) : base(key)
+        protected U64GlobalStateKey(string key) : base(key)
         {
-            KeyIdentifier = KeyIdentifier.EraInfo;
-            
-            if (!key.StartsWith("era-"))
-                throw new ArgumentException($"Key not valid. It should start with 'era-'.",
-                    nameof(key));
-            
-            if(!long.TryParse(key.Substring(4), out var eraNum))
-                throw new ArgumentException($"Key not valid. Cannot parse era number.",
-                    nameof(key));
         }
-
+        
         protected override byte[] _GetRawBytesFromKey(string key)
         {
-            var u64 = ulong.Parse(key.Substring(4));
+            var u64 = ulong.Parse(key.Split('-').Last());
             byte[] bytes = BitConverter.GetBytes(u64);
             if (!BitConverter.IsLittleEndian) Array.Reverse(bytes);
 
@@ -337,6 +377,28 @@ namespace Casper.Network.SDK.Types
             return ms.ToArray();
         }
     }
+    
+    /// <summary>
+    /// Stores information related to the Auction metadata for a particular era..
+    /// Format: u64 number with prefix 'era-' (e.g. 'era-3407').
+    /// </summary>
+    public class EraInfoKey : U64GlobalStateKey
+    {
+        public static string KEYPREFIX = "era-";
+
+        public EraInfoKey(string key) : base(key)
+        {
+            KeyIdentifier = KeyIdentifier.EraInfo;
+            
+            if (!key.StartsWith(KEYPREFIX))
+                throw new ArgumentException($"Key not valid. It should start with '{KEYPREFIX}'.",
+                    nameof(key));
+            
+            if(!long.TryParse(key.Substring(KEYPREFIX.Length), out var eraNum))
+                throw new ArgumentException($"Key not valid. Cannot parse era number.",
+                    nameof(key));
+        }
+    }
 
     /// <summary>
     /// Stores information related to the balance of a given purse.
@@ -344,12 +406,14 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class BalanceKey : GlobalStateKey
     {
-        public BalanceKey(string key) : base(key, "balance-")
+        public static string KEYPREFIX = "balance-";
+
+        public BalanceKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.Balance;
         }
         
-        public BalanceKey(byte[] key) : this("balance-" + CEP57Checksum.Encode(key))
+        public BalanceKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
         }
     }
@@ -360,12 +424,14 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class BidKey : GlobalStateKey
     {
-        public BidKey(string key) : base(key, "bid-")
+        public static string KEYPREFIX = "bid-";
+
+        public BidKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.Bid;
         }
         
-        public BidKey(byte[] key) : this("bid-" + CEP57Checksum.Encode(key))
+        public BidKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
         }
     }
@@ -376,12 +442,14 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class WithdrawKey : GlobalStateKey
     {
-        public WithdrawKey(string key) : base(key, "withdraw-")
+        public static string KEYPREFIX = "withdraw-";
+
+        public WithdrawKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.Withdraw;
         }
         
-        public WithdrawKey(byte[] key) : this("withdraw-" + CEP57Checksum.Encode(key))
+        public WithdrawKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
         }
     }
@@ -392,13 +460,126 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class DictionaryKey : GlobalStateKey
     {
-        public DictionaryKey(string key) : base(key, "dictionary-")
+        public static string KEYPREFIX = "dictionary-";
+
+        public DictionaryKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.Dictionary;
         }
 
-        public DictionaryKey(byte[] key) : this("dictionary-" + CEP57Checksum.Encode(key))
+        public DictionaryKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
+        }
+    }
+
+    /// <summary>
+    /// Stores a list of system contract hashes (auction,
+    /// handle payment, mint and standard payment).
+    /// Format: 32-byte length with prefix 'system-contract-registry-'.
+    /// </summary>
+    public class SystemContractRegistryKey : GlobalStateKey
+    {
+        public static string KEYPREFIX = "system-contract-registry-";
+
+        public SystemContractRegistryKey() : this(
+            KEYPREFIX + "0000000000000000000000000000000000000000000000000000000000000000")
+        {
+        }
+        
+        public SystemContractRegistryKey(string key) : base(key, KEYPREFIX)
+        {
+            KeyIdentifier = KeyIdentifier.SystemContractRegistry;
+        }
+
+        public SystemContractRegistryKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Stores unbond information in the global state.
+    /// Format: 32-byte length with prefix 'unbond-'.
+    /// </summary>
+    public class UnbondKey : GlobalStateKey
+    {
+        public static string KEYPREFIX = "unbond-";
+
+        public UnbondKey(string key) : base(key, KEYPREFIX)
+        {
+            KeyIdentifier = KeyIdentifier.Unbond;
+        }
+
+        public UnbondKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        {
+        }
+    }
+
+    /// <summary>
+    /// Stores a mapping of file names to the hash of the file itself. These files include *Chainspec.toml* and may also include *Accounts.toml* and *GlobalState.toml*.
+    /// Format: 32-byte length with prefix 'chainspec-registry-'.
+    /// </summary>
+    public class ChainspecRegistryKey : GlobalStateKey
+    {
+        public static string KEYPREFIX = "chainspec-registry-";
+
+        public ChainspecRegistryKey() : this(
+            KEYPREFIX + "1111111111111111111111111111111111111111111111111111111111111111")
+        {
+        }
+        
+        public ChainspecRegistryKey(string key) : base(key, KEYPREFIX)
+        {
+            KeyIdentifier = KeyIdentifier.ChainspecRegistry;
+        }
+
+        public ChainspecRegistryKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Stores the root hash of a Merkle tree containing the execution results for the block at this height.
+    /// Format: u64 number with prefix 'block-effects-root-hash-' (e.g. 'block-effects-root-hash-1125463').
+    /// Note: the key exists only when the block at this height contains at least one deploy.
+    /// </summary>
+    public class BlockEffectsRootHashKey : U64GlobalStateKey
+    {
+        public static string KEYPREFIX = "block-effects-root-hash-";
+        
+        public BlockEffectsRootHashKey(string key) : base(key)
+        {
+            KeyIdentifier = KeyIdentifier.BlockEffectsRootHash;
+            
+            if (!key.StartsWith(KEYPREFIX))
+                throw new ArgumentException($"Key not valid. It should start with '{KEYPREFIX}'.",
+                    nameof(key));
+            
+            if(!long.TryParse(key.Substring(KEYPREFIX.Length), out var eraNum))
+                throw new ArgumentException($"Key not valid. Cannot parse {KEYPREFIX}key number.",
+                    nameof(key));
+        }
+    }
+    
+    /// <summary>
+    /// Stores the root hash of a Merkle tree containing the approvals for all the deploys in the block at this height. 
+    /// Format: u64 number with prefix 'deploy-approvals-root-hash-' (e.g. 'deploy-approvals-root-hash-1125463').
+    /// Note: the key exists only when the block at this height contains at least one deploy.
+    /// </summary>
+    public class DeployApprovalsRootHashKey : U64GlobalStateKey
+    {
+        public static string KEYPREFIX = "deploy-approvals-root-hash-";
+
+        public DeployApprovalsRootHashKey(string key) : base(key)
+        {
+            KeyIdentifier = KeyIdentifier.DeployApprovalsRootHash;
+            
+            if (!key.StartsWith(KEYPREFIX))
+                throw new ArgumentException($"Key not valid. It should start with '{KEYPREFIX}'.",
+                    nameof(key));
+            
+            if(!long.TryParse(key.Substring(KEYPREFIX.Length), out var eraNum))
+                throw new ArgumentException($"Key not valid. Cannot parse {KEYPREFIX}key number.",
+                    nameof(key));
         }
     }
 }

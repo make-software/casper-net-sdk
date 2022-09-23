@@ -13,6 +13,8 @@ namespace NetCasperTest
         public void AccountHashTest()
         {
             const string accountHash = "account-hash-0101010101010101010101010101010101010101010101010101010101010101";
+            Assert.IsTrue(accountHash.StartsWith(AccountHashKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(accountHash);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is AccountHashKey);
@@ -34,13 +36,15 @@ namespace NetCasperTest
 
             var key2 = new AccountHashKey(publicKey);
             Assert.IsNotNull(key2);
-            Assert.IsTrue(key2.ToString().StartsWith("account-hash-"));
+            Assert.IsTrue(key2.ToString().StartsWith(AccountHashKey.KEYPREFIX));
         }
 
         [Test]
         public void HashKeyTest()
         {
             const string hashKey = "hash-0202020202020202020202020202020202020202020202020202020202020202";
+            Assert.IsTrue(hashKey.StartsWith(HashKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(hashKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is HashKey);
@@ -58,6 +62,8 @@ namespace NetCasperTest
         public void URefTest()
         {
             const string urefKey = "uref-0303030303030303030303030303030303030303030303030303030303030303-001";
+            Assert.IsTrue(urefKey.StartsWith(URef.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(urefKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is URef);
@@ -77,6 +83,8 @@ namespace NetCasperTest
         public void TransferKeyTest()
         {
             const string transferKey = "transfer-0404040404040404040404040404040404040404040404040404040404040404";
+            Assert.IsTrue(transferKey.StartsWith(TransferKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(transferKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is TransferKey);
@@ -94,6 +102,8 @@ namespace NetCasperTest
         public void DeployInfoKeyTest()
         {
             const string deployKey = "deploy-0505050505050505050505050505050505050505050505050505050505050505";
+            Assert.IsTrue(deployKey.StartsWith(DeployInfoKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(deployKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is DeployInfoKey);
@@ -111,6 +121,8 @@ namespace NetCasperTest
         public void EraInfoKeyTest()
         {
             const string eraInfoKey = "era-12345";
+            Assert.IsTrue(eraInfoKey.StartsWith(EraInfoKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(eraInfoKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is EraInfoKey);
@@ -131,6 +143,8 @@ namespace NetCasperTest
         public void BalanceKeyTest()
         {
             const string balanceKey = "balance-0707070707070707070707070707070707070707070707070707070707070707";
+            Assert.IsTrue(balanceKey.StartsWith(BalanceKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(balanceKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is BalanceKey);
@@ -148,6 +162,8 @@ namespace NetCasperTest
         public void BidKeyTest()
         {
             const string bidKey = "bid-0808080808080808080808080808080808080808080808080808080808080808";
+            Assert.IsTrue(bidKey.StartsWith(BidKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(bidKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is BidKey);
@@ -165,6 +181,8 @@ namespace NetCasperTest
         public void WithdrawKeyTest()
         {
             const string withdrawKey = "withdraw-0909090909090909090909090909090909090909090909090909090909090909";
+            Assert.IsTrue(withdrawKey.StartsWith(WithdrawKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(withdrawKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is WithdrawKey);
@@ -182,6 +200,8 @@ namespace NetCasperTest
         public void DictionaryKeyTest()
         {
             const string dictionaryKey = "dictionary-1010101010101010101010101010101010101010101010101010101010101010";
+            Assert.IsTrue(dictionaryKey.StartsWith(DictionaryKey.KEYPREFIX));
+
             var key = GlobalStateKey.FromString(dictionaryKey);
             Assert.IsNotNull(key);
             Assert.IsTrue(key is DictionaryKey);
@@ -192,6 +212,107 @@ namespace NetCasperTest
             Assert.IsNotNull(key);
             Assert.IsTrue(key is DictionaryKey);
             Assert.AreEqual(dictionaryKey, key.ToString());
+            Assert.IsTrue(key.GetBytes().SequenceEqual(bytes));
+        }
+
+        [Test]
+        public void SystemContractRegistryKeyTest()
+        {
+            const string systemContractKey = "system-contract-registry-0909090909090909090909090909090909090909090909090909090909090909";
+            Assert.IsTrue(systemContractKey.StartsWith(SystemContractRegistryKey.KEYPREFIX));
+
+            var key = GlobalStateKey.FromString(systemContractKey);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is SystemContractRegistryKey);
+            Assert.AreEqual(systemContractKey, key.ToString());
+
+            var bytes = Hex.Decode("0a0909090909090909090909090909090909090909090909090909090909090909");
+            key = GlobalStateKey.FromBytes(bytes);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is SystemContractRegistryKey);
+            Assert.AreEqual(systemContractKey, key.ToString());
+            Assert.IsTrue(key.GetBytes().SequenceEqual(bytes));
+        }
+
+        [Test]
+        public void UnbondKeyTest()
+        {
+            const string unbondKey = "unbond-0909090909090909090909090909090909090909090909090909090909090909";
+            Assert.IsTrue(unbondKey.StartsWith(UnbondKey.KEYPREFIX));
+            
+            var key = GlobalStateKey.FromString(unbondKey);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is UnbondKey);
+            Assert.AreEqual(unbondKey, key.ToString());
+
+            var bytes = Hex.Decode("0b0909090909090909090909090909090909090909090909090909090909090909");
+            key = GlobalStateKey.FromBytes(bytes);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is UnbondKey);
+            Assert.AreEqual(unbondKey, key.ToString());
+            Assert.IsTrue(key.GetBytes().SequenceEqual(bytes));
+        }
+
+        [Test]
+        public void ChainspecRegistryKeyTest()
+        {
+            const string chainspecRegistryKey = "chainspec-registry-0909090909090909090909090909090909090909090909090909090909090909";
+            Assert.IsTrue(chainspecRegistryKey.StartsWith(ChainspecRegistryKey.KEYPREFIX));
+            
+            var key = GlobalStateKey.FromString(chainspecRegistryKey);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is ChainspecRegistryKey);
+            Assert.AreEqual(chainspecRegistryKey, key.ToString());
+
+            var bytes = Hex.Decode("0c0909090909090909090909090909090909090909090909090909090909090909");
+            key = GlobalStateKey.FromBytes(bytes);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is ChainspecRegistryKey);
+            Assert.AreEqual(chainspecRegistryKey, key.ToString());
+            Assert.IsTrue(key.GetBytes().SequenceEqual(bytes));
+        }
+        
+        [Test]
+        public void BlockEffectsRootHashKeyTest()
+        {
+            const string blockEffectsKey = "block-effects-root-hash-12345";
+            Assert.IsTrue(blockEffectsKey.StartsWith(BlockEffectsRootHashKey.KEYPREFIX));
+
+            var key = GlobalStateKey.FromString(blockEffectsKey);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is BlockEffectsRootHashKey);
+            Assert.AreEqual(blockEffectsKey, key.ToString());
+
+            var bytes = Hex.Decode("0d3930000000000000");
+            key = GlobalStateKey.FromBytes(bytes);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is BlockEffectsRootHashKey);
+            Assert.AreEqual(blockEffectsKey, key.ToString());
+            
+            var ex = Assert.Catch(() => GlobalStateKey.FromString("block-effects-root-hash-AAAAA"));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(key.GetBytes().SequenceEqual(bytes));
+        }
+        
+        [Test]
+        public void DeployApprovalsRootHashKeyTest()
+        {
+            const string deployAprovalsKey = "deploy-approvals-root-hash-12345";
+            Assert.IsTrue(deployAprovalsKey.StartsWith(DeployApprovalsRootHashKey.KEYPREFIX));
+
+            var key = GlobalStateKey.FromString(deployAprovalsKey);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is DeployApprovalsRootHashKey);
+            Assert.AreEqual(deployAprovalsKey, key.ToString());
+
+            var bytes = Hex.Decode("0e3930000000000000");
+            key = GlobalStateKey.FromBytes(bytes);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is DeployApprovalsRootHashKey);
+            Assert.AreEqual(deployAprovalsKey, key.ToString());
+            
+            var ex = Assert.Catch(() => GlobalStateKey.FromString("deploy-approvals-root-hash-AAAAA"));
+            Assert.IsNotNull(ex);
             Assert.IsTrue(key.GetBytes().SequenceEqual(bytes));
         }
 
@@ -275,7 +396,7 @@ namespace NetCasperTest
                GlobalStateKey.FromString(invalidPrefixKey);
             });
             Assert.IsNotNull(ex);
-            Assert.IsTrue(ex.Message.StartsWith("Key not valid. Unknown key prefix."));
+            Assert.IsTrue(ex.Message.StartsWith("Key not valid. Unknown key prefix"));
         }
 
         [Test]
