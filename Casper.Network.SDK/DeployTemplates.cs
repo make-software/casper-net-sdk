@@ -320,7 +320,7 @@ namespace Casper.Network.SDK
             ulong ttl = 1800000 //30m
         )
         {
-            return DelegateTokens(undelegateContractWasmBytes,
+            return UndelegateTokens(undelegateContractWasmBytes,
                 fromKey,
                 validatorPK,
                 amount,
