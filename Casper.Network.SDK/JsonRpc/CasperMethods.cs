@@ -10,34 +10,16 @@ namespace Casper.Network.SDK.JsonRpc
         /// Returns a state root hash at a given Block
         /// </summary>
         /// <param name="blockHash">Block hash for which the state root is queried. Null for the most recent.</param>
-        public GetStateRootHash(string blockHash = null) : base("chain_get_state_root_hash")
+        public GetStateRootHash(string blockHash = null) : base("chain_get_state_root_hash", blockHash)
         {
-            var blockIdentifier = new Dictionary<string, string>
-            {
-                {"Hash", blockHash}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockHash != null ? blockIdentifier : null}
-            };
         }
 
         /// <summary>
         /// Returns the state root hash at a given Block
         /// </summary>
         /// <param name="height">Block height for which the state root is queried.</param>
-        public GetStateRootHash(int height) : base("chain_get_state_root_hash")
+        public GetStateRootHash(int height) : base("chain_get_state_root_hash", height)
         {
-            var blockIdentifier = new Dictionary<string, int>
-            {
-                {"Height", height}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockIdentifier}
-            };
         }
     }
 
@@ -67,34 +49,16 @@ namespace Casper.Network.SDK.JsonRpc
         /// Returns the bids and validators at a given block.
         /// </summary>
         /// <param name="blockHash">Block hash for which the auction info is queried. Null for the most recent auction info.</param>
-        public GetAuctionInfo(string blockHash) : base("state_get_auction_info")
+        public GetAuctionInfo(string blockHash) : base("state_get_auction_info", blockHash)
         {
-            var blockIdentifier = new Dictionary<string, string>
-            {
-                {"Hash", blockHash}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockHash != null ? blockIdentifier : null}
-            };
         }
 
         /// <summary>
         /// Returns the bids and validators at a given block.
         /// </summary>
         /// <param name="height">Block height for which the auction info is queried.</param>
-        public GetAuctionInfo(int height) : base("state_get_auction_info")
+        public GetAuctionInfo(int height) : base("state_get_auction_info", height)
         {
-            var blockIdentifier = new Dictionary<string, int>
-            {
-                {"Height", height}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockIdentifier}
-            };
         }
     }
 
@@ -105,18 +69,9 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="blockHash">A block hash for which the information of the account is queried. Null for most recent information.</param>
-        public GetAccountInfo(string publicKey, string blockHash = null) : base("state_get_account_info")
+        public GetAccountInfo(string publicKey, string blockHash = null) : base("state_get_account_info", blockHash)
         {
-            var blockIdentifier = new Dictionary<string, string>
-            {
-                {"Hash", blockHash}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockHash != null ? blockIdentifier : null},
-                {"public_key", publicKey}
-            };
+            this.Parameters.Add("public_key", publicKey);
         }
 
         /// <summary>
@@ -124,18 +79,9 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
-        public GetAccountInfo(string publicKey, int height) : base("state_get_account_info")
+        public GetAccountInfo(string publicKey, int height) : base("state_get_account_info", height)
         {
-            var blockIdentifier = new Dictionary<string, int>
-            {
-                {"Height", height}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockIdentifier},
-                {"public_key", publicKey}
-            };
+            this.Parameters.Add("public_key", publicKey);
         }
     }
     
@@ -244,34 +190,16 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves a Block from the network by its hash. 
         /// </summary>
         /// <param name="blockHash">Hash of the block to retrieve. Null for the most recent block.</param>
-        public GetBlock(string blockHash) : base("chain_get_block")
+        public GetBlock(string blockHash) : base("chain_get_block", blockHash)
         {
-            var blockIdentifier = new Dictionary<string, string>
-            {
-                {"Hash", blockHash}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockHash != null ? blockIdentifier : null}
-            };
         }
 
         /// <summary>
         /// Retrieves a Block from the network by its height number.
         /// </summary>
         /// <param name="height">Height of the block to retrieve.</param>
-        public GetBlock(int height) : base("chain_get_block")
+        public GetBlock(int height) : base("chain_get_block", height)
         {
-            var blockIdentifier = new Dictionary<string, int>
-            {
-                {"Height", height}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockIdentifier}
-            };
         }
     }
 
@@ -281,34 +209,16 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves all transfers for a Block from the network
         /// </summary>
         /// <param name="blockHash">Hash of the block to retrieve the transfers from. Null for the most recent block</param>
-        public GetBlockTransfers(string blockHash) : base("chain_get_block_transfers")
+        public GetBlockTransfers(string blockHash) : base("chain_get_block_transfers", blockHash)
         {
-            var blockIdentifier = new Dictionary<string, string>
-            {
-                {"Hash", blockHash}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockHash != null ? blockIdentifier : null}
-            };
         }
 
         /// <summary>
         /// Retrieves all transfers for a Block from the network
         /// </summary>
         /// <param name="height">Height of the block to retrieve the transfers from.</param>
-        public GetBlockTransfers(int height) : base("chain_get_block_transfers")
+        public GetBlockTransfers(int height) : base("chain_get_block_transfers", height)
         {
-            var blockIdentifier = new Dictionary<string, int>
-            {
-                {"Height", height}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockIdentifier}
-            };
         }
     }
 
@@ -318,34 +228,16 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves an EraInfo from the network given a switch block 
         /// </summary>
         /// <param name="blockHash">Block hash of a switch block.</param>
-        public GetEraInfoBySwitchBlock(string blockHash) : base("chain_get_era_info_by_switch_block")
+        public GetEraInfoBySwitchBlock(string blockHash) : base("chain_get_era_info_by_switch_block", blockHash)
         {
-            var blockIdentifier = new Dictionary<string, string>
-            {
-                {"Hash", blockHash}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockHash != null ? blockIdentifier : null}
-            };
         }
 
         /// <summary>
         /// Retrieves an EraInfo from the network given a switch block.
         /// </summary>
         /// <param name="height">Block height of a switch block.</param>
-        public GetEraInfoBySwitchBlock(int height) : base("chain_get_era_info_by_switch_block")
+        public GetEraInfoBySwitchBlock(int height) : base("chain_get_era_info_by_switch_block", height)
         {
-            var blockIdentifier = new Dictionary<string, int>
-            {
-                {"Height", height}
-            };
-
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"block_identifier", blockIdentifier}
-            };
         }
     }
 

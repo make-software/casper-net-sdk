@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+## [1.1.1]
+
+### Fixed
+* Skip `block_identifier` param if `Hash` value is `null` in RPC requests to be compatible with Casper node v150.
+
 ## [1.1.0]
 
 ### Added
@@ -28,5 +33,6 @@ All notable changes to this project will be documented in this file.  The format
 ### Added
 * Initial release of Casper .NET SDK.
 
+[1.1.1]: https://github.com/make-software/casper-net-sdk/releases/tag/v1.1.1
 [1.1.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v1.1.0
 [1.0.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v1.0.0
