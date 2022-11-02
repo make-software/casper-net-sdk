@@ -61,5 +61,20 @@ namespace Casper.Network.SDK.ByteSerializers
                     break;
             }
         }
+
+        public CLValue FromBytes(MemoryStream ms)
+        {
+            if (!ReadUInteger(ms, out var length))
+                return null;
+
+            var bytes = new byte[length];
+            if (ms.Read(bytes, 0, (int)length) != length)
+                return null;
+
+            if (!ReadCLTypeInfo(ms, out var clTypeInfo))
+                return null;
+
+            return new CLValue(bytes, clTypeInfo);
+        }
     }
 }
