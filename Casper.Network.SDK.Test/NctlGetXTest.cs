@@ -173,6 +173,39 @@ namespace NetCasperTest
                 Assert.Fail(e.RpcError.Message);
             }
         }
+
+        [Test]
+        public async Task GetEraSummaryTest()
+        {
+            try
+            {
+                var response = await _client.GetEraSummary();
+                var result = response.Parse();
+                Assert.IsTrue(result.EraSummary.EraId > 0);
+                Assert.IsNotNull(result.EraSummary.StoredValue.EraInfo);
+                Assert.IsTrue(result.EraSummary.StoredValue.EraInfo.SeigniorageAllocations.Count > 0);
+                
+                var response2 = await _client.GetEraSummary(result.EraSummary.BlockHash);
+                var result2 = response2.Parse();
+                Assert.IsTrue(result2.EraSummary.EraId > 0);
+                Assert.IsNotNull(result2.EraSummary.StoredValue.EraInfo);
+                Assert.IsTrue(result2.EraSummary.StoredValue.EraInfo.SeigniorageAllocations.Count > 0);
+
+                var response3 = await _client.GetBlock(result.EraSummary.BlockHash);
+                var result3 = response3.Parse();
+                Assert.IsNotNull(result3.Block.Hash);
+                
+                var response4 = await _client.GetEraSummary((int)result3.Block.Header.Height);
+                var result4 = response4.Parse();
+                Assert.IsTrue(result4.EraSummary.EraId > 0);
+                Assert.IsNotNull(result4.EraSummary.StoredValue.EraInfo);
+                Assert.IsTrue(result4.EraSummary.StoredValue.EraInfo.SeigniorageAllocations.Count > 0);
+            }
+            catch (RpcClientException e)
+            {
+                Assert.Fail(e.RpcError.Message);
+            }
+        }
         
         [Test]
         public async Task GetValidatorChangesTest()
