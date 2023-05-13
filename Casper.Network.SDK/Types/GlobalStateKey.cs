@@ -53,7 +53,11 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Dictionary keys store dictionary items.
         /// </summary>
-        Dictionary = 0x09
+        Dictionary = 0x09,
+        /// <summary>
+        /// Era Summary keys store current era info.
+        /// </summary>
+        EraSummary = 0x11,
     }
 
     /// <summary>
@@ -127,7 +131,8 @@ namespace Casper.Network.SDK.Types
                 return new WithdrawKey(value);
             if (value.StartsWith("dictionary"))
                 return new DictionaryKey(value);
-
+            if (value.StartsWith("era-summary-"))
+                return new EraSummaryKey(value);
             throw new ArgumentException($"Key not valid. Unknown key prefix.");
         }
 
@@ -399,6 +404,18 @@ namespace Casper.Network.SDK.Types
 
         public DictionaryKey(byte[] key) : this("dictionary-" + CEP57Checksum.Encode(key))
         {
+        }
+    }
+    
+    /// <summary>
+    /// Key used to query current era info.
+    /// Format: 32-byte length with prefix 'era-summary-'.
+    /// </summary>
+    public class EraSummaryKey : GlobalStateKey
+    {
+        public EraSummaryKey(string key) : base(key, "era-summary-")
+        {
+            KeyIdentifier = KeyIdentifier.EraSummary;
         }
     }
 }
