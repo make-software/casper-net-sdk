@@ -147,7 +147,7 @@ namespace NetCasperTest
                 _myAccount.PublicKey,
                 validatorPk,
                 600_000_000_000,
-                5_000_000_000,
+                10_000_000_000,
                 _chainName);
             deploy.Sign(_myAccount);
             
@@ -175,7 +175,7 @@ namespace NetCasperTest
                 _myAccount.PublicKey,
                 validatorPk,
                 10_000_000_000,
-                5_000_000_000,
+                10_000_000_000,
                 _chainName);
             deploy.Sign(_myAccount);
             

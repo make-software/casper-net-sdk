@@ -391,6 +391,26 @@ namespace Casper.Network.SDK
             var method = new GetEraInfoBySwitchBlock(blockHeight);
             return await SendRpcRequestAsync<GetEraInfoBySwitchBlockResult>(method);
         }
+        
+        /// <summary>
+        /// Request current Era Info from the network given a block hash
+        /// </summary>
+        /// <param name="blockHash">Block hash. Null for the latest block.</param>
+        public async Task<RpcResponse<GetEraSummaryResult>> GetEraSummary(string blockHash = null)
+        {
+            var method = new GetEraSummary(blockHash);
+            return await SendRpcRequestAsync<GetEraSummaryResult>(method);
+        }
+
+        /// <summary>
+        /// Request current Era Info from the network given a block hash
+        /// </summary>
+        /// <param name="blockHeight">Block height.</param>
+        public async Task<RpcResponse<GetEraSummaryResult>> GetEraSummary(int blockHeight)
+        {
+            var method = new GetEraSummary(blockHeight);
+            return await SendRpcRequestAsync<GetEraSummaryResult>(method);
+        }
 
         /// <summary>
         /// Lookup a dictionary item from its dictionary item key.

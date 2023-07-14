@@ -70,7 +70,7 @@ namespace NetCasperTest
                 "store_mydict",
                 namedArgs,
                 _faucetKey.PublicKey,
-                100_000_000,
+                1_000_000_000,
                 _chainName);
             deploy.Sign(_faucetKey);
 

@@ -241,6 +241,25 @@ namespace Casper.Network.SDK.JsonRpc
         }
     }
 
+    public class GetEraSummary : RpcMethod
+    {
+        /// <summary>
+        /// Retrieves current era info from the network given a block hash 
+        /// </summary>
+        /// <param name="blockHash">Block hash.</param>
+        public GetEraSummary(string blockHash) : base("chain_get_era_summary", blockHash)
+        {
+        }
+
+        /// <summary>
+        /// Retrieves current era info from the network given a block height 
+        /// </summary>
+        /// <param name="height">Block height.</param>
+        public GetEraSummary(int height) : base("chain_get_era_summary", height)
+        {
+        }
+    }
+
     public class GetDictionaryItem : RpcMethod
     {
         /// <summary>
