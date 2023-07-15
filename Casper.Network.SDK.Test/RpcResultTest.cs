@@ -117,5 +117,24 @@ namespace NetCasperTest
             Assert.AreEqual(result.Account.AccountHash.ToString(), 
                 result.Account.AssociatedKeys[0].AccountHash.ToString());
         }
+
+        [Test]
+        public void GetNodeStatusResultTest()
+        {
+            string json = File.ReadAllText(TestContext.CurrentContext.TestDirectory +
+                                           "/TestData/info_get_status-result.json");
+            
+            var result = RpcResult.Parse<GetNodeStatusResult>(json);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ReactorState.Initialize, result.ReactorState);
+            Assert.AreEqual("1970-01-01T00:00:00.000Z", result.LastProgress);
+            Assert.AreEqual(4, result.AvailableBlockRange.Low);
+            Assert.AreEqual(5, result.AvailableBlockRange.High);
+            Assert.AreEqual("16ddf28e2b3d2e17f4cef36f8b58827eca917af225d139b0c77df3b4a67dc55e", result.BlockSync.Historical.BlockHash);
+            Assert.AreEqual(40, result.BlockSync.Historical.BlockHeight);
+            Assert.AreEqual("59907b1e32a9158169c4d89d9ce5ac9164fc31240bfcfb0969227ece06d74983", result.BlockSync.Forward.BlockHash);
+            Assert.IsNull(result.BlockSync.Forward.BlockHeight);
+            Assert.AreEqual("have block body(6701) for: block hash 5990..4983", result.BlockSync.Forward.AcquisitionState);
+        }
     }
 }
