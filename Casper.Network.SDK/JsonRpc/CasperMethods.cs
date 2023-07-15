@@ -453,6 +453,16 @@ namespace Casper.Network.SDK.JsonRpc
         }
     }
 
+    public class GetChainspec : RpcMethod
+    {
+        /// <summary>
+        /// Returns the chainspec.toml file of the node.
+        /// </summary>
+        public GetChainspec() : base("info_get_chainspec")
+        {
+        }
+    }
+
     public class SpeculativeExecution : RpcMethod
     {
         /// <summary>

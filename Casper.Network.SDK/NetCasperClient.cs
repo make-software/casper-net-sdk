@@ -543,6 +543,15 @@ namespace Casper.Network.SDK
         }
 
         /// <summary>
+        /// Request the the chainspec.toml, genesis accounts.toml, and global_state.toml files of the node.
+        /// </summary>
+        public async Task<RpcResponse<GetChainspecResult>> GetChainspec()
+        {
+            var method = new GetChainspec();
+            return await SendRpcRequestAsync<GetChainspecResult>(method);
+        }
+
+        /// <summary>
         /// Sends a "deploy dry run" to the network. It will execute the deploy on top of the specified block and return
         /// the results of the execution to the caller. The effects of the execution won't be committed to the trie
         /// (blockchain database/GlobalState).

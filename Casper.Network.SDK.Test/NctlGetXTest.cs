@@ -246,5 +246,23 @@ namespace NetCasperTest
                 Assert.Fail(e.RpcError.Message);
             }
         }
+        
+        [Test]
+        public async Task GetChainspecTest()
+        {
+            try
+            {
+                var response = await _client.GetChainspec();
+                Assert.IsNotNull(response);
+
+                var result = response.Parse();
+                Assert.IsNotNull(result.ChainspecBytes.ChainspecBytes);
+                Assert.IsNotNull(result.ChainspecBytes.ChainspecAsString);
+            }
+            catch (RpcClientException e)
+            {
+                Assert.Fail(e.RpcError.Message);
+            }
+        }
     }
 }
