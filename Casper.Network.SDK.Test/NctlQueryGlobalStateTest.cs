@@ -34,6 +34,16 @@ namespace NetCasperTest
         }
 
         [Test]
+        public async Task QueryEraSummary()
+        {
+            var rpcResponse = await _client.QueryGlobalState("era-summary-0000000000000000000000000000000000000000000000000000000000000000");
+            var eraInfo = rpcResponse.Parse().StoredValue.EraInfo;
+            Assert.IsNotNull(eraInfo);
+            Assert.IsNotNull(eraInfo.SeigniorageAllocations);
+            Assert.IsTrue(eraInfo.SeigniorageAllocations.Count > 0);
+        }
+        
+        [Test]
         public async Task QueryWrongKey()
         {
             var key = GlobalStateKey.FromString(

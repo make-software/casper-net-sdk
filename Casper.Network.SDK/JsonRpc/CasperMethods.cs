@@ -84,7 +84,7 @@ namespace Casper.Network.SDK.JsonRpc
             this.Parameters.Add("public_key", publicKey);
         }
     }
-    
+
     public class GetItem : RpcMethod
     {
         /// <summary>
@@ -125,7 +125,7 @@ namespace Casper.Network.SDK.JsonRpc
             this.Parameters = new Dictionary<string, object>
             {
                 {"state_identifier", stateIdentifier},
-                {"path", path ?? new string[] {}},
+                {"path", path ?? new string[] { }},
                 {"key", key}
             };
         }
@@ -162,10 +162,10 @@ namespace Casper.Network.SDK.JsonRpc
                 this.Parameters.Add("state_identifier", new Dictionary<string, string>
                 {
                     {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-                });                
+                });
             }
         }
-        
+
         public GetBalance(AccountHashKey key, string hash, bool isBlockHash) : base("query_balance")
         {
             Dictionary<string, string> mainPurse = new Dictionary<string, string>
@@ -181,10 +181,10 @@ namespace Casper.Network.SDK.JsonRpc
                 this.Parameters.Add("state_identifier", new Dictionary<string, string>
                 {
                     {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-                });                
+                });
             }
         }
-        
+
         public GetBalance(PublicKey key, string hash, bool isBlockHash) : base("query_balance")
         {
             Dictionary<string, string> mainPurse = new Dictionary<string, string>
@@ -200,7 +200,7 @@ namespace Casper.Network.SDK.JsonRpc
                 this.Parameters.Add("state_identifier", new Dictionary<string, string>
                 {
                     {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-                });                
+                });
             }
         }
     }
@@ -235,8 +235,8 @@ namespace Casper.Network.SDK.JsonRpc
             {
                 {"deploy_hash", deployHash}
             };
-            
-            if(finalizedApprovals)
+
+            if (finalizedApprovals)
                 this.Parameters.Add("finalized_approvals", true);
         }
     }
@@ -298,6 +298,25 @@ namespace Casper.Network.SDK.JsonRpc
         }
     }
 
+    public class GetEraSummary : RpcMethod
+    {
+        /// <summary>
+        /// Retrieves current era info from the network given a block hash 
+        /// </summary>
+        /// <param name="blockHash">Block hash.</param>
+        public GetEraSummary(string blockHash) : base("chain_get_era_summary", blockHash)
+        {
+        }
+
+        /// <summary>
+        /// Retrieves current era info from the network given a block height 
+        /// </summary>
+        /// <param name="height">Block height.</param>
+        public GetEraSummary(int height) : base("chain_get_era_summary", height)
+        {
+        }
+    }
+
     public class GetDictionaryItem : RpcMethod
     {
         /// <summary>
@@ -309,15 +328,17 @@ namespace Casper.Network.SDK.JsonRpc
         {
             this.Parameters = new Dictionary<string, object>
             {
-                {"dictionary_identifier", new Dictionary<string, object>
                 {
-                    {"Dictionary", dictionaryItem}
-                }},
+                    "dictionary_identifier", new Dictionary<string, object>
+                    {
+                        {"Dictionary", dictionaryItem}
+                    }
+                },
                 {"state_root_hash", stateRootHash},
             };
         }
     }
-    
+
     public class GetDictionaryItemByAccount : RpcMethod
     {
         /// <summary>
@@ -359,7 +380,8 @@ namespace Casper.Network.SDK.JsonRpc
         /// <param name="dictionaryName">The named key under which the dictionary seed URef is stored.</param>
         /// <param name="dictionaryItem">The dictionary item key.</param>
         /// <param name="stateRootHash">Hash of the state root.</param>
-        public GetDictionaryItemByContract(string contractKey, string dictionaryName, string dictionaryItem, string stateRootHash) : base("state_get_dictionary_item")
+        public GetDictionaryItemByContract(string contractKey, string dictionaryName, string dictionaryItem,
+            string stateRootHash) : base("state_get_dictionary_item")
         {
             var contractNamedKey = new Dictionary<string, string>
             {
@@ -367,13 +389,15 @@ namespace Casper.Network.SDK.JsonRpc
                 {"dictionary_name", dictionaryName},
                 {"dictionary_item_key", dictionaryItem}
             };
-            
+
             this.Parameters = new Dictionary<string, object>
             {
-                {"dictionary_identifier", new Dictionary<string, object>
                 {
-                    {"ContractNamedKey", contractNamedKey}
-                }},
+                    "dictionary_identifier", new Dictionary<string, object>
+                    {
+                        {"ContractNamedKey", contractNamedKey}
+                    }
+                },
                 {"state_root_hash", stateRootHash},
             };
         }
@@ -387,20 +411,23 @@ namespace Casper.Network.SDK.JsonRpc
         /// <param name="seedURef">The dictionary's seed URef.</param>
         /// <param name="dictionaryItem">The dictionary item key.</param>
         /// <param name="stateRootHash">Hash of the state root.</param>
-        public GetDictionaryItemByURef(string seedURef, string dictionaryItem, string stateRootHash) : base("state_get_dictionary_item")
+        public GetDictionaryItemByURef(string seedURef, string dictionaryItem, string stateRootHash) : base(
+            "state_get_dictionary_item")
         {
             var contractNamedKey = new Dictionary<string, string>
             {
                 {"seed_uref", seedURef},
                 {"dictionary_item_key", dictionaryItem}
             };
-            
+
             this.Parameters = new Dictionary<string, object>
             {
-                {"dictionary_identifier", new Dictionary<string, object>
                 {
-                    {"URef", contractNamedKey}
-                }},
+                    "dictionary_identifier", new Dictionary<string, object>
+                    {
+                        {"URef", contractNamedKey}
+                    }
+                },
                 {"state_root_hash", stateRootHash},
             };
         }
@@ -425,7 +452,7 @@ namespace Casper.Network.SDK.JsonRpc
         {
         }
     }
-    
+
     public class SpeculativeExecution : RpcMethod
     {
         /// <summary>
@@ -445,7 +472,7 @@ namespace Casper.Network.SDK.JsonRpc
                 this.Parameters.Add("state_identifier", new Dictionary<string, string>
                 {
                     {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-                });                
+                });
             }
         }
     }

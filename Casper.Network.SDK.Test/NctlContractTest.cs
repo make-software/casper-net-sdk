@@ -88,10 +88,10 @@ namespace NetCasperTest
                 "counter_inc",
                 null,
                 _faucetKey.PublicKey,
-                15_000_000,
+                150_000_000,
                 _chainName,
                 1, //gasPrice=1
-                24*3_600_000); //ttl='1day'
+                18*3_600_000); //ttl='18h'
             deploy.Sign(_faucetKey);
 
             var putResponse = await _client.PutDeploy(deploy);
@@ -115,7 +115,7 @@ namespace NetCasperTest
                 "counter_inc",
                 null,
                 _faucetKey.PublicKey,
-                15_000_000,
+                150_000_000,
                 _chainName);
             deploy.Sign(_faucetKey);
 

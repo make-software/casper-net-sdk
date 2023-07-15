@@ -39,5 +39,12 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("validator_public_key")]
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey ValidatorPublicKey { get; init; }
+        
+        /// <summary>
+        /// The validator public key to re-delegate to.
+        /// </summary>
+        [JsonPropertyName("new_validator")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey NewValidator { get; init; }
     }
 }

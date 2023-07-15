@@ -86,7 +86,32 @@ namespace Casper.Network.SDK.Types
                 SeigniorageAllocation value,
                 JsonSerializerOptions options)
             {
-                throw new NotImplementedException("Write method for SeigniorageAllocation not yet implemented");
+                if (value.IsDelegator)
+                {
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("Delegator");
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("delegator_public_key");
+                    writer.WriteStringValue(value.DelegatorPublicKey.ToString());
+                    writer.WritePropertyName("validator_public_key");
+                    writer.WriteStringValue(value.ValidatorPublicKey.ToString());
+                    writer.WritePropertyName("amount");
+                    writer.WriteStringValue(value.Amount.ToString());
+                    writer.WriteEndObject();
+                    writer.WriteEndObject();
+                }
+                else //validator
+                {
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("Validator");
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("validator_public_key");
+                    writer.WriteStringValue(value.ValidatorPublicKey.ToString());
+                    writer.WritePropertyName("amount");
+                    writer.WriteStringValue(value.Amount.ToString());
+                    writer.WriteEndObject();
+                    writer.WriteEndObject();
+                }
             }
         }
     }
