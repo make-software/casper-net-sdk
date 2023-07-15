@@ -58,6 +58,15 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(GenericListConverter<URef, GlobalStateKey.GlobalStateKeyConverter>))]
         public List<URef> Keys { get; init; }
     }
+
+    /// <summary>
+    /// A enum to determine the lock status of the contract package.
+    /// </summary>
+    public enum LockStatus
+    {
+        Locked,
+        Unlocked,
+    }
     
     /// <summary>
     /// Contract definition, metadata, and security container.
@@ -87,5 +96,12 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("versions")]
         public List<ContractVersion> Versions { get; init; }
+        
+        /// <summary>
+        /// The current state of node reactor.
+        /// </summary>
+        [JsonPropertyName("lock_status")] 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public LockStatus LockStatus { get; init; }
     }
 }
