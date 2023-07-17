@@ -20,7 +20,6 @@ namespace NetCasperTest
         
         private string _wasmFile = TestContext.CurrentContext.TestDirectory +
                                    "/TestData/counter-define.wasm";
-        private string _contractDeployHash = null;
 
         [SetUp]
         public void Setup()
