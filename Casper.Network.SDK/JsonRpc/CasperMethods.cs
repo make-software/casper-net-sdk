@@ -111,20 +111,13 @@ namespace Casper.Network.SDK.JsonRpc
         /// A query to the global state that returns a stored value from the network.
         /// </summary>
         /// <param name="key">A global state key formatted as a string to query the value from the network.</param>
-        /// <param name="hash">A block hash or a state root hash.</param>
-        /// <param name="isBlockHash">true if hash is a Block hash. False for state root hash.</param>
+        /// <param name="stateIdentifier">A block hash, a block height or a state root hash value.</param>
         /// <param name="path">The path components starting from the key as base (use '/' as separator).</param>
-        public QueryGlobalState(string key, string hash, bool isBlockHash, string[] path = null) :
-            base("query_global_state")
+        public QueryGlobalState(string key, StateIdentifier stateIdentifier, string[] path = null) : base("query_global_state")
         {
-            Dictionary<string, string> stateIdentifier = new Dictionary<string, string>
-            {
-                {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-            };
-
             this.Parameters = new Dictionary<string, object>
             {
-                {"state_identifier", stateIdentifier},
+                {"state_identifier", stateIdentifier.GetParam()},
                 {"path", path ?? new string[] { }},
                 {"key", key}
             };
@@ -147,7 +140,7 @@ namespace Casper.Network.SDK.JsonRpc
             };
         }
 
-        public GetBalance(URef uref, string hash, bool isBlockHash) : base("query_balance")
+        public GetBalance(URef uref, StateIdentifier stateIdentifier) : base("query_balance")
         {
             Dictionary<string, string> mainPurse = new Dictionary<string, string>
             {
@@ -157,16 +150,10 @@ namespace Casper.Network.SDK.JsonRpc
             {
                 {"purse_identifier", mainPurse}
             };
-            if (hash != null)
-            {
-                this.Parameters.Add("state_identifier", new Dictionary<string, string>
-                {
-                    {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-                });
-            }
+            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
 
-        public GetBalance(AccountHashKey key, string hash, bool isBlockHash) : base("query_balance")
+        public GetBalance(AccountHashKey key, StateIdentifier stateIdentifier) : base("query_balance")
         {
             Dictionary<string, string> mainPurse = new Dictionary<string, string>
             {
@@ -176,16 +163,10 @@ namespace Casper.Network.SDK.JsonRpc
             {
                 {"purse_identifier", mainPurse}
             };
-            if (hash != null)
-            {
-                this.Parameters.Add("state_identifier", new Dictionary<string, string>
-                {
-                    {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-                });
-            }
+            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
 
-        public GetBalance(PublicKey key, string hash, bool isBlockHash) : base("query_balance")
+        public GetBalance(PublicKey key, StateIdentifier stateIdentifier) : base("query_balance")
         {
             Dictionary<string, string> mainPurse = new Dictionary<string, string>
             {
@@ -195,13 +176,7 @@ namespace Casper.Network.SDK.JsonRpc
             {
                 {"purse_identifier", mainPurse}
             };
-            if (hash != null)
-            {
-                this.Parameters.Add("state_identifier", new Dictionary<string, string>
-                {
-                    {isBlockHash ? "BlockHash" : "StateRootHash", hash}
-                });
-            }
+            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
     }
 

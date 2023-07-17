@@ -174,6 +174,19 @@ namespace Casper.Network.SDK
         /// Request the stored value in a global state key.
         /// </summary>
         /// <param name="key">The global state key formatted as a string to query the value from the network.</param>
+        /// <param name="height">Height of the block to check the stored value in.</param>
+        /// <param name="path">The path components starting from the key as base (use '/' as separator).</param>
+        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, int height,
+            string path = null)
+        {            
+            var method = new QueryGlobalState(key, StateIdentifier.WithBlockHeight(height), path?.Split(new char[] {'/'}));
+            return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the stored value in a global state key.
+        /// </summary>
+        /// <param name="key">The global state key formatted as a string to query the value from the network.</param>
         /// <param name="stateRootHash">Hash of the state root. Null for the most recent stored value..</param>
         /// <param name="path">The path components starting from the key as base (use '/' as separator).</param>
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
@@ -182,7 +195,7 @@ namespace Casper.Network.SDK
             if (stateRootHash == null)
                 stateRootHash = await GetStateRootHash();
 
-            var method = new QueryGlobalState(key, stateRootHash, isBlockHash: false, path?.Split(new char[] {'/'}));
+            var method = new QueryGlobalState(key, StateIdentifier.WithStateRootHash(stateRootHash), path?.Split(new char[] {'/'}));
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
@@ -207,7 +220,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalStateWithBlockHash(string key, string blockHash,
             string path = null)
         {
-            var method = new QueryGlobalState(key, blockHash, isBlockHash: true, path?.Split(new char[] {'/'}));
+            var method = new QueryGlobalState(key, StateIdentifier.WithBlockHash(blockHash), path?.Split(new char[] {'/'}));
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
@@ -240,7 +253,7 @@ namespace Casper.Network.SDK
 
             var uref = new URef(purseURef);
 
-            var method = new GetBalance(uref, stateRootHash, isBlockHash:false);
+            var method = new GetBalance(uref, StateIdentifier.WithStateRootHash(stateRootHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
 
@@ -252,7 +265,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
             string stateRootHash = null)
         {
-            var method = new GetBalance(purseURef, stateRootHash, isBlockHash:false);
+            var method = new GetBalance(purseURef, StateIdentifier.WithStateRootHash(stateRootHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
         
@@ -264,7 +277,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
             string stateRootHash = null)
         {
-            var method = new GetBalance(accountHash, stateRootHash, isBlockHash:false);
+            var method = new GetBalance(accountHash, StateIdentifier.WithStateRootHash(stateRootHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
 
@@ -276,7 +289,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
             string stateRootHash = null)
         {
-            var method = new GetBalance(publicKey, stateRootHash, isBlockHash:false);
+            var method = new GetBalance(publicKey, StateIdentifier.WithStateRootHash(stateRootHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
         
@@ -288,7 +301,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(URef purseURef,
             string blockHash = null)
         {
-            var method = new GetBalance(purseURef, blockHash, isBlockHash:true);
+            var method = new GetBalance(purseURef, StateIdentifier.WithBlockHash(blockHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
         
@@ -300,7 +313,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(AccountHashKey accountHash, 
             string blockHash = null)
         {
-            var method = new GetBalance(accountHash, blockHash, isBlockHash:true);
+            var method = new GetBalance(accountHash, StateIdentifier.WithBlockHash(blockHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
         
@@ -312,11 +325,46 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(PublicKey publicKey, 
             string blockHash = null)
         {
-            var method = new GetBalance(publicKey, blockHash, isBlockHash:true);
+            var method = new GetBalance(publicKey, StateIdentifier.WithBlockHash(blockHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
         
+        /// <summary>
+        /// Request a purse's balance from the network.
+        /// </summary>
+        /// <param name="purseURef">Purse URef key.</param>
+        /// <param name="blockHeight">Height of the block.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
+            int blockHeight)
+        {
+            var method = new GetBalance(purseURef, StateIdentifier.WithBlockHeight(blockHeight));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
         
+        /// <summary>
+        /// Request the balance information of an account given its account hash key.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account to request the balance.</param>
+        /// <param name="blockHeight">Height of the block.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
+            int blockHeight)
+        {
+            var method = new GetBalance(accountHash, StateIdentifier.WithBlockHeight(blockHeight));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its public key.
+        /// </summary>
+        /// <param name="publicKey">The public key of the account to request the balance.</param>
+        /// <param name="blockHeight">Height of the block.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
+            int blockHeight)
+        {
+            var method = new GetBalance(publicKey, StateIdentifier.WithBlockHeight(blockHeight));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+
         /// <summary>
         /// Send a Deploy to the network for its execution.
         /// </summary>

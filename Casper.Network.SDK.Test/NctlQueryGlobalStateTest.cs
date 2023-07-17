@@ -32,7 +32,15 @@ namespace NetCasperTest
             var clValue = rpcResponse.Parse().StoredValue.CLValue;
             Assert.IsNotNull(clValue);
         }
-
+        
+        [Test]
+        public async Task QueryGlobalStateByHeight()
+        {
+            var rpcResponse = await _client.QueryGlobalState("era-summary-0000000000000000000000000000000000000000000000000000000000000000", 1);
+            var blockHeader = rpcResponse.Parse().BlockHeader;
+            Assert.AreEqual(1, blockHeader.Height);
+        }
+        
         [Test]
         public async Task QueryEraSummary()
         {
