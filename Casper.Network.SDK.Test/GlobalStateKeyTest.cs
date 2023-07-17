@@ -309,7 +309,18 @@ namespace NetCasperTest
             Assert.AreEqual(checksumRegistryKey, key.ToString());
             Assert.IsTrue(key.GetBytes().SequenceEqual(bytes));
         }
-        
+
+        [Test]
+        public void ContractsKeyTest()
+        {
+            const string contractPackageKey =
+                "contract-package-0909090909090909090909090909090909090909090909090909090909090909";
+
+            var key = GlobalStateKey.FromString(contractPackageKey);
+            Assert.IsNotNull(key);
+            Assert.IsTrue(key is HashKey);
+        }
+
         [Test]
         public void InvalidPrefixTest()
         {
