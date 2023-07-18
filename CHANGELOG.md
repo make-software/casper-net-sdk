@@ -12,17 +12,20 @@ All notable changes to this project will be documented in this file.  The format
 ## [2.0.0]
 
 ### Added
-* Added client method for new `query_balance` RPC endpoint
-* Added client method for new `speculative_exec` feature in casper node v1.5.0
-* Added client method for new `info_get_chainspec` RPC endpoint
-* Added client method for new `chain_get_era_summary` RPC endpoint
-* Added support for `block_height` parameter in `query_global_state` RPC endpoint
-* Added new key types: `chainspec-registry-`, `system-contract-registry-`, `checksum-registry-`, `era-summary`, `unbond-`
-* Added support for new key prefix 'contract-package-'
-* Added new fields related to node sync in `info_get_status` RPC response
-* Added support optional fields in `info_get_deploy` RPC response
-* Added `lock_status` field to `ContractPackageStatus`
+* Added client method for new `query_balance` RPC endpoint.
+* Added client method for new `speculative_exec` feature in casper node v1.5.0.
+* Added client method for new `info_get_chainspec` RPC endpoint.
+* Added client method for new `chain_get_era_summary` RPC endpoint.
+* Added support for `block_height` parameter in `query_global_state` RPC endpoint.
+* Added new key types: `chainspec-registry-`, `system-contract-registry-`, `checksum-registry-`, `era-summary`, `unbond-`.
+* Added support for new key prefix 'contract-package-'.
+* Added new fields related to node sync in `info_get_status` RPC response.
+* Added support optional fields in `info_get_deploy` RPC response.
+* Added `lock_status` field to `ContractPackageStatus`.
 
+### Changed
+* The SDK now builds with .NET 7 Framework.
+* 
 ## [1.1.2]
 
 ### Added
