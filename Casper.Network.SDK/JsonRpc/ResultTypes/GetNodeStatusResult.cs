@@ -58,5 +58,27 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// Time that passed since the node has started.
         /// </summary>
         [JsonPropertyName("uptime")] public string Uptime { get; init; }
+        
+        /// <summary>
+        /// The current state of node reactor.
+        /// </summary>
+        [JsonPropertyName("reactor_state")] 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public ReactorState ReactorState { get; init; }
+        
+        /// <summary>
+        /// Timestamp of the last recorded progress in the reactor.
+        /// </summary>
+        [JsonPropertyName("last_progress")] public string LastProgress { get; init; }
+
+        /// <summary>
+        /// The available block range in storage.
+        /// </summary>
+        [JsonPropertyName("available_block_range")] public AvailableBlockRange AvailableBlockRange { get; init; }
+
+        /// <summary>
+        /// The status of the block synchronizer builders.
+        /// </summary>
+        [JsonPropertyName("block_sync")] public BlockSynchronizerStatus BlockSync { get; init; }
     }
 }

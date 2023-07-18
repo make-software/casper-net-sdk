@@ -22,5 +22,17 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         [JsonPropertyName("execution_results")]
         [JsonConverter(typeof(GenericListConverter<ExecutionResult, ExecutionResult.ExecutionResultConverter>))]
         public List<ExecutionResult> ExecutionResults { get; init; }
+        
+        /// <summary>
+        /// The hash of this deploy's block.
+        /// </summary>
+        [JsonPropertyName("block_hash")]
+        public string BlockHash { get; init; }
+        
+        /// <summary>
+        /// The height of this deploy's block.
+        /// </summary>
+        [JsonPropertyName("block_height")]
+        public ulong BlockHeight { get; init; }
     }
 }

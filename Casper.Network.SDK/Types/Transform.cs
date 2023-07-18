@@ -28,7 +28,8 @@ namespace Casper.Network.SDK.Types
         AddUInt256,
         AddUInt512,
         AddKeys,
-        Failure
+        Failure,
+        WriteUnbonding,
     }
 
     /// <summary>
@@ -149,6 +150,10 @@ namespace Casper.Network.SDK.Types
                                     break;
                                 case TransformType.Failure:
                                     value = reader.GetString();
+                                    reader.Read();
+                                    break;
+                                case TransformType.WriteUnbonding:
+                                    value = JsonSerializer.Deserialize<List<UnbondingPurse>>(ref reader, options);
                                     reader.Read();
                                     break;
                             }

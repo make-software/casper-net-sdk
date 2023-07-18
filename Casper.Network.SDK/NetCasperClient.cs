@@ -174,6 +174,19 @@ namespace Casper.Network.SDK
         /// Request the stored value in a global state key.
         /// </summary>
         /// <param name="key">The global state key formatted as a string to query the value from the network.</param>
+        /// <param name="height">Height of the block to check the stored value in.</param>
+        /// <param name="path">The path components starting from the key as base (use '/' as separator).</param>
+        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, int height,
+            string path = null)
+        {            
+            var method = new QueryGlobalState(key, StateIdentifier.WithBlockHeight(height), path?.Split(new char[] {'/'}));
+            return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the stored value in a global state key.
+        /// </summary>
+        /// <param name="key">The global state key formatted as a string to query the value from the network.</param>
         /// <param name="stateRootHash">Hash of the state root. Null for the most recent stored value..</param>
         /// <param name="path">The path components starting from the key as base (use '/' as separator).</param>
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
@@ -182,7 +195,7 @@ namespace Casper.Network.SDK
             if (stateRootHash == null)
                 stateRootHash = await GetStateRootHash();
 
-            var method = new QueryGlobalState(key, stateRootHash, isBlockHash: false, path?.Split(new char[] {'/'}));
+            var method = new QueryGlobalState(key, StateIdentifier.WithStateRootHash(stateRootHash), path?.Split(new char[] {'/'}));
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
@@ -207,7 +220,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalStateWithBlockHash(string key, string blockHash,
             string path = null)
         {
-            var method = new QueryGlobalState(key, blockHash, isBlockHash: true, path?.Split(new char[] {'/'}));
+            var method = new QueryGlobalState(key, StateIdentifier.WithBlockHash(blockHash), path?.Split(new char[] {'/'}));
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
@@ -227,7 +240,7 @@ namespace Casper.Network.SDK
         /// Request a purse's balance from the network.
         /// </summary>
         /// <param name="purseURef">Purse URef formatted as a string.</param>
-        /// <param name="stateRootHash">Hash of the state root.</param>
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(string purseURef,
             string stateRootHash = null)
         {
@@ -238,10 +251,9 @@ namespace Casper.Network.SDK
                     .GetProperty("main_purse").GetString();
             }
 
-            if (stateRootHash == null)
-                stateRootHash = await GetStateRootHash();
+            var uref = new URef(purseURef);
 
-            var method = new GetBalance(purseURef, stateRootHash);
+            var method = new GetBalance(uref, StateIdentifier.WithStateRootHash(stateRootHash));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
 
@@ -249,27 +261,110 @@ namespace Casper.Network.SDK
         /// Request a purse's balance from the network.
         /// </summary>
         /// <param name="purseURef">Purse URef key.</param>
-        /// <param name="stateRootHash">Hash of the state root.</param>
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
             string stateRootHash = null)
         {
-            return await GetAccountBalance(purseURef.ToString(), stateRootHash);
+            var method = new GetBalance(purseURef, StateIdentifier.WithStateRootHash(stateRootHash));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its account hash key.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account to request the balance.</param>
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
+            string stateRootHash = null)
+        {
+            var method = new GetBalance(accountHash, StateIdentifier.WithStateRootHash(stateRootHash));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
 
         /// <summary>
         /// Request the balance information of an account given its public key.
         /// </summary>
         /// <param name="publicKey">The public key of the account to request the balance.</param>
-        /// <param name="stateRootHash">Hash of the state root.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey,
+        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
             string stateRootHash = null)
         {
-            var response = await GetAccountInfo(publicKey);
-            var purseUref = response.Result.GetProperty("account")
-                .GetProperty("main_purse").GetString();
-            return await GetAccountBalance(purseUref, stateRootHash);
+            var method = new GetBalance(publicKey, StateIdentifier.WithStateRootHash(stateRootHash));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
         
+        /// <summary>
+        /// Request a purse's balance from the network.
+        /// </summary>
+        /// <param name="purseURef">Purse URef key.</param>
+        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(URef purseURef,
+            string blockHash = null)
+        {
+            var method = new GetBalance(purseURef, StateIdentifier.WithBlockHash(blockHash));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its account hash key.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account to request the balance.</param>
+        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(AccountHashKey accountHash, 
+            string blockHash = null)
+        {
+            var method = new GetBalance(accountHash, StateIdentifier.WithBlockHash(blockHash));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its public key.
+        /// </summary>
+        /// <param name="publicKey">The public key of the account to request the balance.</param>
+        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(PublicKey publicKey, 
+            string blockHash = null)
+        {
+            var method = new GetBalance(publicKey, StateIdentifier.WithBlockHash(blockHash));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request a purse's balance from the network.
+        /// </summary>
+        /// <param name="purseURef">Purse URef key.</param>
+        /// <param name="blockHeight">Height of the block.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
+            int blockHeight)
+        {
+            var method = new GetBalance(purseURef, StateIdentifier.WithBlockHeight(blockHeight));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its account hash key.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account to request the balance.</param>
+        /// <param name="blockHeight">Height of the block.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
+            int blockHeight)
+        {
+            var method = new GetBalance(accountHash, StateIdentifier.WithBlockHeight(blockHeight));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+        
+        /// <summary>
+        /// Request the balance information of an account given its public key.
+        /// </summary>
+        /// <param name="publicKey">The public key of the account to request the balance.</param>
+        /// <param name="blockHeight">Height of the block.</param>
+        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
+            int blockHeight)
+        {
+            var method = new GetBalance(publicKey, StateIdentifier.WithBlockHeight(blockHeight));
+            return await SendRpcRequestAsync<GetBalanceResult>(method);
+        }
+
         /// <summary>
         /// Send a Deploy to the network for its execution.
         /// </summary>
@@ -466,7 +561,6 @@ namespace Casper.Network.SDK
         /// <param name="seedURef">The dictionary's seed URef.</param>
         /// <param name="dictionaryItem">The dictionary item key.</param>
         /// <param name="stateRootHash">Hash of the state root.</param>
-        /// <returns></returns>
         public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItemByURef(string seedURef, 
             string dictionaryItem, string stateRootHash = null)
         {
@@ -494,6 +588,51 @@ namespace Casper.Network.SDK
             var method = new GetRpcSchema();
             var response = await SendRpcRequestAsync<RpcResult>(method);
             return response.Result.GetRawText();
+        }
+
+        /// <summary>
+        /// Request the the chainspec.toml, genesis accounts.toml, and global_state.toml files of the node.
+        /// </summary>
+        public async Task<RpcResponse<GetChainspecResult>> GetChainspec()
+        {
+            var method = new GetChainspec();
+            return await SendRpcRequestAsync<GetChainspecResult>(method);
+        }
+
+        /// <summary>
+        /// Sends a "deploy dry run" to the network. It will execute the deploy on top of the specified block and return
+        /// the results of the execution to the caller. The effects of the execution won't be committed to the trie
+        /// (blockchain database/GlobalState).
+        /// This method runs in a different port of the network (e.g.: 7778) and can be used for debugging, discovery.
+        /// For example price estimation.
+        /// </summary>
+        /// <param name="deploy">The deploy to execute.</param>
+        /// <param name="stateRootHash">Hash of the state root. null if deploy is to be executed on top of the latest block.</param>
+        public async Task<RpcResponse<SpeculativeExecutionResult>> SpeceulativeExecution(Deploy deploy, string stateRootHash = null)
+        {
+            if (deploy.Approvals.Count == 0)
+                throw new Exception("Sign the deploy before sending it to the network.");
+
+            var method = new SpeculativeExecution(deploy, stateRootHash, isBlockHash: false );
+            return await SendRpcRequestAsync<SpeculativeExecutionResult>(method);
+        }
+
+        /// <summary>
+        /// Sends a "deploy dry run" to the network. It will execute the deploy on top of the specified block and return
+        /// the results of the execution to the caller. The effects of the execution won't be committed to the trie
+        /// (blockchain database/GlobalState).
+        /// This method runs in a different port of the network (e.g.: 7778) and can be used for debugging, discovery.
+        /// For example price estimation.
+        /// </summary>
+        /// <param name="deploy">The deploy to execute.</param>
+        /// <param name="blockHash">Hash of the block on top of which the deploy is executed.</param>
+        public async Task<RpcResponse<PutDeployResult>> SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null)
+        {
+            if (deploy.Approvals.Count == 0)
+                throw new Exception("Sign the deploy before sending it to the network.");
+
+            var method = new SpeculativeExecution(deploy, blockHash, isBlockHash: true );
+            return await SendRpcRequestAsync<PutDeployResult>(method);
         }
 
         /// <summary>

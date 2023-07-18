@@ -73,7 +73,8 @@ namespace NetCasperTest
             var rpcResponse3 = await _client.QueryGlobalState(_contractPackageKey);
             var contractPackageInfo = rpcResponse3.Parse().StoredValue.ContractPackage;
             Assert.IsTrue(contractPackageInfo.Versions.Count > 0);
-
+            Assert.AreEqual(LockStatus.Locked, contractPackageInfo.LockStatus);
+            
             var contractWasmKey = GlobalStateKey.FromString(contractInfo.ContractWasmHash);
             var rpcResponse4 = await _client.QueryGlobalState(contractWasmKey);
             var contractWasmInfo = rpcResponse4.Parse().StoredValue.ContractWasm;
@@ -91,7 +92,7 @@ namespace NetCasperTest
                 150_000_000,
                 _chainName,
                 1, //gasPrice=1
-                24*3_600_000); //ttl='1day'
+                18*3_600_000); //ttl='18h'
             deploy.Sign(_faucetKey);
 
             var putResponse = await _client.PutDeploy(deploy);
