@@ -51,7 +51,7 @@ namespace Casper.Network.SDK.Utils
         {
             var length = (int) reader.ReadByte();
             var bytes = reader.ReadBytes(length);
-            return new BigInteger(bytes, true, false);
+            return BigIntegerCompat.Create(bytes, true, false);
         }
 
         public static string ReadCLString(this BinaryReader reader)
