@@ -30,7 +30,7 @@ namespace Casper.Network.SDK.Utils
         /// </summary>
         public static string ToISOString(ulong epochTimeInMillis)
         {
-            return DateTime.UnixEpoch
+            return DateTimeCompat.UnixEpoch
                 .AddMilliseconds(epochTimeInMillis)
                 .ToString("yyyy-MM-dd'T'HH:mm:ss.fffK", CultureInfo.InvariantCulture);
         }
