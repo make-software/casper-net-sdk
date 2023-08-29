@@ -15,7 +15,7 @@ namespace Casper.Network.SDK.Utils
             var bytes = reader.ReadBytes(4);
             if (!BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
-            return BitConverter.ToInt32(bytes);
+            return BitConverterExtensions.ToInt32(bytes);
         }
 
         public static long ReadCLI64(this BinaryReader reader)
@@ -23,7 +23,7 @@ namespace Casper.Network.SDK.Utils
             var bytes = reader.ReadBytes(8);
             if (!BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
-            return BitConverter.ToInt64(bytes);
+            return BitConverterExtensions.ToInt64(bytes);
         }
 
         public static byte ReadCLU8(this BinaryReader reader)
@@ -36,7 +36,7 @@ namespace Casper.Network.SDK.Utils
             var bytes = reader.ReadBytes(4);
             if (!BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
-            return BitConverter.ToUInt32(bytes);
+            return BitConverterExtensions.ToUInt32(bytes);
         }
 
         public static ulong ReadCLU64(this BinaryReader reader)
@@ -44,7 +44,7 @@ namespace Casper.Network.SDK.Utils
             var bytes = reader.ReadBytes(8);
             if (!BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
-            return BitConverter.ToUInt64(bytes);
+            return BitConverterExtensions.ToUInt64(bytes);
         }
 
         public static BigInteger ReadCLBigInteger(this BinaryReader reader)
