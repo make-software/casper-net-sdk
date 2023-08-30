@@ -65,8 +65,8 @@ namespace Casper.Network.SDK.JsonRpc
                 strMethod,
                 System.Text.Encoding.UTF8,
                 "application/json"); //CONTENT-TYPE header
-            if(request.Content.Headers.ContentType != null)
-                request.Content.Headers.ContentType.CharSet = "";
+            request.Content.Headers.Remove("Content-Type"); // "{application/json; charset=utf-8}"
+            request.Content.Headers.Add("Content-Type", "application/json");
 
             try
             {

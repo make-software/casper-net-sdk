@@ -171,21 +171,21 @@ namespace Casper.Network.SDK.Types
         {
             return bytes[0] switch
             {
-                0x00 => new AccountHashKey("account-hash-" + CEP57Checksum.Encode(bytes[1..])),
-                0x01 => new HashKey("hash-" + CEP57Checksum.Encode(bytes[1..])),
-                0x02 => new URef(bytes[1..]),
-                0x03 => new TransferKey("transfer-" + CEP57Checksum.Encode(bytes[1..])),
-                0x04 => new DeployInfoKey("deploy-" + CEP57Checksum.Encode(bytes[1..])),
+                0x00 => new AccountHashKey("account-hash-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x01 => new HashKey("hash-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x02 => new URef(bytes.Slice(1)),
+                0x03 => new TransferKey("transfer-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x04 => new DeployInfoKey("deploy-" + CEP57Checksum.Encode(bytes.Slice(1))),
                 0x05 => new EraInfoKey("era-" + BitConverter.ToInt64(bytes, 1)),
-                0x06 => new BalanceKey("balance-" + CEP57Checksum.Encode(bytes[1..])),
-                0x07 => new BidKey("bid-" + CEP57Checksum.Encode(bytes[1..])),
-                0x08 => new WithdrawKey("withdraw-" + CEP57Checksum.Encode(bytes[1..])),
-                0x09 => new DictionaryKey("dictionary-" + CEP57Checksum.Encode(bytes[1..])),
-                0x0a => new SystemContractRegistryKey("system-contract-registry-" + CEP57Checksum.Encode(bytes[1..])),
-                0x0b => new EraSummaryKey("era-summary-" + CEP57Checksum.Encode(bytes[1..])),
-                0x0c => new UnbondKey("unbond-" + CEP57Checksum.Encode(bytes[1..])),
-                0x0d => new ChainspecRegistryKey("chainspec-registry-" + CEP57Checksum.Encode(bytes[1..])),
-                0x0e => new ChecksumRegistryKey("checksum-registry-" + CEP57Checksum.Encode(bytes[1..])),
+                0x06 => new BalanceKey("balance-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x07 => new BidKey("bid-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x08 => new WithdrawKey("withdraw-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x09 => new DictionaryKey("dictionary-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x0a => new SystemContractRegistryKey("system-contract-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x0b => new EraSummaryKey("era-summary-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x0c => new UnbondKey("unbond-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x0d => new ChainspecRegistryKey("chainspec-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x0e => new ChecksumRegistryKey("checksum-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
                 _ => throw new ArgumentException($"Unknown key identifier '{bytes[0]}'")
             };
         }

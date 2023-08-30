@@ -93,8 +93,8 @@ namespace Casper.Network.SDK.Types
 
             (int expectedPublicKeySize, string algo) = algoIdent switch
             {
-                0x01 => (KeyAlgo.ED25519.GetKeySizeInBytes(), Enum.GetName(KeyAlgo.ED25519)),
-                0x02 => (KeyAlgo.SECP256K1.GetKeySizeInBytes(), Enum.GetName(KeyAlgo.SECP256K1)),
+                0x01 => (KeyAlgo.ED25519.GetKeySizeInBytes(), EnumCompat.GetName(KeyAlgo.ED25519)),
+                0x02 => (KeyAlgo.SECP256K1.GetKeySizeInBytes(), EnumCompat.GetName(KeyAlgo.SECP256K1)),
                 _ => throw new ArgumentException("Wrong public key algorithm identifier", nameof(bytes))
             };
 

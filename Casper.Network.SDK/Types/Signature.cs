@@ -58,7 +58,7 @@ namespace Casper.Network.SDK.Types
                 _ => throw new ArgumentOutOfRangeException(nameof(bytes), "Wrong signature algorithm identifier")
             };
 
-            return new Signature(bytes[1..], algoIdent);
+            return new Signature(bytes.Slice(1), algoIdent);
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Casper.Network.SDK.Types
         /// Creates an URef from a 33 bytes array. Last byte corresponds to the access rights.
         /// </summary>
         public URef(byte[] bytes)
-            : this($"{KEYPREFIX}{Hex.ToHexString(bytes[..32])}-{(int)bytes[32]:000}")
+            : this($"{KEYPREFIX}{Hex.ToHexString(bytes.Slice(0,32))}-{(int)bytes[32]:000}")
         {
         }
         
