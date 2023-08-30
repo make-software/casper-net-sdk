@@ -2,9 +2,9 @@ name: Unity Compat - Build and Test
 
 on:
   push:
-    branches: [feature/unity-compat]
+    branches: [netstandard-2-0-target]
   pull_request:
-    branches: [feature/unity-compat]
+    branches: [netstandard-2-0-target]
 
 jobs:
   buildntest:
