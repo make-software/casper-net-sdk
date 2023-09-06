@@ -508,16 +508,16 @@ namespace Casper.Network.SDK
         }
 
         /// <summary>
-        /// Lookup a dictionary item from its dictionary item key.
+        /// Lookup a dictionary item from its dictionary key.
         /// </summary>
-        /// <param name="dictionaryItem">The dictionary item key to retrieve.</param>
+        /// <param name="dictionaryKey">The dictionary key to retrieve.</param>
         /// <param name="stateRootHash">Hash of the state root.</param>
-        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItem(string dictionaryItem, string stateRootHash = null)
+        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItem(string dictionaryKey, string stateRootHash = null)
         {
             if(stateRootHash == null)
                 stateRootHash = await GetStateRootHash();
 
-            var method = new GetDictionaryItem(dictionaryItem, stateRootHash);
+            var method = new GetDictionaryItem(dictionaryKey, stateRootHash);
             return await SendRpcRequestAsync<GetDictionaryItemResult>(method);
         }
 
