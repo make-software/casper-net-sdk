@@ -9,6 +9,12 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+## [2.1.0]
+
+### Fixed
+* Breaking change! the type for the `Proposer` property in the body block has changed from `PublicKey` to `Proposer`.
+This new type permits to parse correctly the value `"00"` used for system blocks in Casper network starting from v1.5.
+
 ## [2.0.0]
 
 ### Added
@@ -56,6 +62,7 @@ All notable changes to this project will be documented in this file.  The format
 ### Added
 * Initial release of Casper .NET SDK.
 
+[2.1.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.1.0
 [2.0.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.0.0
 [1.1.2]: https://github.com/make-software/casper-net-sdk/releases/tag/v1.1.2
 [1.1.1]: https://github.com/make-software/casper-net-sdk/releases/tag/v1.1.1

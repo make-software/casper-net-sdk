@@ -187,6 +187,25 @@ namespace NetCasperTest
         }
 
         [Test]
+        public async Task GetSystemBlockProposerTest()
+        {
+            try
+            {
+                var response = await _client.GetBlock(0);
+                var result = response.Parse();
+                Assert.IsNotNull(result.Block.Hash);
+                Assert.IsTrue(result.Block.Body.Proposer.isSystem);
+            }
+            catch (RpcClientException e)
+            {
+                Assert.IsNotNull(e.RpcError);
+                Assert.IsNotNull(e.RpcError.Message);
+                Assert.AreNotEqual(0, e.RpcError.Code);
+                Assert.IsNotNull(e.RpcError.Data);
+            }
+        }
+
+        [Test]
         public async Task GetAuctionInfoTest()
         {
             try
