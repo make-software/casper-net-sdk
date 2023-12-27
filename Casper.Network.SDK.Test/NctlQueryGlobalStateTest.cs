@@ -16,11 +16,19 @@ namespace NetCasperTest
             var accountHash = GlobalStateKey.FromString(_faucetKey.PublicKey.GetAccountHash());
 
             var rpcResponse = await _client.QueryGlobalState(accountHash);
-            var account = rpcResponse.Parse().StoredValue.Account;
+            var result = rpcResponse.Parse();
+            var account = result.StoredValue.Account;
             
             Assert.AreEqual(accountHash.ToHexString(), account.AccountHash.ToHexString());
 
             _mainPurse = account.MainPurse;
+            
+            var rpcResponse2 = await _client.QueryGlobalState(
+                accountHash,
+                result.BlockHeader.StateRootHash);
+            var result2 = rpcResponse2.Parse();
+            var account2 = result2.StoredValue.Account;
+            Assert.AreEqual(accountHash.ToHexString(), account2.AccountHash.ToHexString());
         }
         
         [Test, Order(2)]

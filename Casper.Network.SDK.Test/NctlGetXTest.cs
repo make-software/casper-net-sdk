@@ -54,6 +54,26 @@ namespace NetCasperTest
                 var response = await _client.GetAccountInfo(_faucetKey.PublicKey, blockHeight);
                 var accountInfo = response.Parse();
                 Assert.IsNotEmpty(accountInfo.Account.AccountHash.ToString());
+
+                var response2 = await _client.GetAccountInfo(_faucetKey.PublicKey.ToAccountHex(), blockHeight);
+                var accountInfo2 = response2.Parse();
+                Assert.AreEqual(accountInfo.Account.AccountHash.ToString(), accountInfo2.Account.AccountHash.ToString());
+                
+                var response3 = await _client.GetAccountInfo(new AccountHashKey(_faucetKey.PublicKey), blockHeight);
+                var accountInfo3 = response3.Parse();
+                Assert.AreEqual(accountInfo.Account.AccountHash.ToString(), accountInfo3.Account.AccountHash.ToString());
+
+                var response4 = await _client.GetAccountInfo(_faucetKey.PublicKey, blockHash);
+                var accountInfo4 = response4.Parse();
+                Assert.AreEqual(accountInfo.Account.AccountHash.ToString(), accountInfo4.Account.AccountHash.ToString());
+
+                var response5 = await _client.GetAccountInfo(_faucetKey.PublicKey.ToAccountHex(), blockHash);
+                var accountInfo5 = response5.Parse();
+                Assert.AreEqual(accountInfo.Account.AccountHash.ToString(), accountInfo5.Account.AccountHash.ToString());
+
+                var response6 = await _client.GetAccountInfo(new AccountHashKey(_faucetKey.PublicKey), blockHash);
+                var accountInfo6 = response6.Parse();
+                Assert.AreEqual(accountInfo.Account.AccountHash.ToString(), accountInfo6.Account.AccountHash.ToString());
                 
                 var resp = await _client.GetAccountBalance(_faucetKey.PublicKey, stateRootHash);
                 var accountBalance = resp.Parse();
