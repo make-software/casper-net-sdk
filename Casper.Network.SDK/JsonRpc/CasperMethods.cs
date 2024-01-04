@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Casper.Network.SDK.JsonRpc;
 using Casper.Network.SDK.Types;
+using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.JsonRpc
 {
@@ -69,6 +71,48 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="blockHash">A block hash for which the information of the account is queried. Null for most recent information.</param>
+        public GetAccountInfo(PublicKey publicKey, string blockHash = null) : base("state_get_account_info", blockHash)
+        {
+            this.Parameters.Add("account_identifier", publicKey);
+        }
+
+        /// <summary>
+        /// Returns the information of an Account in the network.
+        /// </summary>
+        /// <param name="publicKey">The public key of the account.</param>
+        /// <param name="height">A block height for which the information of the account is queried.</param>
+        public GetAccountInfo(PublicKey publicKey, int height) : base("state_get_account_info", height)
+        {
+            this.Parameters.Add("account_identifier", publicKey);
+        }
+        
+        /// <summary>
+        /// Returns the information of an Account in the network.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account.</param>
+        /// <param name="blockHash">A block hash for which the information of the account is queried. Null for most recent information.</param>
+        public GetAccountInfo(AccountHashKey accountHash, string blockHash = null) : base("state_get_account_info", blockHash)
+        {
+            this.Parameters.Add("account_identifier", accountHash.ToString());
+        }
+
+        /// <summary>
+        /// Returns the information of an Account in the network.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account.</param>
+        /// <param name="height">A block height for which the information of the account is queried.</param>
+        public GetAccountInfo(AccountHashKey accountHash, int height) : base("state_get_account_info", height)
+        {
+            // this.Parameters.Add("account_identifier", Hex.ToHexString(accountHash.GetBytes()));
+            this.Parameters.Add("account_identifier", accountHash.ToString());
+        }
+        
+        /// <summary>
+        /// Returns the information of an Account in the network.
+        /// </summary>
+        /// <param name="publicKey">The public key of the account.</param>
+        /// <param name="blockHash">A block hash for which the information of the account is queried. Null for most recent information.</param>
+        [Obsolete("For Casper node v1.5.5 or newer use the new method signature with PublicKey or AccountHashKey, ", false)]
         public GetAccountInfo(string publicKey, string blockHash = null) : base("state_get_account_info", blockHash)
         {
             this.Parameters.Add("public_key", publicKey);
@@ -79,6 +123,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
+        [Obsolete("For Casper node v1.5.5 or newer use the new method signature with PublicKey or AccountHashKey", false)]
         public GetAccountInfo(string publicKey, int height) : base("state_get_account_info", height)
         {
             this.Parameters.Add("public_key", publicKey);
@@ -111,16 +156,17 @@ namespace Casper.Network.SDK.JsonRpc
         /// A query to the global state that returns a stored value from the network.
         /// </summary>
         /// <param name="key">A global state key formatted as a string to query the value from the network.</param>
-        /// <param name="stateIdentifier">A block hash, a block height or a state root hash value.</param>
+        /// <param name="stateIdentifier">(Optional) A block hash, a block height or a state root hash value.</param>
         /// <param name="path">The path components starting from the key as base (use '/' as separator).</param>
-        public QueryGlobalState(string key, StateIdentifier stateIdentifier, string[] path = null) : base("query_global_state")
+        public QueryGlobalState(string key, StateIdentifier stateIdentifier = null, string[] path = null) : base("query_global_state")
         {
             this.Parameters = new Dictionary<string, object>
             {
-                {"state_identifier", stateIdentifier.GetParam()},
                 {"path", path ?? new string[] { }},
                 {"key", key}
             };
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
     }
 
