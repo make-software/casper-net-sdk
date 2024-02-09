@@ -161,7 +161,9 @@ namespace NetCasperTest
                 var response2 = await _client.GetBlock(1);
                 var result2 = response2.Parse();
                 Assert.IsNotNull(result2.Block.Hash);
-
+                
+                Assert.AreEqual(result2.Block.Body.Proposer.IsSystem, result2.Block.Body.Proposer.isSystem);
+                
                 var response3 = await _client.GetBlock(result2.Block.Hash);
                 var result3 = response3.Parse();
                 Assert.AreEqual(result2.Block.Hash, result3.Block.Hash);
@@ -214,7 +216,8 @@ namespace NetCasperTest
                 var response = await _client.GetBlock(0);
                 var result = response.Parse();
                 Assert.IsNotNull(result.Block.Hash);
-                Assert.IsTrue(result.Block.Body.Proposer.isSystem);
+                Assert.IsTrue(result.Block.Body.Proposer.IsSystem);
+                Assert.AreEqual(result.Block.Body.Proposer.IsSystem, result.Block.Body.Proposer.isSystem);
             }
             catch (RpcClientException e)
             {
