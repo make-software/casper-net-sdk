@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -79,7 +80,15 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The block was proposed by the system, not a validator
         /// </summary>
-        public bool isSystem { get; set; }
+        public bool IsSystem { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Replaced with IsSystem")]
+        public bool isSystem
+        {
+            get => this.IsSystem;
+            set => this.IsSystem = value;
+        }
         
         /// <summary>
         /// Validator's public key
@@ -102,11 +111,11 @@ namespace Casper.Network.SDK.Types
                     if (pkhex == "00")
                         return new Proposer()
                         {
-                            isSystem = true,
+                            IsSystem = true,
                         };
                     return new Proposer()
                     {
-                        isSystem = false,
+                        IsSystem = false,
                         PublicKey = PublicKey.FromHexString(pkhex),
                     };
                 }
@@ -121,7 +130,7 @@ namespace Casper.Network.SDK.Types
                 Proposer proposer,
                 JsonSerializerOptions options)
             {
-                writer.WriteStringValue(proposer.isSystem ? "00" : proposer.PublicKey.ToAccountHex());
+                writer.WriteStringValue(proposer.IsSystem ? "00" : proposer.PublicKey.ToAccountHex());
             }
         }
     }
