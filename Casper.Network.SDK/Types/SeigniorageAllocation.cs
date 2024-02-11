@@ -74,7 +74,7 @@ namespace Casper.Network.SDK.Types
 
                 return new SeigniorageAllocation()
                 {
-                    IsDelegator = propertyName?.ToLower() == "delegator",
+                    IsDelegator = propertyName?.ToLowerInvariant() == "delegator",
                     DelegatorPublicKey = delegatorPk != null ? PublicKey.FromHexString(delegatorPk) : null,
                     ValidatorPublicKey = PublicKey.FromHexString(validatorPk),
                     Amount = amount

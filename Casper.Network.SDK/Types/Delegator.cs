@@ -67,10 +67,10 @@ namespace Casper.Network.SDK.Types
                 
                 while (reader.TokenType == JsonTokenType.PropertyName)
                 {
-                    var property = reader.GetString();
+                    var property = reader.GetString()?.ToLowerInvariant();
                     reader.Read();
                     
-                    switch (property.ToLower())
+                    switch (property)
                     {
                         case "delegator_public_key":
                         case "public_key":
