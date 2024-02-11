@@ -45,10 +45,10 @@ namespace Casper.Network.SDK.Types
                 if (reader.TokenType != JsonTokenType.PropertyName)
                     throw new JsonException("Cannot deserialize StoredValue. PropertyName expected");
 
-                var propertyName = reader.GetString();
+                var propertyName = reader.GetString()?.ToLowerInvariant();
                 reader.Read();
 
-                if (propertyName.ToLower() == "contract")
+                if (propertyName == "contract")
                 {
                     var contract = JsonSerializer.Deserialize<Contract>(ref reader, options);
                     reader.Read(); // end Contract object
@@ -57,7 +57,7 @@ namespace Casper.Network.SDK.Types
                         Contract = contract
                     };
                 }
-                else if (propertyName.ToLower() == "clvalue")
+                else if (propertyName == "clvalue")
                 {
                     var clValue = JsonSerializer.Deserialize<CLValue>(ref reader, options);
                     reader.Read(); // end CLValue object
@@ -66,7 +66,7 @@ namespace Casper.Network.SDK.Types
                         CLValue = clValue
                     };
                 }
-                else if (propertyName.ToLower() == "account")
+                else if (propertyName == "account")
                 {
                     var account = JsonSerializer.Deserialize<Account>(ref reader, options);
                     reader.Read(); // end Account object
@@ -75,7 +75,7 @@ namespace Casper.Network.SDK.Types
                         Account = account
                     };
                 }
-                else if (propertyName.ToLower() == "contractwasm")
+                else if (propertyName == "contractwasm")
                 {
                     var wasmBytes = reader.GetString();
                     reader.Read(); // wasm bytes
@@ -84,7 +84,7 @@ namespace Casper.Network.SDK.Types
                         ContractWasm = wasmBytes
                     };
                 }
-                else if (propertyName.ToLower() == "contractpackage")
+                else if (propertyName == "contractpackage")
                 {
                     var contractPackage = JsonSerializer.Deserialize<ContractPackage>(ref reader, options);
                     reader.Read(); // end ContractPackage object
@@ -93,7 +93,7 @@ namespace Casper.Network.SDK.Types
                         ContractPackage = contractPackage
                     };
                 }
-                else if (propertyName.ToLower() == "transfer")
+                else if (propertyName == "transfer")
                 {
                     var transfer = JsonSerializer.Deserialize<Transfer>(ref reader, options);
                     reader.Read(); // end Transfer object
@@ -102,7 +102,7 @@ namespace Casper.Network.SDK.Types
                         Transfer = transfer
                     };
                 }
-                else if (propertyName.ToLower() == "deployinfo")
+                else if (propertyName == "deployinfo")
                 {
                     var deployInfo = JsonSerializer.Deserialize<DeployInfo>(ref reader, options);
                     reader.Read(); // end DeployInfo object
@@ -111,7 +111,7 @@ namespace Casper.Network.SDK.Types
                         DeployInfo = deployInfo
                     };
                 }
-                else if (propertyName.ToLower() == "erainfo")
+                else if (propertyName == "erainfo")
                 {
                     var eraInfo = JsonSerializer.Deserialize<EraInfo>(ref reader, options);
                     reader.Read(); // end EraInfo object
@@ -120,7 +120,7 @@ namespace Casper.Network.SDK.Types
                         EraInfo = eraInfo
                     };
                 }
-                else if (propertyName.ToLower() == "bid")
+                else if (propertyName == "bid")
                 {
                     var bid = JsonSerializer.Deserialize<Bid>(ref reader, options);
                     reader.Read(); // end Bid object
@@ -129,7 +129,7 @@ namespace Casper.Network.SDK.Types
                         Bid = bid
                     };
                 }
-                else if (propertyName.ToLower() == "withdraw")
+                else if (propertyName == "withdraw")
                 {
                     var withdraw = JsonSerializer.Deserialize<List<UnbondingPurse>>(ref reader, options);
                     reader.Read(); // end Withdraw object
