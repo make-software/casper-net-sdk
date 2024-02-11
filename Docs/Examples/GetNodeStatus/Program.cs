@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Casper.Network.SDK;
 using Casper.Network.SDK.JsonRpc;
@@ -10,8 +11,8 @@ namespace Casper.NET.SDK.Examples
     {
         public static async Task Main(string[] args)
         {
-            string nodeAddress = "http://testnet-node.make.services:7777/rpc";
-
+            string nodeAddress = "http://52.35.59.254:7777/rpc";
+            
             try
             {
                 var casperSdk = new NetCasperClient(nodeAddress);
