@@ -17,6 +17,8 @@
           Casper .NET SDK is a C# SDK to interact with the Casper network.
         </Description>
         <RootNamespace>Casper.Network.SDK</RootNamespace>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,5 +28,6 @@
     <ItemGroup>
       <None Include="README_nuget.md" Pack="true" PackagePath="\" />
       <None Include="..\LICENSE" Pack="true" PackagePath="\" />
+      <None Include="bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml" Pack="true" PackagePath="\" />
     </ItemGroup>
 </Project>
