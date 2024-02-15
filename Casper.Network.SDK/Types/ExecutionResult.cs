@@ -70,7 +70,7 @@ namespace Casper.Network.SDK.Types
                     var property = reader.GetString();
                     reader.Read();
 
-                    switch (property.ToLower())
+                    switch (property.ToLowerInvariant())
                     {
                         case "block_hash":
                             blockHash = reader.GetString();

@@ -168,7 +168,7 @@ namespace Casper.Network.SDK.Types
         public string GetAccountHash()
         {
             var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
-            string algo = KeyAlgorithm.ToString().ToLower();
+            string algo = KeyAlgorithm.ToString().ToLowerInvariant();
             bcBl2bdigest.BlockUpdate(System.Text.Encoding.UTF8.GetBytes(algo), 0, algo.Length);
             bcBl2bdigest.Update(0x00);
             bcBl2bdigest.BlockUpdate(RawBytes, 0, RawBytes.Length);

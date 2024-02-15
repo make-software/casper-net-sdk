@@ -33,7 +33,7 @@ namespace NetCasperTest
                 50_000_000_000,
                 _chainName,
                 1, //gasPrice=1
-                45011500); //ttl='12h 30m 11s 500ms'
+                3_600_000*2); //ttl='2h'
             deploy.Sign(_faucetKey);
 
             var putResponse = await _client.PutDeploy(deploy);
@@ -92,7 +92,7 @@ namespace NetCasperTest
                 150_000_000,
                 _chainName,
                 1, //gasPrice=1
-                18*3_600_000); //ttl='18h'
+                2*3_600_000); //ttl='2h'
             deploy.Sign(_faucetKey);
 
             var putResponse = await _client.PutDeploy(deploy);
