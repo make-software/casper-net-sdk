@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -32,115 +33,42 @@ namespace Casper.Network.SDK.Types
 
         public class StoredValueConverter : JsonConverter<StoredValue>
         {
-            public override StoredValue Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options)
+            public override StoredValue Read
+                (
+                 ref Utf8JsonReader reader,
+                 Type typeToConvert,
+                 JsonSerializerOptions options
+                )
             {
-                if (reader.TokenType != JsonTokenType.StartObject)
-                    throw new JsonException("Cannot deserialize StoredValue. StartObject expected");
+                try
+                {
+                    if (reader.TokenType != JsonTokenType.StartObject)
+                        throw new JsonException("Cannot deserialize StoredValue. StartObject expected.");
 
-                reader.Read(); // start object
+                    StoredValue storedValue = new StoredValue();
+                    while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+                    {
+                        if (reader.TokenType != JsonTokenType.PropertyName)
+                            throw new JsonException("Cannot deserialize StoredValue. PropertyName expected.");
 
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    throw new JsonException("Cannot deserialize StoredValue. PropertyName expected");
+                        var propertyName = reader.GetString();
+                        var propertyInfo = typeof(StoredValue).GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                        if (propertyInfo == null)
+                            throw new JsonException($"Unknown property: {propertyName}.");
 
-                var propertyName = reader.GetString()?.ToLowerInvariant();
-                reader.Read();
+                        reader.Read();
+                        var propertyValue = JsonSerializer.Deserialize(ref reader, propertyInfo.PropertyType, options);
+                        propertyInfo.SetValue(storedValue, propertyValue);
+                    }
 
-                if (propertyName == "contract")
-                {
-                    var contract = JsonSerializer.Deserialize<Contract>(ref reader, options);
-                    reader.Read(); // end Contract object
-                    return new StoredValue()
-                    {
-                        Contract = contract
-                    };
+                    return storedValue;
                 }
-                else if (propertyName == "clvalue")
+                catch (Exception ex)
                 {
-                    var clValue = JsonSerializer.Deserialize<CLValue>(ref reader, options);
-                    reader.Read(); // end CLValue object
-                    return new StoredValue()
-                    {
-                        CLValue = clValue
-                    };
+                    throw new JsonException($"Cannot deserialize StoredValue. Error during deserialization.", ex);
                 }
-                else if (propertyName == "account")
-                {
-                    var account = JsonSerializer.Deserialize<Account>(ref reader, options);
-                    reader.Read(); // end Account object
-                    return new StoredValue()
-                    {
-                        Account = account
-                    };
-                }
-                else if (propertyName == "contractwasm")
-                {
-                    var wasmBytes = reader.GetString();
-                    reader.Read(); // wasm bytes
-                    return new StoredValue()
-                    {
-                        ContractWasm = wasmBytes
-                    };
-                }
-                else if (propertyName == "contractpackage")
-                {
-                    var contractPackage = JsonSerializer.Deserialize<ContractPackage>(ref reader, options);
-                    reader.Read(); // end ContractPackage object
-                    return new StoredValue()
-                    {
-                        ContractPackage = contractPackage
-                    };
-                }
-                else if (propertyName == "transfer")
-                {
-                    var transfer = JsonSerializer.Deserialize<Transfer>(ref reader, options);
-                    reader.Read(); // end Transfer object
-                    return new StoredValue()
-                    {
-                        Transfer = transfer
-                    };
-                }
-                else if (propertyName == "deployinfo")
-                {
-                    var deployInfo = JsonSerializer.Deserialize<DeployInfo>(ref reader, options);
-                    reader.Read(); // end DeployInfo object
-                    return new StoredValue()
-                    {
-                        DeployInfo = deployInfo
-                    };
-                }
-                else if (propertyName == "erainfo")
-                {
-                    var eraInfo = JsonSerializer.Deserialize<EraInfo>(ref reader, options);
-                    reader.Read(); // end EraInfo object
-                    return new StoredValue()
-                    {
-                        EraInfo = eraInfo
-                    };
-                }
-                else if (propertyName == "bid")
-                {
-                    var bid = JsonSerializer.Deserialize<Bid>(ref reader, options);
-                    reader.Read(); // end Bid object
-                    return new StoredValue()
-                    {
-                        Bid = bid
-                    };
-                }
-                else if (propertyName == "withdraw")
-                {
-                    var withdraw = JsonSerializer.Deserialize<List<UnbondingPurse>>(ref reader, options);
-                    reader.Read(); // end Withdraw object
-                    return new StoredValue()
-                    {
-                        Withdraw = withdraw
-                    };
-                }
-
-                throw new JsonException("Cannot deserialize StoredValue. Inner object not yet supported");
             }
+
 
             public override void Write(
                 Utf8JsonWriter writer,
