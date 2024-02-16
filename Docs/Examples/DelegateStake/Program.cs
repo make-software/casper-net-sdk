@@ -15,7 +15,7 @@ namespace CasperIntegrations
     {
         public static async Task Main(string[] args)
         {
-            string nodeAddress = "http://testnet-node.make.services:7777/rpc";
+            string nodeAddress = "http://52.35.59.254:7777/rpc";
 
             try
             {

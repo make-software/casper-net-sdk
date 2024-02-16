@@ -9,6 +9,21 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+## [2.2.0]
+
+### Added
+* Changes to QueryGlobalState and GetAccountInfo methods to support changes in Casper node v1.5.5 [PR#50](https://github.com/make-software/casper-net-sdk/pull/50).
+
+### Fixed
+* We use `ToLowerInvariant()` instead of `ToLower()` to avoid problems with some CultureInfos [PR#52](https://github.com/make-software/casper-net-sdk/pull/52).
+* XML Documentation included into the nuget packages [PR#53](https://github.com/make-software/casper-net-sdk/pull/53).
+* `isSystem` property in the Block Proposer class marked obsolete and replaced with `IsSystem` [PR#51](https://github.com/make-software/casper-net-sdk/pull/51).
+
+### Changed
+* The SDK now links with `BouncyCastle.Cryptography` package instead of `BouncyCastle.NetCore` which was based on a 
+mirror of the official package.
+* Testnet node in the examples updated to a working URL.
+
 ## [2.1.0]
 
 ### Fixed
@@ -62,6 +77,7 @@ This new type permits to parse correctly the value `"00"` used for system blocks
 ### Added
 * Initial release of Casper .NET SDK.
 
+[2.2.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.2.0
 [2.1.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.1.0
 [2.0.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.0.0
 [1.1.2]: https://github.com/make-software/casper-net-sdk/releases/tag/v1.1.2
