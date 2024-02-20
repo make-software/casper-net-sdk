@@ -1,0 +1,2632 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class NetCasperClient
+   | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class NetCasperClient
+   | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>    </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.NetCasperClient">
+  
+  
+  <h1 id="Casper_Network_SDK_NetCasperClient" data-uid="Casper.Network.SDK.NetCasperClient" class="text-break">Class NetCasperClient
+  </h1>
+  <div class="markdown level0 summary"><p>Client to communicate with a Casper node.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">NetCasperClient</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Casper.Network.SDK.ICasperClient.html">ICasperClient</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.Network.SDK.html">Casper.Network.SDK</a></h6>
+  <h6><strong>Assembly</strong>: Casper.Network.SDK.dll</h6>
+  <h5 id="Casper_Network_SDK_NetCasperClient_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class NetCasperClient : object, ICasperClient, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient__ctor_" data-uid="Casper.Network.SDK.NetCasperClient.#ctor*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient__ctor_System_String_Casper_Network_SDK_JsonRpc_RpcLoggingHandler_" data-uid="Casper.Network.SDK.NetCasperClient.#ctor(System.String,Casper.Network.SDK.JsonRpc.RpcLoggingHandler)">NetCasperClient(String, RpcLoggingHandler)</h4>
+  <div class="markdown level1 summary"><p>Create a new instance of the Casper client for a specific node in the network determined
+by the node address. Optionally, indicate a logging handler to log the requests and responses
+exchanged with tne node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NetCasperClient(string nodeAddress, RpcLoggingHandler loggingHandler = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">nodeAddress</span></td>
+        <td><p>URL of the node. Example: 'http://127.0.0.1:7777/rpc'.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.JsonRpc.RpcLoggingHandler.html">RpcLoggingHandler</a></td>
+        <td><span class="parametername">loggingHandler</span></td>
+        <td><p>Optional. An instance of a logging handler to log the requests
+and responses exchanged with the network.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient__ctor_" data-uid="Casper.Network.SDK.NetCasperClient.#ctor*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient__ctor_System_String_HttpClient_" data-uid="Casper.Network.SDK.NetCasperClient.#ctor(System.String,HttpClient)">NetCasperClient(String, HttpClient)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NetCasperClient(string nodeAddress, HttpClient httpClient)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">nodeAddress</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">HttpClient</span></td>
+        <td><span class="parametername">httpClient</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_Dispose_" data-uid="Casper.Network.SDK.NetCasperClient.Dispose*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_Dispose" data-uid="Casper.Network.SDK.NetCasperClient.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_Dispose_" data-uid="Casper.Network.SDK.NetCasperClient.Dispose*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_Dispose_System_Boolean_" data-uid="Casper.Network.SDK.NetCasperClient.Dispose(System.Boolean)">Dispose(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void Dispose(bool disposing)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">disposing</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_Casper_Network_SDK_Types_AccountHashKey_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance(Casper.Network.SDK.Types.AccountHashKey,System.Int32)">GetAccountBalance(AccountHashKey, Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the balance information of an account given its account hash key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalance(AccountHashKey accountHash, int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.AccountHashKey.html">AccountHashKey</a></td>
+        <td><span class="parametername">accountHash</span></td>
+        <td><p>The account hash of the account to request the balance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Height of the block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_Casper_Network_SDK_Types_AccountHashKey_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance(Casper.Network.SDK.Types.AccountHashKey,System.String)">GetAccountBalance(AccountHashKey, String)</h4>
+  <div class="markdown level1 summary"><p>Request the balance information of an account given its account hash key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalance(AccountHashKey accountHash, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.AccountHashKey.html">AccountHashKey</a></td>
+        <td><span class="parametername">accountHash</span></td>
+        <td><p>The account hash of the account to request the balance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root. Null to get latest available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_Casper_Network_SDK_Types_PublicKey_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance(Casper.Network.SDK.Types.PublicKey,System.Int32)">GetAccountBalance(PublicKey, Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the balance information of an account given its public key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalance(PublicKey publicKey, int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.PublicKey.html">PublicKey</a></td>
+        <td><span class="parametername">publicKey</span></td>
+        <td><p>The public key of the account to request the balance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Height of the block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_Casper_Network_SDK_Types_PublicKey_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance(Casper.Network.SDK.Types.PublicKey,System.String)">GetAccountBalance(PublicKey, String)</h4>
+  <div class="markdown level1 summary"><p>Request the balance information of an account given its public key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalance(PublicKey publicKey, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.PublicKey.html">PublicKey</a></td>
+        <td><span class="parametername">publicKey</span></td>
+        <td><p>The public key of the account to request the balance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root. Null to get latest available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_Casper_Network_SDK_Types_URef_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance(Casper.Network.SDK.Types.URef,System.Int32)">GetAccountBalance(URef, Int32)</h4>
+  <div class="markdown level1 summary"><p>Request a purse's balance from the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalance(URef purseURef, int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.URef.html">URef</a></td>
+        <td><span class="parametername">purseURef</span></td>
+        <td><p>Purse URef key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Height of the block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_Casper_Network_SDK_Types_URef_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance(Casper.Network.SDK.Types.URef,System.String)">GetAccountBalance(URef, String)</h4>
+  <div class="markdown level1 summary"><p>Request a purse's balance from the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalance(URef purseURef, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.URef.html">URef</a></td>
+        <td><span class="parametername">purseURef</span></td>
+        <td><p>Purse URef key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root. Null to get latest available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalance_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalance(System.String,System.String)">GetAccountBalance(String, String)</h4>
+  <div class="markdown level1 summary"><p>Request a purse's balance from the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalance(string purseURef, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">purseURef</span></td>
+        <td><p>Purse URef formatted as a string.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root. Null to get latest available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalanceWithBlockHash_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalanceWithBlockHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalanceWithBlockHash_Casper_Network_SDK_Types_AccountHashKey_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalanceWithBlockHash(Casper.Network.SDK.Types.AccountHashKey,System.String)">GetAccountBalanceWithBlockHash(AccountHashKey, String)</h4>
+  <div class="markdown level1 summary"><p>Request the balance information of an account given its account hash key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalanceWithBlockHash(AccountHashKey accountHash, string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.AccountHashKey.html">AccountHashKey</a></td>
+        <td><span class="parametername">accountHash</span></td>
+        <td><p>The account hash of the account to request the balance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Hash of the block. Null to get latest available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalanceWithBlockHash_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalanceWithBlockHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalanceWithBlockHash_Casper_Network_SDK_Types_PublicKey_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalanceWithBlockHash(Casper.Network.SDK.Types.PublicKey,System.String)">GetAccountBalanceWithBlockHash(PublicKey, String)</h4>
+  <div class="markdown level1 summary"><p>Request the balance information of an account given its public key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalanceWithBlockHash(PublicKey publicKey, string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.PublicKey.html">PublicKey</a></td>
+        <td><span class="parametername">publicKey</span></td>
+        <td><p>The public key of the account to request the balance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Hash of the block. Null to get latest available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountBalanceWithBlockHash_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalanceWithBlockHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountBalanceWithBlockHash_Casper_Network_SDK_Types_URef_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountBalanceWithBlockHash(Casper.Network.SDK.Types.URef,System.String)">GetAccountBalanceWithBlockHash(URef, String)</h4>
+  <div class="markdown level1 summary"><p>Request a purse's balance from the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBalanceResult&gt;&gt; GetAccountBalanceWithBlockHash(URef purseURef, string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.URef.html">URef</a></td>
+        <td><span class="parametername">purseURef</span></td>
+        <td><p>Purse URef key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Hash of the block. Null to get latest available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html">GetBalanceResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_Casper_Network_SDK_Types_AccountHashKey_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo(Casper.Network.SDK.Types.AccountHashKey,System.Int32)">GetAccountInfo(AccountHashKey, Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the information of an Account in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAccountInfoResult&gt;&gt; GetAccountInfo(AccountHashKey accountHash, int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.AccountHashKey.html">AccountHashKey</a></td>
+        <td><span class="parametername">accountHash</span></td>
+        <td><p>The account hash of the account.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>A block height for which the information of the account is queried.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html">GetAccountInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_Casper_Network_SDK_Types_AccountHashKey_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo(Casper.Network.SDK.Types.AccountHashKey,System.String)">GetAccountInfo(AccountHashKey, String)</h4>
+  <div class="markdown level1 summary"><p>Request the information of an Account in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAccountInfoResult&gt;&gt; GetAccountInfo(AccountHashKey accountHash, string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.AccountHashKey.html">AccountHashKey</a></td>
+        <td><span class="parametername">accountHash</span></td>
+        <td><p>The account hash of the account.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>A block hash for which the information of the account is queried. Null for most recent information.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html">GetAccountInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_Casper_Network_SDK_Types_PublicKey_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo(Casper.Network.SDK.Types.PublicKey,System.Int32)">GetAccountInfo(PublicKey, Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the information of an Account in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAccountInfoResult&gt;&gt; GetAccountInfo(PublicKey publicKey, int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.PublicKey.html">PublicKey</a></td>
+        <td><span class="parametername">publicKey</span></td>
+        <td><p>The public key of the account.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>A block height for which the information of the account is queried.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html">GetAccountInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_Casper_Network_SDK_Types_PublicKey_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo(Casper.Network.SDK.Types.PublicKey,System.String)">GetAccountInfo(PublicKey, String)</h4>
+  <div class="markdown level1 summary"><p>Request the information of an Account in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAccountInfoResult&gt;&gt; GetAccountInfo(PublicKey publicKey, string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.PublicKey.html">PublicKey</a></td>
+        <td><span class="parametername">publicKey</span></td>
+        <td><p>The public key of the account.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>A block hash for which the information of the account is queried. Null for most recent information.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html">GetAccountInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_System_String_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo(System.String,System.Int32)">GetAccountInfo(String, Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the information of an Account in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAccountInfoResult&gt;&gt; GetAccountInfo(string publicKey, int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">publicKey</span></td>
+        <td><p>The public key of the account formatted as an hex-string.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>A block height for which the information of the account is queried.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html">GetAccountInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAccountInfo_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAccountInfo(System.String,System.String)">GetAccountInfo(String, String)</h4>
+  <div class="markdown level1 summary"><p>Request the information of an Account in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAccountInfoResult&gt;&gt; GetAccountInfo(string publicKey, string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">publicKey</span></td>
+        <td><p>The public key of the account formatted as a string.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>A block hash for which the information of the account is queried. Null for most recent information.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html">GetAccountInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAuctionInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAuctionInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAuctionInfo_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetAuctionInfo(System.Int32)">GetAuctionInfo(Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the bids and validators at a given block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAuctionInfoResult&gt;&gt; GetAuctionInfo(int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Block height for which the auction info is queried.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAuctionInfoResult.html">GetAuctionInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetAuctionInfo_" data-uid="Casper.Network.SDK.NetCasperClient.GetAuctionInfo*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetAuctionInfo_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetAuctionInfo(System.String)">GetAuctionInfo(String)</h4>
+  <div class="markdown level1 summary"><p>Request the bids and validators at a given block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetAuctionInfoResult&gt;&gt; GetAuctionInfo(string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Block hash for which the auction info is queried. Null for the most recent auction info.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAuctionInfoResult.html">GetAuctionInfoResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetBlock_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlock*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetBlock_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlock(System.Int32)">GetBlock(Int32)</h4>
+  <div class="markdown level1 summary"><p>Request a Block from the network by its height number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBlockResult&gt;&gt; GetBlock(int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Height of the block to retrieve.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockResult.html">GetBlockResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetBlock_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlock*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetBlock_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlock(System.String)">GetBlock(String)</h4>
+  <div class="markdown level1 summary"><p>Retrieves a Block from the network by its hash.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBlockResult&gt;&gt; GetBlock(string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Hash of the block to retrieve. Null for the most recent block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockResult.html">GetBlockResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetBlockTransfers_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlockTransfers*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetBlockTransfers_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlockTransfers(System.Int32)">GetBlockTransfers(Int32)</h4>
+  <div class="markdown level1 summary"><p>Request all transfers for a Block by its height number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBlockTransfersResult&gt;&gt; GetBlockTransfers(int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Height of the block to retrieve the transfers from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockTransfersResult.html">GetBlockTransfersResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetBlockTransfers_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlockTransfers*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetBlockTransfers_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetBlockTransfers(System.String)">GetBlockTransfers(String)</h4>
+  <div class="markdown level1 summary"><p>Request all transfers for a Block by its block hash.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetBlockTransfersResult&gt;&gt; GetBlockTransfers(string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Hash of the block to retrieve the transfers from. Null for the most recent block</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockTransfersResult.html">GetBlockTransfersResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetChainspec_" data-uid="Casper.Network.SDK.NetCasperClient.GetChainspec*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetChainspec" data-uid="Casper.Network.SDK.NetCasperClient.GetChainspec">GetChainspec()</h4>
+  <div class="markdown level1 summary"><p>Request the the chainspec.toml, genesis accounts.toml, and global_state.toml files of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetChainspecResult&gt;&gt; GetChainspec()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetChainspecResult.html">GetChainspecResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetDeploy_" data-uid="Casper.Network.SDK.NetCasperClient.GetDeploy*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetDeploy_System_String_CancellationToken_" data-uid="Casper.Network.SDK.NetCasperClient.GetDeploy(System.String,CancellationToken)">GetDeploy(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Request a Deploy object from the network by the deploy hash.
+When a cancellation token is included this method waits until the deploy is
+executed, i.e. until the deploy contains the execution results information.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetDeployResult&gt;&gt; GetDeploy(string deployHash, CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">deployHash</span></td>
+        <td><p>Hash of the deploy to retrieve.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>A CancellationToken. Do not include this parameter to return
+with the first deploy object returned by the network, even it's not executed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDeployResult.html">GetDeployResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetDeploy_" data-uid="Casper.Network.SDK.NetCasperClient.GetDeploy*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetDeploy_System_String_System_Boolean_CancellationToken_" data-uid="Casper.Network.SDK.NetCasperClient.GetDeploy(System.String,System.Boolean,CancellationToken)">GetDeploy(String, Boolean, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Request a Deploy object from the network by the deploy hash.
+When a cancellation token is included this method waits until the deploy is
+executed, i.e. until the deploy contains the execution results information.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetDeployResult&gt;&gt; GetDeploy(string deployHash, bool finalizedApprovals, CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">deployHash</span></td>
+        <td><p>Hash of the deploy to retrieve.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">finalizedApprovals</span></td>
+        <td><p>Whether to return the deploy with the finalized approvals
+substituted. If <code>false</code> or omitted, returns the deploy with the approvals that were originally
+received by the node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>A CancellationToken. Do not include this parameter to return
+with the first deploy object returned by the network, even it's not executed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDeployResult.html">GetDeployResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetDictionaryItem_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItem*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetDictionaryItem_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItem(System.String,System.String)">GetDictionaryItem(String, String)</h4>
+  <div class="markdown level1 summary"><p>Lookup a dictionary item from its dictionary key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetDictionaryItemResult&gt;&gt; GetDictionaryItem(string dictionaryKey, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dictionaryKey</span></td>
+        <td><p>The dictionary key to retrieve.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDictionaryItemResult.html">GetDictionaryItemResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetDictionaryItemByAccount_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItemByAccount*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetDictionaryItemByAccount_System_String_System_String_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItemByAccount(System.String,System.String,System.String,System.String)">GetDictionaryItemByAccount(String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Lookup a dictionary item via an Account's named keys.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetDictionaryItemResult&gt;&gt; GetDictionaryItemByAccount(string accountKey, string dictionaryName, string dictionaryItem, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">accountKey</span></td>
+        <td><p>The account key as a formatted string whose named keys contains dictionaryName.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dictionaryName</span></td>
+        <td><p>The named key under which the dictionary seed URef is stored.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dictionaryItem</span></td>
+        <td><p>The dictionary item key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDictionaryItemResult.html">GetDictionaryItemResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetDictionaryItemByContract_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItemByContract*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetDictionaryItemByContract_System_String_System_String_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItemByContract(System.String,System.String,System.String,System.String)">GetDictionaryItemByContract(String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Lookup a dictionary item via a Contract named keys.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetDictionaryItemResult&gt;&gt; GetDictionaryItemByContract(string contractKey, string dictionaryName, string dictionaryItem, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">contractKey</span></td>
+        <td><p>The contract key as a formatted string whose named keys contains dictionaryName.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dictionaryName</span></td>
+        <td><p>The named key under which the dictionary seed URef is stored.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dictionaryItem</span></td>
+        <td><p>The dictionary item key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDictionaryItemResult.html">GetDictionaryItemResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetDictionaryItemByURef_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItemByURef*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetDictionaryItemByURef_System_String_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetDictionaryItemByURef(System.String,System.String,System.String)">GetDictionaryItemByURef(String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Lookup a dictionary item via its seed URef.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetDictionaryItemResult&gt;&gt; GetDictionaryItemByURef(string seedURef, string dictionaryItem, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">seedURef</span></td>
+        <td><p>The dictionary's seed URef.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dictionaryItem</span></td>
+        <td><p>The dictionary item key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDictionaryItemResult.html">GetDictionaryItemResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetEraInfoBySwitchBlock_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraInfoBySwitchBlock*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetEraInfoBySwitchBlock_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraInfoBySwitchBlock(System.Int32)">GetEraInfoBySwitchBlock(Int32)</h4>
+  <div class="markdown level1 summary"><p>Request an EraInfo from the network given a switch block.
+For a non-switch block this method returns an empty response.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetEraInfoBySwitchBlockResult&gt;&gt; GetEraInfoBySwitchBlock(int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Block height of a switch block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetEraInfoBySwitchBlockResult.html">GetEraInfoBySwitchBlockResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetEraInfoBySwitchBlock_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraInfoBySwitchBlock*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetEraInfoBySwitchBlock_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraInfoBySwitchBlock(System.String)">GetEraInfoBySwitchBlock(String)</h4>
+  <div class="markdown level1 summary"><p>Request an EraInfo from the network given a switch block.
+For a non-switch block this method returns an empty response.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetEraInfoBySwitchBlockResult&gt;&gt; GetEraInfoBySwitchBlock(string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Block hash of a switch block. Null for the latest block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetEraInfoBySwitchBlockResult.html">GetEraInfoBySwitchBlockResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetEraSummary_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraSummary*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetEraSummary_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraSummary(System.Int32)">GetEraSummary(Int32)</h4>
+  <div class="markdown level1 summary"><p>Request current Era Info from the network given a block hash</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetEraSummaryResult&gt;&gt; GetEraSummary(int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Block height.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetEraSummaryResult.html">GetEraSummaryResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetEraSummary_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraSummary*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetEraSummary_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetEraSummary(System.String)">GetEraSummary(String)</h4>
+  <div class="markdown level1 summary"><p>Request current Era Info from the network given a block hash</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetEraSummaryResult&gt;&gt; GetEraSummary(string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Block hash. Null for the latest block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetEraSummaryResult.html">GetEraSummaryResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetNodeMetrics_" data-uid="Casper.Network.SDK.NetCasperClient.GetNodeMetrics*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetNodeMetrics_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetNodeMetrics(System.String)">GetNodeMetrics(String)</h4>
+  <div class="markdown level1 summary"><p>Request the performance metrics of a node in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static async Task&lt;string&gt; GetNodeMetrics(string nodeAddress)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">nodeAddress</span></td>
+        <td><p>URL of the performance metrics endpoint. Example: 'http://127.0.0.1:8888/metrics'.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetNodeMetrics_" data-uid="Casper.Network.SDK.NetCasperClient.GetNodeMetrics*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetNodeMetrics_System_String_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetNodeMetrics(System.String,System.Int32)">GetNodeMetrics(String, Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the performance metrics of a node in the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static async Task&lt;string&gt; GetNodeMetrics(string host, int port)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">host</span></td>
+        <td><p>IP of the network node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">port</span></td>
+        <td><p>Port of the performance metrics endpoint (usually 8888).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetNodePeers_" data-uid="Casper.Network.SDK.NetCasperClient.GetNodePeers*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetNodePeers" data-uid="Casper.Network.SDK.NetCasperClient.GetNodePeers">GetNodePeers()</h4>
+  <div class="markdown level1 summary"><p>Request a list of peers connected to the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetNodePeersResult&gt;&gt; GetNodePeers()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetNodePeersResult.html">GetNodePeersResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetNodeStatus_" data-uid="Casper.Network.SDK.NetCasperClient.GetNodeStatus*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetNodeStatus" data-uid="Casper.Network.SDK.NetCasperClient.GetNodeStatus">GetNodeStatus()</h4>
+  <div class="markdown level1 summary"><p>Request the current status of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetNodeStatusResult&gt;&gt; GetNodeStatus()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetNodeStatusResult.html">GetNodeStatusResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetRpcSchema_" data-uid="Casper.Network.SDK.NetCasperClient.GetRpcSchema*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetRpcSchema" data-uid="Casper.Network.SDK.NetCasperClient.GetRpcSchema">GetRpcSchema()</h4>
+  <div class="markdown level1 summary"><p>Request the RPC Json schema to the network node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;string&gt; GetRpcSchema()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetStateRootHash_" data-uid="Casper.Network.SDK.NetCasperClient.GetStateRootHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetStateRootHash_System_Int32_" data-uid="Casper.Network.SDK.NetCasperClient.GetStateRootHash(System.Int32)">GetStateRootHash(Int32)</h4>
+  <div class="markdown level1 summary"><p>Request the state root hash at a given Block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;string&gt; GetStateRootHash(int blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td><p>Block height for which the state root is queried.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetStateRootHash_" data-uid="Casper.Network.SDK.NetCasperClient.GetStateRootHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetStateRootHash_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.GetStateRootHash(System.String)">GetStateRootHash(String)</h4>
+  <div class="markdown level1 summary"><p>Request the state root hash at a given Block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;string&gt; GetStateRootHash(string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Block hash for which the state root is queried. Null for the most recent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_GetValidatorChanges_" data-uid="Casper.Network.SDK.NetCasperClient.GetValidatorChanges*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_GetValidatorChanges" data-uid="Casper.Network.SDK.NetCasperClient.GetValidatorChanges">GetValidatorChanges()</h4>
+  <div class="markdown level1 summary"><p>Request the status changes of active validators.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetValidatorChangesResult&gt;&gt; GetValidatorChanges()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetValidatorChangesResult.html">GetValidatorChangesResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_PutDeploy_" data-uid="Casper.Network.SDK.NetCasperClient.PutDeploy*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_PutDeploy_Casper_Network_SDK_Types_Deploy_" data-uid="Casper.Network.SDK.NetCasperClient.PutDeploy(Casper.Network.SDK.Types.Deploy)">PutDeploy(Deploy)</h4>
+  <div class="markdown level1 summary"><p>Send a Deploy to the network for its execution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;PutDeployResult&gt;&gt; PutDeploy(Deploy deploy)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.Deploy.html">Deploy</a></td>
+        <td><span class="parametername">deploy</span></td>
+        <td><p>The deploy object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.PutDeployResult.html">PutDeployResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_QueryGlobalState_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalState*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_QueryGlobalState_Casper_Network_SDK_Types_GlobalStateKey_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalState(Casper.Network.SDK.Types.GlobalStateKey,System.String,System.String)">QueryGlobalState(GlobalStateKey, String, String)</h4>
+  <div class="markdown level1 summary"><p>Request the stored value in a global state key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;QueryGlobalStateResult&gt;&gt; QueryGlobalState(GlobalStateKey key, string stateRootHash = null, string path = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html">GlobalStateKey</a></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The global state key to query the value from the network.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root. Null for the most recent stored value..</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path components starting from the key as base (use '/' as separator).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.html">QueryGlobalStateResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_QueryGlobalState_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalState*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_QueryGlobalState_System_String_System_Int32_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalState(System.String,System.Int32,System.String)">QueryGlobalState(String, Int32, String)</h4>
+  <div class="markdown level1 summary"><p>Request the stored value in a global state key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;QueryGlobalStateResult&gt;&gt; QueryGlobalState(string key, int height, string path = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The global state key formatted as a string to query the value from the network.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Height of the block to check the stored value in.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path components starting from the key as base (use '/' as separator).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.html">QueryGlobalStateResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_QueryGlobalState_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalState*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_QueryGlobalState_System_String_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalState(System.String,System.String,System.String)">QueryGlobalState(String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Request the stored value in a global state key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;QueryGlobalStateResult&gt;&gt; QueryGlobalState(string key, string stateRootHash = null, string path = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The global state key formatted as a string to query the value from the network.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root. Null for the most recent stored value..</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path components starting from the key as base (use '/' as separator).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.html">QueryGlobalStateResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_QueryGlobalStateWithBlockHash_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalStateWithBlockHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_QueryGlobalStateWithBlockHash_Casper_Network_SDK_Types_GlobalStateKey_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalStateWithBlockHash(Casper.Network.SDK.Types.GlobalStateKey,System.String,System.String)">QueryGlobalStateWithBlockHash(GlobalStateKey, String, String)</h4>
+  <div class="markdown level1 summary"><p>Request the stored value in a global state key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;QueryGlobalStateResult&gt;&gt; QueryGlobalStateWithBlockHash(GlobalStateKey key, string blockHash, string path = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html">GlobalStateKey</a></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The global state key to query the value from the network.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>The block hash.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path components starting from the key as base (use '/' as separator).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.html">QueryGlobalStateResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_QueryGlobalStateWithBlockHash_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalStateWithBlockHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_QueryGlobalStateWithBlockHash_System_String_System_String_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.QueryGlobalStateWithBlockHash(System.String,System.String,System.String)">QueryGlobalStateWithBlockHash(String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Request the stored value in a global state key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;QueryGlobalStateResult&gt;&gt; QueryGlobalStateWithBlockHash(string key, string blockHash, string path = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The global state key formatted as a string to query the value from the network.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>The block hash.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path components starting from the key as base (use '/' as separator).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.html">QueryGlobalStateResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_QueryState_" data-uid="Casper.Network.SDK.NetCasperClient.QueryState*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_QueryState_System_String_List_System_String__System_String_" data-uid="Casper.Network.SDK.NetCasperClient.QueryState(System.String,List{System.String},System.String)">QueryState(String, List&lt;String&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Request a stored value from the network. This RPC is deprecated, use <code>QueryGlobalState</code> instead.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;GetItemResult&gt;&gt; QueryState(string keyHash, List&lt;string&gt; path = null, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">keyHash</span></td>
+        <td><p>A global state key formatted as a string</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path components starting from the key as base (use '/' as separator).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.GetItemResult.html">GetItemResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_SpeceulativeExecution_" data-uid="Casper.Network.SDK.NetCasperClient.SpeceulativeExecution*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_SpeceulativeExecution_Casper_Network_SDK_Types_Deploy_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.SpeceulativeExecution(Casper.Network.SDK.Types.Deploy,System.String)">SpeceulativeExecution(Deploy, String)</h4>
+  <div class="markdown level1 summary"><p>Sends a &quot;deploy dry run&quot; to the network. It will execute the deploy on top of the specified block and return
+the results of the execution to the caller. The effects of the execution won't be committed to the trie
+(blockchain database/GlobalState).
+This method runs in a different port of the network (e.g.: 7778) and can be used for debugging, discovery.
+For example price estimation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;SpeculativeExecutionResult&gt;&gt; SpeceulativeExecution(Deploy deploy, string stateRootHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.Deploy.html">Deploy</a></td>
+        <td><span class="parametername">deploy</span></td>
+        <td><p>The deploy to execute.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stateRootHash</span></td>
+        <td><p>Hash of the state root. null if deploy is to be executed on top of the latest block.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.html">SpeculativeExecutionResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_NetCasperClient_SpeceulativeExecutionWithBlockHash_" data-uid="Casper.Network.SDK.NetCasperClient.SpeceulativeExecutionWithBlockHash*"></a>
+  <h4 id="Casper_Network_SDK_NetCasperClient_SpeceulativeExecutionWithBlockHash_Casper_Network_SDK_Types_Deploy_System_String_" data-uid="Casper.Network.SDK.NetCasperClient.SpeceulativeExecutionWithBlockHash(Casper.Network.SDK.Types.Deploy,System.String)">SpeceulativeExecutionWithBlockHash(Deploy, String)</h4>
+  <div class="markdown level1 summary"><p>Sends a &quot;deploy dry run&quot; to the network. It will execute the deploy on top of the specified block and return
+the results of the execution to the caller. The effects of the execution won't be committed to the trie
+(blockchain database/GlobalState).
+This method runs in a different port of the network (e.g.: 7778) and can be used for debugging, discovery.
+For example price estimation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;RpcResponse&lt;PutDeployResult&gt;&gt; SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.Deploy.html">Deploy</a></td>
+        <td><span class="parametername">deploy</span></td>
+        <td><p>The deploy to execute.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">blockHash</span></td>
+        <td><p>Hash of the block on top of which the deploy is executed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.RpcResponse-1.html">RpcResponse</a>&lt;<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.PutDeployResult.html">PutDeployResult</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Casper.Network.SDK.ICasperClient.html">ICasperClient</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Maintained by MAKE Technology LLC
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

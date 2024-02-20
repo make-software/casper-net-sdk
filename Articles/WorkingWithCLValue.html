@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Working with CLValue | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Working with CLValue | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>    </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="working-with-clvalue">Working with <code>CLValue</code></h1>
+
+<p><code>CLValue</code> is the type used in deploy input arguments. And it can also be returned as a result of a query to the network or a contract call.</p>
+<p>A <code>CLValue</code> comprises three parts:</p>
+<ul>
+<li><code>cl_type</code>. A <code>CLType</code> that defines the type of the value stored.</li>
+<li><code>bytes</code>. The value encoded as a byte array.</li>
+<li><code>parsed</code>. A human-readable representation of the value. This part is optional and may not be present in some cases.</li>
+</ul>
+<p>As an example, the most simple CLValue representing a boolean <code>true</code> value is like this:</p>
+<pre><code class="lang-json">{
+    &quot;cl_type&quot;:&quot;Bool&quot;,
+    &quot;bytes&quot;:&quot;01&quot;,
+    &quot;parsed&quot;:true
+}
+</code></pre>
+<p><em>NOTE</em>: Check the KVStorage contract tutorial in this repository to see some examples of converting from and to <code>CLValue</code>.</p>
+<h2 id="cltype"><code>CLType</code></h2>
+<p>The list of <code>CLType</code>s is in the table below. Some of the types have equivalent native types in <code>C#</code>. In these cases we can convert easily between both as described later in this document.</p>
+<table>
+<thead>
+<tr>
+<th>Casper type</th>
+<th>C# type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Bool</code></td>
+<td><code>bool</code></td>
+<td>Boolean primitive.</td>
+</tr>
+<tr>
+<td><code>I32</code></td>
+<td><code>int</code></td>
+<td>Signed 32-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>I64</code></td>
+<td><code>long</code></td>
+<td>Signed 64-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>U8</code></td>
+<td><code>byte</code></td>
+<td>Unsigned 8-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>U32</code></td>
+<td><code>uint</code></td>
+<td>Unsigned 32-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>U64</code></td>
+<td><code>ulong</code></td>
+<td>Unsigned 64-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>U128</code></td>
+<td><code>BigInteger</code></td>
+<td>Unsigned 128-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>U256</code></td>
+<td><code>BigInteger</code></td>
+<td>Unsigned 256-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>U512</code></td>
+<td><code>BigInteger</code></td>
+<td>Unsigned 512-bit integer primitive.</td>
+</tr>
+<tr>
+<td><code>Unit</code></td>
+<td>n/a</td>
+<td>Singleton value without additional semantics.</td>
+</tr>
+<tr>
+<td><code>String</code></td>
+<td><code>string</code></td>
+<td>A string. e.g. &quot;Hello, World!&quot;.</td>
+</tr>
+<tr>
+<td><code>Key</code></td>
+<td>n/a</td>
+<td>Global state key.</td>
+</tr>
+<tr>
+<td><code>URef</code></td>
+<td>n/a</td>
+<td>Unforgeable reference.</td>
+</tr>
+<tr>
+<td><code>Option</code></td>
+<td>n/a</td>
+<td>Optional value of the given type <code>Option(CLType)</code>. The value <code>None</code> is represented in C# as <code>null</code>.</td>
+</tr>
+<tr>
+<td><code>List</code></td>
+<td><code>List&lt;&gt;</code></td>
+<td>Variable-length list of values of a single <code>CLType</code> <code>List(CLType)</code></td>
+</tr>
+<tr>
+<td><code>ByteArray</code></td>
+<td><code>byte[]</code></td>
+<td>Fixed-length list of bytes.</td>
+</tr>
+<tr>
+<td><code>Result</code></td>
+<td>n/a</td>
+<td>Co-product of the the given types; one variant meaning success, the other failure.</td>
+</tr>
+<tr>
+<td><code>Map</code></td>
+<td><code>Dictionary&lt;,&gt;</code></td>
+<td>Key-value association where keys and values have the given types <code>Map(CLType, CLType)</code></td>
+</tr>
+<tr>
+<td><code>Tuple1</code></td>
+<td>n/a</td>
+<td>Single value of the given type <code>Tuple1(CLType</code>).</td>
+</tr>
+<tr>
+<td><code>Tuple2</code></td>
+<td>n/a</td>
+<td>Pair consisting of elements of the given types <code>Tuple2(CLType, CLType)</code></td>
+</tr>
+<tr>
+<td><code>Tuple3</code></td>
+<td>n/a</td>
+<td>Triple consisting of elements of the given types <code>Tuple3(CLType, CLType, CLType)</code></td>
+</tr>
+<tr>
+<td><code>Any</code></td>
+<td>n/a</td>
+<td>Indicates the type is not known.</td>
+</tr>
+<tr>
+<td><code>PublicKey</code></td>
+<td>n/a</td>
+<td>A Public key.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="working-with-booleans">Working with booleans</h2>
+<p>To create a <code>CLValue</code> value with a boolean type write:</p>
+<pre><code class="lang-csharp">var clTrue = CLValue.Bool(true);
+var clFalse = CLValue.Bool(false);
+</code></pre>
+<p>However, in many cases you won't need to explicitly create the <code>CLValue</code> object. For example, to create a <code>NamedArg</code>, e.g. the input argument for a contract call, you can use the C# type directly:</p>
+<pre><code class="lang-csharp">var inputArg = new NamedArg(&quot;value&quot;, true);
+</code></pre>
+<p>To convert a <code>CLValue</code> with a boolean value to <code>bool</code>, use one of the following:</p>
+<pre><code class="lang-csharp">var b1 = clValue.ToBoolean();
+var b2 = (bool)clValue;
+</code></pre>
+<h2 id="working-with-numbers">Working with numbers</h2>
+<p>Similarly, numbers can be converted to <code>CLValue</code> objects explicitly:</p>
+<pre><code class="lang-csharp">var myI32 = CLValue.I32(int.MinValue);
+var myI64 = CLValue.I64(long.MaxValue);
+var myU8 = CLValue.U8(0x7F);
+var myU32 = CLValue.U32(0);
+var myU64 = CLValue.U64(ulong.MaxValue);
+</code></pre>
+<p>But, as before, the C# native types can be used instead to create the <code>NamedArgs</code> objects used as input arguments. Thus, these two lines of code are identical:</p>
+<pre><code class="lang-csharp">var i32Arg = new NamedArg(&quot;value&quot;, int.MinValue);
+</code></pre>
+<pre><code class="lang-csharp">var i32Arg = new NamedArg(&quot;value&quot;, myI32);
+</code></pre>
+<p>When you need to use the value from a <code>CLValue</code> object, call any of the available <code>.ToXXX()</code> methods or use an explicit cast:</p>
+<pre><code class="lang-csharp">var num1 = myI32.ToInt32();
+var num2 = myI64.ToInt64();
+var num3 = myU8.ToByte();
+var num4 = myU32.ToUInt32();
+var num5 = myU64.ToUInt64();
+</code></pre>
+<pre><code class="lang-csharp">var num1 = (int)myI32;
+var num2 = (long)myI64;
+var num3 = (byte)myU8;
+var num4 = (uint)myU32;
+var num5 = (ulong)myU64;
+</code></pre>
+<p>For numbers with 128, 256 and 512 bits use the <code>BigInteger</code> class in the <code>System.Numerics</code> namespace. For instance, $CSPR amounts are indicated with a <code>U512</code> value containing the number of motes. So, to create a variable with a quantity of 3 $CSPR, you can write:</p>
+<pre><code class="lang-csharp">var cspr3 = CLValue.U512(3_000_000_000);
+</code></pre>
+<p>And, in a <code>NamedArg</code> object, you would write:</p>
+<pre><code class="lang-csharp">var payment = new NamedArg(&quot;payment&quot;, new BigInteger(3_000_000_000));
+</code></pre>
+<pre><code class="lang-csharp">var payment = new NamedArg(&quot;payment&quot;, cspr3);
+</code></pre>
+<h2 id="working-with-strings">Working with strings</h2>
+<p><code>string</code> objects can be converted to <code>CLValue</code> and viceversa. The same mechanism as with number applies:</p>
+<pre><code class="lang-csharp">var clString = CLValue.String(&quot;Hello world!&quot;);
+</code></pre>
+<pre><code class="lang-csharp">var namedArgs = new List&lt;NamedArg&gt;()
+    {
+        new NamedArg(&quot;name&quot;, &quot;Weekday&quot;),
+        new NamedArg(&quot;value&quot;, &quot;Monday&quot;)
+    };
+</code></pre>
+<pre><code class="lang-csharp">string value = clString.ToString();
+</code></pre>
+<pre><code class="lang-csharp">string value = (string)clValue;
+</code></pre>
+<h2 id="working-with-byte-arrays">Working with byte arrays</h2>
+<p>Byte arrays can be encoded into <code>CLValue</code>s and converted back. The same mechanism  applies:</p>
+<pre><code class="lang-csharp">var bytes = new byte[] {0x00, 0x01, 0x02, 0x03};
+var clValue = CLValue.ByteArray(bytes);
+
+var arg1 = new NamedArg(&quot;value&quot;, clValue);
+var arg2 = new NamedArg(&quot;value&quot;, bytes);
+
+var bytes1 = clValue.ToByteArray();
+var bytes2 = (byte[]) clValue;
+</code></pre>
+<h2 id="working-with-option">Working with <code>Option</code></h2>
+<p>The type <code>Option(CLType)</code> is either a <code>None</code> value or a value with type <code>CLType</code>. Some examples:</p>
+<pre><code class="lang-csharp">var option1 = CLValue.Option(CLValue.String(&quot;Hello World!&quot;));
+// but also:
+var option2 = CLValue.Option(&quot;Hello World!&quot;);
+var option3 = CLValue.Option(int.MinValue);
+var option4 = CLValue.Option(publicKey);
+</code></pre>
+<p>To encode <code>None</code>, indicate the <code>CLType</code> that is wrapping:</p>
+<pre><code class="lang-csharp">var option4 = CLValue.OptionNone(CLType.String);
+</code></pre>
+<p>Call the methods <code>IsSome()</code> and <code>IsNone()</code> to get whether an <code>Option(CLType)</code> is wrapping a value or not, respectively.</p>
+<pre><code class="lang-csharp">option1.IsSome(); //returns true
+option1.IsNone(); //returns false
+
+option4.IsSome(); //returns false
+option4.IsNone(); //returns true
+</code></pre>
+<p>To extract the value of an <code>Option(CLType)</code> use the <code>Some()</code> method:</p>
+<pre><code class="lang-csharp">if(option1.Some(out string str1))
+  Console.WriteLine($&quot;option1 = {str1}&quot;);
+</code></pre>
+<h2 id="working-with-publickeys-and-urefs">Working with <code>PublicKey</code>s and <code>URef</code>s</h2>
+<p><code>PublicKey</code> and <code>URef</code> objects can be encoded into <code>CLValue</code>s and converted back. The same mechanism  applies:</p>
+<pre><code class="lang-csharp">var publicKey = PublicKey.FromPem(&quot;myPublicKey.pem&quot;);
+var pkClValue = CLValue.PublicKey(publicKey);
+
+var arg1 = new NamedArg(&quot;value&quot;, pkClValue); 
+var arg2 = new NamedArg(&quot;value&quot;, publicKey);
+
+var pk1 = pkClValue.ToPublicKey();
+var pk2 = (PublicKey) pkClValue;            
+</code></pre>
+<pre><code class="lang-csharp">var uref = new URef(&quot;uref-000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f-007&quot;);
+var urefClValue = CLValue.URef(uref);
+
+var arg3 = new NamedArg(&quot;value&quot;, urefClValue); 
+var arg4 = new NamedArg(&quot;value&quot;, uref);
+
+var uref2 = urefClValue.ToURef();
+var uref3 = (URef) urefClValue;
+</code></pre>
+<h2 id="working-with-keys">Working with <code>Key</code>s</h2>
+<p><code>GlobalStateKey</code> objects can be encoded into <code>CLValue</code>s and converted back. The same mechanism  applies. For instance, with an <code>AccountHashKey</code>, we can write:</p>
+<pre><code class="lang-csharp">var publicKey = PublicKey.FromPem(&quot;myPublicKey.pem&quot;);
+var accountHash = new AccountHashKey(publicKey);
+
+var accountClValue = CLValue.Key(accountHash);
+
+var arg1 = new NamedArg(&quot;value&quot;, accountClValue);
+var arg2 = new NamedArg(&quot;value&quot;, accountHash);
+</code></pre>
+<h2 id="working-with-lists">Working with <code>List</code>s</h2>
+<p>Create a <code>CLValue</code> with type <code>List</code> with an array of values from the same type:</p>
+<pre><code class="lang-csharp">var list = CLValue.List(new[]
+    {CLValue.U8(0x10), CLValue.U8(0x20), CLValue.U8(0x30), CLValue.U8(0x40)});
+
+var namedArgs = new List&lt;NamedArg&gt;()
+{
+    new NamedArg(&quot;name&quot;, &quot;MyListOfBytes&quot;),
+    new NamedArg(&quot;value&quot;, list)
+};
+</code></pre>
+<p>And, vice versa, convert a <code>CLValue</code> with type <code>List</code> to a C# List with <code>.ToList()</code>:</p>
+<pre><code class="lang-csharp">var list1 = list.ToList();
+</code></pre>
+<h2 id="working-with-maps">Working with <code>Map</code>s</h2>
+<p>Create a <code>CLValue</code> with type <code>Map</code> with a Dictionary of key-values:</p>
+<pre><code class="lang-csharp">var dict = new Dictionary&lt;CLValue, CLValue&gt;()
+    {
+        {CLValue.String(&quot;fourteen&quot;), CLValue.Option(CLValue.String(&quot;14&quot;))},
+        {CLValue.String(&quot;fifteen&quot;), CLValue.Option(CLValue.String(&quot;15&quot;))},
+        {CLValue.String(&quot;sixteen&quot;), CLValue.Option(CLValue.String(&quot;16&quot;))},
+        {CLValue.String(&quot;none&quot;), CLValue.OptionNone(CLType.String)},
+    };
+
+var map = CLValue.Map(dict);
+
+var namedArgs = new List&lt;NamedArg&gt;()
+    {
+        new NamedArg(&quot;name&quot;, &quot;MyMap&quot;),
+        new NamedArg(&quot;value&quot;, map)
+    };
+</code></pre>
+<p>And, vice versa, convert a <code>CLValue</code> with type <code>Map</code> to a C# Dictionary with <code>.ToDictionary()</code>:</p>
+<pre><code class="lang-csharp">var dict1 = map.ToDictionary();
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Maintained by MAKE Technology LLC
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Counter tutorial with C# and Casper .NET SDK | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Counter tutorial with C# and Casper .NET SDK | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                Casper.Network.SDK
+              </a>    </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="counter-tutorial-with-c-and-casper-net-sdk">Counter tutorial with C# and Casper .NET SDK</h1>
+
+<p>This example is based on the <a href="https://casper.network/docs/counter">Counter contract tutorial</a> available in the Casper Network web site.</p>
+<p>Using the Casper .NET SDK, we'll show you how to:</p>
+<ul>
+<li>Send $CSPR from one account to another.</li>
+<li>Deploy the counter contract example to the blockchain.</li>
+<li>Read the counter value.</li>
+<li>Call the <code>counter_inc</code> contract entry point to increase the counter.</li>
+</ul>
+<p>NOTE: We use a local network in this example. Learn <a href="https://casper.network/docs/dapp-dev-guide/setup-nctl">here</a>
+how to install your own local network. Alternatively, you can easily adapt the code in this example
+to use the casper-test network. In this case, skip the transfer from faucet step.</p>
+<h3 id="step-1-get-a-new-instance-of-the-casper-client">Step 1. Get a new instance of the Casper client</h3>
+<p>Prepare an instance of the client and a couple of keys that will be used during the example:</p>
+<pre><code class="lang-csharp">static string nodeAddress = &quot;http://207.154.217.11:11101/rpc&quot;;
+static string chainName = &quot;casper-net-1&quot;;
+
+static NetCasperClient casperSdk = new NetCasperClient(nodeAddress);
+
+static KeyPair faucetAcct = KeyPair.FromPem(&quot;/tmp/faucetact_sk.pem&quot;);
+
+static KeyPair myAccount = KeyPair.FromPem(&quot;/tmp/myaccount_sk.pem&quot;);
+static PublicKey myAccountPK = PublicKey.FromPem(&quot;/tmp/myaccount_pk.pem&quot;);
+</code></pre>
+<h3 id="step-2-send-cspr-from-the-faucet-account-to-myaccount">Step 2. Send $CSPR from the faucet account to <code>myAccount</code></h3>
+<p>Use the <code>StandardTransfer</code> template to create a deploy object that orders a transfer of 2500 $CSPR from the faucet account. Sign it and send it to the network.</p>
+<p>Take the <code>deploy_hash</code> from the response and make a call to <code>GetDeploy</code> with a timeout of 120 seconds. This will query the network until the transfer is complete.</p>
+<pre><code class="lang-csharp">public static async Task FundAccount()
+{
+  var deploy = DeployTemplates.StandardTransfer(
+      faucetAcct.PublicKey,
+      myAccountPK,
+      2500_000_000_000,
+      100_000_000,
+      chainName);
+  deploy.Sign(faucetAcct);
+  
+  var putResponse = await casperSdk.PutDeploy(deploy);
+  
+  var deployHash = putResponse.GetDeployHash();
+  
+  var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
+  var getResponse = await casperSdk.GetDeploy(deployHash, tokenSource.Token);
+  
+  var execResult = getResponse.Parse().ExecutionResults.First();
+  Console.WriteLine(&quot;Deploy COST : &quot; + execResult.Cost);
+}
+</code></pre>
+<h3 id="step-3-deploy-the-counter-contract">Step 3. Deploy the counter contract</h3>
+<p>If you haven't done yet, get a copy of the repository and build the contract following the instructions in the README file.</p>
+<pre><code>git clone https://github.com/casper-ecosystem/counter
+cd counter
+make build-contract
+</code></pre>
+<p>As a result you will get the contract compiled at <code>target/wasm32-unknown-unknown/release/</code>. Copy the <code>contract-define.wasm</code> to your working directory.</p>
+<p>Next, use the <code>ContractDeploy</code> deploy template to prepare a <code>Deploy</code> object. Sign it and deploy it.</p>
+<pre><code class="lang-csharp">public static async Task DeployContract(string wasmFile)
+{
+  var wasmBytes = await File.ReadAllBytesAsync(wasmFile);
+  
+  var deploy = DeployTemplates.ContractDeploy(
+      wasmBytes, 
+      myAccount,
+      50_000_000_000, 
+      chainName);
+  deploy.Sign(myAccount);
+  
+  var putResponse = await casperSdk.PutDeploy(deploy);
+  
+  var deployHash = putResponse.GetDeployHash();
+  
+  var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
+  var getResponse = await casperSdk.GetDeploy(deployHash, tokenSource.Token);
+  
+  var execResult = getResponse.Parse().ExecutionResults.First();
+  
+  Console.WriteLine(&quot;Deploy COST : &quot; + execResult.Cost);
+  Console.WriteLine(&quot;Contract key: &quot; + execResult.Effect.Transforms.First(t =&gt;
+      t.Type == TransformType.WriteContract).Key);
+}
+</code></pre>
+<h3 id="step-4-get-the-counter-value">Step 4. Get the counter value</h3>
+<p>The deploy of the contract creates a <code>Named Key</code> in the caller account named <code>counter</code>. Its key value is the new
+contract hash.</p>
+<p>The contract itself also has a <code>Named Key</code> called <code>count</code> that stores the value of the counter.</p>
+<p>Combining both, we form the path <code>counter/count</code>. We can send the <code>QueryGlobalState</code> method to the network to get
+the current value of the counter.</p>
+<pre><code class="lang-csharp">public static async Task QueryState()
+{
+  var accountKey = new AccountHashKey(myAccountPK);
+  var rpcResponse = await casperSdk.QueryGlobalState(accountKey, null,
+     &quot;counter/count&quot;);
+ 
+  var result = rpcResponse.Parse();
+  Console.WriteLine(&quot;Counter value: &quot; + (int)result.StoredValue.CLValue);
+}
+</code></pre>
+<p>The response from the network will look like the following:</p>
+<pre><code>{
+  &quot;api_version&quot;: &quot;1.0.0&quot;,
+  &quot;stored_value&quot;: {
+    &quot;CLValue&quot;: {
+      &quot;cl_type&quot;: &quot;I32&quot;,
+      &quot;bytes&quot;: &quot;00000000&quot;,
+      &quot;parsed&quot;: 0
+    }
+  },
+  &quot;merkle_proof&quot;: &quot;...&quot;
+}  
+</code></pre>
+<p>When you know the type of a <code>CLValue</code> you can easily get its value with the corresponding
+cast operator. In this case, we know the counter is an integer so we can convert the <code>CLValue</code>
+to an integer number with <code>(int)</code>.</p>
+<p>In the previous code we queried the network starting from an account key and using a path that
+hops from the account to the contract and then retrieves the value of the <code>count</code> named key.
+But you could also query directly the contract using the contract hash:</p>
+<pre><code class="lang-csharp">var contrachHash = &quot;hash-4d6b463f4a5503a1d2fb8dbca92260e3574ff86d68d2103b6d4ecb28246dfb5c&quot;;
+var response = await casperSdk.QueryGlobalState(contrachHash, null, &quot;count&quot;);
+
+var result = response.Parse();
+Console.WriteLine(&quot;Counter value: &quot; + result.StoredValue.CLValue.ToInt32());
+</code></pre>
+<h3 id="step-5-increment-the-counter">Step 5. Increment the counter</h3>
+<p>To increment the counter we need to send a deploy and call the <code>counter_inc</code> entry point in the
+contract. For this, we can use the <code>ContractCall</code> template:</p>
+<pre><code class="lang-csharp">public static async Task CallCounterInc()
+{
+  var deploy = DeployTemplates.ContractCall(
+      &quot;counter&quot;,
+      &quot;counter_inc&quot;,
+      null,
+      myAccountPK,
+      15_000_000,
+      chainName);
+  deploy.Sign(myAccount);
+  
+  var putResponse = await casperSdk.PutDeploy(deploy);
+  
+  var deployHash = putResponse.GetDeployHash();
+  
+  var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
+  var getResponse = await casperSdk.GetDeploy(deployHash, tokenSource.Token);
+  
+  var execResult = getResponse.Parse().ExecutionResults.First();
+  
+  Console.WriteLine(&quot;Deploy COST : &quot; + execResult.Cost);
+}
+</code></pre>
+<h3 id="step-6-check-the-counter-has-a-new-value">Step 6. Check the counter has a new value</h3>
+<p>Calling the <code>QueryState()</code> method in step 4 we'll now see that the counter has a new value:</p>
+<pre><code>{
+  &quot;api_version&quot;: &quot;1.0.0&quot;,
+  &quot;stored_value&quot;: {
+    &quot;CLValue&quot;: {
+      &quot;cl_type&quot;: &quot;I32&quot;,
+      &quot;bytes&quot;: &quot;01000000&quot;,
+      &quot;parsed&quot;: 1
+    }
+  },
+  &quot;merkle_proof&quot;: &quot;0300000000989ca079a...&quot;
+}  
+</code></pre>
+<p>The git repository also contains a second contract named <code>counter-call</code>. It is an example of how to increment the counter value with a deploy instead of calling a contract entry point.</p>
+<h3 id="logging-handler">Logging handler</h3>
+<p>The example in <code>Program.cs</code> creates the Casper client passing a logging handler as a reference. This is useful to see the communication exchanged with the node.</p>
+<p>To print the logs to the standard output, use:</p>
+<pre><code>LoggerStream = new StreamWriter(Console.OpenStandardOutput())
+</code></pre>
+<p>To print the logs to a file, use:</p>
+<pre><code>LoggerStream = File.AppendText(&quot;netcasper.log&quot;)
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Maintained by MAKE Technology LLC
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

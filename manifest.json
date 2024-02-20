@@ -1,0 +1,2636 @@
+{
+  "homepages": [],
+  "source_base_path": "/github/workspace/Docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Articles/GettingStarted.md",
+      "output": {
+        ".html": {
+          "relative_path": "Articles/GettingStarted.html",
+          "hash": "WoNjUCE/XyvsZ9VQd5ycqdYLTu4f1F1aRj6u0TgpydI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Articles/KeyManagement.md",
+      "output": {
+        ".html": {
+          "relative_path": "Articles/KeyManagement.html",
+          "hash": "L99hpSTBofCMR+Tw2nX4Zubdw0vtm6DF118dciphpY4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Articles/RunningNctlLocally.md",
+      "output": {
+        ".html": {
+          "relative_path": "Articles/RunningNctlLocally.html",
+          "hash": "hne4VEHaUsmMX2UldODGtNBPv8NGaCMLGEGDvy1mHsE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Articles/WorkingWithCLValue.md",
+      "output": {
+        ".html": {
+          "relative_path": "Articles/WorkingWithCLValue.html",
+          "hash": "JWoB58w6cniQNeQgdqlXeodT/WpLon6g4Se/XkAuSk8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "Articles/index.html",
+          "hash": "oR86BoIGW1iCKfjlaHeFvD/HaSwprexdF35C5F/B/WE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "Articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "Articles/toc.html",
+          "hash": "UYXCGeqkpiUR6v2JWUnA4EGSY4WamvFWUkbN2yEnahw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Examples/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "Examples/index.html",
+          "hash": "EnsxaXjgX33Wus2s49scyzdwX2IUzJMoq3EJHQrdYPw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "Examples/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "Examples/toc.html",
+          "hash": "DW9CoNllCc+lDoJ56Z1o5GVAxeeLCk1j8JjdWs2u944="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Tutorials/counter-contract/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "Tutorials/counter-contract/README.html",
+          "hash": "FGw3x/TdfVazVKdhF2oxs+0E7juWWmPmpwqh9JTLPDA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Tutorials/erc20-contract/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "Tutorials/erc20-contract/README.html",
+          "hash": "PUbWDz76aDAKHBJ8s9MSDV06j72pBEZq3SFRcFBNYF0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Tutorials/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "Tutorials/index.html",
+          "hash": "LXazUGVVEURZdriodxPWnsqG+UV1l928OyjkY6rK9gY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Tutorials/kvstorage-contract/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "Tutorials/kvstorage-contract/README.html",
+          "hash": "uFr2LuFAmJm1Yu9mIuUnCmZmZtjApRBPMq1QvVR1DaI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "Tutorials/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "Tutorials/toc.html",
+          "hash": "NqiwdZ7oPaVpzwJxor5MP2F4m+xW0OuJroV3j2AnXJY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.BaseByteSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.BaseByteSerializer.html",
+          "hash": "xSNBzoqfgxl7n+BuPCuLySvsBaFpO8xFYMIzDpz5Wxk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.CLValueByteSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.CLValueByteSerializer.html",
+          "hash": "vwKEjLb19jyLkjurDQWnDJDLyTMtOLnbFwyz8PUSIUs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.DeployApprovalByteSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.DeployApprovalByteSerializer.html",
+          "hash": "LMi1Z6Lhlfb1zlbcUAViBu0PieB2+vSCVP9frbGwnnk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.DeployByteSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.DeployByteSerializer.html",
+          "hash": "QVJu6bPD56R9709IBRvpEiQ5GKGiyUu4qCVmeHOiGgk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.ExecutableDeployItemByteSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.ExecutableDeployItemByteSerializer.html",
+          "hash": "fK2yp94GnhV/096M0C+cnpGs4xD2cw8xMENMNlAramc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.GlobalStateKeyByteSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.GlobalStateKeyByteSerializer.html",
+          "hash": "8x/rwt8J4egSgwUKdZYW8o4CQDphwK7NSsivA7zWnUY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.IByteSerializer-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.IByteSerializer-1.html",
+          "hash": "9fTKwCrBKiuBV9e8CnNeBMAvypIuRtVlIcYN9i+NTOk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.NamedArgByteSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.NamedArgByteSerializer.html",
+          "hash": "r1BR4DG3HJrGAWhpv3q+JE+rGsa1mNgfa/v94ySat6s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ByteSerializers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ByteSerializers.html",
+          "hash": "zQ+1YQgRq0Gib6tutQQ+a5j3SVgrA++n9S0/2OrG0kk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.BidsListConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.BidsListConverter.html",
+          "hash": "+sOpgGE2KLmuQysgWkvJ9EUqGyJBs+mQZK7YkW6ye0A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.BigIntegerConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.BigIntegerConverter.html",
+          "hash": "Cc01iLfE6rTiXXKqiC/XlxBGBkYZCVyB2a5YvIZQgVc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.CLTypeInfoConverter.CLTypeInfoConverterInner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.CLTypeInfoConverter.CLTypeInfoConverterInner.html",
+          "hash": "QXae5V4zsHWH4YqvL6acDoyqAynBPi8e97hHIaJd0Jk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.CLTypeInfoConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.CLTypeInfoConverter.html",
+          "hash": "+ydL+4vQmtywVo8l0gSwXzm4K096iKea7UKGsOR/kO4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.DateTime2EpochConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.DateTime2EpochConverter.html",
+          "hash": "/DG8Z2YVdDNAHXPMf6qJIUBD9YEQriCXQvJFKsTFW/U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.ExecutableDeployItemConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.ExecutableDeployItemConverter.html",
+          "hash": "jgOkmSklg3YqReEyD2Z3F9g+VX5bv9UUTbxSWjtUy4Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.GenericListConverter-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.GenericListConverter-2.html",
+          "hash": "TQvdWlPJihgg/xyJyarnH8I7beXO0fsxnJFMQRFHxa4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.HexBytesConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.HexBytesConverter.html",
+          "hash": "L6Ky3iVo/+I0PGQR4PnbbS2qnEQ7deV7LnJMgrg05hU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.HexBytesWithChecksumConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.HexBytesWithChecksumConverter.html",
+          "hash": "uaDkW4iGtyPG9Jq/p1wSzdcTxpjGHVlLcqt3Ye3dKtY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.HumanizeTTLConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.HumanizeTTLConverter.html",
+          "hash": "P2l0oy2acM2Mm9YIYiV0N+a+AqWsL2zjJFPeVbql4Mo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.IDeserializeAsList.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.IDeserializeAsList.html",
+          "hash": "M2fH7HeYAUa3dlqu95HFeI8GRnVi84wYKtbOXKEsGEM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Converters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Converters.html",
+          "hash": "HelnqOz2uvIwbJkVIB/PRpDQCPXJZW4E9ygEyepY8nY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.DeployTemplates.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.DeployTemplates.html",
+          "hash": "19P+Yj1K4PYaLoluqwvIPXm1ZLx5O9Y7rn07XqVvQvU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.ICasperClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.ICasperClient.html",
+          "hash": "lcBHa4ZOsGQ95yY+TOvBmSKNi5KVl6aVckGJAFZDWgI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetAccountInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetAccountInfo.html",
+          "hash": "ZPTYaKtk+hF4XfOhlFoudpOhBaP7ymBl63zU2rQc7B0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetAuctionInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetAuctionInfo.html",
+          "hash": "1/elTpDsCjNiOY0bEWSLyV5+iVjd/8fFqsr3rhAH4yI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetBalance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetBalance.html",
+          "hash": "V45POaqhoiD5uL3aVEyn0S+UQ81kue+0yJbBS4UYnRI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetBlock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetBlock.html",
+          "hash": "fCO+DdgVPlMJQEjfP6WCJnJNGjcuaT9P/8KSiR/l6HQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetBlockTransfers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetBlockTransfers.html",
+          "hash": "l9motPTKI34oGewwLo9rcSEIg8Y40r08KamqPmZLvH4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetChainspec.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetChainspec.html",
+          "hash": "9zWOLpjz5YFcIKfNX72mj5RGqHQjwLqfNJ9gdWbC2Cc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetDeploy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetDeploy.html",
+          "hash": "xiIdZEF4RidPrsmdoihUTY0PicBXP/C9BMIlX/sOZz4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItem.html",
+          "hash": "fMgSKoK+u6xM+oA35Eov34hsYsxbPXlY52uMGN4NCOY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItemByAccount.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItemByAccount.html",
+          "hash": "w3g5Uds+r0oukDNwxUnk8OqxHIMQMGGiqGiFd3MJJEw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItemByContract.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItemByContract.html",
+          "hash": "URNWEVC/TE1VW1PjHdR2vSsvVCgMqZVYrdIYqrfDsOQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItemByURef.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetDictionaryItemByURef.html",
+          "hash": "o/NEMu/8PUP3sQoClWf8N+3Et232t1P08Ap8K2hSiXk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetEraInfoBySwitchBlock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetEraInfoBySwitchBlock.html",
+          "hash": "agg7VBFtyRPTGs04ehLrVdE+IGnqpXhl/mwivIekJyo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetEraSummary.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetEraSummary.html",
+          "hash": "lFjir4qxOwpZKchZdUVCYigU9IjL3ddqxLy/shgYnpk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetItem.html",
+          "hash": "qN/TqtM9YoZUbarvyM8kx1njsKoyUgmUEHZ58Q6aERU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetNodePeers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetNodePeers.html",
+          "hash": "1ZzP+QxidqtGz6d6Dxb4QT2MCBrtUupiYgRqM74S/EI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetNodeStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetNodeStatus.html",
+          "hash": "tEuRKQLf/e294PeVS/5PfNojbHygy7ThkmmUyoelHJU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetRpcSchema.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetRpcSchema.html",
+          "hash": "IIsSNgRbF807uOvkuD/IEZM8HniEbAPDgQZT7hSeHBY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetStateRootHash.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetStateRootHash.html",
+          "hash": "Kw/TkjnSNRRUm74M4EF+T+2TqEuEsyYOE4K67u0Nsl0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.GetValidatorChanges.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.GetValidatorChanges.html",
+          "hash": "R0/+fEm0inZQd3w3mgB1HH0+UI/0OoQ+ggia8SmE7ic="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.PutDeploy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.PutDeploy.html",
+          "hash": "KKp/ktGkCQvfPl94mf11Qhy65kcLpXKw/be/LpUuKWk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.QueryGlobalState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.QueryGlobalState.html",
+          "hash": "j1/V2ryLao/Tp5JlE6BCZvXdaPi3Adr9owjls8l6pVs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.BalanceResultConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.BalanceResultConverter.html",
+          "hash": "f16VaYLCDNKEpLRU/XTZyqgayRB/DQH8GUOAV0kxpWw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html",
+          "hash": "apVAdKKih+oTHDD1VrthoxCNmk9rxYSLpzfgQVHGYvk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetAuctionInfoResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetAuctionInfoResult.html",
+          "hash": "pkty7ttQwNgkS4P/VZqMxQwA9zDKrQDZqysG/FyEJ1M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetBalanceResult.html",
+          "hash": "0znSPq5zWXvcwL5WhianTydbDZt27DlGgBQMZY1YIyE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockResult.html",
+          "hash": "TE2c8peXcQw8BDDIGVZ4wd9EqPf3oC+DwClEutBBD7M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockTransfersResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockTransfersResult.html",
+          "hash": "AX1TpaTo/ioCR48UJd/syX5A3pLPShDt/wGDcp3cPaE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetChainspecResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetChainspecResult.html",
+          "hash": "JDiPB3w9Hf4L665zlFZYbxR+IoNd+l1Txvo+X00muPU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetDeployResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetDeployResult.html",
+          "hash": "9aqMvezRxsdkknmqpk/s+TltwyFZP3ibSgmrWpm+ePA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetDictionaryItemResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetDictionaryItemResult.html",
+          "hash": "AAlyVgUlqrsk4WEce4m3UNh4RX/rTVK8J3pk9iIaoHE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetEraInfoBySwitchBlockResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetEraInfoBySwitchBlockResult.html",
+          "hash": "eX1qd02atO5P7qV4QdEQ5DDglHBaJCWVzXb8R2St3R8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetEraSummaryResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetEraSummaryResult.html",
+          "hash": "zhxS48S9x0Zd3DWIyF9Z0izO5vPkTv7dnQI9Pl/fsL4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetItemResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetItemResult.html",
+          "hash": "rJlM9WrimEALY+ciOcaRL/qBscsXsGRq6l0+SXPU/4k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetNodePeersResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetNodePeersResult.html",
+          "hash": "ojQO4PnD3xu+IjYPeQf0uMxLkwWgmjn60/Vxe/QI8JY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetNodeStatusResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetNodeStatusResult.html",
+          "hash": "sfDK/xqnMxuFXdbuSV4l/2Nt8dElkvVYILm1C6tJB+k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetStateRootHashResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetStateRootHashResult.html",
+          "hash": "EDWdSKXiqiCc+CzTkfDX9c7DvqTF89jAz4g9aRethoY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetValidatorChangesResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.GetValidatorChangesResult.html",
+          "hash": "OjO0OXdBhevc8AkQgFNXGwZAdTeE189qhWha1RUsPD0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.PutDeployResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.PutDeployResult.html",
+          "hash": "JDGTnLvX94+41blEIXGnJ/Mk0rsd6Y8ljltf8KSB/Gg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.html",
+          "hash": "W4hu1WgMysUBIq53EFI+JI0RH00BEQOrSq3D/oxNL1Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.RpcResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.RpcResult.html",
+          "hash": "ryq9XdgC7W+0yl12YaLJaflqG49cSqgnFqx6MywstG4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.html",
+          "hash": "DDXWFnMSQTq5xju9e4uCXxnkQx1DLhOAn3rGMxIjnww="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.ResultTypes.html",
+          "hash": "aKWDodOn50C9bkccnCf/UBEGydVByKWVkOQz2iqbGTk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.RpcClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.RpcClient.html",
+          "hash": "SIHYamMsWKgQl/5czR86mn1/Vh3sk7Z5TOPk8VS/Qmo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.RpcClientException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.RpcClientException.html",
+          "hash": "J3RNoUBHgKz5WeKbvp6pvR3wt0qYnS2Xo5HywefbCYc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.RpcError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.RpcError.html",
+          "hash": "UzfZ6rmYE1951Ft75GSBqxwyTxad2qENCwbhhdLhtY0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.RpcLoggingHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.RpcLoggingHandler.html",
+          "hash": "bPcsLPBm6m93DmUH/AYuwF4xh2lsabsetGR19GHaMBo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.RpcMethod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.RpcMethod.html",
+          "hash": "j2F4QN7sa2JTOEZV4trOnoHsfFrnzHTuAWilaWLFLgs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.RpcResponse-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.RpcResponse-1.html",
+          "hash": "cW9Dx2sGU9s5bNGq/cW7ZR6LG7am2SLuoNfqlvqjyaw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.SpeculativeExecution.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.SpeculativeExecution.html",
+          "hash": "A/iv/2AtDY95brUBW3BCWdexdPMP7lCBdTwvzMaSL/Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.JsonRpc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.JsonRpc.html",
+          "hash": "9DadAeglwJ4mKeiedqCEL79Ikh3gOkpNr28qB2EPgok="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.NetCasperClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.NetCasperClient.html",
+          "hash": "hH3UrsXAnzkfmxqeJHbbgsfngFEgZ3I2Ig8paRolSW0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.BlockAdded.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.BlockAdded.html",
+          "hash": "/l3eBxoDn2doMkmkYZV+64h8YD646LAOLGblUEXKZ9E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.ChannelType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.ChannelType.html",
+          "hash": "/OQxXCnKHpaP5A+9QyzBw25CcZRridpEP7qBvhuk5Bk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.DeployAccepted.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.DeployAccepted.html",
+          "hash": "7eqVmPHylhRTXXgc11VgUVh10fR+NYk/ZlrUuiTa374="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.DeployExpired.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.DeployExpired.html",
+          "hash": "D+2rg6AsXC1MMb5RkCzgqswZI0fHt0fpv27neB+7O/E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.DeployProcessed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.DeployProcessed.html",
+          "hash": "7+eYHQCwMrjceRpt6H3GsQb8KY2Bsk0Mmy/ssw2CSiw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.EventCallback.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.EventCallback.html",
+          "hash": "M/nkO86iPcRuLHpNSmainfEYYI2+BR0U5DLy2/WAdbE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.EventType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.EventType.html",
+          "hash": "kPOyscWRsjVe4h6W9WpVsgo9yn3vkipAmGppHHaFvW0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.Fault.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.Fault.html",
+          "hash": "ASI3s5koaJsXpjSwsO55kozfngSiv5pfsnw/T8wnlB8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.FinalitySignature.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.FinalitySignature.html",
+          "hash": "sh4ebmUB7GjFLFfqBLJl/mn+OY/Q26PKkJDFqD/C0VU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.ISSEClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.ISSEClient.html",
+          "hash": "SkGt9F5ElPlzsXgTVul8hQL/UjuYlEZ3qunIr19eyCU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.SSEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.SSEvent.html",
+          "hash": "hHjxul7pXWa1rMHrP6M9Zp6+zTS0dT+Pmuv5EOsj6v4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.ServerEventsClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.ServerEventsClient.html",
+          "hash": "mKo7sCiYgCiOpTKQQvfxHvvm1lpZwKtfflXRpIAiYe0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.SSE.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.SSE.html",
+          "hash": "FdT/yYth9dAeD9p+9hKxpm+ZwvVLVhzJhXG7z5jWPgg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.AccessRights.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.AccessRights.html",
+          "hash": "c3H0JWMEdTkZeQBwxkxaevejRmLujZXg6lHK6nMqvSg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Account.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Account.html",
+          "hash": "b3l5dz0lRekFZ6HvptB/zx3cIuq80AUA52hstUtD0d0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.AccountHashKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.AccountHashKey.html",
+          "hash": "iVIByr/VnuruQ0rTxTs/CCfrjXXSWflrUxFV6UrVcMU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ActionThresholds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ActionThresholds.html",
+          "hash": "t1tyVUl7XiOBJLDpik6sDclwtnNid+DBqDLAxU7ljkc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.AssociatedKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.AssociatedKey.html",
+          "hash": "5fci5c7VVXM85pysjmMI1VcvkcBjGEHIdSbqsMzj1Y8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.AuctionState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.AuctionState.html",
+          "hash": "7zXtU5rZ9Rz60nQHOvr5Bgf8cWXZJVUyGbjDSPllLrM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.AvailableBlockRange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.AvailableBlockRange.html",
+          "hash": "hNeYPU57kTKjrndq52VjPW53/TKLaRf4SZ3MuD+GfWI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.BalanceKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.BalanceKey.html",
+          "hash": "HkVJcWiEZ5Wkxtc3zbnBogKULkksI9f+TJKwVKQXLHg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Bid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Bid.html",
+          "hash": "t05JAo1QNvD7AQEIgeTeKWRMx7536m+Z3RlMoTZ/AKI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.BidKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.BidKey.html",
+          "hash": "tRLzVgaAKVXVDI4cAnqnVpxDRjoXFF2rQ5fTJdIo1MQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Block.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Block.html",
+          "hash": "aP2xKgAnUWRxyn3S+ttLdvJnsfBBArx0I1P9WZwEkE8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.BlockBody.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.BlockBody.html",
+          "hash": "oAbl90B0D4gxNFIQwRl3Htc9xJmy6Jd3Ss0A9FgwzH8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.BlockHeader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.BlockHeader.html",
+          "hash": "wokflElYgz7doAKhtz4fYMwtlzr7I9L8vboYR8j31HM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.BlockProof.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.BlockProof.html",
+          "hash": "5NPZrVe+s0/gcC/0oPGFukq5rkBIU5JoIGoKx1BDPY0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.BlockSyncStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.BlockSyncStatus.html",
+          "hash": "VnBz74JUrNrrOIrCAu9lpBQLY8mF9BILE5jqDCQ61TU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.BlockSynchronizerStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.BlockSynchronizerStatus.html",
+          "hash": "SCN9z9iILT6e5yDM8ukGZX3vtRIVMiV0duidV3AqWt0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLByteArrayTypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLByteArrayTypeInfo.html",
+          "hash": "GM/AXkD9tCmp0l7+KMJeEgpKzZO1XUozDEwsb/dPi6g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLKeyTypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLKeyTypeInfo.html",
+          "hash": "DAGpaNmE9jAbLa8lxBHQ7QHDnpYmr4RZI9qM3dOGasc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLListTypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLListTypeInfo.html",
+          "hash": "H0lfAY/s+3lh67WkT+Y2cIlBNSq19rmCoeUViKwyRR0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLMapTypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLMapTypeInfo.html",
+          "hash": "lP1Rxk9xt0Yydt5uqcPDOHJLi3TZ1oTwAyZ5pdpMsrQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLOptionTypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLOptionTypeInfo.html",
+          "hash": "NBWcYV4HVLI3SIBi3BXkgWljef5UA6vUqnSTVL1+MJk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLResultTypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLResultTypeInfo.html",
+          "hash": "GM2xTmvnsdbLGyUsssUth8N4aYEjgXSEMYluYeOK10M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLTuple1TypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLTuple1TypeInfo.html",
+          "hash": "eYJHtCSlEiNDkiGZWEFM4nZTalcljCYrww7Hem8Eqys="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLTuple2TypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLTuple2TypeInfo.html",
+          "hash": "29uAHbExmwcws6T2ldFG/Wa41+zI/7+UWajm5Ei8UzM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLTuple3TypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLTuple3TypeInfo.html",
+          "hash": "+2xHyIxeC2pg0qhTduHEICUe116RCZdCh6+Ai0bJKDw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLType.html",
+          "hash": "P/z1FDAMpTe206MEPjaDzCa2CwuUcp9rR1GEu2Msw1M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLTypeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLTypeInfo.html",
+          "hash": "9Whv/HGLxjYRfFuAqo71dJ1HC4xyc21f4kUsq3gWBuM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLValue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLValue.html",
+          "hash": "Fd4Us3CT120DdpV4UnlnT/xLcVhQpp7iYZEUTkGNj1I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.CLValueException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.CLValueException.html",
+          "hash": "6HBcQh2i5ca9jDj0blxPwE6Nd78QB2iDq79Edhv+2n8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ChainspecRawBytes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ChainspecRawBytes.html",
+          "hash": "DEaTBm46n0ofwmRZutAAIR9EP4CXOgrXZ65Ng7ns2sc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ChainspecRegistryKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ChainspecRegistryKey.html",
+          "hash": "tfJlynWsqChHnXu8QAx227ZcJi/PNHtwRVrq8yRHHSc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ChecksumRegistryKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ChecksumRegistryKey.html",
+          "hash": "KhzoIxCp0Vr04BuZPgvFm0A67JiebSdCzNGumdCYUIw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Contract.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Contract.html",
+          "hash": "bi3uUt8ewuCGy702xZB4/Lyu8JSYb6NcgLy4fTPT2Bk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ContractPackage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ContractPackage.html",
+          "hash": "1VGNqJGbelAUWgnsKr9WDqfzoHWt8FmQtCl2nc/z+40="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ContractVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ContractVersion.html",
+          "hash": "jOydNVNUh6BATUdXT0i9mhiLrNxrlV9+/piOHkO1uI4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Delegator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Delegator.html",
+          "hash": "QvAGZC6kYx/4thsDWLwp5L/PtwQOjNc/HqO1uxhgiS0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Deploy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Deploy.html",
+          "hash": "N2/4y89UfYT1JOz1V7YGv2tiZ+pYb15BtBCKEWt9cJA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.DeployApproval.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.DeployApproval.html",
+          "hash": "ngyTUW6cK4F9r+Epo912TqjXQKW0HbHoFhl8V15VoNs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.DeployHeader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.DeployHeader.html",
+          "hash": "062MovGYkkmEJ27rxQfLrZ6W9e+90NABIUlHiaqFcgU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.DeployInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.DeployInfo.html",
+          "hash": "jzuRRRZcUtDQ7hAuW8w7KbIwsG/Ny5jMvzbZPfhMJvA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.DeployInfoKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.DeployInfoKey.html",
+          "hash": "wqcRut2PYD/YaiR2gZhHc0LZmnh0t5d27nULYA0AJ7g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.DictionaryKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.DictionaryKey.html",
+          "hash": "l584OQUzx+ILeadXUrnKoiqSAzaekR2u9xzmGwSfqM4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.DisabledVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.DisabledVersion.html",
+          "hash": "xuLgFmsdOSjkFgjUnmzBBEzedTcdyss+LvOF6yHudEg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EntryPoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EntryPoint.html",
+          "hash": "sqKJ/PxnvxHu9gwpsAPyb9AOGLGNy9HUBw5TcIuVvC0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EntryPointAccess.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EntryPointAccess.html",
+          "hash": "LBCvRg/+D1ZUDl0UEomMhrkAaVityND8U253xE6Dt5Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EntryPointType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EntryPointType.html",
+          "hash": "flMz68ZjA2Mek46A7hdxG3eFZc1ePRtJKPMLKYdxzJY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EraEnd.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EraEnd.html",
+          "hash": "T8qOgXbbX0/iFRnH9GMlU+SD+UkQ6+vy22z5onYIr/U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EraInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EraInfo.html",
+          "hash": "8MSNNrzn9nNT7mdi57I6UAUn87xo7Mu2gK/SZY6aivk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EraInfoKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EraInfoKey.html",
+          "hash": "SrAHDCYwyXaDRd2NIR7cdlE3XYp0YU0EQmfzl1BdxQ0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EraReport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EraReport.html",
+          "hash": "Y/vp8iYhwv96IfoTFTbjROO+sZ3zAiC/K9LojHXLfR4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EraSummary.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EraSummary.html",
+          "hash": "NH8Rbmv4SX5azOaqfYBqKUvy9FQ88Iq8HRdl6KvE6zk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EraSummaryKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EraSummaryKey.html",
+          "hash": "StFSWuvJaGTrkZwQMYzdUTDSnw3PDXJ9PJtZpGjCxf4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.EraValidators.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.EraValidators.html",
+          "hash": "NjZXr6Q1SZDxS7ROwPtlcFP++e4dhlBiRxVENH/eG5M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ExecutableDeployItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ExecutableDeployItem.html",
+          "hash": "9As7w/HUgRdP07jWP2ewpaPfdfjV/68e+4eRIdJk65Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ExecutionEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ExecutionEffect.html",
+          "hash": "iYVgYsKzj1WX72hX2JmeoQGmywmJjwN7oMfXeQYPNyQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ExecutionResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ExecutionResult.html",
+          "hash": "fG3aj0r5B41t02MOaI0m/a60aMMGXDRZ4DD0N9PHmc0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.GlobalStateKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.GlobalStateKey.html",
+          "hash": "A/Z+4elUqFhseFEmj8LIC/cdbLZeJQPIPkmbIabvWKo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Group.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Group.html",
+          "hash": "EkTCYkrrj28dxjrpH1RX8hm96Kb2mpZUoEYpu7hXjpY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.HashKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.HashKey.html",
+          "hash": "RV5skmU16PPvFM0OuCLBuhi82L5+QauaZw86v69L0Ws="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.KeyAlgo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.KeyAlgo.html",
+          "hash": "EtelohE30KRoYI80HHt9AE67rV3c1S6uXtLvn3kGADA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.KeyIdentifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.KeyIdentifier.html",
+          "hash": "21Vlc0W8+XWCusT83DFyHhDpTQUPbGtJ1ty+9R8vJZ4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.KeyPair.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.KeyPair.html",
+          "hash": "36Yld2Hg8xuYr+pT/dy9pboZYdrvx2dthUi8XdJRrBA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.LockStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.LockStatus.html",
+          "hash": "RMVCNtDLf0kSZUiGKVcpay5FjwIU1fuxogQhg41szXo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.MinimalBlockInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.MinimalBlockInfo.html",
+          "hash": "Euif7eEeUgR6BUPf9myRQGyzeOamJYYo1jFR3VzSSRY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ModuleBytesDeployItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ModuleBytesDeployItem.html",
+          "hash": "hjb3V7bl8CeWP9aCuJMj8whx/YC+aZeOvdDKW86Brm0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.NamedArg.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.NamedArg.html",
+          "hash": "yMhjqXQnh5H/m6XBmo2klbK0rUEj+/TWhZP3wcuX6g4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.NamedKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.NamedKey.html",
+          "hash": "0YSREzjEzeG7tadQkrNe54giTXXa3ksQ+K4LJjghXqk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.NextUpgrade.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.NextUpgrade.html",
+          "hash": "pZDJEm5YXzp0eZ9vmL0n9eEIdvfrB5h/Go38it0+n+g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.OpKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.OpKind.html",
+          "hash": "wjpcLUZBLsa20u8HPYo+cGs181y8KqRgesKTPdzPGSA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Operation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Operation.html",
+          "hash": "PTbRb3xFvlCU3uoNX6bPTEVfz3BecvE1RtDHzRYkXbM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Parameter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Parameter.html",
+          "hash": "Zg77ulchZ5PwAGDC1oJpxMY2eC3wwMcbO1pktZq8P5A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Peer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Peer.html",
+          "hash": "3Rs5ZZf/DeKMWcQBPVHHzqDM5EkPZal97lOwjU5oV2s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Proposer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Proposer.html",
+          "hash": "i59fItct+AH78YUc9qDJV0V5a4Kc7XRsLGu/+aVD0pY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.PublicKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.PublicKey.html",
+          "hash": "AxsBKFRKORLVHHjTAu6KTMwQN1qLcHnnLSkzKurfm2E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ReactorState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ReactorState.html",
+          "hash": "YeVUgj7T/igDpl65w7BQsHfcqiHUaddlsECvOE1H0SQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Result-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Result-2.html",
+          "hash": "hutN0JKgvfm6Dd6nWigsHzoZ4exLdFvILbMIaRSPOe4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Reward.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Reward.html",
+          "hash": "ppTX+BWi/n3p2CCdAkLD3cMjjMtzs7f+Hc6w8toAsBk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.SeigniorageAllocation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.SeigniorageAllocation.html",
+          "hash": "nIFbikOnServkC7lJwWcks9PFqcAoMb80TNtcGXbbFM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Signature.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Signature.html",
+          "hash": "zV4hCmSgLWGGqA8vumsw4br2oDqxatuV7+SvizCA1c0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.StateIdentifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.StateIdentifier.html",
+          "hash": "HJA9lB1E+HD4FgOHgV9fY4akeuBNUbj+liXLOKmn7LE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Step.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Step.html",
+          "hash": "1gaM9SOct0Yo19/vxmCqZ5I4eWQyVbR8h82JzfNSHfg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.StoredContractByHashDeployItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.StoredContractByHashDeployItem.html",
+          "hash": "BMXvTJElWx2vIy5NRDjdqmYOei7aqAGlVxQpkYqDsEM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.StoredContractByNameDeployItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.StoredContractByNameDeployItem.html",
+          "hash": "6mEMliqQJPWcfk9a/A4O1zx8r9mSkm1ic2yOv4wQyjo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.StoredValue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.StoredValue.html",
+          "hash": "sJumGH+cVsWX2bkLwE5cuhMVpoRfIn/hO4WTdXYLFTc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.StoredVersionedContractByHashDeployItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.StoredVersionedContractByHashDeployItem.html",
+          "hash": "VbKx7ApA9h1/vFPghdw7RVxzSdu3cw7MNLc8JBmH/0A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.StoredVersionedContractByNameDeployItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.StoredVersionedContractByNameDeployItem.html",
+          "hash": "8gGBj485SGV/75jFiVGVJ35uR6dEM5FJ7Q8thoYlprc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.SystemContractRegistryKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.SystemContractRegistryKey.html",
+          "hash": "jY70iGh394zcWq3wD+JIKPmPMyIi7MnHonBgmyqipyE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Transfer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Transfer.html",
+          "hash": "XAoSZ4hbI2hwhSxdHsjxVa9FGhZXBew6rPD9Qz2bfjg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.TransferDeployItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.TransferDeployItem.html",
+          "hash": "rnny+Fp7yiO/hhyQs8s0224LV7EkBGRYlYcLBAoiadA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.TransferKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.TransferKey.html",
+          "hash": "+/zYpW0XIRkdw4NPZ6wBs/or9B95/wJ5n3y6vYyvu9s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Transform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Transform.html",
+          "hash": "xG4VXpIWtAgdvXyWNhmhJ9xmTQC30vbuoPtMLbwMpwA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.TransformType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.TransformType.html",
+          "hash": "LIuoF6fw3Ob09G64bC3vi/2mfAW1hIJlShWz/5BtN24="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.U64GlobalStateKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.U64GlobalStateKey.html",
+          "hash": "zLzKOU0g+m42s8OFQcahksIO2D/aMHhRPeoRFd904Ww="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.URef.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.URef.html",
+          "hash": "EmyMiT756gErVtPimSxNWMw8Hdk5GQqdnEZ0YPN8EIA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.UnbondKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.UnbondKey.html",
+          "hash": "rn/AN3xSytis03tNSDDI/Up3efB7Wi5uhermO5gFFQY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.UnbondingPurse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.UnbondingPurse.html",
+          "hash": "VfFtPfybUcOlCqkD1Z//DO78Uh2FEOlHnPAzinFxQPQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.Unit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.Unit.html",
+          "hash": "rcDFp/lQNKqdRsOPqCueqQNS7zsHpfQ/Bxpe74vKaHo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ValidatorChange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ValidatorChange.html",
+          "hash": "vlnsdrFiurf/QuKL7ZwzYXoKrrYaYYt95+SL5bIiThY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ValidatorChanges.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ValidatorChanges.html",
+          "hash": "0Lxasa5LMe7RcxR9lgUzM/5CbqvYpDdoOrcLWzeYY34="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ValidatorStatusChange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ValidatorStatusChange.html",
+          "hash": "PY1C9kvD7WsJOgE8+VSYKkP/ddrVJRKkGNAgHNb1Rmw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.ValidatorWeight.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.ValidatorWeight.html",
+          "hash": "XDCdlFW6lDAWAxfqlf+gKpk64ucmqyfjziZzCNHj46E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.VestingSchedule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.VestingSchedule.html",
+          "hash": "Yssdy8pZ/Cblv1izH3MTB/IGRFRxjNfrIa5U9BxofqQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.WithdrawKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.WithdrawKey.html",
+          "hash": "XOwTACChomxK3meNszdihe3xEiqx5VEhb+px/ogrYHM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Types.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Types.html",
+          "hash": "/afpFkZvloqdmis2Z4Hhl9KqdRUp3w7TT9sN+VdMX0w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Utils.BinaryReaderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Utils.BinaryReaderExtensions.html",
+          "hash": "058BgkT19E5Xi8PVnPC3RwWX/EOOy0Wnr1bQXMWaZS0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Utils.CEP57Checksum.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Utils.CEP57Checksum.html",
+          "hash": "AX22TAtxaabEOthXblzf00JRfT3g6YE/G3u4k6/jjvk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Utils.DateUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Utils.DateUtils.html",
+          "hash": "2crvg5ulWDSteGxoNcuA5A7rIonftgEyQVEc0vrjfyo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Utils.DurationUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Utils.DurationUtils.html",
+          "hash": "o1zBZ+MrVHQ0hQ/tVxkc7dvbrAltPb6K1zfo74NGPLM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Utils.RpcResponseExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Utils.RpcResponseExtensions.html",
+          "hash": "ja6VMFL7OBBosrdNNUmDLLrigiObzj+o2AXjJ0Knxhw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.Utils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.Utils.html",
+          "hash": "UHe87ENubeAc4hxMwXVGvZo0EwlFeB3yf4ta651c028="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Casper.Network.SDK.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Casper.Network.SDK.html",
+          "hash": "o/A12wmHGyVETgUBp1/PNEBCqwXSRPxauoFqKEhIJNY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "56vgZy7hIyNjZb0wFv6tSj9SdKg1FagWS36fOPlrkMc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "o2QBu/ARkJqOA13qIOKFXzBy1Om3lqOIrnZHkahPfC8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "c1m6GEObXCB45FsoeTmvCi5XVSzJ3YIgEMG+2FNRT70="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "PACVL2bYBoyVGvAmn8Yo0y1l7Lws2BniPrwzmht5P1s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 12,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 205,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

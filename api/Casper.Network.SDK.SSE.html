@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Casper.Network.SDK.SSE
+   | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Casper.Network.SDK.SSE
+   | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>    </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.SSE">
+  
+  <h1 id="Casper_Network_SDK_SSE" data-uid="Casper.Network.SDK.SSE" class="text-break">Namespace Casper.Network.SDK.SSE
+  </h1>
+  <div class="markdown level0 summary"><p>Use the class ServerEventsClient to create a client object that connects to the node's event stream.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"><p>The example <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Examples/AwaitEvents/Program.cs">AwaitEvents</a> shows how to use the SSE client.</p>
+</div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.BlockAdded.html">BlockAdded</a></h4>
+      <section><p>A <a class="xref" href="Casper.Network.SDK.SSE.BlockAdded.html#Casper_Network_SDK_SSE_BlockAdded_Block">Block</a> that has been added to the linear chain and stored in the node.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.DeployAccepted.html">DeployAccepted</a></h4>
+      <section><p>A new <a class="xref" href="Casper.Network.SDK.Types.Deploy.html">Deploy</a> received for processing in the network.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.DeployExpired.html">DeployExpired</a></h4>
+      <section><p>A <a class="xref" href="Casper.Network.SDK.Types.Deploy.html">Deploy</a> that has expired before being processed.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.DeployProcessed.html">DeployProcessed</a></h4>
+      <section><p>A <a class="xref" href="Casper.Network.SDK.Types.Deploy.html">Deploy</a> that has been executed, committed and forms part of a <a class="xref" href="Casper.Network.SDK.Types.Block.html">Block</a>..</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.Fault.html">Fault</a></h4>
+      <section><p>Generic representation of validator's fault in an era.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.FinalitySignature.html">FinalitySignature</a></h4>
+      <section><p>Server-Side event sent after each block finalization</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.ServerEventsClient.html">ServerEventsClient</a></h4>
+      <section><p>The client used to subscribe to events emitted by a Casper node.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.SSEvent.html">SSEvent</a></h4>
+      <section><p>An occurrence of a server side event delivered via callback method</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.ISSEClient.html">ISSEClient</a></h4>
+      <section></section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.ChannelType.html">ChannelType</a></h4>
+      <section><p>An enumeration with the event stream channels offered by a Casper node.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.EventType.html">EventType</a></h4>
+      <section><p>An enumeration with the different events triggered by a node.</p>
+</section>
+    <h3 id="delegates">Delegates
+  </h3>
+      <h4><a class="xref" href="Casper.Network.SDK.SSE.EventCallback.html">EventCallback</a></h4>
+      <section><p>A delegate method to handle emitted events.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Maintained by MAKE Technology LLC
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

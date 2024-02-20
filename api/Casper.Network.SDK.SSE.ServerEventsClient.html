@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ServerEventsClient
+   | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ServerEventsClient
+   | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>    </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.SSE.ServerEventsClient">
+  
+  
+  <h1 id="Casper_Network_SDK_SSE_ServerEventsClient" data-uid="Casper.Network.SDK.SSE.ServerEventsClient" class="text-break">Class ServerEventsClient
+  </h1>
+  <div class="markdown level0 summary"><p>The client used to subscribe to events emitted by a Casper node.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ServerEventsClient</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Casper.Network.SDK.SSE.ISSEClient.html">ISSEClient</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.Network.SDK.SSE.html">Casper.Network.SDK.SSE</a></h6>
+  <h6><strong>Assembly</strong>: Casper.Network.SDK.dll</h6>
+  <h5 id="Casper_Network_SDK_SSE_ServerEventsClient_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ServerEventsClient : object, ISSEClient</code></pre>
+  </div>
+  <h5 id="Casper_Network_SDK_SSE_ServerEventsClient_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Instantiate the <code>ServerEventsClient</code> class indicating the host and the port of the node
+that you want to connect to. Then, add one or more event callback methods to subscribe
+to some of the <a class="xref" href="Casper.Network.SDK.SSE.EventType.html">EventType</a>s offered by the node and start to
+listen to the event stream.<br>
+Refer to the <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Examples/AwaitEvents/Program.cs">AwaitEvents</a>
+for a practical example that shows how to use this class.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient__ctor_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.#ctor*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient__ctor" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.#ctor">ServerEventsClient()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ServerEventsClient()</code></pre>
+  </div>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient__ctor_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.#ctor*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient__ctor_System_String_System_Int32_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.#ctor(System.String,System.Int32)">ServerEventsClient(String, Int32)</h4>
+  <div class="markdown level1 summary"><p>Instantiate the class indicating the host and the port of a node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ServerEventsClient(string host, int port)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">host</span></td>
+        <td><p>IP or domain name of the node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">port</span></td>
+        <td><p>Event stream port.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient__host" data-uid="Casper.Network.SDK.SSE.ServerEventsClient._host">_host</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected string _host</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient__port" data-uid="Casper.Network.SDK.SSE.ServerEventsClient._port">_port</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int _port</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient__getHttpClient_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient._getHttpClient*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient__getHttpClient" data-uid="Casper.Network.SDK.SSE.ServerEventsClient._getHttpClient">_getHttpClient()</h4>
+  <div class="markdown level1 summary"><p>Returns an instance of an HttpClient. Derived classes can override this method to get
+the client object from an HttpClientFactory, for example.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual HttpClient _getHttpClient()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">HttpClient</span></td>
+        <td><p>a new or recycled instance of HttpClient</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient_AddEventCallback_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.AddEventCallback*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient_AddEventCallback_Casper_Network_SDK_SSE_EventType_System_String_Casper_Network_SDK_SSE_EventCallback_System_Int32_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.AddEventCallback(Casper.Network.SDK.SSE.EventType,System.String,Casper.Network.SDK.SSE.EventCallback,System.Int32)">AddEventCallback(EventType, String, EventCallback, Int32)</h4>
+  <div class="markdown level1 summary"><p>Adds an event callback method that is called for each subscribed event emitted by the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddEventCallback(EventType eventType, string name, EventCallback cb, int startFrom = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.SSE.EventType.html">EventType</a></td>
+        <td><span class="parametername">eventType</span></td>
+        <td><p>One or more event types to subscribe to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of the callback. Use it later to remove the callback when needed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.SSE.EventCallback.html">EventCallback</a></td>
+        <td><span class="parametername">cb</span></td>
+        <td><p>Callback method to call.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startFrom</span></td>
+        <td><p>The minimum Id number in the event stream that we want to receive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient_RemoveEventCallback_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.RemoveEventCallback*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient_RemoveEventCallback_Casper_Network_SDK_SSE_EventType_System_String_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.RemoveEventCallback(Casper.Network.SDK.SSE.EventType,System.String)">RemoveEventCallback(EventType, String)</h4>
+  <div class="markdown level1 summary"><p>Removes an event callback method from the client.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool RemoveEventCallback(EventType eventType, string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.SSE.EventType.html">EventType</a></td>
+        <td><span class="parametername">eventType</span></td>
+        <td><p>Event types subscribed in the callback method.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of the callback.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient_StartListening_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.StartListening*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient_StartListening" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.StartListening">StartListening()</h4>
+  <div class="markdown level1 summary"><p>Connects to the node and starts listening to its even stream. If no callback method has been
+added, this method throws an exception.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StartListening()</code></pre>
+  </div>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient_StopListening_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.StopListening*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient_StopListening" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.StopListening">StopListening()</h4>
+  <div class="markdown level1 summary"><p>Stops listening to the event stream and disconnects from the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task StopListening()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_SSE_ServerEventsClient_Wait_" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.Wait*"></a>
+  <h4 id="Casper_Network_SDK_SSE_ServerEventsClient_Wait" data-uid="Casper.Network.SDK.SSE.ServerEventsClient.Wait">Wait()</h4>
+  <div class="markdown level1 summary"><p>Blocks the calling thread until all channels are disconnected.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Wait()</code></pre>
+  </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Casper.Network.SDK.SSE.ISSEClient.html">ISSEClient</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Maintained by MAKE Technology LLC
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

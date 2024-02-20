@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Key management with Casper .Net SDK | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Key management with Casper .Net SDK | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>    </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="key-management-with-casper-net-sdk">Key management with Casper .Net SDK</h1>
+
+<p>Use the <code>PublicKey</code> and <code>KeyPair</code> classes to work with public keys and private keys respectively.</p>
+<h3 id="creating-new-key-pairs">Creating new key pairs</h3>
+<p>To create a new key pair use the method <code>CreateNew()</code> indicating the algorithm used:</p>
+<pre><code class="lang-csharp">var newKeyPair = KeyPair.CreateNew(KeyAlgo.ED25519);
+</code></pre>
+<pre><code class="lang-csharp">var anotherKeyPair = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+</code></pre>
+<h3 id="reading-keys-from-pem-files">Reading keys from PEM files</h3>
+<p>To read a key from a PEM file use the method <code>FromPEM()</code>:</p>
+<pre><code class="lang-csharp">var pk = PublicKey.FromPem(&quot;/tmp/my_pk.pem&quot;);
+</code></pre>
+<pre><code class="lang-csharp">var keypair = KeyPair.FromPem(&quot;/tmp/faucetact.pem&quot;);
+</code></pre>
+<p>When working with a private key you can always get its public key:</p>
+<pre><code class="lang-csharp">var faucetPK = keypair.PublicKey;
+</code></pre>
+<h3 id="writing-keys-to-pem-files">Writing keys to PEM files</h3>
+<p>When you create a new key you may want to save the private part in a file for later usage. Currently, we support writing the keys to PEM files:</p>
+<pre><code class="lang-csharp">newKeyPair.WriteToPem(&quot;newED25519_sk.pem&quot;);
+</code></pre>
+<pre><code class="lang-csharp">anotherKeyPair.WriteToPem(&quot;newSECP256K1_sk.pem&quot;);
+</code></pre>
+<p>You can save to a file also the public key part:</p>
+<pre><code class="lang-csharp">newKeyPair.WritePublicKeyToPem(&quot;newED25519_pk.pem&quot;);
+</code></pre>
+<pre><code class="lang-csharp">newKeyPair.PublicKey.WriteToPem(&quot;newED25519_pk2.pem&quot;);
+</code></pre>
+<h3 id="creating-public-key-from-values">Creating public key from values</h3>
+<p>To get a <code>PublicKey</code> object from a hexadecimal string, use the <code>FromHexString()</code> method if the string contains the algorithm identifier prefix as first byte:</p>
+<pre><code class="lang-csharp">var pk = PublicKey.FromHexString(&quot;012629e6d0eed7db2d232b5b0a35d729796bb6f3cbd12811538a61de78c75870ba&quot;);
+</code></pre>
+<p>Or use the method <code>FromRawBytes()</code> and indicate the algorithm of the key explicitly:</p>
+<pre><code class="lang-csharp">var pk2 = PublicKey.FromRawBytes(&quot;2629e6d0eed7db2d232b5b0a35d729796bb6f3cbd12811538a61de78c75870ba&quot;, KeyAlgo.ED25519);
+</code></pre>
+<pre><code class="lang-csharp">var pk3 = PublicKey.FromRawBytes(&quot;02793d6a3940502b0946bed65719d3e75d089a25b52a8fc740373c48a8031e83b3&quot;, KeyAlgo.SECP256K1);
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Maintained by MAKE Technology LLC
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

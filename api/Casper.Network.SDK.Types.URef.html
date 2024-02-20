@@ -1,0 +1,391 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class URef
+   | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class URef
+   | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>    </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.Types.URef">
+  
+  
+  <h1 id="Casper_Network_SDK_Types_URef" data-uid="Casper.Network.SDK.Types.URef" class="text-break">Class URef
+  </h1>
+  <div class="markdown level0 summary"><p>Unforgeable Reference. This key type is used for storing any type of value
+except Account. Additionally, URefs used in contracts carry permission information
+to prevent unauthorized usage of the value stored under the key.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html">GlobalStateKey</a></div>
+    <div class="level2"><span class="xref">URef</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_Key">GlobalStateKey.Key</a>
+    </div>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_KeyIdentifier">GlobalStateKey.KeyIdentifier</a>
+    </div>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_RawBytes">GlobalStateKey.RawBytes</a>
+    </div>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_ToHexString">GlobalStateKey.ToHexString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_FromString_System_String_">GlobalStateKey.FromString(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_FromBytes_System_Byte___">GlobalStateKey.FromBytes(Byte[])</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.Network.SDK.Types.html">Casper.Network.SDK.Types</a></h6>
+  <h6><strong>Assembly</strong>: Casper.Network.SDK.dll</h6>
+  <h5 id="Casper_Network_SDK_Types_URef_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class URef : GlobalStateKey</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Casper_Network_SDK_Types_URef__ctor_" data-uid="Casper.Network.SDK.Types.URef.#ctor*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_Byte___" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.Byte[])">URef(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Creates an URef from a 33 bytes array. Last byte corresponds to the access rights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public URef(byte[] bytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">bytes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_Types_URef__ctor_" data-uid="Casper.Network.SDK.Types.URef.#ctor*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_Byte___Casper_Network_SDK_Types_AccessRights_" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.Byte[],Casper.Network.SDK.Types.AccessRights)">URef(Byte[], AccessRights)</h4>
+  <div class="markdown level1 summary"><p>Creates an URef from a 32 bytes array and the access rights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public URef(byte[] rawBytes, AccessRights accessRights)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">rawBytes</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.AccessRights.html">AccessRights</a></td>
+        <td><span class="parametername">accessRights</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Casper_Network_SDK_Types_URef__ctor_" data-uid="Casper.Network.SDK.Types.URef.#ctor*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_String_" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.String)">URef(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public URef(string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  
+  <h4 id="Casper_Network_SDK_Types_URef_KEYPREFIX" data-uid="Casper.Network.SDK.Types.URef.KEYPREFIX">KEYPREFIX</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string KEYPREFIX</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Casper_Network_SDK_Types_URef_AccessRights_" data-uid="Casper.Network.SDK.Types.URef.AccessRights*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef_AccessRights" data-uid="Casper.Network.SDK.Types.URef.AccessRights">AccessRights</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AccessRights AccessRights { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.AccessRights.html">AccessRights</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Casper_Network_SDK_Types_URef__GetRawBytesFromKey_" data-uid="Casper.Network.SDK.Types.URef._GetRawBytesFromKey*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef__GetRawBytesFromKey_System_String_" data-uid="Casper.Network.SDK.Types.URef._GetRawBytesFromKey(System.String)">_GetRawBytesFromKey(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override byte[] _GetRawBytesFromKey(string key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey__GetRawBytesFromKey_System_String_">GlobalStateKey._GetRawBytesFromKey(String)</a></div>
+  
+  
+  <a id="Casper_Network_SDK_Types_URef_GetBytes_" data-uid="Casper.Network.SDK.Types.URef.GetBytes*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef_GetBytes" data-uid="Casper.Network.SDK.Types.URef.GetBytes">GetBytes()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override byte[] GetBytes()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_GetBytes">GlobalStateKey.GetBytes()</a></div>
+  
+  
+  <a id="Casper_Network_SDK_Types_URef_ToString_" data-uid="Casper.Network.SDK.Types.URef.ToString*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef_ToString" data-uid="Casper.Network.SDK.Types.URef.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_ToString">GlobalStateKey.ToString()</a></div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Maintained by MAKE Technology LLC
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
