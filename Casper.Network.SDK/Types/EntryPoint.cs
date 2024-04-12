@@ -32,7 +32,7 @@ namespace Casper.Network.SDK.Types
                 if (reader.TokenType == JsonTokenType.String)
                 {
                     var value = reader.GetString();
-                    if (value.ToLower() == "public")
+                    if (value.ToLowerInvariant() == "public")
                         return new EntryPointAccess()
                         {
                             IsPublic = true,
@@ -44,7 +44,7 @@ namespace Casper.Network.SDK.Types
                     reader.Read(); // start object
                     var value = reader.GetString(); // read property
                     reader.Read();
-                    if (value.ToLower() == "groups")
+                    if (value.ToLowerInvariant() == "groups")
                     {
                         List<string> groups = JsonSerializer.Deserialize<List<string>>(ref reader, options);
                         reader.Read(); // end array

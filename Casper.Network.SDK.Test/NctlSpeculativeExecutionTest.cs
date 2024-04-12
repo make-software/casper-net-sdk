@@ -48,7 +48,7 @@ namespace NetCasperTest
                 50_000_000_000,
                 _chainName,
                 1, //gasPrice=1
-                45011500); //ttl='12h 30m 11s 500ms'
+                3_600_000*2); //ttl='2h'
             deploy.Sign(_faucetKey);
 
             var rpcResponse = await _client.SpeceulativeExecution(deploy);

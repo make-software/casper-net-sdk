@@ -114,7 +114,19 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(PublicKey publicKey,
             string blockHash = null)
         {
-            var method = new GetAccountInfo(publicKey.ToAccountHex(), blockHash);
+            var method = new GetAccountInfo(publicKey, blockHash);
+            return await SendRpcRequestAsync<GetAccountInfoResult>(method);
+        }
+
+        /// <summary>
+        /// Request the information of an Account in the network.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account.</param>
+        /// <param name="blockHash">A block hash for which the information of the account is queried. Null for most recent information.</param>
+        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash,
+            string blockHash = null)
+        {
+            var method = new GetAccountInfo(accountHash, blockHash);
             return await SendRpcRequestAsync<GetAccountInfoResult>(method);
         }
 
@@ -123,6 +135,7 @@ namespace Casper.Network.SDK
         /// </summary>
         /// <param name="publicKey">The public key of the account formatted as a string.</param>
         /// <param name="blockHash">A block hash for which the information of the account is queried. Null for most recent information.</param>
+        [Obsolete("For Casper node v1.5.5 or newer use the new method signature with PublicKey or AccountHashKey, ", false)]
         public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, 
             string blockHash = null)
         {
@@ -137,7 +150,18 @@ namespace Casper.Network.SDK
         /// <param name="blockHeight">A block height for which the information of the account is queried.</param>
         public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(PublicKey publicKey, int blockHeight)
         {
-            var method = new GetAccountInfo(publicKey.ToAccountHex(), blockHeight);
+            var method = new GetAccountInfo(publicKey, blockHeight);
+            return await SendRpcRequestAsync<GetAccountInfoResult>(method);
+        }
+
+        /// <summary>
+        /// Request the information of an Account in the network.
+        /// </summary>
+        /// <param name="accountHash">The account hash of the account.</param>
+        /// <param name="blockHeight">A block height for which the information of the account is queried.</param>
+        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, int blockHeight)
+        {
+            var method = new GetAccountInfo(accountHash, blockHeight);
             return await SendRpcRequestAsync<GetAccountInfoResult>(method);
         }
 
@@ -146,6 +170,7 @@ namespace Casper.Network.SDK
         /// </summary>
         /// <param name="publicKey">The public key of the account formatted as an hex-string.</param>
         /// <param name="blockHeight">A block height for which the information of the account is queried.</param>
+        [Obsolete("For Casper node v1.5.5 or newer use the new method signature with PublicKey or AccountHashKey, ", false)]
         public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, int blockHeight)
         {
             var method = new GetAccountInfo(publicKey, blockHeight);
@@ -192,10 +217,9 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
             string path = null)
         {            
-            if (stateRootHash == null)
-                stateRootHash = await GetStateRootHash();
-
-            var method = new QueryGlobalState(key, StateIdentifier.WithStateRootHash(stateRootHash), path?.Split(new char[] {'/'}));
+            var method = new QueryGlobalState(key, 
+                stateRootHash != null? StateIdentifier.WithStateRootHash(stateRootHash) : null, 
+                path?.Split(new char[] {'/'}));
             return await SendRpcRequestAsync<QueryGlobalStateResult>(method);
         }
 
@@ -508,16 +532,16 @@ namespace Casper.Network.SDK
         }
 
         /// <summary>
-        /// Lookup a dictionary item from its dictionary item key.
+        /// Lookup a dictionary item from its dictionary key.
         /// </summary>
-        /// <param name="dictionaryItem">The dictionary item key to retrieve.</param>
+        /// <param name="dictionaryKey">The dictionary key to retrieve.</param>
         /// <param name="stateRootHash">Hash of the state root.</param>
-        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItem(string dictionaryItem, string stateRootHash = null)
+        public async Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItem(string dictionaryKey, string stateRootHash = null)
         {
             if(stateRootHash == null)
                 stateRootHash = await GetStateRootHash();
 
-            var method = new GetDictionaryItem(dictionaryItem, stateRootHash);
+            var method = new GetDictionaryItem(dictionaryKey, stateRootHash);
             return await SendRpcRequestAsync<GetDictionaryItemResult>(method);
         }
 

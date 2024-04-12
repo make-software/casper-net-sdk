@@ -68,9 +68,10 @@ The command above excludes integration tests. If you're running a Casper network
 dotnet test --settings Casper.Network.SDK.Test/test.runsettings --filter 'TestCategory~NCTL'
 ```
 
+NOTE: Make sure your NCTL network has booted up and nodes are emitting blocks before running the tests.
+
 ## Create a workspace in Gitpod
 
 Click the button to start coding in Gitpod with an online IDE.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/make-software/casper-net-sdk)
-

@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net7.0;netstandard2.0</TargetFramework>
         <LangVersion>9.0</LangVersion>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-        <FileVersion>2.0.0</FileVersion>
-        <PackageVersion>2.0.0</PackageVersion>
+        <AssemblyVersion>2.2.0.0</AssemblyVersion>
+        <FileVersion>2.2.0</FileVersion>
+        <PackageVersion>2.2.0</PackageVersion>
         <Title>Casper.Network.SDK</Title>
         <Authors>make-software</Authors>
         <PackageProjectUrl>https://github.com/make-software/casper-net-sdk</PackageProjectUrl>
@@ -18,10 +18,12 @@
           Casper .NET SDK is a C# SDK to interact with the Casper network.
         </Description>
         <RootNamespace>Casper.Network.SDK</RootNamespace>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BouncyCastle.NetCore" Version="1.9.0" />
+      <PackageReference Include="BouncyCastle.Cryptography" Version="2.3.0" />
       <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
       <PackageReference Include="System.Text.Json" Version="7.0.3" />
     </ItemGroup>
@@ -29,5 +31,6 @@
     <ItemGroup>
       <None Include="README_nuget.md" Pack="true" PackagePath="\" />
       <None Include="..\LICENSE" Pack="true" PackagePath="\" />
+      <None Include="bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml" Pack="true" PackagePath="\" />
     </ItemGroup>
 </Project>

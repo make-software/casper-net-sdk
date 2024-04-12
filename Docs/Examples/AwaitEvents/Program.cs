@@ -9,7 +9,7 @@ namespace Casper.NET.SDK.Examples
     public static class AwaitEvents
     {
         // Testnet node and port
-        private static string localNetHost = "testnet-node.make.services";
+        private static string localNetHost = "52.35.59.254";
         private static int localNetPort = 9999; // use 18101 with NCTL
         
         static NetCasperClient casperSdk;

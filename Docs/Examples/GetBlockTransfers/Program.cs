@@ -10,7 +10,7 @@ namespace Casper.NET.SDK.Examples
     {
         public static async Task Main(string[] args)
         {
-            string nodeAddress = "http://testnet-node.make.services:7777/rpc";
+            string nodeAddress = "http://52.35.59.254:7777/rpc";
             string blockHash = "c7148e1e2e115d8fba357e04be2073d721847c982dc70d5c36b5f6d3cf66331c";
             int blockHeight = 20652;
 

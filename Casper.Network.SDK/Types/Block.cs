@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Casper.Network.SDK.Types
@@ -70,6 +73,69 @@ namespace Casper.Network.SDK.Types
     }
 
     /// <summary>
+    /// Validator that proposed the block
+    /// </summary>
+    public class Proposer
+    {
+        /// <summary>
+        /// The block was proposed by the system, not a validator
+        /// </summary>
+        public bool IsSystem { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Replaced with IsSystem")]
+        public bool isSystem
+        {
+            get => this.IsSystem;
+            set => this.IsSystem = value;
+        }
+        
+        /// <summary>
+        /// Validator's public key
+        /// </summary>
+        public PublicKey PublicKey { get; set; }
+        
+        /// <summary>
+        /// Json converter class to serialize/deserialize a Proposer to/from Json
+        /// </summary>
+        public class ProposerConverter : JsonConverter<Proposer>
+        {
+            public override Proposer Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                try
+                {
+                    var pkhex = reader.GetString();
+                    if (pkhex == "00")
+                        return new Proposer()
+                        {
+                            IsSystem = true,
+                        };
+                    return new Proposer()
+                    {
+                        IsSystem = false,
+                        PublicKey = PublicKey.FromHexString(pkhex),
+                    };
+                }
+                catch (Exception e)
+                {
+                    throw new JsonException(e.Message);
+                }
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                Proposer proposer,
+                JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(proposer.IsSystem ? "00" : proposer.PublicKey.ToAccountHex());
+            }
+        }
+    }
+    
+    /// <summary>
     /// A block body
     /// </summary>
     public class BlockBody
@@ -84,8 +150,8 @@ namespace Casper.Network.SDK.Types
         /// Public key of the validator that proposed the block
         /// </summary>
         [JsonPropertyName("proposer")]
-        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
-        public PublicKey Proposer { get; init; }
+        [JsonConverter(typeof(Proposer.ProposerConverter))]
+        public Proposer Proposer { get; init; }
         
         /// <summary>
         /// List of Transfer hashes included in the block

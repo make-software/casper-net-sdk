@@ -8,7 +8,7 @@ namespace ListRewards
 {
     public static class ListRewards
     {
-        static string nodeAddress = "http://testnet-node.make.services:7777/rpc";
+        static string nodeAddress = "http://52.35.59.254:7777/rpc";
         static NetCasperClient casperSdk;
 
         public async static Task GetEraSummary()
