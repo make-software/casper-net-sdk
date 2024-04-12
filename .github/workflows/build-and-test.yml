@@ -2,7 +2,7 @@ name: Build and Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, netstandard-2-0-target ]
   pull_request:
     branches: [ master ]
 
@@ -11,6 +11,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        include:
+          - name: net7.0
+            framework: net7.0
+          - name: netstandard2.0
+            framework: netstandard2.0         
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -22,4 +29,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal --filter "TestCategory!~NCTL"
+      run: TEST_FRAMEWORK ${{ matrix.framework }} dotnet test --no-build --verbosity normal --filter "TestCategory!~NCTL"

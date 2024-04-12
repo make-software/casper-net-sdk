@@ -1,5 +1,3 @@
-#if NETSTANDARD2_0
-
 using System;
 using System.Linq;
 
@@ -15,5 +13,3 @@ public static class EnumCompat
         return Enum.GetName(typeof(TEnum), value);
     }
 }
-
-#endif

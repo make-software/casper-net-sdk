@@ -1,5 +1,3 @@
-#if NETSTANDARD2_0
-
 using System;
 using System.Numerics;
 
@@ -7,6 +5,9 @@ public class BigIntegerCompat
 {
     public static BigInteger Create(byte[] value, bool isUnsigned = false, bool isBigEndian = false)
     {
+#if NET7_0_OR_GREATER
+        return new BigInteger(value, true, false);
+#elif NETSTANDARD2_0        
         if (value == null)
         {
             throw new ArgumentNullException(nameof(value));
@@ -28,7 +29,7 @@ public class BigIntegerCompat
         }
 
         return new BigInteger(value);
+#endif
     }
 }
 
-#endif

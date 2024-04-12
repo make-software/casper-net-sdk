@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
 using Casper.Network.SDK.Types;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Org.BouncyCastle.Utilities.Encoders;
 
@@ -148,7 +147,7 @@ namespace NetCasperTest
             var json = @"{""cl_type"":""I32"",""bytes"":""00000080"",""parsed"":-2147483648}";
             var clValue = JsonSerializer.Deserialize<CLValue>(json);
             Assert.IsNotNull(clValue);
-            Assert.AreEqual(int.MinValue, BitConverter.ToInt32(clValue.Bytes));
+            Assert.AreEqual(int.MinValue, BitConverterExtensions.ToInt32(clValue.Bytes));
             Assert.AreEqual(int.MinValue, clValue.Parsed);
         }
         
@@ -168,7 +167,7 @@ namespace NetCasperTest
             var clValue = JsonSerializer.Deserialize<CLValue>(json);
             Assert.IsNotNull(clValue);
             Assert.AreEqual(CLType.U64, clValue.TypeInfo.Type);
-            Assert.AreEqual(ulong.MaxValue, BitConverter.ToUInt64(clValue.Bytes));
+            Assert.AreEqual(ulong.MaxValue, BitConverterExtensions.ToUInt64(clValue.Bytes));
             Assert.AreEqual(ulong.MaxValue, clValue.Parsed);
         }
 

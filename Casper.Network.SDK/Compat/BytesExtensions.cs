@@ -1,4 +1,3 @@
-#if NETSTANDARD2_0
 
 using System;
 
@@ -22,4 +21,3 @@ public static class BytesExtensions
     }
 }
 
-#endif

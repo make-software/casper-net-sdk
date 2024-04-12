@@ -946,7 +946,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Tuple1 CLValue to Tuple&ltT1;&gt;.
+        /// Converts Tuple1 CLValue to Tuple&lt;T1&gt;.
         /// </summary>
         public Tuple<T1> ToTuple1<T1>()
         {
@@ -969,7 +969,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Tuple2 CLValue to Tuple&ltT1,T2;&gt;.
+        /// Converts Tuple2 CLValue to Tuple&lt;T1,T2&gt;.
         /// </summary>
         public Tuple<T1, T2> ToTuple2<T1, T2>()
         {
@@ -992,7 +992,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Tuple2 CLValue to Tuple&ltT1,T2,T3;&gt;.
+        /// Converts Tuple2 CLValue to Tuple&lt;T1,T2,T3&gt;.
         /// </summary>
         public Tuple<T1, T2, T3> ToTuple3<T1, T2, T3>()
         {
@@ -1015,7 +1015,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Result CLValue to Result&ltTOk,TErr;&gt;.
+        /// Converts Result CLValue to Result&lt;TOk,TErr&gt;.
         /// </summary>
         public Result<TOk, TErr> ToResult<TOk, TErr>()
         {

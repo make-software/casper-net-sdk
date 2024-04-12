@@ -214,7 +214,7 @@ namespace NetCasperTest
             Assert.AreEqual(new BigInteger(5123456789012), clValue.ToBigInteger());
             Assert.AreEqual(new BigInteger(5123456789012), (BigInteger) clValue);
 
-            var bigInt = new BigInteger(Hex.Decode("F0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF"), true);
+            var bigInt = BigIntegerCompat.Create(Hex.Decode("F0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF"), true);
             clValue = CLValue.U128(bigInt);
             Assert.AreEqual(bigInt, clValue.ToBigInteger());
             Assert.AreEqual(bigInt, (BigInteger) clValue);
