@@ -9,6 +9,14 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
+    strategy:
+      matrix:
+        include:
+          - name: net7.0
+            framework: net7.0
+          - name: netstandard2.0
+            framework: netstandard2.0
+            
     # Service containers to run with `runner-job`
     services:
       # Label used to access the service container
@@ -37,4 +45,4 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Test
-        run: dotnet test --no-build --verbosity normal --settings Casper.Network.SDK.Test/test.runsettings --filter="TestCategory=NCTL"
+        run: TEST_FRAMEWORK=${{ matrix.framework }} dotnet test --no-build --verbosity normal --settings Casper.Network.SDK.Test/test.runsettings --filter="TestCategory=NCTL"
