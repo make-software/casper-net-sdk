@@ -29,4 +29,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: TEST_FRAMEWORK ${{ matrix.framework }} dotnet test --no-build --verbosity normal --filter "TestCategory!~NCTL"
+      run: TEST_FRAMEWORK=${{ matrix.framework }} dotnet test --no-build --verbosity normal --filter "TestCategory!~NCTL"
