@@ -40,7 +40,7 @@ namespace NetCasperTest
         [Test, Order(1)]
         public async Task SpeculativeExecutionTest()
         {
-            var wasmBytes = await File.ReadAllBytesAsync(_wasmFile);
+            var wasmBytes = await FileExtensions.ReadAllBytesAsync(_wasmFile);
 
             var deploy = DeployTemplates.ContractDeploy(
                 wasmBytes,

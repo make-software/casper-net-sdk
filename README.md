@@ -54,6 +54,12 @@ dotnet test --filter 'TestCategory!~NCTL'
 
 On Windows use a PowerShell terminal to run the tests.
 
+To test against `netstandard2.0` framework, launch the tests as follows:
+
+```
+TEST_FRAMEWORK=netstandard2.0 dotnet test --filter 'TestCategory!~NCTL'
+```
+
 ### Integration tests
 
 The command above excludes integration tests. If you're running a Casper network locally with NCTL, follow these steps to run the integrations tests:
@@ -69,6 +75,12 @@ dotnet test --settings Casper.Network.SDK.Test/test.runsettings --filter 'TestCa
 ```
 
 NOTE: Make sure your NCTL network has booted up and nodes are emitting blocks before running the tests.
+
+To test against `netstandard2.0` framework, launch the tests as follows:
+
+```
+TEST_FRAMEWORK=netstandard2.0 dotnet test --settings Casper.Network.SDK.Test/test.runsettings --filter 'TestCategory~NCTL'
+```
 
 ## Create a workspace in Gitpod
 

@@ -20,7 +20,7 @@ namespace Casper.Network.SDK.Types
         }
 
         public CLValueException(byte[] bytes, CLTypeInfo okType, CLTypeInfo errType) 
-            : base($"Cannot convert {Hex.ToHexString(bytes[1..])}' to '{errType}'.")
+            : base($"Cannot convert {Hex.ToHexString(bytes.Slice(1))}' to '{errType}'.")
         {
             Bytes = bytes;
             ErrorValue = null;

@@ -536,7 +536,7 @@ namespace Casper.Network.SDK.Types
 
         private void ParseResultError(byte[] Bytes, CLResultTypeInfo resultTypeInfo)
         {
-            var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+            var reader = new BinaryReader(new MemoryStream(Bytes.Slice(1)));
 
             var item = reader.ReadCLItem(resultTypeInfo.Err, null);
             if (item == null)
@@ -554,7 +554,7 @@ namespace Casper.Network.SDK.Types
                 ParseResultError(Bytes, resultTypeInfo);
 
             typeInfo = resultTypeInfo.Ok;
-            return Bytes[1..];
+            return Bytes.Slice(1);
         }
 
         /// <summary>
@@ -786,8 +786,9 @@ namespace Casper.Network.SDK.Types
             if (typeInfo.Type == CLType.URef)
                 return new URef(bytes);
 
-            if (typeInfo.Type == CLType.Key && ((CLKeyTypeInfo) typeInfo).KeyIdentifier == KeyIdentifier.URef)
-                return new URef(bytes[1..]);
+            if (typeInfo.Type == CLType.Key && ((CLKeyTypeInfo) typeInfo).KeyIdentifier == KeyIdentifier.URef) {
+                return new URef(bytes.Slice(1));
+            }
 
             throw new FormatException($"Cannot convert '{typeInfo.Type}' to 'URef'.");
         }
@@ -945,7 +946,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Tuple1 CLValue to Tuple&ltT1;&gt;.
+        /// Converts Tuple1 CLValue to Tuple&lt;T1&gt;.
         /// </summary>
         public Tuple<T1> ToTuple1<T1>()
         {
@@ -968,7 +969,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Tuple2 CLValue to Tuple&ltT1,T2;&gt;.
+        /// Converts Tuple2 CLValue to Tuple&lt;T1,T2&gt;.
         /// </summary>
         public Tuple<T1, T2> ToTuple2<T1, T2>()
         {
@@ -991,7 +992,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Tuple2 CLValue to Tuple&ltT1,T2,T3;&gt;.
+        /// Converts Tuple2 CLValue to Tuple&lt;T1,T2,T3&gt;.
         /// </summary>
         public Tuple<T1, T2, T3> ToTuple3<T1, T2, T3>()
         {
@@ -1014,7 +1015,7 @@ namespace Casper.Network.SDK.Types
         }
 
         /// <summary>
-        /// Converts Result CLValue to Result&ltTOk,TErr;&gt;.
+        /// Converts Result CLValue to Result&lt;TOk,TErr&gt;.
         /// </summary>
         public Result<TOk, TErr> ToResult<TOk, TErr>()
         {
@@ -1029,13 +1030,13 @@ namespace Casper.Network.SDK.Types
 
             if (Bytes[0] == 0x01)
             {
-                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                var reader = new BinaryReader(new MemoryStream(Bytes.Slice(1)));
                 var v = reader.ReadCLItem(resultTypeInfo.Ok, typeof(TOk));
                 return Result<TOk, TErr>.Ok((TOk) v);
             }
             else
             {
-                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                var reader = new BinaryReader(new MemoryStream(Bytes.Slice(1)));
                 var v = reader.ReadCLItem(resultTypeInfo.Err, typeof(TErr));
                 return Result<TOk, TErr>.Fail((TErr)v);
             }
@@ -1076,7 +1077,7 @@ namespace Casper.Network.SDK.Types
                 if(typeInfo==null)
                     throw new ArgumentException(nameof(value), $"value is not an 'Option' CLValue.");
 
-                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                var reader = new BinaryReader(new MemoryStream(Bytes.Slice(1)));
                 value = reader.ReadCLItem(typeInfo.OptionType, null);
             }
 
@@ -1098,7 +1099,7 @@ namespace Casper.Network.SDK.Types
                 if(typeInfo==null)
                     throw new ArgumentException(nameof(value), $"value is not an 'Option' CLValue.");
 
-                var reader = new BinaryReader(new MemoryStream(Bytes[1..]));
+                var reader = new BinaryReader(new MemoryStream(Bytes.Slice(1)));
                 value = (T) reader.ReadCLItem(typeInfo.OptionType, typeof(T));
                 
                 return true;

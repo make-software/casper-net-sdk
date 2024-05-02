@@ -84,7 +84,7 @@ namespace Casper.Network.SDK.Types
                         {
                             var stype = reader.GetString();
                             if (stype != null)
-                                type = Enum.Parse<TransformType>(stype);
+                                type = EnumCompat.Parse<TransformType>(stype);
                             reader.Read();
                         }
                         else if (reader.TokenType == JsonTokenType.StartObject)
@@ -92,7 +92,7 @@ namespace Casper.Network.SDK.Types
                             reader.Read();
                             var stype = reader.GetString();
                             if (stype != null)
-                                type = Enum.Parse<TransformType>(stype);
+                                type = EnumCompat.Parse<TransformType>(stype);
                             reader.Read();
                             switch (type)
                             {

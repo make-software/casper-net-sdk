@@ -21,7 +21,7 @@ namespace NetCasperTest
             var publicKey = PublicKey.FromHexString(ED25519publicKey);
             Assert.AreEqual(KeyAlgo.ED25519, publicKey.KeyAlgorithm);
             Assert.AreEqual(ED25519publicKey, publicKey.ToAccountHex());
-            Assert.IsTrue(Hex.Decode(ED25519publicKey)[1..].SequenceEqual(publicKey.RawBytes));
+            Assert.IsTrue(Hex.Decode(ED25519publicKey).Slice(1).SequenceEqual(publicKey.RawBytes));
             
             var hash = publicKey.GetAccountHash();
             Assert.AreEqual(ED25519hash, hash.Substring("account-hash-".Length), "Unexpected ED25519 hash value");
@@ -29,19 +29,19 @@ namespace NetCasperTest
             var pk2 = PublicKey.FromBytes(Hex.Decode(ED25519publicKey));
             Assert.AreEqual(KeyAlgo.ED25519, pk2.KeyAlgorithm);
             Assert.AreEqual(ED25519publicKey, pk2.ToAccountHex());
-            Assert.IsTrue(Hex.Decode(ED25519publicKey)[1..].SequenceEqual(pk2.RawBytes));
+            Assert.IsTrue(Hex.Decode(ED25519publicKey).Slice(1).SequenceEqual(pk2.RawBytes));
             
-            var pk3 = PublicKey.FromRawBytes(Hex.Decode(ED25519publicKey)[1..], KeyAlgo.ED25519);
+            var pk3 = PublicKey.FromRawBytes(Hex.Decode(ED25519publicKey).Slice(1), KeyAlgo.ED25519);
             Assert.AreEqual(KeyAlgo.ED25519, pk3.KeyAlgorithm);
             Assert.AreEqual(ED25519publicKey, pk3.ToAccountHex());
-            Assert.IsTrue(Hex.Decode(ED25519publicKey)[1..].SequenceEqual(pk3.RawBytes));
+            Assert.IsTrue(Hex.Decode(ED25519publicKey).Slice(1).SequenceEqual(pk3.RawBytes));
             
             var pemfile =  TestContext.CurrentContext.TestDirectory + 
                            "/TestData/test-ed25519-pk.pem";
             var pk4 = PublicKey.FromPem(pemfile);
             Assert.AreEqual(KeyAlgo.ED25519, pk4.KeyAlgorithm);
             Assert.AreEqual(ED25519publicKey, pk4.ToAccountHex());
-            Assert.IsTrue(Hex.Decode(ED25519publicKey)[1..].SequenceEqual(pk4.RawBytes));
+            Assert.IsTrue(Hex.Decode(ED25519publicKey).Slice(1).SequenceEqual(pk4.RawBytes));
             Assert.IsTrue(Hex.Decode(ED25519publicKey).SequenceEqual(pk4.GetBytes()));
             
             var hash3 = pk4.GetAccountHash();
@@ -60,19 +60,19 @@ namespace NetCasperTest
             var pk2 = PublicKey.FromBytes(Hex.Decode(SECP256K1publicKey));
             Assert.AreEqual(KeyAlgo.SECP256K1, pk2.KeyAlgorithm);
             Assert.AreEqual(SECP256K1publicKey, pk2.ToAccountHex());
-            Assert.IsTrue(Hex.Decode(SECP256K1publicKey)[1..].SequenceEqual(pk2.RawBytes));
+            Assert.IsTrue(Hex.Decode(SECP256K1publicKey).Slice(1).SequenceEqual(pk2.RawBytes));
             
-            var pk3 = PublicKey.FromRawBytes(Hex.Decode(SECP256K1publicKey)[1..], KeyAlgo.SECP256K1);
+            var pk3 = PublicKey.FromRawBytes(Hex.Decode(SECP256K1publicKey).Slice(1), KeyAlgo.SECP256K1);
             Assert.AreEqual(KeyAlgo.SECP256K1, pk3.KeyAlgorithm);
             Assert.AreEqual(SECP256K1publicKey, pk3.ToAccountHex());
-            Assert.IsTrue(Hex.Decode(SECP256K1publicKey)[1..].SequenceEqual(pk3.RawBytes));
+            Assert.IsTrue(Hex.Decode(SECP256K1publicKey).Slice(1).SequenceEqual(pk3.RawBytes));
 
             var pemfile =  TestContext.CurrentContext.TestDirectory + 
                            "/TestData/test-secp256k1-pk.pem";
             var pk4 = PublicKey.FromPem(pemfile);
             Assert.AreEqual(KeyAlgo.SECP256K1, pk4.KeyAlgorithm);
             Assert.AreEqual(SECP256K1publicKey, pk4.ToAccountHex());
-            Assert.IsTrue(Hex.Decode(SECP256K1publicKey)[1..].SequenceEqual(pk4.RawBytes));
+            Assert.IsTrue(Hex.Decode(SECP256K1publicKey).Slice(1).SequenceEqual(pk4.RawBytes));
             Assert.IsTrue(Hex.Decode(SECP256K1publicKey).SequenceEqual(pk4.GetBytes()));
             
             var hash3 = pk4.GetAccountHash();

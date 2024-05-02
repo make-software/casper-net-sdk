@@ -1,10 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyVersion>2.2.0.0</AssemblyVersion>
-        <FileVersion>2.2.0</FileVersion>
-        <PackageVersion>2.2.0</PackageVersion>
+        <TargetFrameworks>net7.0;netstandard2.0</TargetFrameworks>
+        <LangVersion>9.0</LangVersion>
+        <NoWarn>CS1591</NoWarn>
+        <AssemblyVersion>2.3.0.0</AssemblyVersion>
+        <FileVersion>2.3.0</FileVersion>
+        <PackageVersion>2.3.0</PackageVersion>
         <Title>Casper.Network.SDK</Title>
         <Authors>make-software</Authors>
         <PackageProjectUrl>https://github.com/make-software/casper-net-sdk</PackageProjectUrl>
@@ -18,11 +20,13 @@
         </Description>
         <RootNamespace>Casper.Network.SDK</RootNamespace>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="BouncyCastle.Cryptography" Version="2.3.0" />
+      <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
+      <PackageReference Include="System.Text.Json" Version="7.0.3" />
     </ItemGroup>
 
     <ItemGroup>
