@@ -9,6 +9,12 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+## [2.3.0]
+
+### Added
+* Compatibility with `netstandard2.0` framework. 
+* Multi-framework nuget package.
+
 ## [2.2.0]
 
 ### Added
@@ -77,6 +83,7 @@ This new type permits to parse correctly the value `"00"` used for system blocks
 ### Added
 * Initial release of Casper .NET SDK.
 
+[2.3.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.3.0
 [2.2.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.2.0
 [2.1.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.1.0
 [2.0.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.0.0
