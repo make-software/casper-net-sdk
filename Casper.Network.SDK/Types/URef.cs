@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
@@ -10,7 +11,7 @@ namespace Casper.Network.SDK.Types
     /// except Account. Additionally, URefs used in contracts carry permission information
     /// to prevent unauthorized usage of the value stored under the key.
     /// </summary>
-    public class URef : GlobalStateKey
+    public class URef : GlobalStateKey, IPurseIdentifier
     {
         public static string KEYPREFIX = "uref-";
 
@@ -76,6 +77,17 @@ namespace Casper.Network.SDK.Types
         public override string ToString()
         {
             return KEYPREFIX + CEP57Checksum.Encode(RawBytes) + $"-{(byte) AccessRights:000}";
+        }
+        
+        /// <summary>
+        /// Returns a PurseIdentifier object as defined in the RPC schema for an URef key.
+        /// </summary>
+        public Dictionary<string, object> GetPurseIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                {"purse_uref", this.ToString()}
+            };
         }
     }
 }
