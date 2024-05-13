@@ -388,6 +388,43 @@ namespace Casper.Network.SDK
             var method = new GetBalance(publicKey, StateIdentifier.WithBlockHeight(blockHeight));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
+        
+        /// <summary>
+        /// Queries the balance information including total, available, and holds.
+        /// </summary>
+        /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
+        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
+        public async Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
+            string blockHash = null)
+        {
+            var method = new QueryBalanceDetails(purseIdentifier, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<QueryBalanceDetailsResult>(method);
+        }
+        
+        /// <summary>
+        /// Queries the balance information including total, available, and holds.
+        /// </summary>
+        /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
+        /// <param name="blockHeight">Height of the block.</param>
+        public async Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
+            UInt64 blockHeight)
+        {
+            var method = new QueryBalanceDetails(purseIdentifier, new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<QueryBalanceDetailsResult>(method);
+        }
+        
+        /// <summary>
+        /// Queries the balance information including total, available, and holds.
+        /// </summary>
+        /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
+        /// <param name="stateRootHash">The state root hash used for the query.</param>
+        /// <param name="timestamp">Timestamp for holds lookup.</param>
+        public async Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
+            string stateRootHash, string timestamp)
+        {
+            var method = new QueryBalanceDetails(purseIdentifier, stateRootHash, timestamp);
+            return await SendRpcRequestAsync<QueryBalanceDetailsResult>(method);
+        }
 
         /// <summary>
         /// Send a Deploy to the network for its execution.
@@ -402,7 +439,6 @@ namespace Casper.Network.SDK
             var method = new PutDeploy(deploy);
             return await SendRpcRequestAsync<PutDeployResult>(method);
         }
-
         
         /// <summary>
         /// Request a Deploy object from the network by the deploy hash.
