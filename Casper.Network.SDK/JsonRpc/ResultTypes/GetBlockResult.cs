@@ -11,7 +11,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// <summary>
         /// The block, if found.
         /// </summary>
-        [JsonPropertyName("block")]
-        public Block Block { get; init; }
+        [JsonPropertyName("block_with_signatures")]
+        public BlockWithSignatures BlockWithSignatures { get; init; }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.Converters;
 using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.JsonRpc.ResultTypes
@@ -19,6 +20,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// The block's transfers
         /// </summary>
         [JsonPropertyName("transfers")]
-        public List<Transfer> Transfers { get; init; }
+        [JsonConverter(typeof(GenericListConverter<ITransfer, Transfer.TransferConverter>))]
+        public List<ITransfer> Transfers { get; init; }
     }
 }

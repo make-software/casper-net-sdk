@@ -11,11 +11,14 @@ namespace Casper.Network.SDK.SSE
         /// <summary>
         /// The <see cref="Block">Block</see> hash.
         /// </summary>
-        [JsonPropertyName("block_hash")] public string BlockHash { get; init; }
+        [JsonPropertyName("block_hash")] 
+        public string BlockHash { get; init; }
 
         /// <summary>
         /// The <see cref="Block">Block</see> data.
         /// </summary>
-        [JsonPropertyName("block")] public Block Block { get; init; }
+        [JsonPropertyName("block")]
+        [JsonConverter(typeof(Block.BlockConverter))]
+        public IBlock Block { get; init; }
     }
 }
