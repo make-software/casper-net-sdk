@@ -130,6 +130,35 @@ namespace Casper.Network.SDK.JsonRpc
         }
     }
 
+    public class GetEntity : RpcMethod
+    {
+        /// <summary>
+        /// Returns an AddressableEntity from the network for a Block from the network
+        /// </summary>
+        /// <param name="entityIdentifier">A PublicKey, an AccoountHashKey, or an AddressableEntityKey</param>
+        /// <param name="blockIdentifier">A a block identifier by hash or key. Null for the latest block</param>
+        public GetEntity(IEntityIdentifier entityIdentifier, IBlockIdentifier blockIdentifier = null) : base("state_get_entity")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "entity_identifier", entityIdentifier.GetEntityIdentifier() }
+            };
+            
+            if(blockIdentifier != null)
+                this.Parameters.Add("block_identifier", blockIdentifier.GetBlockIdentifier());
+        }
+
+        /// <summary>
+        /// Returns an AddressableEntity from the network for a Block from the network
+        /// </summary>
+        /// <param name="addressableEntity">A string with an addressable entity key.</param>
+        /// <param name="blockIdentifier">A a block identifier by hash or key. Null for the latest block</param>
+        public GetEntity(string addressableEntity, IBlockIdentifier blockIdentifier = null) 
+            : this(new AddressableEntityKey(addressableEntity), blockIdentifier)
+        {
+        }
+    }
+    
     public class GetItem : RpcMethod
     {
         /// <summary>
@@ -233,7 +262,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
         /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
-        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, IBlockIdentifier blockIdentifier) : base("query_balance_details")
+        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, IBlockIdentifier blockIdentifier = null) : base("query_balance_details")
         {
             this.Parameters = new Dictionary<string, object>
             {

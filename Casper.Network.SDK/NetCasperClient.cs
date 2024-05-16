@@ -178,6 +178,50 @@ namespace Casper.Network.SDK
         }
 
         /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityIdentifier">A PublicKey, an AccoountHashKey, or an AddressableEntityKey</param>
+        /// <param name="blockHash">A block hash for which the information of the entity is queried. Null for most recent information.</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, string blockHash = null)
+        {
+            var method = new GetEntity(entityIdentifier, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityIdentifier">A PublicKey, an AccoountHashKey, or an AddressableEntityKey</param>
+        /// <param name="blockHeight">A block height for which the information of the entity is queried..</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, ulong blockHeight)
+        {
+            var method = new GetEntity(entityIdentifier, new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityAddr">The entity address to get information of.</param>
+        /// <param name="blockHash">A block hash for which the information of the entity is queried. Null for most recent information.</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, string blockHash = null)
+        {
+            var method = new GetEntity(entityAddr, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityAddr">The entity address to get information of.</param>
+        /// <param name="blockHeight">A block height for which the information of the entity is queried..</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, ulong blockHeight)
+        {
+            var method = new GetEntity(entityAddr, new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
         /// Request a stored value from the network. This RPC is deprecated, use `QueryGlobalState` instead.
         /// </summary>
         /// <param name="keyHash">A global state key formatted as a string</param>
@@ -201,7 +245,7 @@ namespace Casper.Network.SDK
         /// <param name="key">The global state key formatted as a string to query the value from the network.</param>
         /// <param name="height">Height of the block to check the stored value in.</param>
         /// <param name="path">The path components starting from the key as base (use '/' as separator).</param>
-        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, int height,
+        public async Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, ulong height,
             string path = null)
         {            
             var method = new QueryGlobalState(key, StateIdentifier.WithBlockHeight(height), path?.Split(new char[] {'/'}));
@@ -359,7 +403,7 @@ namespace Casper.Network.SDK
         /// <param name="purseURef">Purse URef key.</param>
         /// <param name="blockHeight">Height of the block.</param>
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
-            int blockHeight)
+            ulong blockHeight)
         {
             var method = new GetBalance(purseURef, StateIdentifier.WithBlockHeight(blockHeight));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
@@ -371,7 +415,7 @@ namespace Casper.Network.SDK
         /// <param name="accountHash">The account hash of the account to request the balance.</param>
         /// <param name="blockHeight">Height of the block.</param>
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
-            int blockHeight)
+            ulong blockHeight)
         {
             var method = new GetBalance(accountHash, StateIdentifier.WithBlockHeight(blockHeight));
             return await SendRpcRequestAsync<GetBalanceResult>(method);
@@ -383,7 +427,7 @@ namespace Casper.Network.SDK
         /// <param name="publicKey">The public key of the account to request the balance.</param>
         /// <param name="blockHeight">Height of the block.</param>
         public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
-            int blockHeight)
+            ulong blockHeight)
         {
             var method = new GetBalance(publicKey, StateIdentifier.WithBlockHeight(blockHeight));
             return await SendRpcRequestAsync<GetBalanceResult>(method);

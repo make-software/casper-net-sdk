@@ -19,6 +19,12 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("key_management")]
         public uint KeyManagement { get; init; }
+
+        /// <summary>
+        /// Threshold for upgrading contracts.
+        /// </summary>
+        [JsonPropertyName("upgrade_management")]
+        public uint UpgradeManagement { get; init; }
     }
     
     /// <summary>
