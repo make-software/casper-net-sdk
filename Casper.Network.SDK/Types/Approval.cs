@@ -1,15 +1,14 @@
 using System.Text.Json.Serialization;
-using Casper.Network.SDK.Converters;
 
 namespace Casper.Network.SDK.Types
 {
     /// <summary>
     /// Signature and Public Key of the signer.
     /// </summary>
-    public class DeployApproval
+    public class Approval
     {
         /// <summary>
-        /// Signature of a deploy.
+        /// Signature of a deploy or transaction.
         /// </summary>
         [JsonPropertyName("signature")]
         [JsonConverter(typeof(Signature.SignatureConverter))]

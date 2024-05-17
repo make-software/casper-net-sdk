@@ -45,7 +45,7 @@ namespace Casper.Network.SDK.Types
         public BigInteger StakedAmount { get; init; }
 
         /// <summary>
-        /// Validator public key
+        /// Validator public key.
         /// </summary>
         [JsonPropertyName("validator_public_key")]
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]

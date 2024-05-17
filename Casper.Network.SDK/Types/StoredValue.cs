@@ -9,6 +9,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A wrapper class for different types of values stored in the global state.
     /// </summary>
+    [JsonConverter(typeof(StoredValue.StoredValueConverter))]
     public class StoredValue
     {
         public Contract Contract { get; init; }
@@ -21,7 +22,7 @@ namespace Casper.Network.SDK.Types
 
         public ContractPackage ContractPackage { get; init; }
 
-        public Transfer Transfer { get; init; }
+        public TransferV1 LegacyTransfer { get; init; }
 
         public DeployInfo DeployInfo { get; init; }
 
@@ -29,8 +30,50 @@ namespace Casper.Network.SDK.Types
 
         public Bid Bid { get; init; }
 
-        public List<UnbondingPurse> Withdraw { get; init; }
+        public List<WithdrawPurse> Withdraw { get; init; }
 
+        public List<UnbondingPurse> Unbonding { get; init; }
+        
+        /// <summary>
+        /// Stores an addressable entity.
+        /// </summary>
+        public AddressableEntity AddressableEntity { get; init; }
+        
+        /// <summary>
+        /// Stores a BidKind.
+        /// </summary>
+        // public BidKind BidKind { get; init; }
+        
+        /// <summary>
+        /// Stores a package.
+        /// </summary>
+        public Package Package { get; init; }
+        
+        /// <summary>
+        /// A record of byte code.
+        /// </summary>
+        public ByteCode ByteCode { get; init; }
+        
+        /// <summary>
+        /// Stores a message topic.
+        /// </summary>
+        public MessageTopicSummary MessageTopic { get; init; }
+        
+        /// <summary>
+        /// Stores a message digest.
+        /// </summary>
+        public string Message { get; init; }
+        
+        /// <summary>
+        /// Stores a NamedKey.
+        /// </summary>
+        public NamedKeyValue NamedKey { get; init; }
+        
+        /// <summary>
+        /// Stores location, type and data for a gas reservation.
+        /// </summary>
+        // public Reservation Reservation { get; init; }
+        
         public class StoredValueConverter : JsonConverter<StoredValue>
         {
             public override StoredValue Read

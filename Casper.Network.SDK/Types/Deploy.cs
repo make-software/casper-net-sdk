@@ -18,7 +18,7 @@ namespace Casper.Network.SDK.Types
         /// List of signers and signatures for this Deploy.
         /// </summary>
         [JsonPropertyName("approvals")] 
-        public List<DeployApproval> Approvals { get; } = new List<DeployApproval>();
+        public List<Approval> Approvals { get; } = new List<Approval>();
 
         /// <summary>
         /// A hash over the header of the deploy.
@@ -94,7 +94,7 @@ namespace Casper.Network.SDK.Types
 
         [JsonConstructor]
         public Deploy(string hash, DeployHeader header, ExecutableDeployItem payment,
-            ExecutableDeployItem session, List<DeployApproval> approvals)
+            ExecutableDeployItem session, List<Approval> approvals)
         {
             this.Hash = hash;
             this.Header = header;
@@ -130,7 +130,7 @@ namespace Casper.Network.SDK.Types
         {
             byte[] signature = keyPair.Sign(Hex.Decode(this.Hash));
 
-            Approvals.Add(new DeployApproval()
+            Approvals.Add(new Approval()
             {
                 Signature = Signature.FromRawBytes(signature, keyPair.PublicKey.KeyAlgorithm),
                 Signer = keyPair.PublicKey
@@ -140,7 +140,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Adds an approval to the deploy. No check is done to the approval signature.
         /// </summary>
-        public void AddApproval(DeployApproval approval)
+        public void AddApproval(Approval approval)
         {
             this.Approvals.Add(approval);
         }
