@@ -104,6 +104,10 @@ namespace Casper.Network.SDK.Types
         /// A `Key` under which a hold on a purse balance is stored.
         /// </summary>
         BalanceHold = 0x16,
+        /// <summary>
+        /// A `Key` under which a entrypoint record is written.
+        /// </summary>
+        EntryPoint = 0x17,
     }
     
     /// <summary>
@@ -207,6 +211,8 @@ namespace Casper.Network.SDK.Types
                 return new ByteCodeKey(value);
             if (value.StartsWith("message-"))
                 return new MessageKey(value);
+            if (value.StartsWith("entry-point-"))
+                return new EntryPointKey(value);
             throw new ArgumentException($"Key not valid. Unknown key prefix in \"{value}\".");
         }
 
@@ -241,6 +247,7 @@ namespace Casper.Network.SDK.Types
                 0x14 => new NamedKeyKey(bytes.Slice(1)),
                 0x15 => new BlockGlobalAddrKey(bytes.Slice(1)),
                 0x16 => new BalanceHoldKey(bytes.Slice(1)),
+                0x17 => new EntryPointKey(bytes.Slice(1)),
                 _ => throw new ArgumentException($"Unknown key identifier '{bytes[0]}'")
             };
         }
@@ -293,7 +300,8 @@ namespace Casper.Network.SDK.Types
                        typeToConvert == typeof(MessageKey) ||
                        typeToConvert == typeof(NamedKeyKey) ||
                        typeToConvert == typeof(BlockGlobalAddrKey) ||
-                       typeToConvert == typeof(BalanceHoldKey);
+                       typeToConvert == typeof(BalanceHoldKey) ||
+                       typeToConvert == typeof(EntryPointKey);
             }
 
             public override JsonConverter CreateConverter(

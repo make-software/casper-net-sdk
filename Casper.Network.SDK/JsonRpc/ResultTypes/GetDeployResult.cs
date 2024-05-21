@@ -17,21 +17,9 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         public Deploy Deploy { get; init; }
 
         /// <summary>
-        /// The map of block hash to execution result.
+        /// Execution info, if available.
         /// </summary>
-        [JsonPropertyName("execution_result")]
-        public ExecutionResult ExecutionResult { get; init; }
-        
-        /// <summary>
-        /// The hash of the block in which the deploy was executed.
-        /// </summary>
-        [JsonPropertyName("block_hash")]
-        public string BlockHash { get; init; }
-        
-        /// <summary>
-        /// The height of the block in which the deploy was executed.
-        /// </summary>
-        [JsonPropertyName("block_height")]
-        public ulong BlockHeight { get; init; }
+        [JsonPropertyName("execution_info")]
+        public ExecutionInfo ExecutionInfo { get; init; }
     }
 }

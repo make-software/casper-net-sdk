@@ -521,7 +521,7 @@ namespace Casper.Network.SDK
             {
                 var response = await SendRpcRequestAsync<GetDeployResult>(method);
                 if (!cancellationToken.CanBeCanceled ||
-                    response.Result.GetProperty("execution_results").GetArrayLength() > 0)
+                    response.Result.GetProperty("execution_info").GetArrayLength() > 0)
                     return response;
                 await Task.Delay(10000);
             }

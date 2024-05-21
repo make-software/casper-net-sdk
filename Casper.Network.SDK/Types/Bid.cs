@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
@@ -28,8 +29,13 @@ namespace Casper.Network.SDK.Types
         /// The delegators.
         /// </summary>
         [JsonPropertyName("delegators")]
-        [JsonConverter(typeof(GenericListConverter<Delegator, Delegator.DelegatorConverter>))]
-        public List<Delegator> Delegators { get; init; }
+        public List<PublicKeyAndDelegator> PublicKeyAndDelegators { get; init; }
+        
+        public List<Delegator> Delegators
+        {
+            get { return PublicKeyAndDelegators.Select(pd => pd.Delegator).ToList();  }
+            init { }
+        }
 
         /// <summary>
         /// `true` if validator has been "evicted"

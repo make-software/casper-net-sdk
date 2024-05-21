@@ -47,7 +47,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Packages associated with Wasm stored on chain.
         /// </summary>
-        public bool? SmartContract { get; init; }
+        public string SmartContract { get; init; }
 
         /// <summary>
         /// Json converter class to serialize/deserialize a Block to/from Json
@@ -59,14 +59,6 @@ namespace Casper.Network.SDK.Types
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (reader.TokenType == JsonTokenType.String &&
-                    reader.GetString().Equals("SmartContract", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return new EntityKind()
-                    {
-                        SmartContract = true,
-                    };
-                }
                 if (reader.TokenType == JsonTokenType.StartObject)
                 {
                     reader.Read();
@@ -87,6 +79,12 @@ namespace Casper.Network.SDK.Types
                                 entity = new EntityKind()
                                 {
                                     System = EnumCompat.Parse<SystemEntityType>(reader.GetString()),
+                                };
+                                break;
+                            case "SmartContract":
+                                entity = new EntityKind()
+                                {
+                                    SmartContract = reader.GetString(),
                                 };
                                 break;
                         }
@@ -156,13 +154,6 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("main_purse")]
         [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public URef MainPurse { get; init; }
-
-        /// <summary>
-        /// List of entry points or methods in the package.
-        /// </summary>
-        [JsonPropertyName("entry_points")]
-        [JsonConverter(typeof(EntryPoint.NamedEntryPointsConverter))]
-        public List<EntryPoint> EntryPoints { get; init; }
 
         /// <summary>
         /// Set of public keys allowed to provide signatures on deploys for the package

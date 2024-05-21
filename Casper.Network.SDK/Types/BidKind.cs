@@ -14,7 +14,6 @@ namespace Casper.Network.SDK.Types
         public Bid Validator { get; init; }
         
         [JsonPropertyName("Delegator")]
-        [JsonConverter(typeof(Delegator.DelegatorConverter))]
         public Delegator Delegator { get; init; }
     }
 }

@@ -72,7 +72,9 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Stores location, type and data for a gas reservation.
         /// </summary>
-        // public Reservation Reservation { get; init; }
+        public Reservation Reservation { get; init; }
+        
+        public EntryPoint EntryPoint { get; init; }
         
         public class StoredValueConverter : JsonConverter<StoredValue>
         {

@@ -97,6 +97,22 @@ namespace Casper.Network.SDK.Types
         Factory,
     }
 
+    public enum EntryPointPayment
+    {
+        /// <summary>
+        /// The caller must cover cost.
+        /// </summary>
+        Caller,
+        /// <summary>
+        /// Will cover cost to execute self but not cost of any subsequent invoked contracts.
+        /// </summary>
+        SelfOnly,
+        /// <summary>
+        /// Will cover cost to execute self and the cost of any subsequent invoked contracts.
+        /// </summary>
+        SelfOnward,
+    }
+
     /// <summary>
     /// Parameter to a method
     /// </summary>
@@ -119,7 +135,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// Type signature of a method. Order of arguments matter since can be referenced by index as well as name.
     /// </summary>
-    public class EntryPoint
+    public class EntryPointV1
     {
         /// <summary>
         /// Access control options for a contract entry point
@@ -142,6 +158,13 @@ namespace Casper.Network.SDK.Types
         public EntryPointType EntryPointType { get; init; }
 
         /// <summary>
+        /// Specifies who pays for the invocation and execution of the entrypoint.
+        /// </summary>
+        [JsonPropertyName("entry_point_payment")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public EntryPointPayment EntryPointPayment { get; init; }
+        
+        /// <summary>
         /// Name of the entry point
         /// </summary>
         [JsonPropertyName("name")]
@@ -153,6 +176,33 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("ret")]
         [JsonConverter(typeof(CLTypeInfoConverter))]
         public CLTypeInfo Ret { get; init; }
+        
+        
+    }
+
+    public class EntryPointV2
+    {
+        public EntryPointV2()
+        {
+            throw new NotImplementedException("V2CasperVm entry point not yet implemented");
+        }
+    }
+    
+    public class EntryPoint
+    {
+        public EntryPointV1 V1CasperVm { get; init; }
+        
+        public EntryPointV2 V2CasperVm { get; init; }
+    }
+        
+    //TODO: Remove this if finally is not used
+    public class NamedEntryPoint
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; init; }
+        
+        [JsonPropertyName("entry_point")]
+        public EntryPoint EntryPoint { get; init; }
         
         public class NamedEntryPointsConverter : JsonConverter<List<EntryPoint>>
         {
@@ -176,14 +226,5 @@ namespace Casper.Network.SDK.Types
                 throw new NotImplementedException("Write method for Array_of_NamedEntryPoint not yet implemented.");
             }
         }
-    }
-
-    public class NamedEntryPoint
-    {
-        [JsonPropertyName("name")]
-        public string Name { get; init; }
-        
-        [JsonPropertyName("entry_point")]
-        public EntryPoint EntryPoint { get; init; }
     }
 }
