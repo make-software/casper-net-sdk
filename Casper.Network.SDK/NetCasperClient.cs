@@ -530,6 +530,70 @@ namespace Casper.Network.SDK
         }
 
         /// <summary>
+        /// Send a Transaction to the network for its execution.
+        /// </summary>
+        /// <param name="transaction">The transaction object.</param>
+        /// <exception cref="System.Exception">Throws an exception if the transaction is not signed.</exception>
+        public async Task<RpcResponse<PutTransactionResult>> PutTransaction(TransactionV1 transaction)
+        {
+            if (transaction.Approvals.Count == 0)
+                throw new Exception("Sign the transaction before sending it to the network.");
+
+            var method = new PutTransaction(transaction);
+            return await SendRpcRequestAsync<PutTransactionResult>(method);
+        }
+        
+        /// <summary>
+        /// Request a Transaction object from the network by the transaction (or deploy) hash.
+        /// When a cancellation token is included this method waits until the transaction is
+        /// executed, i.e. until the transaction contains the execution result information.
+        /// </summary>
+        /// <param name="transactionHash">An v1 transaction hash or a deploy hash</param>
+        /// <param name="finalizedApprovals">Whether to return the transaction with the finalized approvals
+        /// substituted. If `false` or omitted, returns the transaction with the approvals that were originally
+        /// received by the node.</param>
+        /// <param name="cancellationToken">A CancellationToken. Do not include this parameter to return
+        /// with the first transaction object returned by the network, even it's not executed.</param>
+        /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
+        public async Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
+            bool finalizedApprovals = false,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var method = new GetTransaction(transactionHash, finalizedApprovals);
+
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var response = await SendRpcRequestAsync<GetTransactionResult>(method);
+                if (!cancellationToken.CanBeCanceled ||
+                    response.Result.GetProperty("execution_result").GetArrayLength() > 0)
+                    return response;
+                await Task.Delay(10000);
+            }
+
+            throw new TaskCanceledException("GetDeploy operation canceled");
+        }
+        
+        /// <summary>
+        /// Request a Transaction object from the network by the transaction hash.
+        /// When a cancellation token is included this method waits until the transaction is
+        /// executed, i.e. until the transaction contains the execution result information.
+        /// </summary>
+        /// <param name="version1Hash">A v1 transaction hash</param>
+        /// <param name="finalizedApprovals">Whether to return the transaction with the finalized approvals
+        /// substituted. If `false` or omitted, returns the transaction with the approvals that were originally
+        /// received by the node.</param>
+        /// <param name="cancellationToken">A CancellationToken. Do not include this parameter to return
+        /// with the first transaction object returned by the network, even it's not executed.</param>
+        /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
+        public async Task<RpcResponse<GetTransactionResult>> GetTransaction(string version1Hash,
+            bool finalizedApprovals = false,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await this.GetTransaction(new TransactionHash { Version1 = version1Hash }, finalizedApprovals,
+                cancellationToken);
+        }
+
+        /// <summary>
         /// Retrieves a Block from the network by its hash. 
         /// </summary>
         /// <param name="blockHash">Hash of the block to retrieve. Null for the most recent block.</param>
