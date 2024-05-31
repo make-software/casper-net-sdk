@@ -20,7 +20,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// The block's transfers
         /// </summary>
         [JsonPropertyName("transfers")]
-        [JsonConverter(typeof(GenericListConverter<ITransfer, Transfer.TransferConverter>))]
-        public List<ITransfer> Transfers { get; init; }
+        [JsonConverter(typeof(GenericListConverter<Transfer, Transfer.TransferConverter>))]
+        public List<Transfer> Transfers { get; init; }
     }
 }
