@@ -64,6 +64,11 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("to")]
         [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public AccountHashKey To { get; init; }
+
+        public TransferV1()
+        {
+            _version = 1;
+        }
     }
     
     /// <summary>
@@ -123,6 +128,12 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("to")]
         [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public AccountHashKey To { get; init; }
+        
+        
+        public TransferV2()
+        {
+            _version = 2;
+        }
     }
 
     public interface ITransfer
@@ -172,28 +183,19 @@ namespace Casper.Network.SDK.Types
             {
                 try
                 {
-                    reader.Read();
-                    var version = reader.GetString();
-                    reader.Read();
-                    switch (version)
+                    using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
                     {
-                        case "Version1":
-                        {
-                            var transfer1 = JsonSerializer.Deserialize<TransferV1>(ref reader, options);
-                            reader.Read();
-                            transfer1._version = 1;
-                            return transfer1;
-                        }
-                        case "Version2":
-                            var transfer2 = JsonSerializer.Deserialize<TransferV2>(ref reader, options);
-                            reader.Read();
-                            transfer2._version = 2;
-                            return transfer2;
-                        default:
-                            throw new JsonException("Expected Version1 or Version2");
-                    }
+                        JsonElement root = doc.RootElement;
 
-                    ;
+                        if (root.TryGetProperty("Version1", out JsonElement v1Element))
+                            return JsonSerializer.Deserialize<TransferV1>(v1Element.GetRawText(), options);
+
+                        if (root.TryGetProperty("Version2", out JsonElement v2Element))
+                            return JsonSerializer.Deserialize<TransferV2>(v2Element.GetRawText(), options);
+
+                        // try as Casper node v1.x for backward compatibility
+                        return JsonSerializer.Deserialize<TransferV1>(root.GetRawText(), options);
+                    }
                 }
                 catch (Exception e)
                 {
