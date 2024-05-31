@@ -344,28 +344,24 @@ namespace Casper.Network.SDK.Types
             {
                 try
                 {
+                    IBlock block;
                     reader.Read();
                     var version = reader.GetString();
                     reader.Read();
                     switch (version)
                     {
                         case "Version1":
-                        {
-                            var block1 = JsonSerializer.Deserialize<BlockV1>(ref reader, options);
-                            reader.Read();
-                            block1._version = 1;
-                            return block1;
-                        }
+                            block = JsonSerializer.Deserialize<BlockV1>(ref reader, options);
+                            break;
                         case "Version2":
-                            var block2 = JsonSerializer.Deserialize<BlockV2>(ref reader, options);
-                            reader.Read();
-                            block2._version = 2;
-                            return block2;
+                            block = JsonSerializer.Deserialize<BlockV2>(ref reader, options);
+                            break;
                         default:
                             throw new JsonException("Expected Version1 or Version2");
                     }
 
-                    ;
+                    reader.Read();
+                    return block;
                 }
                 catch (Exception e)
                 {
@@ -415,6 +411,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("body")]
         public BlockBodyV1 Body { get; init; }
+
+        public BlockV1()
+        {
+            _version = 1;
+        }
     }
 
     /// <summary>
@@ -433,6 +434,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("body")]
         public BlockBodyV2 Body { get; init; }
+        
+        public BlockV2()
+        {
+            _version = 2;
+        }
     }
 
     /// <summary>
@@ -453,24 +459,5 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("signature")]
         [JsonConverter(typeof(Signature.SignatureConverter))]
         public Signature Signature { get; init; }
-    }
-
-    /// <summary>
-    /// A JSON-friendly representation of a block and the signatures for that block
-    /// </summary>
-    public class BlockWithSignatures
-    {
-        /// <summary>
-        /// The block.
-        /// </summary>
-        [JsonPropertyName("block")]
-        [JsonConverter(typeof(Block.BlockConverter))]
-        public IBlock Block { get; init; }
-
-        /// <summary>
-        /// The proofs of the block, i.e. a collection of validators' signatures of the block hash.
-        /// </summary>
-        [JsonPropertyName("proofs")]
-        public List<BlockProof> Proofs { get; init; }
     }
 }
