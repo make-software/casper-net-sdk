@@ -36,5 +36,8 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("scheduling")] 
         [JsonConverter(typeof(TransactionScheduling.TransactionSchedulingConverter))]
         public TransactionScheduling Scheduling { get; init; }
+        
+        [JsonPropertyName("transaction_kind")] 
+        public byte TransactionKind { get; init; }
     }
 }

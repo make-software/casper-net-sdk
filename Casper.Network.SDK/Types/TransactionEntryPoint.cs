@@ -35,6 +35,14 @@ namespace Casper.Network.SDK.Types
         /// The `activate_bid` native entry point, used to used to reactivate an inactive bid.
         /// </summary>
         ActivateBid = 7,
+        /// <summary>
+        /// The `change_bid_public_key` native entry point, used to change a bid's public key.
+        /// </summary>
+        ChangeBidPublicKey = 8,
+        /// <summary>
+        /// Used to call entry point call() in session transactions
+        /// </summary>
+        Call = 9,
     }
     
     public class TransactionEntryPoint

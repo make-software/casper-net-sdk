@@ -102,6 +102,7 @@ namespace Casper.Network.SDK.ByteSerializers
 
             WriteBytes(ms, ToBytes(source.Target));
             WriteBytes(ms, ToBytes(source.EntryPoint));
+            WriteByte(ms, source.TransactionKind);
             WriteBytes(ms, ToBytes(source.Scheduling));
 
             return ms.ToArray();
