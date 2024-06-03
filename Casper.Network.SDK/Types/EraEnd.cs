@@ -100,7 +100,7 @@ namespace Casper.Network.SDK.Types
         /// The rewards distributed to the validators.
         /// </summary>
         [JsonPropertyName("rewards")]
-        public Dictionary<string, string> Rewards { get; init; }
+        public Dictionary<string, List<string>> Rewards { get; init; }
         
         /// <summary>
         /// Next Era gas price

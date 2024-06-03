@@ -19,6 +19,6 @@ namespace Casper.Network.SDK.SSE
         /// </summary>
         [JsonPropertyName("block")]
         [JsonConverter(typeof(Block.BlockConverter))]
-        public IBlock Block { get; init; }
+        public Block Block { get; init; }
     }
 }
