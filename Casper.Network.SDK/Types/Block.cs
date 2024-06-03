@@ -1,78 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace Casper.Network.SDK.Types
 {
-    public abstract class BlockHeader
-    {
-        /// <summary>
-        /// Json converter class to serialize/deserialize a Block to/from Json
-        /// </summary>
-        public class BlockHeaderConverter : JsonConverter<BlockHeader>
-        {
-            public override BlockHeader Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options)
-            {
-                try
-                {
-                    reader.Read();
-                    var version = reader.GetString();
-                    reader.Read();
-                    switch (version.ToLowerInvariant())
-                    {
-                        case "version1":
-                        {
-                            var block1 = JsonSerializer.Deserialize<BlockHeaderV1>(ref reader, options);
-                            reader.Read();
-                            return block1;
-                        }
-                        case "version2":
-                            var block2 = JsonSerializer.Deserialize<BlockHeaderV2>(ref reader, options);
-                            reader.Read();
-                            return block2;
-                        default:
-                            throw new JsonException("Expected Version1 or Version2");
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new JsonException(e.Message);
-                }
-            }
-
-            public override void Write(
-                Utf8JsonWriter writer,
-                BlockHeader blockHeader,
-                JsonSerializerOptions options)
-            {
-                if (blockHeader is BlockHeaderV2)
-                {
-                    writer.WritePropertyName("Version2");
-                    writer.WriteStartObject();
-                    JsonSerializer.Serialize(blockHeader as BlockHeaderV2, options);
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WritePropertyName("Version1");
-                    writer.WriteStartObject();
-                    JsonSerializer.Serialize(blockHeader as BlockHeaderV1, options);
-                    writer.WriteEndObject();
-                }
-            }
-        }
-    }
-
-    /// <summary>
+   /// <summary>
     /// A block header
     /// </summary>
-    public class BlockHeaderV1 : BlockHeader
+    public class BlockHeaderV1
     {
         /// <summary>
         /// A seed needed for initializing a future era.
@@ -135,7 +74,7 @@ namespace Casper.Network.SDK.Types
         public string Timestamp { get; init; }
     }
 
-    public class BlockHeaderV2 : BlockHeaderV1
+    public class BlockHeader : BlockHeaderV1
     {
         /// <summary>
         /// The `EraEnd` of a block if it is a switch block.
@@ -148,6 +87,16 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("current_gas_price")]
         public UInt16 CurrentGasPrice { get; init; }
+        
+        /// <summary>
+        /// Public key of the validator that proposed the block
+        /// </summary>
+        [JsonPropertyName("proposer")]
+        [JsonConverter(typeof(Proposer.ProposerConverter))]
+        public Proposer Proposer { get; init; }
+        
+        [JsonPropertyName("last_switch_block_hash")]
+        public string LastSwitchBlockHash { get; init; }
     }
 
     /// <summary>
@@ -218,11 +167,6 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class BlockBodyV1
     {
-        public virtual uint Version
-        {
-            get { return 1; }
-        }
-
         /// <summary>
         /// The deploy hashes of the non-transfer deploys within the block.
         /// </summary>
@@ -246,7 +190,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A block body
     /// </summary>
-    public class BlockBodyV2
+    public class BlockBody
     {
         /// <summary>
         /// The hashes of the installer/upgrader transactions within the block.
@@ -267,13 +211,6 @@ namespace Casper.Network.SDK.Types
         public List<TransactionHash> Standard { get; init; }
 
         /// <summary>
-        /// Public key of the validator that proposed the block
-        /// </summary>
-        [JsonPropertyName("proposer")]
-        [JsonConverter(typeof(Proposer.ProposerConverter))]
-        public Proposer Proposer { get; init; }
-
-        /// <summary>
         /// The hashes of the mint transactions within the block.
         /// </summary>
         [JsonPropertyName("mint")]
@@ -289,16 +226,7 @@ namespace Casper.Network.SDK.Types
         public List<List<UInt16>> RewardedSignatures { get; init; }
     }
 
-    public interface IBlock
-    {
-        public int Version { get; }
-        public BlockV1 BlockV1 { get; }
-        public BlockV2 BlockV2 { get; }
-        
-        public string Hash { get; init; }
-    }
-    
-    public abstract class Block : IBlock
+    public class Block
     {
         protected int _version;
 
@@ -309,16 +237,29 @@ namespace Casper.Network.SDK.Types
         {
             get { return _version; }
         }
+        
+        protected BlockV1 _blockV1;
+        
+        // Explicit cast operator from A to B
+        public static explicit operator BlockV1(Block block)
+        {
+            if(block._version == 1)
+                return block._blockV1;
 
-        /// <summary>
-        /// Returns the block as a Version1 block object.
-        /// </summary>
-        BlockV1 IBlock.BlockV1 => this as BlockV1;
-
-        /// <summary>
-        /// Returns the block as a Version2 block object.
-        /// </summary>
-        BlockV2 IBlock.BlockV2 => this as BlockV2;
+            throw new InvalidCastException("Version2 block cannot be converted to Version1");
+        }
+        
+        public static explicit operator Block(BlockV1 block)
+        {
+            return new Block
+            {
+                _version = 1,
+                _blockV1 = block,
+                Hash = block.Hash,
+                Header = BlockV1.BlockHeaderFromV1(block.Header, block.Body),
+                Body = BlockV1.BlockBodyFromV1(block.Body),
+            };
+        }
 
         /// <summary>
         /// Block hash
@@ -327,41 +268,51 @@ namespace Casper.Network.SDK.Types
         public string Hash { get; init; }
 
         /// <summary>
+        /// Block header
+        /// </summary>
+        [JsonPropertyName("header")]
+        public BlockHeader Header { get; init; }
+
+        /// <summary>
+        /// Block body
+        /// </summary>
+        [JsonPropertyName("body")]
+        public BlockBody Body { get; init; }
+        
+        /// <summary>
         /// Json converter class to serialize/deserialize a Block to/from Json
         /// </summary>
-        public class BlockConverter : JsonConverter<IBlock>
+        public class BlockConverter : JsonConverter<Block>
         {
-            public override bool CanConvert(Type typeToConvert)
-            {
-                return typeToConvert == typeof(IBlock) ||
-                       typeToConvert == typeof(Block);
-            }
-
-            public override IBlock Read(
+            public override Block Read(
                 ref Utf8JsonReader reader,
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
                 try
                 {
-                    IBlock block;
                     reader.Read();
                     var version = reader.GetString();
                     reader.Read();
                     switch (version)
                     {
                         case "Version1":
-                            block = JsonSerializer.Deserialize<BlockV1>(ref reader, options);
-                            break;
+                            var blockv1 = JsonSerializer.Deserialize<BlockV1>(ref reader, options);
+                            reader.Read();
+                            return (Block)blockv1;
                         case "Version2":
-                            block = JsonSerializer.Deserialize<BlockV2>(ref reader, options);
-                            break;
+                            var blockv2 = JsonSerializer.Deserialize<BlockV2>(ref reader, options);
+                            reader.Read();
+                            return new Block
+                            {
+                                _version = 2,
+                                Hash = blockv2.Hash,
+                                Header = blockv2.Header,
+                                Body = blockv2.Body,
+                            };
                         default:
                             throw new JsonException("Expected Version1 or Version2");
                     }
-
-                    reader.Read();
-                    return block;
                 }
                 catch (Exception e)
                 {
@@ -371,7 +322,7 @@ namespace Casper.Network.SDK.Types
 
             public override void Write(
                 Utf8JsonWriter writer,
-                IBlock block,
+                Block block,
                 JsonSerializerOptions options)
             {
                 switch (block.Version)
@@ -379,13 +330,13 @@ namespace Casper.Network.SDK.Types
                     case 1:
                         writer.WritePropertyName("Version1");
                         writer.WriteStartObject();
-                        JsonSerializer.Serialize(block as BlockV1, options);
+                        JsonSerializer.Serialize((BlockV1)block, options);
                         writer.WriteEndObject();
                         break;
                     case 2:
                         writer.WritePropertyName("Version2");
                         writer.WriteStartObject();
-                        JsonSerializer.Serialize(block as BlockV2, options);
+                        JsonSerializer.Serialize(block, options);
                         writer.WriteEndObject();
                         break;
                     default:
@@ -398,8 +349,14 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A block in the network
     /// </summary>
-    public class BlockV1 : Block
+    public class BlockV1
     {
+        /// <summary>
+        /// Block hash
+        /// </summary>
+        [JsonPropertyName("hash")]
+        public string Hash { get; init; }
+        
         /// <summary>
         /// Block header
         /// </summary>
@@ -412,33 +369,85 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("body")]
         public BlockBodyV1 Body { get; init; }
 
-        public BlockV1()
+        internal static BlockHeader BlockHeaderFromV1(BlockHeaderV1 header, BlockBodyV1 body)
         {
-            _version = 1;
+            Dictionary<string, List<string>> rewards = new();
+            if (header.EraEnd != null && header.EraEnd.EraReport.Rewards.Count > 0)
+            {
+                foreach (var r in header.EraEnd.EraReport.Rewards)
+                {
+                    rewards.Add(r.PublicKey.ToString().ToLower(), 
+                        new List<string> { r.Amount.ToString()});
+                }
+            }
+            
+            EraEndV2 eraEnd = header.EraEnd == null ? null : new EraEndV2
+            {
+                NextEraValidatorWeights = header.EraEnd.NextEraValidatorWeights,
+                NextEraGasPrice = 1,
+                Equivocators = header.EraEnd.EraReport.Equivocators,
+                InactiveValidators = header.EraEnd.EraReport.InactiveValidators,
+                Rewards = rewards,
+            };
+            
+            return new BlockHeader
+            {
+                BodyHash = header.BodyHash,
+                ParentHash = header.ParentHash,
+                Height = header.Height,
+                Timestamp = header.Timestamp,
+                EraId = header.EraId,
+                RandomBit = header.RandomBit,
+                AccumulatedSeed = header.AccumulatedSeed,
+                StateRootHash = header.StateRootHash,
+                ProtocolVersion = header.ProtocolVersion,
+                CurrentGasPrice = 1,
+                LastSwitchBlockHash = null,
+                Proposer = body.Proposer,
+                EraEnd = eraEnd,
+            };
+        }
+
+        internal static BlockBody BlockBodyFromV1(BlockBodyV1 body)
+        {
+            var mintTransactions =
+                body.TransferHashes.Select(t => new TransactionHash { Deploy = t }).ToList();
+            var standardTransactions = 
+                body.DeployHashes.Select(t => new TransactionHash { Deploy = t }).ToList();
+            
+            return new BlockBody
+            {
+                Auction = new List<TransactionHash>(),
+                Mint = mintTransactions,
+                Standard =  standardTransactions,
+                InstallUpgrade = new List<TransactionHash>(),
+                RewardedSignatures = null,
+            };
         }
     }
 
     /// <summary>
     /// A block in the network
     /// </summary>
-    public class BlockV2 : Block
+    internal class BlockV2
     {
+        /// <summary>
+        /// Block hash
+        /// </summary>
+        [JsonPropertyName("hash")]
+        public string Hash { get; init; }
+
         /// <summary>
         /// Block header
         /// </summary>
         [JsonPropertyName("header")]
-        public BlockHeaderV2 Header { get; init; }
+        public BlockHeader Header { get; init; }
 
         /// <summary>
         /// Block body
         /// </summary>
         [JsonPropertyName("body")]
-        public BlockBodyV2 Body { get; init; }
-        
-        public BlockV2()
-        {
-            _version = 2;
-        }
+        public BlockBody Body { get; init; }
     }
 
     /// <summary>

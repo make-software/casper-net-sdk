@@ -31,7 +31,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// </summary>
         [JsonPropertyName("block")]
         [JsonConverter(typeof(Block.BlockConverter))]
-        public IBlock Block { get; init; }
+        public Block Block { get; init; }
 
         /// <summary>
         /// The proofs of the block, i.e. a collection of validators' signatures of the block hash.
@@ -63,7 +63,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// </summary>
         [JsonPropertyName("block")]
         [JsonConverter(typeof(Block.BlockConverter))]
-        public IBlock Block { get; init; }
+        public Block Block { get; init; }
 
         /// <summary>
         /// The proofs of the block, i.e. a collection of validators' signatures of the block hash.
@@ -89,15 +89,16 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
 
                     if (resultCompat.BlockV1 != null)
                     {
+                        var blockV1 = new BlockV1
+                        {
+                            Hash = resultCompat.BlockV1.Hash,
+                            Header = resultCompat.BlockV1.Header,
+                            Body = resultCompat.BlockV1.Body,
+                        };
                         return new GetBlockResult()
                         {
                             ApiVersion = resultCompat.ApiVersion,
-                            Block = new BlockV1()
-                            {
-                                Hash = resultCompat.BlockV1.Hash,
-                                Header = resultCompat.BlockV1.Header,
-                                Body = resultCompat.BlockV1.Body,
-                            },
+                            Block =  (Block)blockV1,
                             Proofs = resultCompat.BlockV1.Proofs,
                         };
                     }
