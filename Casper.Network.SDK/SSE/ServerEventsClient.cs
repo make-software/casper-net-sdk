@@ -276,7 +276,7 @@ namespace Casper.Network.SDK.SSE
                     try
                     {
                         var uriBuilder = new UriBuilder(new Uri(client.BaseAddress +
-                            $"events/{channelType.ToString().ToLowerInvariant()}"));
+                            $"events"));
 
                         if (startFrom != null && startFrom != int.MaxValue)
                             uriBuilder.Query = $"start_from={startFrom}";
