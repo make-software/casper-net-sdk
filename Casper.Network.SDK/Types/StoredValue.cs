@@ -22,13 +22,15 @@ namespace Casper.Network.SDK.Types
 
         public ContractPackage ContractPackage { get; init; }
 
-        public TransferV1 LegacyTransfer { get; init; }
+        public Transfer LegacyTransfer { get; init; }
 
         public DeployInfo DeployInfo { get; init; }
 
         public EraInfo EraInfo { get; init; }
 
         public Bid Bid { get; init; }
+        
+        public BidKind BidKind { get; init; }
 
         public List<WithdrawPurse> Withdraw { get; init; }
 

@@ -269,6 +269,22 @@ namespace Casper.Network.SDK.Types
             return Key;
         }
 
+        public override bool Equals(object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || ! this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+
+            return Key.ToLowerInvariant().Equals(((GlobalStateKey) obj).Key.ToLowerInvariant());
+        }
+        
+        public override int GetHashCode()
+        {
+            return Key.ToLowerInvariant().GetHashCode();
+        }
+        
         /// <summary>
         /// Json converter class to serialize/deserialize an object derived from
         /// GlobalStateKey to/from Json
