@@ -9,7 +9,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// Represents a transfer from one purse to another
     /// </summary>
-    internal class TransferV1
+    public class TransferV1
     {
         /// <summary>
         /// Transfer amount
@@ -71,8 +71,40 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class Transfer
     {
+        protected int _version;
+
         [JsonIgnore]
-        public int Version { get; init; }
+        public int Version
+        {
+            get { return _version; }
+        }
+
+        protected TransferV1 _transferV1;
+
+        public static explicit operator TransferV1(Transfer transfer)
+        {
+            if(transfer._version == 1)
+                return transfer._transferV1;
+
+            throw new InvalidCastException("Version2 transfer cannot be converted to Version1");
+        }
+        
+        public static explicit operator Transfer(TransferV1 transfer)
+        {
+            return new Transfer()
+            {
+                _version = 1,
+                _transferV1 = transfer,
+                Amount = transfer.Amount,
+                From = new InitiatorAddr { AccountHash = transfer.From },
+                To = transfer.To,
+                Id = transfer.Id,
+                TransactionHash = new TransactionHash() { Deploy = transfer.DeployHash },
+                Source = transfer.Source,
+                Target = transfer.Target,
+                Gas = transfer.Gas,
+            };
+        }
         
         /// <summary>
         /// Transfer amount
@@ -130,7 +162,7 @@ namespace Casper.Network.SDK.Types
         public Transfer()
         {
             // this value is overriden in FromTransferV1 
-            Version = 2;
+            _version = 2;
         }
         
         /// <summary>
@@ -152,7 +184,7 @@ namespace Casper.Network.SDK.Types
                         if (root.TryGetProperty("Version1", out JsonElement v1Element))
                         {
                             var transfer = JsonSerializer.Deserialize<TransferV1>(v1Element.GetRawText(), options);
-                            return transfer != null ? FromTransferV1(transfer) : null;
+                            return transfer != null ? (Transfer)transfer : null;
                         }
 
                         if (root.TryGetProperty("Version2", out JsonElement v2Element))
@@ -163,8 +195,7 @@ namespace Casper.Network.SDK.Types
 
                         // try as Casper node v1.x for backward compatibility
                         var transferv1 = JsonSerializer.Deserialize<TransferV1>(root.GetRawText(), options);
-                        return transferv1 != null ? FromTransferV1(transferv1) : null;
-
+                        return transferv1 != null ? (Transfer)transferv1 : null;
                     }
                 }
                 catch (Exception e)
@@ -183,7 +214,7 @@ namespace Casper.Network.SDK.Types
                     case 1:
                         writer.WritePropertyName("Version1");
                         writer.WriteStartObject();
-                        JsonSerializer.Serialize(ToTransferV1(transfer), options);
+                        JsonSerializer.Serialize((TransferV1)transfer, options);
                         writer.WriteEndObject();
                         break;
                     case 2:
@@ -196,37 +227,6 @@ namespace Casper.Network.SDK.Types
                         throw new JsonException($"Unexpected transfer version {transfer.Version}");
                 }
             }
-        }
-
-        internal static Transfer FromTransferV1(TransferV1 v1)
-        {
-            return new Transfer()
-            {
-                Version = 1,
-                Amount = v1.Amount,
-                From = new InitiatorAddr { AccountHash = v1.From },
-                To = v1.To,
-                Id = v1.Id,
-                TransactionHash = new TransactionHash() { Deploy = v1.DeployHash },
-                Source = v1.Source,
-                Target = v1.Target,
-                Gas = v1.Gas,
-            };
-        }
-        
-        internal static TransferV1 ToTransferV1(Transfer v1)
-        {
-            return new TransferV1()
-            {
-                Amount = v1.Amount,
-                From = v1.From.AccountHash,
-                To = v1.To,
-                Id = v1.Id,
-                DeployHash = v1.TransactionHash.Deploy,
-                Source = v1.Source,
-                Target = v1.Target,
-                Gas = v1.Gas,
-            };
         }
     }
 }
