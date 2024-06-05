@@ -262,43 +262,14 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
         /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
-        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, IBlockIdentifier blockIdentifier = null) : base("query_balance_details")
+        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance_details")
         {
             this.Parameters = new Dictionary<string, object>
             {
                 {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
             };
-            if(blockIdentifier != null)
-                this.Parameters.Add("state_identifier", new Dictionary<string, object>
-                {
-                    { "block", blockIdentifier.GetBlockIdentifier()}
-                });
-        }
-        
-        /// <summary>
-        /// Query for full balance information using a purse identifier and a state identifier
-        /// </summary>
-        /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
-        /// <param name="stateRootHash">The state root hash used for the query.</param>
-        /// <param name="timestamp">Timestamp for holds lookup.</param>
-        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, string stateRootHash, string timestamp) : base("query_balance_details")
-        {
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
-                {"state_identifier", 
-                    new Dictionary<string, object>
-                    {
-                        {
-                            "state_root", new Dictionary<string, object>
-                            {
-                                {"state_root_hash", stateRootHash},
-                                {"timestamp", timestamp},
-                            }
-                        },
-                    }
-                },
-            };
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
     }
     

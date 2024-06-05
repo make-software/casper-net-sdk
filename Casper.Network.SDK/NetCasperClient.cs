@@ -441,7 +441,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
             string blockHash = null)
         {
-            var method = new QueryBalanceDetails(purseIdentifier, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            var method = new QueryBalanceDetails(purseIdentifier, blockHash != null ? StateIdentifier.WithBlockHash(blockHash) : null);
             return await SendRpcRequestAsync<QueryBalanceDetailsResult>(method);
         }
         
@@ -451,9 +451,9 @@ namespace Casper.Network.SDK
         /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
         /// <param name="blockHeight">Height of the block.</param>
         public async Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
-            UInt64 blockHeight)
+            ulong blockHeight)
         {
-            var method = new QueryBalanceDetails(purseIdentifier, new BlockIdentifier(blockHeight));
+            var method = new QueryBalanceDetails(purseIdentifier, StateIdentifier.WithBlockHeight(blockHeight));
             return await SendRpcRequestAsync<QueryBalanceDetailsResult>(method);
         }
         
@@ -461,12 +461,11 @@ namespace Casper.Network.SDK
         /// Queries the balance information including total, available, and holds.
         /// </summary>
         /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
-        /// <param name="stateRootHash">The state root hash used for the query.</param>
-        /// <param name="timestamp">Timestamp for holds lookup.</param>
-        public async Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
-            string stateRootHash, string timestamp)
+        /// <param name="stateRootHash">the state root hash.</param>
+        public async Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetailsWithStateRootHash(IPurseIdentifier purseIdentifier,
+            string stateRootHash)
         {
-            var method = new QueryBalanceDetails(purseIdentifier, stateRootHash, timestamp);
+            var method = new QueryBalanceDetails(purseIdentifier, StateIdentifier.WithStateRootHash(stateRootHash));
             return await SendRpcRequestAsync<QueryBalanceDetailsResult>(method);
         }
 
