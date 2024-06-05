@@ -18,6 +18,10 @@ namespace Casper.Network.SDK.Types
         /// Delegator BidAddr,
         /// </summary>
         Delegator = 2,
+        /// <summary>
+        /// BidAddr for auction credit.
+        /// </summary>
+        Credit = 4,
     }
     
     public class BidAddrKey : GlobalStateKey
@@ -49,7 +53,7 @@ namespace Casper.Network.SDK.Types
         public BidAddrKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.BidAddr;
-            var bytes = Hex.Decode(Key);
+            var bytes = Hex.Decode(key.Substring(key.LastIndexOf('-') + 1));
             if (bytes.Length <= 0)
                 throw new Exception("Wrong key length.");
             switch (bytes[0])
@@ -68,6 +72,11 @@ namespace Casper.Network.SDK.Types
                     Tag = BidAddrTag.Delegator;
                     if (bytes.Length != 65)
                         throw new Exception("Wrong key length for Unified BidAddr. Expected 65 bytes.");
+                    break;
+                case (byte)BidAddrTag.Credit:
+                    Tag = BidAddrTag.Credit;
+                    if (bytes.Length != 41)
+                        throw new Exception("Wrong key length for Credit BidAddr. Expected 41 bytes.");
                     break;
                 default:
                     throw new Exception($"Wrong BidAddr tag '{bytes[0]}'.");

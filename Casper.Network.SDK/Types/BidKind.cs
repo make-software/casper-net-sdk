@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.Converters;
 
 namespace Casper.Network.SDK.Types
 {
@@ -13,12 +14,14 @@ namespace Casper.Network.SDK.Types
         /// Previous validator public key associated with the bid.
         /// </summary>
         [JsonPropertyName("old_validator_public_key")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey OldValidator { get; init; }
         
         /// <summary>
         /// New validator public key associated with the bid.
         /// </summary>
         [JsonPropertyName("new_validator_public_key")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey NewValidator { get; init; }
         
         /// <summary>
@@ -37,6 +40,7 @@ namespace Casper.Network.SDK.Types
         /// The credit amount.
         /// </summary>
         [JsonPropertyName("amount")]
+        [JsonConverter(typeof(BigIntegerConverter))]
         public BigInteger Amount { get; init; }
         
         /// <summary>
@@ -49,6 +53,7 @@ namespace Casper.Network.SDK.Types
         /// Validator public key.
         /// </summary>
         [JsonPropertyName("validator_public_key")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey Validator { get; init; }
     }
     

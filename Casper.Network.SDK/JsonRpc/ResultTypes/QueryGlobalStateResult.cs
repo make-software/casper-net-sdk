@@ -12,7 +12,6 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// The block header if a Block hash was provided.
         /// </summary>
         [JsonPropertyName("block_header")]
-        [JsonConverter(typeof(BlockHeader.BlockHeaderConverter))]
         public BlockHeader BlockHeader { get; init; }
         
         /// <summary>

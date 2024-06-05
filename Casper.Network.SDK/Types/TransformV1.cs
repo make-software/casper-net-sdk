@@ -49,7 +49,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The type of transform
         /// </summary>
-        public TransformKindV1 Type { get; init; }
+        public TransformKindV1 Kind { get; init; }
 
         /// <summary>
         /// Data associated to some type of transforms
@@ -179,7 +179,7 @@ namespace Casper.Network.SDK.Types
                     return new TransformV1()
                     {
                         Key = GlobalStateKey.FromString(key),
-                        Type = type ?? TransformKindV1.Identity,
+                        Kind = type ?? TransformKindV1.Identity,
                         Value = value
                     };
                 }
