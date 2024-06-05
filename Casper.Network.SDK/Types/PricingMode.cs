@@ -105,6 +105,8 @@ public enum PricingModeType
                     reader.Read();
                 }
 
+                reader.Read();
+                
                 return new PricingMode()
                 {
                     Type = EnumCompat.Parse<PricingModeType>(pricingModeType),

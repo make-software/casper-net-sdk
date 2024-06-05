@@ -261,10 +261,9 @@ namespace Casper.Network.SDK.Types
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (reader.TokenType == JsonTokenType.PropertyName)
+                if (reader.TokenType == JsonTokenType.String)
                 {
                     var targetType = reader.GetString();
-                    reader.Read();
 
                     var type = EnumCompat.Parse<TransactionTargetType>(targetType);
                     switch (targetType)
@@ -302,20 +301,24 @@ namespace Casper.Network.SDK.Types
                                 {
                                     case "id":
                                         id = JsonSerializer.Deserialize<IInvocationTarget>(ref reader, options);
+                                        reader.Read();
                                         break;
                                     case "runtime":
                                         runtime = reader.GetString();
+                                        reader.Read(); // skip end object
                                         break;
                                 }
                             }
 
                             reader.Read(); // skip end object
+
                             transactionTarget = new TransactionTarget()
                             {
                                 Type = EnumCompat.Parse<TransactionTargetType>(targetType), 
                                 Id = id,
-                                Runtime = EnumCompat.Parse<TransactionRuntime>(runtime),
                             };
+                            if (runtime != null)
+                                transactionTarget.Runtime = EnumCompat.Parse<TransactionRuntime>(runtime);
                             break;
                         case "Session":
                             reader.Read();
@@ -338,6 +341,7 @@ namespace Casper.Network.SDK.Types
                             }
 
                             reader.Read(); // skip end object
+                            
                             transactionTarget = new TransactionTarget()
                             {
                                 Type = EnumCompat.Parse<TransactionTargetType>(targetType), 
@@ -349,8 +353,6 @@ namespace Casper.Network.SDK.Types
                         default:
                             throw new JsonException($"TransactionTargetType '{targetType}' not supported.");
                     }
-
-                    reader.Read(); // skip end object
 
                     return transactionTarget;
                 }

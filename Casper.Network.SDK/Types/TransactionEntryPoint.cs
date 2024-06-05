@@ -70,10 +70,9 @@ namespace Casper.Network.SDK.Types
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (reader.TokenType == JsonTokenType.PropertyName)
+                if (reader.TokenType == JsonTokenType.String)
                 {
                     var nativeEntryPoint = EnumCompat.Parse<NativeEntryPoint>(reader.GetString());
-                    reader.Read();
                     return new TransactionEntryPoint(nativeEntryPoint);
                 }
 
@@ -86,7 +85,6 @@ namespace Casper.Network.SDK.Types
                         reader.Read();
                         var customEntryPoint = reader.GetString();
                         reader.Read();
-                        reader.Read(); // read end object
                         return new TransactionEntryPoint(customEntryPoint);
                     }
                 }
