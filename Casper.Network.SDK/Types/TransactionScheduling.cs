@@ -32,7 +32,6 @@ namespace Casper.Network.SDK.Types
                 if (reader.TokenType == JsonTokenType.String)
                 {
                     var schedulingType = reader.GetString();
-                    reader.Read();
                     switch (schedulingType)
                     {
                         case "Standard":
@@ -69,7 +68,7 @@ namespace Casper.Network.SDK.Types
                         default:
                             throw new JsonException("Cannot deserialize TransactionScheduling. Unknown scheduling type");
                     }
-                    reader.Read(); // skip end object
+                    reader.Read();
                 }
                 else 
                     throw new JsonException("Cannot deserialize TransactionScheduling.");
