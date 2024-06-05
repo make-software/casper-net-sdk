@@ -35,8 +35,12 @@ namespace Casper.Network.SDK.Types
             var v2Transfers = executionResult.Transfers.Select(key =>
             {
                 var transform = executionResult.Effect.Transforms.FirstOrDefault(tr => tr.Key.Equals(key));
-                if (transform != null && transform.Kind == TransformKindV1.WriteTransfer)
-                    return (Transfer)transform.Value;
+                if (transform != null && 
+                    transform.Kind == TransformKindV1.WriteTransfer && 
+                    transform.Value is TransferV1 transferV1)
+                {
+                    return (Transfer)transferV1;
+                }
                 return null;
             }).ToList();
             
