@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Casper.Network.SDK.JsonRpc;
@@ -520,9 +521,9 @@ namespace Casper.Network.SDK
             {
                 var response = await SendRpcRequestAsync<GetDeployResult>(method);
                 if (!cancellationToken.CanBeCanceled ||
-                    response.Result.GetProperty("execution_info").GetArrayLength() > 0)
+                    response.Result.GetProperty("execution_info").ValueKind != JsonValueKind.Null)
                     return response;
-                await Task.Delay(10000);
+                await Task.Delay(4000);
             }
 
             throw new TaskCanceledException("GetDeploy operation canceled");
@@ -564,9 +565,9 @@ namespace Casper.Network.SDK
             {
                 var response = await SendRpcRequestAsync<GetTransactionResult>(method);
                 if (!cancellationToken.CanBeCanceled ||
-                    response.Result.GetProperty("execution_result").GetArrayLength() > 0)
+                    response.Result.GetProperty("execution_info").ValueKind != JsonValueKind.Null)
                     return response;
-                await Task.Delay(10000);
+                await Task.Delay(4000);
             }
 
             throw new TaskCanceledException("GetDeploy operation canceled");
