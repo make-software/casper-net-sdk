@@ -1,0 +1,115 @@
+{
+  "api_version": "2.0.0",
+  "block_with_signatures": {
+    "block": {
+      "Version2": {
+        "hash": "8c1042f7e78c58229b9cf8579a2a5094e68332646b433bd785650d2a4f607421",
+        "header": {
+          "parent_hash": "b877088ae6272d77fc1b4b936331d9cef4c2b6e7ea2e8854b5ee8e93c438cadd",
+          "state_root_hash": "972ff7268bee4e6a11c0b1c615dfcc1ed89f13de2f19c1b85a0d9dcf95774eef",
+          "body_hash": "2f6218cdaa056e391fc9fb37f2dae71eefa3ca03e91d7fc4455bb6a4cd01ac5b",
+          "random_bit": false,
+          "accumulated_seed": "dacf81815b307edc02802bb8afee014cd2681749efeaab5a4f5e0a1240e26663",
+          "era_end": {
+            "equivocators": [],
+            "inactive_validators": [],
+            "next_era_validator_weights": [
+              {
+                "validator": "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6",
+                "weight": "1457007299027515530"
+              },
+              {
+                "validator": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+                "weight": "2462811880650517518"
+              },
+              {
+                "validator": "01c867ff3cf1d4e4e68fc00922fdcb740304def196e223091dee62012f444b9eba",
+                "weight": "684867946138376005"
+              },
+              {
+                "validator": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
+                "weight": "1500458509683331484"
+              },
+              {
+                "validator": "01fed662dc7f1f7af43ad785ba07a8cc05b7a96f9ee69613cfde43bc56bec1140b",
+                "weight": "1604854364500260181"
+              }
+            ],
+            "rewards": {
+              "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6": [
+                "3787954951771805",
+                "378861119683192"
+              ],
+              "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab": [
+                "18392670705238418",
+                "638104246294617"
+              ],
+              "01c867ff3cf1d4e4e68fc00922fdcb740304def196e223091dee62012f444b9eba": [
+                "1760738793374719",
+                "176836068103231"
+              ],
+              "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6": [
+                "9901127257757664",
+                "391012293027695"
+              ],
+              "01fed662dc7f1f7af43ad785ba07a8cc05b7a96f9ee69613cfde43bc56bec1140b": [
+                "18657508291857411",
+                "915186272891264"
+              ]
+            },
+            "next_era_gas_price": 1
+          },
+          "timestamp": "2024-06-10T13:44:09.123Z",
+          "era_id": 141,
+          "height": 1551,
+          "protocol_version": "2.0.0",
+          "proposer": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+          "current_gas_price": 1,
+          "last_switch_block_hash": "45216a334c0ef0e886ca2671d5795150e8bc0f1a1a47719112d7289dbb5e5dfd"
+        },
+        "body": {
+          "transactions": {
+            "2": [
+              {
+                "Version1": "82bedd65735508daeb26e9132f24bd8861bcece1120ee945a3362ef6526e3884"
+              }
+            ]
+          },
+          "rewarded_signatures": [
+            [
+              248
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ]
+          ]
+        }
+      }
+    },
+    "proofs": [
+      {
+        "public_key": "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6",
+        "signature": "01bceb8d8ebdec1065d0a9614b601b2621a3f127bfad6dce4c5d106d7fdabf98e0e5824309fb907c51071060dce62cc445330b94298dc2cccc4a49cb16e9150103"
+      },
+      {
+        "public_key": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+        "signature": "01682c1cf7770ced1b9e764db6223c4b0cb349b14979ea67c89e5af9b5e325f0c2a56b7844e136c349475888b334acf9ba803b0c64a86146db4d6801222a336a0a"
+      },
+      {
+        "public_key": "01c867ff3cf1d4e4e68fc00922fdcb740304def196e223091dee62012f444b9eba",
+        "signature": "0108ddabc990a3b01628f52bdcbbc200d2086e9c5c3e8e6c1ce1e6aa28d4cf41183161a0ebb72243d56dc6a6deff028b16c10970b84bdd8fee5c8cea73b8fcf201"
+      },
+      {
+        "public_key": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
+        "signature": "01713456c93fb75ebd05fcbc6c3eab28e04a19da43bb056d935a9af6a7781487468bc2127c8c49fe794fcb61aae6552893281d91fd6ea9be8c8530c51d41ff1508"
+      },
+      {
+        "public_key": "01fed662dc7f1f7af43ad785ba07a8cc05b7a96f9ee69613cfde43bc56bec1140b",
+        "signature": "01113063714eed166f636b4437bc839fa4c26d59fc3fdf8268f3ee6466e559521edad9737637c5918adb713b4281e2f761e595189be086fcabd50d945d8d39f106"
+      }
+    ]
+  }
+}
