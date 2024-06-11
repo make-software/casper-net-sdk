@@ -1,0 +1,8 @@
+{
+  "FinalitySignature": {
+    "block_hash": "d800de72aa40c6df064c714d3a6d8b6fab73f68742d8468b84efd6616bbb10bb",
+    "era_id": 13859,
+    "signature": "01221b61b83b889898363501c7defd7baa6729989d8fce2dfffea4632017fd46cc34b88bc85fa570a6e9ada829c67b9fdaa78e8dee2f07d346bcad0010e1d3df0f",
+    "public_key": "01b71b2d746681b4e0f44ef137d72ee0d42122b08ef569dc65bb0395cb624f99e5"
+  }
+}
