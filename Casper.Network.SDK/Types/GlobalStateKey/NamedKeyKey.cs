@@ -11,12 +11,12 @@ namespace Casper.Network.SDK.Types
         
         private static string GetPrefix(string key)
         {
-            if (key.StartsWith(NAMEDKEYPREFIX+EntityKind.System.ToKeyPrefix()))
-                return NAMEDKEYPREFIX+EntityKind.System.ToKeyPrefix();
-            if (key.StartsWith(NAMEDKEYPREFIX+EntityKind.Account.ToKeyPrefix()))
-                return NAMEDKEYPREFIX+EntityKind.Account.ToKeyPrefix();
-            if (key.StartsWith(NAMEDKEYPREFIX+EntityKind.Contract.ToKeyPrefix()))
-                return NAMEDKEYPREFIX+EntityKind.Contract.ToKeyPrefix();
+            if (key.StartsWith(NAMEDKEYPREFIX+EntityKindEnum.System.ToKeyPrefix()))
+                return NAMEDKEYPREFIX+EntityKindEnum.System.ToKeyPrefix();
+            if (key.StartsWith(NAMEDKEYPREFIX+EntityKindEnum.Account.ToKeyPrefix()))
+                return NAMEDKEYPREFIX+EntityKindEnum.Account.ToKeyPrefix();
+            if (key.StartsWith(NAMEDKEYPREFIX+EntityKindEnum.Contract.ToKeyPrefix()))
+                return NAMEDKEYPREFIX+EntityKindEnum.Contract.ToKeyPrefix();
 
             throw new Exception("Unexpected key prefix in NamedKeyKey: " + key);
         }

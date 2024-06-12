@@ -467,7 +467,7 @@ namespace NetCasperTest
 
             var entityAddr = "0101010101010101010101010101010101010101010101010101010101010101";
 
-            var entities = new EntityKind[] { EntityKind.System, EntityKind.Account, EntityKind.Contract };
+            var entities = new EntityKindEnum[] { EntityKindEnum.System, EntityKindEnum.Account, EntityKindEnum.Contract };
             foreach (var entityKind in entities)
             {
                 var entityKey = $"{ENTITY_PREFIX}{entityKind.ToString().ToLower()}-{entityAddr}";
@@ -513,7 +513,7 @@ namespace NetCasperTest
             var entityAddr = "0101010101010101010101010101010101010101010101010101010101010101";
             var namedKeyAddr = "0202020202020202020202020202020202020202020202020202020202020202";
 
-            var entities = new EntityKind[] { EntityKind.System, EntityKind.Account, EntityKind.Contract };
+            var entities = new EntityKindEnum[] { EntityKindEnum.System, EntityKindEnum.Account, EntityKindEnum.Contract };
             foreach (var entityKind in entities)
             {
                 var namedKeyKey = $"{NAMEDKEY_PREFIX}{ENTITY_PREFIX}{entityKind.ToString().ToLower()}-{entityAddr}-{namedKeyAddr}";

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -17,7 +18,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A wrapper for a Public Key. Provides signature verification functionality.
     /// </summary>
-    public class PublicKey
+    public class PublicKey: IPurseIdentifier, IEntityIdentifier
     {
         /// <summary>
         /// Byte array without the Key algorithm identifier.
@@ -263,6 +264,28 @@ namespace Casper.Network.SDK.Types
         public bool VerifySignature(string message, string signature)
         {
             return VerifySignature(Hex.Decode(message), Hex.Decode(signature));
+        }
+        
+        /// <summary>
+        /// Returns a PurseIdentifier object as defined in the RPC schema for a public key.
+        /// </summary>
+        public Dictionary<string, object> GetPurseIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                {"main_purse_under_public_key", this.ToString()}
+            };
+        }
+        
+        /// <summary>
+        /// Returns an EntityIdentifier object as defined in the RPC schema for a public key.
+        /// </summary>
+        public Dictionary<string, object> GetEntityIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                {"PublicKey", this.ToString()}
+            };
         }
 
         #region Cast operators
