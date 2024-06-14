@@ -356,6 +356,10 @@ namespace Casper.Network.SDK.Types
             : base(publicKey.GetAccountHash(), KEYPREFIX)
         {
         }
+
+        public AccountHashKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        {
+        }
     }
 
     /// <summary>

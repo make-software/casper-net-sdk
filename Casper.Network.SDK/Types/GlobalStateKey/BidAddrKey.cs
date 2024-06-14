@@ -18,6 +18,10 @@ namespace Casper.Network.SDK.Types
         /// Delegator BidAddr,
         /// </summary>
         Delegator = 2,
+        /// <summary>
+        /// BidAddr for auction credit.
+        /// </summary>
+        Credit = 4,
     }
     
     public class BidAddrKey : GlobalStateKey
@@ -26,48 +30,61 @@ namespace Casper.Network.SDK.Types
 
         public BidAddrTag Tag { get; init; }
 
-        public AccountHashKey Validator
-        {
-            get
-            {
-                var hash = Tag == BidAddrTag.Delegator ? Key.Substring(0,32) : Key;
-                return new AccountHashKey("account-hash-" + hash);
-            }
-        }
+        /// <summary>
+        /// Unified BidAddr.
+        /// </summary>
+        public AccountHashKey Unified { get; init; }
         
-        public AccountHashKey Delegator
-        {
-            get
-            {
-                var hash = Tag == BidAddrTag.Delegator ? Key.Substring(32) : null;
-                return hash != null 
-                    ? new AccountHashKey("account-hash-" + hash)
-                    : null;
-            }
-        }
+        /// <summary>
+        /// The valicator address.
+        /// </summary>
+        public AccountHashKey Validator { get; init; }
+        
+        /// <summary>
+        /// The delegator address.
+        /// </summary>
+        public AccountHashKey Delegator { get; init; }
+        
+        /// <summary>
+        /// The era id.
+        /// </summary>
+        public ulong EraId { get; init; }
         
         public BidAddrKey(string key) : base(key, KEYPREFIX)
         {
             KeyIdentifier = KeyIdentifier.BidAddr;
-            var bytes = Hex.Decode(Key);
-            if (bytes.Length <= 0)
+            var bytes = Hex.Decode(key.Substring(key.LastIndexOf('-') + 1));
+            
+            if (bytes.Length == 0)
                 throw new Exception("Wrong key length.");
+            
             switch (bytes[0])
             {
                 case (byte)BidAddrTag.Unified:
                     Tag = BidAddrTag.Unified;
                     if (bytes.Length != 33)
                         throw new Exception("Wrong key length for Unified BidAddr. Expected 33 bytes.");
+                    Unified = new AccountHashKey(bytes.Slice(1, 33));
                     break;
                 case (byte)BidAddrTag.Validator:
                     Tag = BidAddrTag.Validator;
                     if (bytes.Length != 33)
                         throw new Exception("Wrong key length for Validator BidAddr. Expected 33 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
                     break;
                 case (byte)BidAddrTag.Delegator:
                     Tag = BidAddrTag.Delegator;
                     if (bytes.Length != 65)
                         throw new Exception("Wrong key length for Unified BidAddr. Expected 65 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
+                    Delegator = new AccountHashKey(bytes.Slice(33));
+                    break;
+                case (byte)BidAddrTag.Credit:
+                    Tag = BidAddrTag.Credit;
+                    if (bytes.Length != 41)
+                        throw new Exception("Wrong key length for Credit BidAddr. Expected 41 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
+                    EraId = BitConverterExtensions.ToUInt64(bytes.Slice(33));
                     break;
                 default:
                     throw new Exception($"Wrong BidAddr tag '{bytes[0]}'.");

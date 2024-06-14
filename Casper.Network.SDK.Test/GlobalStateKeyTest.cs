@@ -608,5 +608,61 @@ namespace NetCasperTest
             Assert.AreEqual(msgKeyStr, messageKey.ToString().ToLower());
             Assert.AreEqual(msgKeyStr, key.ToString().ToLower());
         }
+        
+        [Test]
+        public void BidAddrKeyTest()
+        {
+            {
+                var unifiedBidAddrKeyStr = "bid-addr-002f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309";
+                var key = GlobalStateKey.FromString(unifiedBidAddrKeyStr);
+                Assert.IsNotNull(key);
+                Assert.AreEqual(KeyIdentifier.BidAddr, key.KeyIdentifier);
+
+                var bidAddrKey = key as BidAddrKey;
+                Assert.AreEqual(BidAddrTag.Unified, bidAddrKey.Tag);
+                Assert.AreEqual("account-hash-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309", bidAddrKey.Unified.ToString().ToLower());
+                Assert.IsNull(bidAddrKey.Delegator);
+                Assert.AreEqual(0, bidAddrKey.EraId);
+
+            }
+            {
+                var validatorBidAddrKeyStr = "bid-addr-012f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309";
+                var key = GlobalStateKey.FromString(validatorBidAddrKeyStr);
+                Assert.IsNotNull(key);
+                Assert.AreEqual(KeyIdentifier.BidAddr, key.KeyIdentifier);
+
+                var bidAddrKey = key as BidAddrKey;
+                Assert.AreEqual(BidAddrTag.Validator, bidAddrKey.Tag);
+                Assert.AreEqual("account-hash-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309", bidAddrKey.Validator.ToString().ToLower());
+                Assert.IsNull(bidAddrKey.Delegator);
+                Assert.AreEqual(0, bidAddrKey.EraId);
+            }
+            {
+                var delegatorBidAddrKeyStr = "bid-addr-022f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c4580073099fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4";
+                var key = GlobalStateKey.FromString(delegatorBidAddrKeyStr);
+                Assert.IsNotNull(key);
+                Assert.AreEqual(KeyIdentifier.BidAddr, key.KeyIdentifier);
+
+                var bidAddrKey = key as BidAddrKey;
+                Assert.AreEqual(BidAddrTag.Delegator, bidAddrKey.Tag);
+                Assert.AreEqual("account-hash-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309", bidAddrKey.Validator.ToString().ToLower());
+                Assert.AreEqual("account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4", bidAddrKey.Delegator.ToString().ToLower());
+                Assert.AreEqual(0, bidAddrKey.EraId);
+
+            }
+            {
+                var creditBidAddrKeyStr =
+                    "bid-addr-04520037cd249ccbcfeb0b9feae07d8d4f7d922cf88adc4f3e8691f9d34ccc8d097f00000000000000";
+                var key = GlobalStateKey.FromString(creditBidAddrKeyStr);
+                Assert.IsNotNull(key);
+                Assert.AreEqual(KeyIdentifier.BidAddr, key.KeyIdentifier);
+
+                var bidAddrKey = key as BidAddrKey;
+                Assert.AreEqual(BidAddrTag.Credit, bidAddrKey.Tag);
+                Assert.AreEqual("account-hash-520037cd249ccbcfeb0b9feae07d8d4f7d922cf88adc4f3e8691f9d34ccc8d09", bidAddrKey.Validator.ToString().ToLower());
+                Assert.IsNull(bidAddrKey.Delegator);
+                Assert.AreEqual(127, bidAddrKey.EraId);
+            }
+        }
     }
 }
