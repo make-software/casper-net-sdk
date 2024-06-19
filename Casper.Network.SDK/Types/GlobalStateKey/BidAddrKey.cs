@@ -1,5 +1,4 @@
 using System;
-using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
@@ -91,7 +90,7 @@ namespace Casper.Network.SDK.Types
             }
         }
 
-        public BidAddrKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public BidAddrKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }

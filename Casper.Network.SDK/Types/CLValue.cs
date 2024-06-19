@@ -32,7 +32,7 @@ namespace Casper.Network.SDK.Types
         /// Byte array representation of underlying data 
         /// </summary>
         [JsonPropertyName("bytes")]
-        [JsonConverter(typeof(HexBytesWithChecksumConverter))]
+        [JsonConverter(typeof(HexBytesConverter))]
         public byte[] Bytes { get; }
 
         /// <summary>

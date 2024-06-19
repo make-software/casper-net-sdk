@@ -1,5 +1,5 @@
 using System;
-using Casper.Network.SDK.Utils;
+using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
@@ -55,9 +55,9 @@ namespace Casper.Network.SDK.Types
     
         public ByteCodeKey(byte[] key) : this( 
             key[0] == (byte)ByteCodeKind.Empty
-                ? ByteCodeKind.Empty.ToKeyPrefix() + CEP57Checksum.Encode(key.Slice(1))
+                ? ByteCodeKind.Empty.ToKeyPrefix() + Hex.ToHexString(key.Slice(1))
                 : (key[0] == (byte)ByteCodeKind.V1CasperWasm
-                    ? ByteCodeKind.V1CasperWasm.ToKeyPrefix() + CEP57Checksum.Encode(key.Slice(1))
+                    ? ByteCodeKind.V1CasperWasm.ToKeyPrefix() + Hex.ToHexString(key.Slice(1))
                     :  throw new Exception($"Wrong kind tag '{key[0]}' for ByteCodeKey.")))
         {
         }

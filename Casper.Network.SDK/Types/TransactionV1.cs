@@ -19,7 +19,6 @@ namespace Casper.Network.SDK.Types
         /// A hash over the header of the transaction.
         /// </summary>
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
         public string Hash { get; }
         
         /// <summary>

@@ -23,7 +23,6 @@ namespace Casper.Network.SDK.Types
         /// A hash over the header of the deploy.
         /// </summary>
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
         public string Hash { get; }
 
         /// <summary>
@@ -114,10 +113,10 @@ namespace Casper.Network.SDK.Types
                 Ttl = header.Ttl,
                 Dependencies = header.Dependencies,
                 GasPrice = header.GasPrice,
-                BodyHash = CEP57Checksum.Encode(bodyHash),
+                BodyHash = Hex.ToHexString(bodyHash),
                 ChainName = header.ChainName
             };
-            this.Hash = CEP57Checksum.Encode(ComputeHeaderHash(this.Header));
+            this.Hash = Hex.ToHexString(ComputeHeaderHash(this.Header));
             this.Payment = payment;
             this.Session = session;
         }
@@ -156,7 +155,7 @@ namespace Casper.Network.SDK.Types
             {
                 message = "Computed Body Hash does not match value in deploy header. " +
                           $"Expected: '{this.Header.BodyHash}'. " +
-                          $"Computed: '{CEP57Checksum.Encode(computedHash)}'.";
+                          $"Computed: '{Hex.ToHexString(computedHash)}'.";
                 return false;
             }
 
@@ -165,7 +164,7 @@ namespace Casper.Network.SDK.Types
             {
                 message = "Computed Hash does not match value in deploy object. " +
                           $"Expected: '{this.Hash}'. " +
-                          $"Computed: '{CEP57Checksum.Encode(computedHash)}'.";
+                          $"Computed: '{Hex.ToHexString(computedHash)}'.";
                 return false;
             }
 

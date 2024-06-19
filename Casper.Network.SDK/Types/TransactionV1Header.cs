@@ -42,7 +42,6 @@ namespace Casper.Network.SDK.Types
         /// Hash of the body part of this Deploy.
         /// </summary>
         [JsonPropertyName("body_hash")]
-        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
         public string BodyHash { get; set; }
 
         /// <summary>
