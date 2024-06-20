@@ -13,7 +13,7 @@ public enum PricingModeType
         Classic = 0,
 
         /// <summary>
-        /// The cost of the transaction is determined by the cost table, per the transaction kind.
+        /// The cost of the transaction is determined by the cost table, per the transaction category.
         /// </summary>
         Fixed = 1,
 

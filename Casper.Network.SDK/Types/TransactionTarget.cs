@@ -134,40 +134,11 @@ namespace Casper.Network.SDK.Types
         VmCasperV2,
     }
 
-    public enum TransactionSessionKind
-    {
-        /// <summary>
-        /// A standard (non-special-case) session.
-        /// This kind of session is not allowed to install or upgrade a stored contract,
-        /// but can call stored contracts.
-        /// </summary>
-        Standard,
-
-        /// <summary>
-        /// A session which installs a stored contract.
-        /// </summary>
-        Installer,
-
-        /// <summary>
-        /// A session which upgrades a previously-installed stored contract.
-        /// Such a session must have \"package_id: PackageIdentifier\" runtime arg present.
-        /// </summary>
-        Upgrader,
-
-        /// <summary>
-        /// A session which doesn't call any stored contracts.
-        /// This kind of session is not allowed to install or upgrade a stored contract.
-        /// </summary>
-        Isolated,
-    }
-
     public class TransactionTarget
     {
         public TransactionTargetType Type { get; init; }
 
         [JsonPropertyName("id")] public IInvocationTarget Id { get; init; }
-
-        public TransactionSessionKind SessionKind { get; init; }
 
         /// <summary>
         /// wasm Bytes
@@ -214,42 +185,11 @@ namespace Casper.Network.SDK.Types
             };
         }
 
-        public static TransactionTarget StandardSession(byte[] moduleBytes)
+        public static TransactionTarget Session(byte[] moduleBytes)
         {
             return new TransactionTarget()
             {
                 Type = TransactionTargetType.Session,
-                SessionKind = TransactionSessionKind.Standard,
-                ModuleBytes = moduleBytes,
-            };
-        }
-
-        public static TransactionTarget InstallerSession(byte[] moduleBytes)
-        {
-            return new TransactionTarget()
-            {
-                Type = TransactionTargetType.Session,
-                SessionKind = TransactionSessionKind.Installer,
-                ModuleBytes = moduleBytes,
-            };
-        }
-
-        public static TransactionTarget UpgraderSession(byte[] moduleBytes)
-        {
-            return new TransactionTarget()
-            {
-                Type = TransactionTargetType.Session,
-                SessionKind = TransactionSessionKind.Upgrader,
-                ModuleBytes = moduleBytes,
-            };
-        }
-
-        public static TransactionTarget IsolatedSession(byte[] moduleBytes)
-        {
-            return new TransactionTarget()
-            {
-                Type = TransactionTargetType.Session,
-                SessionKind = TransactionSessionKind.Isolated,
                 ModuleBytes = moduleBytes,
             };
         }
@@ -281,7 +221,6 @@ namespace Casper.Network.SDK.Types
                 {
                     TransactionTarget transactionTarget = null;
                     IInvocationTarget id = null;
-                    string kind = null;
                     string module_bytes = null;
                     string runtime = null;
       
@@ -328,9 +267,6 @@ namespace Casper.Network.SDK.Types
                                 reader.Read();
                                 switch (prop)
                                 {
-                                    case "kind":
-                                        kind = reader.GetString();
-                                        break;
                                     case "module_bytes":
                                         module_bytes = reader.GetString();
                                         break;
@@ -345,7 +281,6 @@ namespace Casper.Network.SDK.Types
                             transactionTarget = new TransactionTarget()
                             {
                                 Type = EnumCompat.Parse<TransactionTargetType>(targetType), 
-                                SessionKind = EnumCompat.Parse<TransactionSessionKind>(kind),
                                 ModuleBytes = Hex.Decode(module_bytes),
                                 Runtime = EnumCompat.Parse<TransactionRuntime>(runtime),
                             };
@@ -382,7 +317,6 @@ namespace Casper.Network.SDK.Types
                     case TransactionTargetType.Session:
                         writer.WriteStartObject();
                         writer.WriteStartObject("Session");
-                        writer.WriteString("kind", value.SessionKind.ToString());
                         writer.WriteString("module_bytes", Hex.ToHexString(value.ModuleBytes));
                         writer.WriteString("runtime", value.Runtime.ToString());
                         writer.WriteEndObject();
