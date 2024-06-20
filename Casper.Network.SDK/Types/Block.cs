@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace Casper.Network.SDK.Types
 {
@@ -187,35 +186,91 @@ namespace Casper.Network.SDK.Types
         public List<string> TransferHashes { get; init; }
     }
 
+    public enum TransactionCategory {
+        /// Native mint interaction (the default).
+        Mint = 0,
+        /// Native auction interaction.
+        Auction = 1,
+        /// Install or Upgrade.
+        InstallUpgrade = 2,
+        /// A large Wasm based transaction.
+        Large = 3,
+        /// A medium Wasm based transaction.
+        Medium = 4,
+        /// A small Wasm based transaction.
+        Small = 5,
+    }
+
+    public enum TransactionVersion
+    {
+        Deploy = 0,
+        Version1 = 1,
+    }
+    
+    public class BlockTransaction
+    {
+        public TransactionCategory Category { get; init; }
+        public TransactionVersion Version { get; init; }
+        public string Hash { get; init; }
+        
+        public class BlockTransactionConverter : JsonConverter<List<BlockTransaction>>
+        {
+            public override List<BlockTransaction> Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                var txs = new List<BlockTransaction>();
+                
+                try
+                {
+                    reader.Read(); // skip start object
+                    while (reader.TokenType == JsonTokenType.PropertyName)
+                    {
+                        var categoryNumber = reader.GetString();
+                        var category = EnumCompat.Parse<TransactionCategory>(categoryNumber);
+                        reader.Read();
+                        var list = JsonSerializer.Deserialize<List<TransactionHash>>(ref reader, options);
+                        reader.Read();
+                        if (list.Count > 0)
+                        {
+                            txs.AddRange(list.Select(t => new BlockTransaction()
+                            {
+                                Category = category,
+                                Hash = t.Deploy != null ? t.Deploy : t.Version1,
+                                Version = t.Deploy != null ? TransactionVersion.Deploy : TransactionVersion.Version1,
+                            }));
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new JsonException(e.Message);
+                }
+
+                return txs;
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                List<BlockTransaction> block,
+                JsonSerializerOptions options)
+            {
+                throw new JsonException($"Serialization of BlockTransaction not available");
+            }
+        }
+    }
+    
     /// <summary>
     /// A block body
     /// </summary>
     public class BlockBody
     {
-        /// <summary>
-        /// The hashes of the installer/upgrader transactions within the block.
-        /// </summary>
-        [JsonPropertyName("install_upgrade")]
-        public List<TransactionHash> InstallUpgrade { get; init; }
-
-        /// <summary>
-        /// The hashes of the auction transactions within the block.
-        /// </summary>
-        [JsonPropertyName("auction")]
-        public List<TransactionHash> Auction { get; init; }
-
-        /// <summary>
-        /// The hashes of all other (non-installer/upgrader) transactions within the block.
-        /// </summary>
-        [JsonPropertyName("standard")]
-        public List<TransactionHash> Standard { get; init; }
-
-        /// <summary>
-        /// The hashes of the mint transactions within the block.
-        /// </summary>
-        [JsonPropertyName("mint")]
-        public List<TransactionHash> Mint { get; init; }
-
+        [JsonPropertyName("transactions")]
+        [JsonConverter(typeof(BlockTransaction.BlockTransactionConverter))]
+        public List<BlockTransaction> Transactions { get; init; }
+        // public Dictionary<string,List<TransactionHash>> Transactions { get; init; }
+        
         /// <summary>
         /// Describes finality signatures that will be rewarded in a block. Consists of a vector of
         /// `SingleBlockRewardedSignatures`, each of which describes signatures for a single ancestor block.
@@ -410,17 +465,31 @@ namespace Casper.Network.SDK.Types
 
         internal static BlockBody BlockBodyFromV1(BlockBodyV1 body)
         {
+            var txs = new List<BlockTransaction>();
+            
             var mintTransactions =
-                body.TransferHashes.Select(t => new TransactionHash { Deploy = t }).ToList();
+                body.TransferHashes.Select(hash => new BlockTransaction()
+                {
+                    Category = TransactionCategory.Mint,
+                    Hash = hash,
+                    Version = TransactionVersion.Deploy,
+                }).ToList();
+            if(mintTransactions.Count > 0)
+                txs.AddRange(mintTransactions);
+            
             var standardTransactions = 
-                body.DeployHashes.Select(t => new TransactionHash { Deploy = t }).ToList();
+                body.DeployHashes.Select(hash => new BlockTransaction()
+                {
+                    Category = TransactionCategory.Large,
+                    Hash = hash,
+                    Version = TransactionVersion.Deploy,
+                }).ToList();
+            if(standardTransactions.Count > 0)
+                txs.AddRange(standardTransactions);
             
             return new BlockBody
             {
-                Auction = new List<TransactionHash>(),
-                Mint = mintTransactions,
-                Standard =  standardTransactions,
-                InstallUpgrade = new List<TransactionHash>(),
+                Transactions = txs,
                 RewardedSignatures = null,
             };
         }
