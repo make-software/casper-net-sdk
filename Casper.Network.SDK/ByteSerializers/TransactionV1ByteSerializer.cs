@@ -40,7 +40,6 @@ namespace Casper.Network.SDK.ByteSerializers
             }
             else if (source.Type == TransactionTargetType.Session)
             {
-                WriteByte(ms, (byte)source.SessionKind);
                 if (source.ModuleBytes == null || source.ModuleBytes.Length == 0)
                     WriteInteger(ms, 0);
                 else
@@ -102,7 +101,7 @@ namespace Casper.Network.SDK.ByteSerializers
 
             WriteBytes(ms, ToBytes(source.Target));
             WriteBytes(ms, ToBytes(source.EntryPoint));
-            WriteByte(ms, source.TransactionKind);
+            WriteByte(ms, source.TransactionCategory);
             WriteBytes(ms, ToBytes(source.Scheduling));
 
             return ms.ToArray();
