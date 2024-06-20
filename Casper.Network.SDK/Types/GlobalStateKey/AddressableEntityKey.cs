@@ -87,6 +87,22 @@ namespace Casper.Network.SDK.Types
             Key = Kind.ToKeyPrefix() + Hex.ToHexString(addr);
         }
         
+        protected override byte[] _GetRawBytesFromKey(string key)
+        {
+            return this.GetBytes();
+        }
+        
+        public override byte[] GetBytes()
+        {
+            var key = Key.Substring(Key.LastIndexOf('-')+1);
+            var rawBytes = Hex.Decode(key);
+            var ms = new MemoryStream();
+            ms.WriteByte((byte)this.Kind);
+            ms.Write(rawBytes);
+
+            return ms.ToArray();
+        }
+        
         /// <summary>
         /// Returns an EntityIdentifier object as defined in the RPC schema for an account hash key.
         /// </summary>
