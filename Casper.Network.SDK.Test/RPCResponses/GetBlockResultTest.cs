@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Casper.Network.SDK.JsonRpc.ResultTypes;
 using Casper.Network.SDK.Types;
 using NUnit.Framework;
@@ -25,6 +26,12 @@ namespace NetCasperTest.RPCResponses
             Assert.AreEqual(2947381, result.Block.Header.Height);
             Assert.AreEqual(13670, result.Block.Header.EraId);
             Assert.IsNull(result.Block.Header.EraEnd);
+            Assert.IsNull(result.Block.Body.RewardedSignatures);
+            Assert.AreEqual(26, result.Block.Body.Transactions.Count);
+            Assert.AreEqual(25, result.Block.Body.Transactions
+                .Where(t => t.Category==TransactionCategory.Large).ToList().Count);
+            Assert.AreEqual("31849e17f715273ad7032d51534c5b6029dd0dec1e01c225c50083752a750219",
+                result.Block.Body.Transactions.First(t => t.Category==TransactionCategory.Mint).Hash);
         }
         
         [Test]
@@ -49,6 +56,9 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNotNull(eraEnd.NextEraValidatorWeights[1].PublicKey);
             Assert.IsNotNull(eraEnd.NextEraValidatorWeights[1].Weight);
             Assert.IsTrue(eraEnd.Rewards.Count > 1);
+            Assert.AreEqual(1, result.Block.Body.Transactions.Count);
+            Assert.AreEqual(TransactionCategory.InstallUpgrade, result.Block.Body.Transactions[0].Category);
+            Assert.IsNotEmpty(result.Block.Body.Transactions[0].Hash);
         }
     }
 }
