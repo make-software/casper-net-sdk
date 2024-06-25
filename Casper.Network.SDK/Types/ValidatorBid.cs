@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
-using Org.BouncyCastle.Math;
+using System.Numerics;
 
 namespace Casper.Network.SDK.Types
 {
