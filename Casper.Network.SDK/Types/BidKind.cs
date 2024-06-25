@@ -69,7 +69,7 @@ namespace Casper.Network.SDK.Types
         /// A bid record containing only validator data.
         /// </summary>
         [JsonPropertyName("Validator")]
-        public Bid Validator { get; init; }
+        public ValidatorBid Validator { get; init; }
         
         /// <summary>
         /// A bid record containing only delegator data.
