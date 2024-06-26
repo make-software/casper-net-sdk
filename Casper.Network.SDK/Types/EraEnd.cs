@@ -108,4 +108,11 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("next_era_gas_price")]
         public UInt16 NextEraGasPrice { get; init; }
     }
+
+    /// <summary>
+    /// Information related to the end of an era, and validator weights for the following era (alias for EraEndV2).
+    /// </summary>
+    public class EraEnd: EraEndV2
+    {
+    }
 }
