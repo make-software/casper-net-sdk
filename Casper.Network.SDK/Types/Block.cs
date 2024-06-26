@@ -101,8 +101,200 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A block header (alias for BlockHeaderV2)
     /// </summary>
-    public class BlockHeader : BlockHeaderV2
+    public class BlockHeader
     {
+        protected int _version;
+
+        /// <summary>
+        /// Returns the version of the block.
+        /// </summary>
+        public int Version
+        {
+            get { return _version; }
+        }
+        
+        protected BlockHeaderV1 _blockHeaderV1;
+
+        protected BlockHeaderV2 _blockHeaderV2;
+        
+        /// <summary>
+        /// A seed needed for initializing a future era.
+        /// </summary>
+        public string AccumulatedSeed { get; init; }
+
+        /// <summary>
+        /// The hash of the block's body.
+        /// </summary>
+        public string BodyHash { get; init; }
+
+        /// <summary>
+        /// The era ID in which this block was created.
+        /// </summary>
+        public ulong EraId { get; init; }
+
+        /// <summary>
+        /// The height of this block, i.e. the number of ancestors.
+        /// </summary>
+        public ulong Height { get; init; }
+
+        /// <summary>
+        /// The parent block's hash.
+        /// </summary>
+        public string ParentHash { get; init; }
+
+        /// <summary>
+        /// The protocol version of the network from when this block was created.
+        /// </summary>
+        public string ProtocolVersion { get; init; }
+
+        /// <summary>
+        /// A random bit needed for initializing a future era.
+        /// </summary>
+        public bool RandomBit { get; init; }
+
+        /// <summary>
+        /// The root hash of global state after the deploys in this block have been executed.
+        /// </summary>
+        public string StateRootHash { get; init; }
+
+        /// <summary>
+        /// The timestamp from when the block was proposed.
+        /// </summary>
+        public string Timestamp { get; init; }
+        
+        /// <summary>
+        /// The `EraEnd` of a block if it is a switch block.
+        /// </summary>
+        public EraEnd EraEnd { get; init; }
+
+        /// <summary>
+        /// The gas price of the era.
+        /// </summary>
+        public UInt16 CurrentGasPrice { get; init; }
+        
+        /// <summary>
+        /// Public key of the validator that proposed the block
+        /// </summary>
+        public Proposer Proposer { get; init; }
+        
+        public string LastSwitchBlockHash { get; init; }
+        
+        public class BlockHeaderConverter : JsonConverter<BlockHeader>
+        {
+            public override BlockHeader Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                try
+                {
+                    reader.Read();
+                    var version = reader.GetString();
+                    reader.Read();
+                    switch (version)
+                    {
+                        case "Version1":
+                            var blockHeaderv1 = JsonSerializer.Deserialize<BlockHeaderV1>(ref reader, options);
+                            reader.Read();
+                            return (BlockHeader)blockHeaderv1;
+                        case "Version2":
+                            var blockHeaderv2 = JsonSerializer.Deserialize<BlockHeaderV2>(ref reader, options);
+                            reader.Read();
+                            return (BlockHeader)blockHeaderv2;
+                        default:
+                            throw new JsonException("Expected Version1 or Version2");
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new JsonException(e.Message);
+                }
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                BlockHeader blockHeader,
+                JsonSerializerOptions options)
+            {
+                switch (blockHeader.Version)
+                {
+                    case 1:
+                        writer.WritePropertyName("Version1");
+                        writer.WriteStartObject();
+                        JsonSerializer.Serialize((BlockHeaderV1)blockHeader, options);
+                        writer.WriteEndObject();
+                        break;
+                    case 2:
+                        writer.WritePropertyName("Version2");
+                        writer.WriteStartObject();
+                        JsonSerializer.Serialize((BlockHeaderV2)blockHeader, options);
+                        writer.WriteEndObject();
+                        break;
+                    default:
+                        throw new JsonException($"Unexpected block header version {blockHeader.Version}");
+                }
+            }
+        }
+        
+        public static explicit operator BlockHeaderV1(BlockHeader blockHeader)
+        {
+            if(blockHeader._version == 1)
+                return blockHeader._blockHeaderV1;
+
+            throw new InvalidCastException("Version2 block header cannot be converted to Version1");
+        }
+        
+        public static explicit operator BlockHeaderV2(BlockHeader blockHeader)
+        {
+            if(blockHeader._version == 2)
+                return blockHeader._blockHeaderV2;
+
+            throw new InvalidCastException("Version1 block header cannot be converted to Version2");
+        }
+        
+        public static explicit operator BlockHeader(BlockHeaderV1 blockHeader)
+        {
+            return new BlockHeader
+            {
+                _version = 1,
+                _blockHeaderV1 = blockHeader,
+
+                AccumulatedSeed = blockHeader.AccumulatedSeed,
+                EraId = blockHeader.EraId,
+                Height = blockHeader.Height,
+                ParentHash = blockHeader.ParentHash,
+                ProtocolVersion = blockHeader.ProtocolVersion,
+                StateRootHash = blockHeader.StateRootHash,
+                Timestamp = blockHeader.Timestamp,
+                RandomBit = blockHeader.RandomBit,
+                CurrentGasPrice = 1,
+                LastSwitchBlockHash = null,
+                Proposer = null,
+                EraEnd = BlockV1.EraEndFromV1(blockHeader),
+            };
+        }
+        
+        public static explicit operator BlockHeader(BlockHeaderV2 blockHeader)
+        {
+            return new BlockHeader
+            {
+                _version = 2,
+                _blockHeaderV2 = blockHeader,
+
+                AccumulatedSeed = blockHeader.AccumulatedSeed,
+                EraId = blockHeader.EraId,
+                Height = blockHeader.Height,
+                ParentHash = blockHeader.ParentHash,
+                ProtocolVersion = blockHeader.ProtocolVersion,
+                StateRootHash = blockHeader.StateRootHash,
+                Timestamp = blockHeader.Timestamp,
+                RandomBit = blockHeader.RandomBit,
+                CurrentGasPrice = blockHeader.CurrentGasPrice,
+                LastSwitchBlockHash = blockHeader.LastSwitchBlockHash,
+                Proposer = blockHeader.Proposer,
+                EraEnd = blockHeader.EraEnd,
+            };
+        }
     }
 
     /// <summary>
@@ -236,7 +428,7 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("body")]
         public BlockBodyV1 Body { get; init; }
 
-        internal static EraEnd EraEndFromV1(BlockHeaderV1 header, BlockBodyV1 body)
+        internal static EraEnd EraEndFromV1(BlockHeaderV1 header)
         {
             Dictionary<string, List<string>> rewards = new();
             if (header.EraEnd != null && header.EraEnd.EraReport.Rewards.Count > 0)
@@ -570,7 +762,7 @@ namespace Casper.Network.SDK.Types
                 CurrentGasPrice = 1,
                 LastSwitchBlockHash = null,
                 Proposer = block.Body.Proposer,
-                EraEnd = BlockV1.EraEndFromV1(block.Header, block.Body),
+                EraEnd = BlockV1.EraEndFromV1(block.Header),
 
                 Transactions = BlockV1.BlockTransactionsFromV1(block.Body),
                 RewardedSignatures = null,
