@@ -1,0 +1,632 @@
+{
+  "api_version": "2.0.0",
+  "deploy": {
+    "hash": "cdbb52d946ce58dccde35ac17a5820c0ee6bdddcf80d0e5e22572d2be6bffed6",
+    "header": {
+      "account": "0184f6d260f4ee6869ddb36affe15456de6ae045278fa2f467bb677561ce0dad55",
+      "timestamp": "2024-06-28T10:15:36.909Z",
+      "ttl": "30m",
+      "gas_price": 1,
+      "body_hash": "467d34798eb4075f9518a82f7a8eb959290f00ac5fb305c3428f63508082ba39",
+      "dependencies": [],
+      "chain_name": "casper-net-1"
+    },
+    "payment": {
+      "ModuleBytes": {
+        "module_bytes": "",
+        "args": [
+          [
+            "amount",
+            {
+              "cl_type": "U512",
+              "bytes": "050088526a74",
+              "parsed": "500000000000"
+            }
+          ]
+        ]
+      }
+    },
+    "session": {
+      "ModuleBytes": {
+        "module_bytes": "0061736d0100000141073602b803200141b8036a10ee808080002102200141b8036a0002100000",
+        "args": [
+          [
+            "name",
+            {
+              "cl_type": "String",
+              "bytes": "0b000000434c49434b542054657374",
+              "parsed": "CLICKT Test"
+            }
+          ],
+          [
+            "symbol",
+            {
+              "cl_type": "String",
+              "bytes": "06000000434c49434b54",
+              "parsed": "CLICKT"
+            }
+          ],
+          [
+            "decimals",
+            {
+              "cl_type": "U8",
+              "bytes": "03",
+              "parsed": 3
+            }
+          ],
+          [
+            "total_supply",
+            {
+              "cl_type": "U256",
+              "bytes": "0400ca9a3b",
+              "parsed": "1000000000"
+            }
+          ],
+          [
+            "events_mode",
+            {
+              "cl_type": "U8",
+              "bytes": "01",
+              "parsed": 1
+            }
+          ],
+          [
+            "enable_mint_burn",
+            {
+              "cl_type": "U8",
+              "bytes": "00",
+              "parsed": 0
+            }
+          ]
+        ]
+      }
+    },
+    "approvals": [
+      {
+        "signer": "0184f6d260f4ee6869ddb36affe15456de6ae045278fa2f467bb677561ce0dad55",
+        "signature": "01cddbf5fc583f7ebf2293837e8f306ecb3650ad8df3760010048e3a7ad75640dcce3e5b1c990cd596f60b01570fb963514c0af083a29b81194f708a777f15910b"
+      }
+    ]
+  },
+  "execution_info": {
+    "block_hash": "63dcce7f471030454da37a84e35c62fac863ee73aea0a9bf159e973ecc3e2e7d",
+    "block_height": 23,
+    "execution_result": {
+      "Version1": {
+        "Success": {
+          "effect": {
+            "operations": [],
+            "transforms": [
+              {
+                "key": "account-hash-6174cf2e6f8fed1715c9a3bace9c50bfe572eecb763b0ed3f644532616452008",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-d6513eb8e21953badd438f0e3cb01fa4c47f879cd6ecd28a25bd327cb0d0a0e2",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-c3d73ae472263ea840378de7487c67b3b598dcd281d7851a429e783b25d4e959",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-1499242da9799e647edf8e0903e75776fe5c1df56a26de15d028422ef1f2bf93",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-c3d73ae472263ea840378de7487c67b3b598dcd281d7851a429e783b25d4e959",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-a1e58c31ab6ef541735d5a13ee768c72031b5042c3b128e45119cf1087b3c93d",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U512",
+                    "bytes": "0e0078ad95955ac138938d44c64d31",
+                    "parsed": "999999999999999999999500000000000"
+                  }
+                }
+              },
+              {
+                "key": "balance-a1e58c31ab6ef541735d5a13ee768c72031b5042c3b128e45119cf1087b3c93d",
+                "transform": {
+                  "AddUInt512": "500000000000"
+                }
+              },
+              {
+                "key": "uref-db1891fef9155d6ef077d8a93d5e3edcba5eea0d8298163fb9872e133268711e-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "String",
+                    "bytes": "0b000000434c49434b542054657374",
+                    "parsed": "CLICKT Test"
+                  }
+                }
+              },
+              {
+                "key": "uref-e8d05c77d4bf5d46001bad5828c27d90b5da6e4a151496e46af1cc706efd48dd-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "String",
+                    "bytes": "06000000434c49434b54",
+                    "parsed": "CLICKT"
+                  }
+                }
+              },
+              {
+                "key": "uref-21fe1e848187fdd960698ad8b7986d5c0e08de270b6757e7635c9d86e44e1f9e-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U8",
+                    "bytes": "03",
+                    "parsed": 3
+                  }
+                }
+              },
+              {
+                "key": "uref-18556a7a9e30862aa6f649f184febae6edf1ffe038403ef85a8ff78ad97307b9-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U256",
+                    "bytes": "0400ca9a3b",
+                    "parsed": "1000000000"
+                  }
+                }
+              },
+              {
+                "key": "uref-3d67308514d1a0c447a07f088b165d54aa13f601f9e58791e059bc6344cd84f9-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U8",
+                    "bytes": "01",
+                    "parsed": 1
+                  }
+                }
+              },
+              {
+                "key": "uref-5c12c6fa083d7a2340379cb9a56d07915f186d76624c7223c478a679962cecf4-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U8",
+                    "bytes": "00",
+                    "parsed": 0
+                  }
+                }
+              },
+              {
+                "key": "uref-783e3cbee2b8acb3e58da315fdfdc809faf98f0c03d4de7b7d3fd1ec10a7bd6e-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "Unit",
+                    "bytes": "",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "hash-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb",
+                "transform": "WriteContractPackage"
+              },
+              {
+                "key": "account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "cep18_contract_package_CLICKT Test",
+                      "key": "hash-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "cep18_contract_package_access_CLICKT Test",
+                      "key": "uref-783e3cbee2b8acb3e58da315fdfdc809faf98f0c03d4de7b7d3fd1ec10a7bd6e-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "hash-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-906aa4db02430ae0894f6996c3dcb423013d9878037ad84a46c6f6ac78b7d5b1",
+                "transform": "WriteContractWasm"
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": "WriteContract"
+              },
+              {
+                "key": "hash-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb",
+                "transform": "WriteContractPackage"
+              },
+              {
+                "key": "account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "cep18_contract_hash_CLICKT Test",
+                      "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "uref-09377f91048ec8d1b15df45c151e55683d8b93a779c5f2cef634d3ca1543b192-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U32",
+                    "bytes": "01000000",
+                    "parsed": 1
+                  }
+                }
+              },
+              {
+                "key": "account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "cep18_contract_version_CLICKT Test",
+                      "key": "uref-09377f91048ec8d1b15df45c151e55683d8b93a779c5f2cef634d3ca1543b192-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-906aa4db02430ae0894f6996c3dcb423013d9878037ad84a46c6f6ac78b7d5b1",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "package_hash",
+                      "key": "hash-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "uref-ae50771df34a40472b425ddd98c874a0836888f3bd22e01842f7bfddb3549c6f-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "Unit",
+                    "bytes": "",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "allowances",
+                      "key": "uref-ae50771df34a40472b425ddd98c874a0836888f3bd22e01842f7bfddb3549c6f-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "uref-aeae29762c24430dd4e6dd0ff93994abd53c43907103a27bfe7d3881fdcebbc0-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "Unit",
+                    "bytes": "",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "balances",
+                      "key": "uref-aeae29762c24430dd4e6dd0ff93994abd53c43907103a27bfe7d3881fdcebbc0-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "dictionary-3242adf99a374c325bbc98d29323805a5a0c7d81c0b55731027111bc1b220869",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "Any",
+                    "bytes": "050000000400ca9a3b0720000000aeae29762c24430dd4e6dd0ff93994abd53c43907103a27bfe7d3881fdcebbc02c0000004146612b2f424f6d2f574c686a7a5958414b58676a355a7041634e4e2b4151624e7579583155316758435065",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "uref-304e0283e0bd6fbb04dd97af1c6caea28cbd7a8937fcf46724052142cfe3f603-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "Unit",
+                    "bytes": "",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "security_badges",
+                      "key": "uref-304e0283e0bd6fbb04dd97af1c6caea28cbd7a8937fcf46724052142cfe3f603-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "dictionary-fbde437d8e6d72b1eecd9e776d5a54c70216381905dca0ef5e589cf6d708d5d1",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "Any",
+                    "bytes": "01000000000320000000304e0283e0bd6fbb04dd97af1c6caea28cbd7a8937fcf46724052142cfe3f6032c0000004146612b2f424f6d2f574c686a7a5958414b58676a355a7041634e4e2b4151624e7579583155316758435065",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "uref-3d67308514d1a0c447a07f088b165d54aa13f601f9e58791e059bc6344cd84f9-000",
+                "transform": "Identity"
+              },
+              {
+                "key": "uref-83fe09fd54cc79ce67e513bdef50297936fdcef11fa7886f984a373aa2fa000c-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "Unit",
+                    "bytes": "",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "__events",
+                      "key": "uref-83fe09fd54cc79ce67e513bdef50297936fdcef11fa7886f984a373aa2fa000c-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "uref-c241213422d3c9adb0afa8437ea3dab8c69dd863c0cf44536d7586538545b482-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U32",
+                    "bytes": "00000000",
+                    "parsed": 0
+                  }
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "__events_length",
+                      "key": "uref-c241213422d3c9adb0afa8437ea3dab8c69dd863c0cf44536d7586538545b482-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "uref-8ed3033a37c622f23a4c1689c29a3b773bec3a8ac8a583e866c3d196a7b2e8a4-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": {
+                      "Map": {
+                        "key": "String",
+                        "value": {
+                          "List": {
+                            "Tuple2": [
+                              "String",
+                              "Any"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "bytes": "08000000040000004275726e02000000050000006f776e65720b06000000616d6f756e74070e0000004368616e67655365637572697479020000000500000061646d696e0b0e0000007365635f6368616e67655f6d6170110b03110000004465637265617365416c6c6f77616e636504000000050000006f776e65720b070000007370656e6465720b09000000616c6c6f77616e63650707000000646563725f62790711000000496e637265617365416c6c6f77616e636504000000050000006f776e65720b070000007370656e6465720b09000000616c6c6f77616e63650706000000696e635f627907040000004d696e740200000009000000726563697069656e740b06000000616d6f756e74070c000000536574416c6c6f77616e636503000000050000006f776e65720b070000007370656e6465720b09000000616c6c6f77616e636507080000005472616e73666572030000000600000073656e6465720b09000000726563697069656e740b06000000616d6f756e74070c0000005472616e7366657246726f6d04000000070000007370656e6465720b050000006f776e65720b09000000726563697069656e740b06000000616d6f756e7407",
+                    "parsed": null
+                  }
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "__events_schema",
+                      "key": "uref-8ed3033a37c622f23a4c1689c29a3b773bec3a8ac8a583e866c3d196a7b2e8a4-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "uref-6533dbce8d122ee0310a51dc4416e1a594277ec8625f1df54cbc1dcccae27c4b-000",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "String",
+                    "bytes": "03000000312e31",
+                    "parsed": "1.1"
+                  }
+                }
+              },
+              {
+                "key": "hash-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+                "transform": {
+                  "AddKeys": [
+                    {
+                      "name": "__events_ces_version",
+                      "key": "uref-6533dbce8d122ee0310a51dc4416e1a594277ec8625f1df54cbc1dcccae27c4b-007"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "deploy-cdbb52d946ce58dccde35ac17a5820c0ee6bdddcf80d0e5e22572d2be6bffed6",
+                "transform": {
+                  "WriteDeployInfo": {
+                    "deploy_hash": "cdbb52d946ce58dccde35ac17a5820c0ee6bdddcf80d0e5e22572d2be6bffed6",
+                    "transfers": [],
+                    "from": "account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de",
+                    "source": "uref-bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e-007",
+                    "gas": "239918433115"
+                  }
+                }
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-d6513eb8e21953badd438f0e3cb01fa4c47f879cd6ecd28a25bd327cb0d0a0e2",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-a1e58c31ab6ef541735d5a13ee768c72031b5042c3b128e45119cf1087b3c93d",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+                "transform": "Identity"
+              },
+              {
+                "key": "account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-c3d73ae472263ea840378de7487c67b3b598dcd281d7851a429e783b25d4e959",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-1499242da9799e647edf8e0903e75776fe5c1df56a26de15d028422ef1f2bf93",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-c3d73ae472263ea840378de7487c67b3b598dcd281d7851a429e783b25d4e959",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-a1e58c31ab6ef541735d5a13ee768c72031b5042c3b128e45119cf1087b3c93d",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-a1e58c31ab6ef541735d5a13ee768c72031b5042c3b128e45119cf1087b3c93d",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U512",
+                    "bytes": "05900f467738",
+                    "parsed": "242519248784"
+                  }
+                }
+              },
+              {
+                "key": "balance-bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e",
+                "transform": {
+                  "AddUInt512": "257480751216"
+                }
+              },
+              {
+                "key": "hash-c3d73ae472263ea840378de7487c67b3b598dcd281d7851a429e783b25d4e959",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-1499242da9799e647edf8e0903e75776fe5c1df56a26de15d028422ef1f2bf93",
+                "transform": "Identity"
+              },
+              {
+                "key": "hash-c3d73ae472263ea840378de7487c67b3b598dcd281d7851a429e783b25d4e959",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-a1e58c31ab6ef541735d5a13ee768c72031b5042c3b128e45119cf1087b3c93d",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-59621579e9cd67523b65d2ac87fe05993be7dfd6ba677fd1b4200e64a53f9d16",
+                "transform": "Identity"
+              },
+              {
+                "key": "balance-a1e58c31ab6ef541735d5a13ee768c72031b5042c3b128e45119cf1087b3c93d",
+                "transform": {
+                  "WriteCLValue": {
+                    "cl_type": "U512",
+                    "bytes": "00",
+                    "parsed": "0"
+                  }
+                }
+              },
+              {
+                "key": "balance-59621579e9cd67523b65d2ac87fe05993be7dfd6ba677fd1b4200e64a53f9d16",
+                "transform": {
+                  "AddUInt512": "242519248784"
+                }
+              }
+            ]
+          },
+          "transfers": [],
+          "cost": "239918433115"
+        }
+      }
+    }
+  }
+}
+
+
