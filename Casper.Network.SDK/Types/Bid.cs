@@ -29,12 +29,6 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(Delegator.PublicKeyAndDelegatorListConverter))]
         public List<Delegator> Delegators { get; init; }
         
-        // public List<Delegator> Delegators
-        // {
-            // get { return PublicKeyAndDelegators.Select(pd => pd.Delegator).ToList();  }
-            // init { }
-        // }
-
         /// <summary>
         /// `true` if validator has been "evicted"
         /// </summary>
