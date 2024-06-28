@@ -13,14 +13,14 @@ namespace Casper.Network.SDK.Converters
             Type typeToConvert,
             JsonSerializerOptions options)
         {
+            var bids = new List<Bid>();
+            
             if (reader.TokenType != JsonTokenType.StartArray)
-                throw new JsonException("Array token expected to deserialize a list of Bids");
+                throw new JsonException("StartArray token expected to deserialize a list of Bids");
 
             reader.Read(); // Start array
 
-            List<Bid> bids = new List<Bid>();
-
-            while (reader.TokenType == JsonTokenType.StartObject)
+            while (reader.TokenType != JsonTokenType.EndArray)
             {
                 reader.Read();
                 
@@ -55,6 +55,7 @@ namespace Casper.Network.SDK.Converters
                         Inactive = bid.Inactive,
                         StakedAmount = bid.StakedAmount,
                         PublicKey = PublicKey.FromHexString(publicKey),
+                        VestingSchedule = bid.VestingSchedule,
                     };
                 bids.Add(bid);
 
