@@ -568,6 +568,20 @@ namespace Casper.Network.SDK
                     response.Result.GetProperty("execution_result").GetArrayLength() > 0)
                     return response;
                 await Task.Delay(10000);
+                if (!cancellationToken.CanBeCanceled)
+                    return response;
+                
+                // Casper >= v2.0.0 processed deploy contains execution_info with data
+                if(response.Result.TryGetProperty("execution_info", out var executionInfo) &&
+                   executionInfo.ValueKind != JsonValueKind.Null)
+                    return response;
+             
+                // Casper < v2.0.0 processed deploy contains execution_results with data
+                if(response.Result.TryGetProperty("execution_results", out var executionResults) &&
+                   executionResults.ValueKind == JsonValueKind.Array &&
+                   executionResults.GetArrayLength() > 0)
+                
+                await Task.Delay(4000);
             }
 
             throw new TaskCanceledException("GetDeploy operation canceled");
