@@ -103,6 +103,7 @@ namespace Casper.Network.SDK.SSE
 
         protected string _host;
         protected int _port;
+        protected int _nodeVersion = 1;
         
         public ServerEventsClient()
         {
@@ -126,12 +127,19 @@ namespace Casper.Network.SDK.SSE
         /// </summary>
         /// <param name="host">IP or domain name of the node.</param>
         /// <param name="port">Event stream port.</param>
-        public ServerEventsClient(string host, int port) : this()
+        public ServerEventsClient(string host, int port, int nodeVersion = 2) : this()
         {
             _host = host;
             _port = port;
+            _nodeVersion = nodeVersion;
         }
 
+        public int NodeVersion
+        {
+            get { return _nodeVersion; }
+            set { _nodeVersion = value; }
+        }
+        
         /// <summary>
         /// Adds an event callback method that is called for each subscribed event emitted by the node. 
         /// </summary>
@@ -233,6 +241,8 @@ namespace Casper.Network.SDK.SSE
             }
 
             await Task.WhenAll(tasks);
+            
+            _runningTasks.Clear();
         }
 
         /// <summary>
@@ -250,6 +260,11 @@ namespace Casper.Network.SDK.SSE
             Task.WhenAll(tasks).Wait();
         }
 
+        public bool IsRunning()
+        {
+            return _runningTasks.Count > 0;
+        }
+        
         /// <summary>
         /// Returns an instance of an HttpClient. Derived classes can override this method to get
         /// the client object from an HttpClientFactory, for example.
@@ -276,8 +291,9 @@ namespace Casper.Network.SDK.SSE
                     try
                     {
                         var uriBuilder = new UriBuilder(new Uri(client.BaseAddress +
-                            $"events"));
-
+                            $"events" +
+                            (_nodeVersion == 1 ? $"/{channelType.ToString().ToLowerInvariant()}" : "")));
+                        
                         if (startFrom != null && startFrom != int.MaxValue)
                             uriBuilder.Query = $"start_from={startFrom}";
                         else

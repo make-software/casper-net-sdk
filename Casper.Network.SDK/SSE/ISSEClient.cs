@@ -9,10 +9,14 @@ namespace Casper.Network.SDK.SSE
 
         bool RemoveEventCallback(EventType eventType, string name);
 
+        int NodeVersion { get; set; }
+        
         void StartListening();
 
         Task StopListening();
 
+        bool IsRunning();
+        
         void Wait();
     }
 }
