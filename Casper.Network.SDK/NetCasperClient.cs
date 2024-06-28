@@ -520,9 +520,20 @@ namespace Casper.Network.SDK
             while (!cancellationToken.IsCancellationRequested)
             {
                 var response = await SendRpcRequestAsync<GetDeployResult>(method);
-                if (!cancellationToken.CanBeCanceled ||
-                    response.Result.GetProperty("execution_info").ValueKind != JsonValueKind.Null)
+                if (!cancellationToken.CanBeCanceled)
                     return response;
+                
+                // Casper >= v2.0.0 processed deploy contains execution_info with data
+                if(response.Result.TryGetProperty("execution_info", out var executionInfo) &&
+                   executionInfo.ValueKind != JsonValueKind.Null)
+                    return response;
+             
+                // Casper < v2.0.0 processed deploy contains execution_results with data
+                if(response.Result.TryGetProperty("execution_results", out var executionResults) &&
+                   executionResults.ValueKind == JsonValueKind.Array &&
+                   executionResults.GetArrayLength() > 0)
+                    return response;
+                
                 await Task.Delay(4000);
             }
 
