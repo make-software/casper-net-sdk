@@ -28,6 +28,14 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, int blockHeight);
 
+        Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, string blockHash = null);
+
+        Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, ulong blockHeight);
+
+        Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, string blockHash = null);
+
+        Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, ulong blockHeight);
+
         Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
             string path = null);
         
@@ -49,9 +57,22 @@ namespace Casper.Network.SDK
         Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey,
             string stateRootHash = null);
 
+        Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
+            string blockHash = null);
+
+        Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
+            ulong blockHeight);
+
+        Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetailsWithStateRootHash(
+            IPurseIdentifier purseIdentifier, string stateRootHash);
+        
         Task<RpcResponse<PutDeployResult>> PutDeploy(Deploy deploy);
 
         Task<RpcResponse<GetDeployResult>> GetDeploy(string deployHash,
+            CancellationToken cancellationToken = default(CancellationToken));
+        
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
+            bool finalizedApprovals = false,
             CancellationToken cancellationToken = default(CancellationToken));
         
         Task<RpcResponse<GetBlockResult>> GetBlock(string blockHash = null);
