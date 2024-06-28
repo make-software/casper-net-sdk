@@ -126,7 +126,10 @@ namespace Casper.Network.SDK.Types
                     switch (version)
                     {
                         case "Version1":
-                            var erV1 = JsonSerializer.Deserialize<ExecutionResultV1>(ref reader, options);
+                            var erSerializerOptions = new JsonSerializerOptions(options);
+                            erSerializerOptions.Converters.Add(new ExecutionResultV1.ExecutionResultV1Converter());
+
+                            var erV1 = JsonSerializer.Deserialize<ExecutionResultV1>(ref reader, erSerializerOptions);
                             reader.Read();
                             return (ExecutionResult)erV1;
                         case "Version2":
