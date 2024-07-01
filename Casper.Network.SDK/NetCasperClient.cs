@@ -265,128 +265,47 @@ namespace Casper.Network.SDK
         /// </summary>
         /// <param name="purseURef">Purse URef formatted as a string.</param>
         /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(string purseURef,
+        public async Task<RpcResponse<GetBalanceResult>> GetBalance(string purseURef,
             string stateRootHash = null)
         {
-            if (!purseURef.StartsWith("uref-"))
-            {
-                var response = await GetAccountInfo(purseURef);
-                purseURef = response.Result.GetProperty("account")
-                    .GetProperty("main_purse").GetString();
-            }
-
-            var uref = new URef(purseURef);
-
-            var method = new GetBalance(uref, StateIdentifier.WithStateRootHash(stateRootHash));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
-        }
-
-        /// <summary>
-        /// Request a purse's balance from the network.
-        /// </summary>
-        /// <param name="purseURef">Purse URef key.</param>
-        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
-            string stateRootHash = null)
-        {
-            var method = new GetBalance(purseURef, StateIdentifier.WithStateRootHash(stateRootHash));
+            var method = new GetBalance(purseURef, stateRootHash);
             return await SendRpcRequestAsync<GetBalanceResult>(method);
         }
         
         /// <summary>
-        /// Request the balance information of an account given its account hash key.
+        /// Request the balance information from a PublicKey, AccountHashKey, URef or EntityAddr.
         /// </summary>
-        /// <param name="accountHash">The account hash of the account to request the balance.</param>
-        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
-            string stateRootHash = null)
-        {
-            var method = new GetBalance(accountHash, StateIdentifier.WithStateRootHash(stateRootHash));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
-        }
-
-        /// <summary>
-        /// Request the balance information of an account given its public key.
-        /// </summary>
-        /// <param name="publicKey">The public key of the account to request the balance.</param>
-        /// <param name="stateRootHash">Hash of the state root. Null to get latest available.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
-            string stateRootHash = null)
-        {
-            var method = new GetBalance(publicKey, StateIdentifier.WithStateRootHash(stateRootHash));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
-        }
-        
-        /// <summary>
-        /// Request a purse's balance from the network.
-        /// </summary>
-        /// <param name="purseURef">Purse URef key.</param>
+        /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
         /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(URef purseURef,
+        public async Task<RpcResponse<QueryBalanceResult>> QueryBalance(IPurseIdentifier purseIdentifier, 
             string blockHash = null)
         {
-            var method = new GetBalance(purseURef, StateIdentifier.WithBlockHash(blockHash));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
+            var method = new QueryBalance(purseIdentifier, blockHash != null ? StateIdentifier.WithBlockHash(blockHash) : null);
+            return await SendRpcRequestAsync<QueryBalanceResult>(method);
         }
         
         /// <summary>
-        /// Request the balance information of an account given its account hash key.
+        /// Request the balance information from a PublicKey, AccountHashKey, URef or EntityAddr.
         /// </summary>
-        /// <param name="accountHash">The account hash of the account to request the balance.</param>
-        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(AccountHashKey accountHash, 
-            string blockHash = null)
-        {
-            var method = new GetBalance(accountHash, StateIdentifier.WithBlockHash(blockHash));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
-        }
-        
-        /// <summary>
-        /// Request the balance information of an account given its public key.
-        /// </summary>
-        /// <param name="publicKey">The public key of the account to request the balance.</param>
-        /// <param name="blockHash">Hash of the block. Null to get latest available.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalanceWithBlockHash(PublicKey publicKey, 
-            string blockHash = null)
-        {
-            var method = new GetBalance(publicKey, StateIdentifier.WithBlockHash(blockHash));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
-        }
-        
-        /// <summary>
-        /// Request a purse's balance from the network.
-        /// </summary>
-        /// <param name="purseURef">Purse URef key.</param>
+        /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
         /// <param name="blockHeight">Height of the block.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
+        public async Task<RpcResponse<QueryBalanceResult>> QueryBalance(IPurseIdentifier purseIdentifier, 
             ulong blockHeight)
         {
-            var method = new GetBalance(purseURef, StateIdentifier.WithBlockHeight(blockHeight));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
+            var method = new QueryBalance(purseIdentifier, StateIdentifier.WithBlockHeight(blockHeight));
+            return await SendRpcRequestAsync<QueryBalanceResult>(method);
         }
         
         /// <summary>
-        /// Request the balance information of an account given its account hash key.
+        /// Request the balance information from a PublicKey, AccountHashKey, URef or EntityAddr.
         /// </summary>
-        /// <param name="accountHash">The account hash of the account to request the balance.</param>
-        /// <param name="blockHeight">Height of the block.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(AccountHashKey accountHash, 
-            ulong blockHeight)
+        /// <param name="purseIdentifier">A PublicKey, AccountHashKey, URef or EntityAddr to identify a purse.</param>
+        /// <param name="stateRootHash">the state root hash.</param>
+        public async Task<RpcResponse<QueryBalanceResult>> QueryBalanceWithStateRootHash(IPurseIdentifier purseIdentifier,
+            string stateRootHash)
         {
-            var method = new GetBalance(accountHash, StateIdentifier.WithBlockHeight(blockHeight));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
-        }
-        
-        /// <summary>
-        /// Request the balance information of an account given its public key.
-        /// </summary>
-        /// <param name="publicKey">The public key of the account to request the balance.</param>
-        /// <param name="blockHeight">Height of the block.</param>
-        public async Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey, 
-            ulong blockHeight)
-        {
-            var method = new GetBalance(publicKey, StateIdentifier.WithBlockHeight(blockHeight));
-            return await SendRpcRequestAsync<GetBalanceResult>(method);
+            var method = new QueryBalance(purseIdentifier, StateIdentifier.WithStateRootHash(stateRootHash));
+            return await SendRpcRequestAsync<QueryBalanceResult>(method);
         }
         
         /// <summary>

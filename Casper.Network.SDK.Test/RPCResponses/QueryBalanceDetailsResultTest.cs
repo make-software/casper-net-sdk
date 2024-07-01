@@ -1,12 +1,10 @@
 using System.IO;
 using Casper.Network.SDK.JsonRpc.ResultTypes;
-using Casper.Network.SDK.Types;
 using NUnit.Framework;
-using Org.BouncyCastle.Utilities.Encoders;
 
 namespace NetCasperTest.RPCResponses
 {
-    public class GetNodeStatusResultTest
+    public class QueryBalanceDetailsResultTest
     {
         [Test]
         public void GetBlockResultTest_v200()
