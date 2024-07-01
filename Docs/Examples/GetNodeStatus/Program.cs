@@ -11,12 +11,12 @@ namespace Casper.NET.SDK.Examples
     {
         public static async Task Main(string[] args)
         {
-            string nodeAddress = "http://52.35.59.254:7777/rpc";
+            string nodeAddress = "http://127.0.0.1:11101/rpc";
             
             try
             {
                 var casperSdk = new NetCasperClient(nodeAddress);
-                var rpcResponse = await casperSdk.GetNodeStatus();
+                var rpcResponse = await casperSdk.QueryBalance(PublicKey.FromHexString("01Fed662DC7F1f7Af43Ad785Ba07a8cc05b7a96F9EE69613CfdE43BC56bEC1140B"));
                 Console.WriteLine(rpcResponse.Result.GetRawText());
             }
             catch (RpcClientException e)

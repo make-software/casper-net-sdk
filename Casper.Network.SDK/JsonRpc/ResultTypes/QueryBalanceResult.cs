@@ -5,14 +5,14 @@ using Casper.Network.SDK.Converters;
 namespace Casper.Network.SDK.JsonRpc.ResultTypes
 {
     /// <summary>
-    /// Result for "state_get_balance" RPC response.
+    /// Result for "query_balance" RPC response.
     /// </summary>
-    public class GetBalanceResult : RpcResult
+    public class QueryBalanceResult : RpcResult
     {
         /// <summary>
         /// The balance value.
         /// </summary>
-        [JsonPropertyName("balance_value")]
+        [JsonPropertyName("balance")]
         [JsonConverter(typeof(BigIntegerConverter))]
         public BigInteger BalanceValue { get; init; }
 
