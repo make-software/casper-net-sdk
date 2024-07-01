@@ -39,7 +39,7 @@ namespace Casper.Network.SDK.Types
         }
     }
     
-    public class AddressableEntityKey : GlobalStateKey, IEntityIdentifier
+    public class AddressableEntityKey : GlobalStateKey, IEntityIdentifier, IPurseIdentifier
     {
         public EntityKindEnum Kind { get; init; }
         
@@ -111,6 +111,17 @@ namespace Casper.Network.SDK.Types
             return new Dictionary<string, object>
             {
                 {"EntityAddr", Key}
+            };
+        }
+        
+        /// <summary>
+        /// Returns a PurseIdentifier object as defined in the RPC schema for an entity address
+        /// </summary>
+        public Dictionary<string, object> GetPurseIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                {"main_purse_under_entity_addr", this.ToString()}
             };
         }
     }
