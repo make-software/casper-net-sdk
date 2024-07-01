@@ -40,15 +40,27 @@ namespace Casper.Network.SDK
         Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalStateWithBlockHash(GlobalStateKey key, string blockHash, 
             string path = null);
 
-        Task<RpcResponse<GetBalanceResult>> GetAccountBalance(string purseURef,
+        Task<RpcResponse<GetBalanceResult>> GetBalance(string purseURef,
             string stateRootHash = null);
 
-        Task<RpcResponse<GetBalanceResult>> GetAccountBalance(URef purseURef,
-            string stateRootHash = null);
+        Task<RpcResponse<QueryBalanceResult>> QueryBalance(IPurseIdentifier purseIdentifier,
+            string blockHash = null);
 
-        Task<RpcResponse<GetBalanceResult>> GetAccountBalance(PublicKey publicKey,
-            string stateRootHash = null);
+        Task<RpcResponse<QueryBalanceResult>> QueryBalance(IPurseIdentifier purseIdentifier,
+            ulong blockHeight);
 
+        Task<RpcResponse<QueryBalanceResult>> QueryBalanceWithStateRootHash(
+            IPurseIdentifier purseIdentifier, string stateRootHash);
+        
+        Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
+            string blockHash = null);
+
+        Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetails(IPurseIdentifier purseIdentifier,
+            ulong blockHeight);
+
+        Task<RpcResponse<QueryBalanceDetailsResult>> QueryBalanceDetailsWithStateRootHash(
+            IPurseIdentifier purseIdentifier, string stateRootHash);
+        
         Task<RpcResponse<PutDeployResult>> PutDeploy(Deploy deploy);
 
         Task<RpcResponse<GetDeployResult>> GetDeploy(string deployHash,

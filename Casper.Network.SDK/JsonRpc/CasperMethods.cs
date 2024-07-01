@@ -181,51 +181,48 @@ namespace Casper.Network.SDK.JsonRpc
         {
             this.Parameters = new Dictionary<string, object>
             {
-                {"state_root_hash", stateRootHash},
-                {"purse_uref", purseURef}
+                { "state_root_hash", stateRootHash },
+                { "purse_uref", purseURef }
             };
-        }
-
-        public GetBalance(URef uref, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"purse_uref", uref.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
-        }
-
-        public GetBalance(AccountHashKey key, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"main_purse_under_account_hash", key.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
-        }
-
-        public GetBalance(PublicKey key, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"main_purse_under_public_key", key.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
     }
 
+    public class QueryBalance : RpcMethod
+    {
+        /// <summary>
+        /// Query for balance information using a purse identifier and a state identifier
+        /// </summary>
+        /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
+        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public QueryBalance(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
+            };
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
+        }
+    }
+
+    public class QueryBalanceDetails : RpcMethod
+    {
+        /// <summary>
+        /// Query for full balance information using a purse identifier and a state identifier
+        /// </summary>
+        /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
+        /// <param name="stateIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance_details")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
+            };
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
+        }
+    }
+    
     public class PutDeploy : RpcMethod
     {
         /// <summary>
