@@ -24,7 +24,7 @@ namespace Casper.Network.SDK.SSE
         /// <summary>
         /// Channel to subscribe to only `DeployAccepted` events.
         /// </summary>
-        Sigs
+        Sigs,
     };
 
     /// <summary>
@@ -69,7 +69,19 @@ namespace Casper.Network.SDK.SSE
         /// <summary>
         /// Add `DeployExpired` to an event callback to catch events due to an expired <see cref="Deploy">Deploy</see>.
         /// </summary>
-        DeployExpired
+        DeployExpired,
+        /// <summary>
+        /// Add `TransactionAccepted` to an event callback to catch events due to a new <see cref="Transaction">Transaction</see> accepted by the network.
+        /// </summary>
+        TransactionAccepted,
+        /// <summary>
+        /// Add `TransactionProcessed` to an event callback to catch events due to a new <see cref="Transaction">Transaction</see> processed by the network.
+        /// </summary>
+        TransactionProcessed,
+        /// <summary>
+        /// Add `TransactionExpired` to an event callback to catch events due to an expired <see cref="Transaction">Transaction</see>.
+        /// </summary>
+        TransactionExpired,
     }
 
     internal struct EventData
@@ -116,7 +128,10 @@ namespace Casper.Network.SDK.SSE
                 {EventType.Fault, ChannelType.Main},
                 {EventType.Step, ChannelType.Main},
                 {EventType.FinalitySignature, ChannelType.Sigs},
-                {EventType.DeployExpired, ChannelType.Main}
+                {EventType.DeployExpired, ChannelType.Main},
+                {EventType.TransactionAccepted, ChannelType.Main},
+                {EventType.TransactionProcessed, ChannelType.Main},
+                {EventType.TransactionExpired, ChannelType.Main},
             };
             _runningTasks = new Dictionary<ChannelType, Tuple<Task, CancellationTokenSource>>();
         }

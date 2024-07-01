@@ -5,125 +5,117 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.ByteSerializers;
-using Casper.Network.SDK.Converters;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
-    public class Deploy
+    /// <summary>
+    /// A unit of work sent by a client to the network, which when executed can cause global state to be altered.
+    /// </summary>
+    public class TransactionV1
     {
         /// <summary>
-        /// List of signers and signatures for this Deploy.
-        /// </summary>
-        [JsonPropertyName("approvals")] 
-        public List<Approval> Approvals { get; } = new List<Approval>();
-
-        /// <summary>
-        /// A hash over the header of the deploy.
+        /// A hash over the header of the transaction.
         /// </summary>
         [JsonPropertyName("hash")]
         [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
         public string Hash { get; }
+        
+        /// <summary>
+        /// List of signers and signatures for this transaction.
+        /// </summary>
+        [JsonPropertyName("approvals")] 
+        public List<Approval> Approvals { get; } = new List<Approval>();
+        
+        /// <summary>
+        /// Header for this transaction.
+        /// </summary>
+        [JsonPropertyName("header")] 
+        public TransactionV1Header Header { get; init; }
 
         /// <summary>
-        /// Contains metadata about the deploy.
+        /// Body for this transaction.
         /// </summary>
-        [JsonPropertyName("header")]
-        public DeployHeader Header { get; }
-
+        [JsonPropertyName("body")] 
+        public TransactionV1Body Body { get; init; }
+        
         /// <summary>
-        /// Contains the payment amount for the deploy.
+        /// Loads and deserializes a TransactionV1 from a file.
         /// </summary>
-        [JsonPropertyName("payment")]
-        [JsonConverter(typeof(ExecutableDeployItemConverter))]
-        public ExecutableDeployItem Payment { get; }
-
-        /// <summary>
-        /// Contains the session information for the deploy.
-        /// </summary>
-        [JsonPropertyName("session")]
-        [JsonConverter(typeof(ExecutableDeployItemConverter))]
-        public ExecutableDeployItem Session { get; }
-
-        /// <summary>
-        /// Loads and deserializes a Deploy from a file.
-        /// </summary>
-        public static Deploy Load(string filename)
+        public static TransactionV1 Load(string filename)
         {
             var data = File.ReadAllText(filename);
-            return Deploy.Parse(data);
+            return TransactionV1.Parse(data);
         }
-
+        
         /// <summary>
-        /// Parses a Deploy from a file.
+        /// Parses a Transaction from a string with json.
         /// </summary>
-        public static Deploy Parse(string json)
+        public static TransactionV1 Parse(string json)
         {
             try
             {
-                var deploy = JsonSerializer.Deserialize<Deploy>(json);
+                var transaction = JsonSerializer.Deserialize<TransactionV1>(json);
 
-                return deploy;
+                return transaction;
             }
             catch (JsonException e)
             {
-                var message = $"The JSON value could not be converted to a Deploy object. " +
+                var message = $"The JSON value could not be converted to a TransactionV1 object. " +
                               $"{e.Message} Path: {e.Path} | LineNumber: {e.LineNumber} | " +
                               $"BytePositionInLine: {e.BytePositionInLine}.";
                 throw new Exception(message);
             }
         }
-
+        
         /// <summary>
-        /// Saves a deploy object to a file.
+        /// Saves a transaction object to a file.
         /// </summary>
         public void Save(string filename)
         {
             File.WriteAllText(filename, JsonSerializer.Serialize(this));
         }
-
+        
         /// <summary>
-        /// Returns a json string with the deploy.
+        /// Returns a json string with the transaction.
         /// </summary>
         public string SerializeToJson()
         {
             return JsonSerializer.Serialize(this);
         }
-
+        
         [JsonConstructor]
-        public Deploy(string hash, DeployHeader header, ExecutableDeployItem payment,
-            ExecutableDeployItem session, List<Approval> approvals)
+        public TransactionV1(string hash,
+            TransactionV1Header header,
+            TransactionV1Body body,
+            List<Approval> approvals)
         {
             this.Hash = hash;
             this.Header = header;
-            this.Payment = payment;
-            this.Session = session;
+            this.Body = body;
             this.Approvals = approvals;
         }
-
-        public Deploy(DeployHeader header,
-            ExecutableDeployItem payment,
-            ExecutableDeployItem session)
+        
+        public TransactionV1(TransactionV1Header header,
+            TransactionV1Body body)
         {
-            var bodyHash = ComputeBodyHash(payment, session);
-            this.Header = new DeployHeader()
+            var bodyHash = ComputeBodyHash(body);
+            this.Header = new TransactionV1Header()
             {
-                Account = header.Account,
+                ChainName = header.ChainName,
                 Timestamp = header.Timestamp,
                 Ttl = header.Ttl,
-                Dependencies = header.Dependencies,
-                GasPrice = header.GasPrice,
-                BodyHash = CEP57Checksum.Encode(bodyHash),
-                ChainName = header.ChainName
+                BodyHash = Hex.ToHexString(bodyHash),
+                PricingMode = header.PricingMode,
+                InitiatorAddr = header.InitiatorAddr,
             };
-            this.Hash = CEP57Checksum.Encode(ComputeHeaderHash(this.Header));
-            this.Payment = payment;
-            this.Session = session;
+            this.Hash = Hex.ToHexString(ComputeHeaderHash(this.Header));
+            this.Body = body;
         }
-
+        
         /// <summary>
-        /// Signs the deploy with a private key and adds a new Approval to it.
+        /// Signs the transaction with a private key and adds a new Approval to it.
         /// </summary>
         public void Sign(KeyPair keyPair)
         {
@@ -135,37 +127,37 @@ namespace Casper.Network.SDK.Types
                 Signer = keyPair.PublicKey
             });
         }
-
+        
         /// <summary>
-        /// Adds an approval to the deploy. No check is done to the approval signature.
+        /// Adds an approval to the transaction. No check is done to the approval signature.
         /// </summary>
         public void AddApproval(Approval approval)
         {
             this.Approvals.Add(approval);
         }
-
+        
         /// <summary>
-        /// Validates the body and header hashes in the deploy.
+        /// Validates the body and header hashes in the transaction.
         /// </summary>
         /// <param name="message">output string with a validation error message if validation fails. empty otherwise.</param>
         /// <returns>false if the validation of hashes is not successful</returns>
         public bool ValidateHashes(out string message)
         {
-            var computedHash = ComputeBodyHash(this.Payment, this.Session);
+            var computedHash = ComputeBodyHash(this.Body);
             if (!Hex.Decode(this.Header.BodyHash).SequenceEqual(computedHash))
             {
-                message = "Computed Body Hash does not match value in deploy header. " +
+                message = "Computed Body Hash does not match value in transaction header. " +
                           $"Expected: '{this.Header.BodyHash}'. " +
-                          $"Computed: '{CEP57Checksum.Encode(computedHash)}'.";
+                          $"Computed: '{computedHash}'.";
                 return false;
             }
 
             computedHash = ComputeHeaderHash(this.Header);
             if (!Hex.Decode(this.Hash).SequenceEqual(computedHash))
             {
-                message = "Computed Hash does not match value in deploy object. " +
+                message = "Computed Hash does not match value in transaction object. " +
                           $"Expected: '{this.Hash}'. " +
-                          $"Computed: '{CEP57Checksum.Encode(computedHash)}'.";
+                          $"Computed: '{computedHash}'.";
                 return false;
             }
 
@@ -194,23 +186,23 @@ namespace Casper.Network.SDK.Types
 
             return true;
         }
-
+        
         /// <summary>
         /// returns the number of bytes resulting from the binary serialization of the Deploy.
         /// </summary>
-        public int GetDeploySizeInBytes()
+        public int GetTransactionSizeInBytes()
         {
-            var serializer = new DeployByteSerializer();
+            var serializer = new TransactionV1ByteSerializer();
             return serializer.ToBytes(this).Length;
         }
-
-        private byte[] ComputeBodyHash(ExecutableDeployItem payment, ExecutableDeployItem session)
+        
+        private byte[] ComputeBodyHash(TransactionV1Body body)
         {
             var ms = new MemoryStream();
-            var itemSerializer = new ExecutableDeployItemByteSerializer();
 
-            ms.Write(itemSerializer.ToBytes(payment));
-            ms.Write(itemSerializer.ToBytes(session));
+            var serializer = new TransactionV1ByteSerializer();
+            
+            ms.Write(serializer.ToBytes(body));
 
             var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
             var bBody = ms.ToArray();
@@ -222,10 +214,10 @@ namespace Casper.Network.SDK.Types
 
             return hash;
         }
-
-        private byte[] ComputeHeaderHash(DeployHeader header)
+        
+        private byte[] ComputeHeaderHash(TransactionV1Header header)
         {
-            var serializer = new DeployByteSerializer();
+            var serializer = new TransactionV1ByteSerializer();
             var bHeader = serializer.ToBytes(header);
 
             var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);

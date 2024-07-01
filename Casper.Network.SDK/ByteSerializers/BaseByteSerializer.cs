@@ -44,5 +44,17 @@ namespace Casper.Network.SDK.ByteSerializers
             ms.Write(lenBytes);
             ms.Write(valueBytes);
         }
+        
+        protected static void WriteMaybeUInteger(MemoryStream ms, uint? maybeValue)
+        {
+            WriteByte(ms, (byte)(maybeValue.HasValue ? 0x01 : 0x00));
+
+            if (maybeValue.HasValue)
+            {
+                var bytes = BitConverter.GetBytes(maybeValue.Value);
+                if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
+                ms.Write(bytes);
+            }
+        }
     }
 }

@@ -5,13 +5,13 @@ namespace Casper.Network.SDK.Types
     public class ExecutionInfo
     {
         /// <summary>
-        /// The hash of the block in which the deploy was executed.
+        /// The hash of the block in which the transaction/deploy was executed.
         /// </summary>
         [JsonPropertyName("block_hash")]
         public string BlockHash { get; init; }
         
         /// <summary>
-        /// The height of the block in which the deploy was executed.
+        /// The height of the block in which the transaction/deploy was executed.
         /// </summary>
         [JsonPropertyName("block_height")]
         public ulong BlockHeight { get; init; }
