@@ -6,7 +6,7 @@ namespace Casper.Network.SDK.Types
     {
         private string _stateRootHash;
         private string _blockHash;
-        private int? _blockHeight;
+        private ulong? _blockHeight;
 
         private StateIdentifier()
         {
@@ -32,7 +32,7 @@ namespace Casper.Network.SDK.Types
             };
         }
         
-        public static StateIdentifier WithBlockHeight(int blockHeight)
+        public static StateIdentifier WithBlockHeight(ulong blockHeight)
         {
             return new StateIdentifier
             {

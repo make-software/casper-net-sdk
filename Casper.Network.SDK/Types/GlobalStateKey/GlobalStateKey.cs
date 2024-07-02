@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -343,7 +344,7 @@ namespace Casper.Network.SDK.Types
     /// Stores an account in the global state.
     /// Format: 32-byte length with prefix 'account-hash-'.
     /// </summary>
-    public class AccountHashKey : GlobalStateKey
+    public class AccountHashKey : GlobalStateKey, IPurseIdentifier
     {
         public static string KEYPREFIX = "account-hash-";
 
@@ -356,9 +357,20 @@ namespace Casper.Network.SDK.Types
             : base(publicKey.GetAccountHash(), KEYPREFIX)
         {
         }
-
+        
         public AccountHashKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
+        }
+        
+        /// <summary>
+        /// Returns a PurseIdentifier object as defined in the RPC schema for an account hash key.
+        /// </summary>
+        public Dictionary<string, object> GetPurseIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                {"main_purse_under_account_hash", this.ToString()}
+            };
         }
     }
 

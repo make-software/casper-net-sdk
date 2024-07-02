@@ -80,5 +80,10 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// The status of the block synchronizer builders.
         /// </summary>
         [JsonPropertyName("block_sync")] public BlockSynchronizerStatus BlockSync { get; init; }
+        
+        /// <summary>
+        /// The hash of the latest switch block.
+        /// </summary>
+        [JsonPropertyName("latest_switch_block_hash")] public string LatestSwitchBlockHash { get; init; }
     }
 }
