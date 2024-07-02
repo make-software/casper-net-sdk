@@ -75,14 +75,43 @@ namespace Casper.Network.SDK.Types
         /// A `Key` variant under which a registry of checksums are stored.
         /// </summary>
         ChecksumRegistry = 0x0e,
+        /// <summary>
+        /// A `Key` under which bid information is stored.
+        /// </summary>
+        BidAddr = 0x0f,
+        /// <summary>
+        /// A `Key` under which package information is stored.
+        /// </summary>
+        Package = 0x10,
+        /// <summary>
+        /// A `Key` under which an addressable entity is stored.
+        /// </summary>
+        AddressableEntity = 0x11,
+        /// <summary>
+        /// A `Key` under which a byte code record is stored.
+        /// </summary>
+        ByteCode = 0x12,
+        /// <summary>
+        /// A `Key` under which a message is stored.
+        /// </summary>
+        Message = 0x13,
+        /// <summary>
+        /// A `Key` under which a single named key entry is stored.
+        /// </summary>
+        NamedKey = 0x14,
+        BlockGlobal = 0x15,
+        /// <summary>
+        /// A `Key` under which a hold on a purse balance is stored.
+        /// </summary>
+        BalanceHold = 0x16,
     }
-
+    
     /// <summary>
     /// Base class for the different global state keys. 
     /// </summary>
     public abstract class GlobalStateKey
     {
-        protected readonly string Key;
+        protected string Key { get; init; }
 
         public KeyIdentifier KeyIdentifier { get; init; }
 
@@ -140,8 +169,12 @@ namespace Casper.Network.SDK.Types
                 return new TransferKey(value);
             if (value.StartsWith("deploy-"))
                 return new DeployInfoKey(value);
+            if (value.StartsWith("balance-hold-"))
+                return new BalanceHoldKey(value);
             if (value.StartsWith("balance-"))
                 return new BalanceKey(value);
+            if (value.StartsWith("bid-addr-"))
+                return new BidAddrKey(value);            
             if (value.StartsWith("bid"))
                 return new BidKey(value);
             if (value.StartsWith("withdraw"))
@@ -160,7 +193,20 @@ namespace Casper.Network.SDK.Types
                 return new ChainspecRegistryKey(value);
             if (value.StartsWith("checksum-registry-"))
                 return new ChecksumRegistryKey(value);
-            
+            if (value.StartsWith("package-"))
+                return new PackageKey(value);
+            if (value.StartsWith("block-message-count-"))
+                return new BlockGlobalAddrKey(value);
+            if (value.StartsWith("block-time-"))
+                return new BlockGlobalAddrKey(value);
+            if (value.StartsWith("entity-"))
+                return new AddressableEntityKey(value);
+            if (value.StartsWith("named-key-"))
+                return new NamedKeyKey(value);
+            if (value.StartsWith("byte-code-"))
+                return new ByteCodeKey(value);
+            if (value.StartsWith("message-"))
+                return new MessageKey(value);
             throw new ArgumentException($"Key not valid. Unknown key prefix in \"{value}\".");
         }
 
@@ -187,6 +233,14 @@ namespace Casper.Network.SDK.Types
                 0x0c => new UnbondKey("unbond-" + CEP57Checksum.Encode(bytes.Slice(1))),
                 0x0d => new ChainspecRegistryKey("chainspec-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
                 0x0e => new ChecksumRegistryKey("checksum-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x0f => new BidAddrKey("bid-addr-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x10 => new PackageKey("package-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x11 => new AddressableEntityKey(bytes.Slice(1)),
+                0x12 => new ByteCodeKey(bytes.Slice(1)),
+                0x13 => new MessageKey(bytes.Slice(1)),
+                0x14 => new NamedKeyKey(bytes.Slice(1)),
+                0x15 => new BlockGlobalAddrKey(bytes.Slice(1)),
+                0x16 => new BalanceHoldKey(bytes.Slice(1)),
                 _ => throw new ArgumentException($"Unknown key identifier '{bytes[0]}'")
             };
         }
@@ -231,7 +285,15 @@ namespace Casper.Network.SDK.Types
                        typeToConvert == typeof(EraSummaryKey) ||
                        typeToConvert == typeof(UnbondKey) ||
                        typeToConvert == typeof(ChainspecRegistryKey) ||
-                       typeToConvert == typeof(ChecksumRegistryKey);
+                       typeToConvert == typeof(ChecksumRegistryKey) ||
+                       typeToConvert == typeof(BidAddrKey) ||
+                       typeToConvert == typeof(PackageKey) ||
+                       typeToConvert == typeof(AddressableEntityKey) ||
+                       typeToConvert == typeof(ByteCodeKey) ||
+                       typeToConvert == typeof(MessageKey) ||
+                       typeToConvert == typeof(NamedKeyKey) ||
+                       typeToConvert == typeof(BlockGlobalAddrKey) ||
+                       typeToConvert == typeof(BalanceHoldKey);
             }
 
             public override JsonConverter CreateConverter(
@@ -293,6 +355,10 @@ namespace Casper.Network.SDK.Types
 
         public AccountHashKey(PublicKey publicKey)
             : base(publicKey.GetAccountHash(), KEYPREFIX)
+        {
+        }
+        
+        public AccountHashKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
         {
         }
         
