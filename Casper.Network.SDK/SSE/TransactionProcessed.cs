@@ -42,6 +42,13 @@ namespace Casper.Network.SDK.SSE
         /// Versioned execution result.
         /// </summary>
         [JsonPropertyName("execution_result")]
+        [JsonConverter(typeof(ExecutionResult.ExecutionResultConverter))]
         public ExecutionResult ExecutionResult { get; init; }
+        
+        /// <summary>
+        /// List of messages emitted in the transaction execution
+        /// </summary>
+        [JsonPropertyName("messages")]
+        public List<Message> Messages { get; init; }
     }
 }

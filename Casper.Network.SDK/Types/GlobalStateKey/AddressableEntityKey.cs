@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
@@ -123,6 +125,32 @@ namespace Casper.Network.SDK.Types
             {
                 {"main_purse_under_entity_addr", this.ToString()}
             };
+        }
+        
+        public class AddressableEntityKeyConverter : JsonConverter<AddressableEntityKey>
+        {
+            public override AddressableEntityKey Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                try
+                {
+                    return new AddressableEntityKey(reader.GetString());
+                }
+                catch (Exception e)
+                {
+                    throw new JsonException(e.Message);
+                }
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                AddressableEntityKey addressableEntity,
+                JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(addressableEntity.Key);
+            }
         }
     }
 }
