@@ -40,11 +40,6 @@ namespace Casper.Network.SDK.Types
         public AddressableEntity AddressableEntity { get; init; }
         
         /// <summary>
-        /// Stores a BidKind.
-        /// </summary>
-        // public BidKind BidKind { get; init; }
-        
-        /// <summary>
         /// Stores a package.
         /// </summary>
         public Package Package { get; init; }
@@ -60,7 +55,7 @@ namespace Casper.Network.SDK.Types
         public MessageTopicSummary MessageTopic { get; init; }
         
         /// <summary>
-        /// Stores a message digest.
+        /// Stores a message checksum.
         /// </summary>
         public string Message { get; init; }
         
