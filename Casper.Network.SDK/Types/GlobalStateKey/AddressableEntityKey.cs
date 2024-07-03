@@ -97,5 +97,33 @@ namespace Casper.Network.SDK.Types
                 {"EntityAddr", Key}
             };
         }
+        
+        
+        protected override byte[] _GetRawBytesFromKey(string key)
+        {
+            return this.GetBytes();
+        }
+        
+        public override byte[] GetBytes()
+        {
+            var key = Key.Substring(Key.LastIndexOf('-')+1);
+            var rawBytes = Hex.Decode(key);
+            var ms = new MemoryStream();
+            ms.WriteByte((byte)this.Kind);
+            ms.Write(rawBytes);
+
+            return ms.ToArray();
+        }
+        
+        /// <summary>
+        /// Returns a PurseIdentifier object as defined in the RPC schema for an entity address
+        /// </summary>
+        public Dictionary<string, object> GetPurseIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                {"main_purse_under_entity_addr", this.ToString()}
+            };
+        }
     }
 }

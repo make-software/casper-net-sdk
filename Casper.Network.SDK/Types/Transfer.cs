@@ -9,7 +9,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// Represents a transfer from one purse to another
     /// </summary>
-    public class TransferV1 : Transfer
+    public class TransferV1
     {
         /// <summary>
         /// Transfer amount
@@ -69,8 +69,43 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// Represents a version 2 transfer from one purse to another
     /// </summary>
-    public class TransferV2 : Transfer
+    public class Transfer
     {
+        protected int _version;
+
+        [JsonIgnore]
+        public int Version
+        {
+            get { return _version; }
+        }
+
+        protected TransferV1 _transferV1;
+
+        public static explicit operator TransferV1(Transfer transfer)
+        {
+            if(transfer._version == 1)
+                return transfer._transferV1;
+
+            throw new InvalidCastException("Version2 transfer cannot be converted to Version1");
+        }
+        
+        public static explicit operator Transfer(TransferV1 transfer)
+        {
+            return new Transfer()
+            {
+                _version = 1,
+                _transferV1 = transfer,
+                Amount = transfer.Amount,
+                From = new InitiatorAddr { AccountHash = transfer.From },
+                To = transfer.To,
+                Id = transfer.Id,
+                TransactionHash = new TransactionHash() { Deploy = transfer.DeployHash },
+                Source = transfer.Source,
+                Target = transfer.Target,
+                Gas = transfer.Gas,
+            };
+        }
+        
         /// <summary>
         /// Transfer amount
         /// </summary>
@@ -123,77 +158,45 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("to")]
         [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public AccountHashKey To { get; init; }
-    }
 
-    public interface ITransfer
-    {
-        public int Version { get; }
-        public TransferV1 TransferV1 { get; }
-        public TransferV2 TransferV2 { get; }
-    }
-    
-    public class Transfer: ITransfer
-    {
-        protected int _version;
-
-        /// <summary>
-        /// Returns the version of the transfer.
-        /// </summary>
-        public int Version
+        public Transfer()
         {
-            get { return _version; }
+            // this value is overriden in FromTransferV1 
+            _version = 2;
         }
-        
-        /// <summary>
-        /// Returns the transfer as a Version1 transfer object.
-        /// </summary>
-        TransferV1 ITransfer.TransferV1 => this as TransferV1;
-
-        /// <summary>
-        /// Returns the transfer as a Version2 transfer object.
-        /// </summary>
-        TransferV2 ITransfer.TransferV2 => this as TransferV2;
         
         /// <summary>
         /// Json converter class to serialize/deserialize a Block to/from Json
         /// </summary>
-        public class TransferConverter : JsonConverter<ITransfer>
+        public class TransferConverter : JsonConverter<Transfer>
         {
-            public override bool CanConvert(Type typeToConvert)
-            {
-                return typeToConvert == typeof(ITransfer) ||
-                       typeToConvert == typeof(Transfer);
-            }
-
-            public override ITransfer Read(
+            public override Transfer Read(
                 ref Utf8JsonReader reader,
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
                 try
                 {
-                    reader.Read();
-                    var version = reader.GetString();
-                    reader.Read();
-                    switch (version)
+                    using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
                     {
-                        case "Version1":
-                        {
-                            var transfer1 = JsonSerializer.Deserialize<TransferV1>(ref reader, options);
-                            reader.Read();
-                            transfer1._version = 1;
-                            return transfer1;
-                        }
-                        case "Version2":
-                            var transfer2 = JsonSerializer.Deserialize<TransferV2>(ref reader, options);
-                            reader.Read();
-                            transfer2._version = 2;
-                            return transfer2;
-                        default:
-                            throw new JsonException("Expected Version1 or Version2");
-                    }
+                        JsonElement root = doc.RootElement;
 
-                    ;
+                        if (root.TryGetProperty("Version1", out JsonElement v1Element))
+                        {
+                            var transfer = JsonSerializer.Deserialize<TransferV1>(v1Element.GetRawText(), options);
+                            return transfer != null ? (Transfer)transfer : null;
+                        }
+
+                        if (root.TryGetProperty("Version2", out JsonElement v2Element))
+                        {
+                            var transfer = JsonSerializer.Deserialize<Transfer>(v2Element.GetRawText());
+                            return transfer;
+                        }
+
+                        // try as Casper node v1.x for backward compatibility
+                        var transferv1 = JsonSerializer.Deserialize<TransferV1>(root.GetRawText(), options);
+                        return transferv1 != null ? (Transfer)transferv1 : null;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -203,7 +206,7 @@ namespace Casper.Network.SDK.Types
 
             public override void Write(
                 Utf8JsonWriter writer,
-                ITransfer transfer,
+                Transfer transfer,
                 JsonSerializerOptions options)
             {
                 switch (transfer.Version)
@@ -211,13 +214,13 @@ namespace Casper.Network.SDK.Types
                     case 1:
                         writer.WritePropertyName("Version1");
                         writer.WriteStartObject();
-                        JsonSerializer.Serialize(transfer as TransferV1, options);
+                        JsonSerializer.Serialize((TransferV1)transfer, options);
                         writer.WriteEndObject();
                         break;
                     case 2:
                         writer.WritePropertyName("Version2");
                         writer.WriteStartObject();
-                        JsonSerializer.Serialize(transfer as TransferV2, options);
+                        JsonSerializer.Serialize(transfer, options);
                         writer.WriteEndObject();
                         break;
                     default:
