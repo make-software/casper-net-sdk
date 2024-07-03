@@ -1,26 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
-    public enum EntityKindEnum {
+    public enum EntityKindEnum
+    {
         /// <summary>
         /// Package associated with a native contract implementation.
         /// </summary>
         System = 0,
+
         /// <summary>
         /// Package associated with an Account hash.
         /// </summary>
         Account = 1,
+
         /// <summary>
         /// Package associated with Wasm stored on chain.
         /// </summary>
         Contract = 2,
     }
-    
+
     public static class EntityKinEnumExtensions
     {
         public static string ToKeyPrefix(this EntityKindEnum kind)
@@ -38,11 +43,11 @@ namespace Casper.Network.SDK.Types
             }
         }
     }
-    
-    public class AddressableEntityKey : GlobalStateKey, IEntityIdentifier
+
+    public class AddressableEntityKey : GlobalStateKey, IEntityIdentifier, IPurseIdentifier
     {
         public EntityKindEnum Kind { get; init; }
-        
+
         private static string GetPrefix(string key)
         {
             if (key.StartsWith(EntityKindEnum.System.ToKeyPrefix()))
@@ -53,8 +58,8 @@ namespace Casper.Network.SDK.Types
                 return EntityKindEnum.Contract.ToKeyPrefix();
 
             throw new Exception("Unexpected key prefix in NamedKeyKey: " + key);
-            
         }
+
         public AddressableEntityKey(string key) : base(key, GetPrefix(key))
         {
             KeyIdentifier = KeyIdentifier.AddressableEntity;
@@ -67,7 +72,7 @@ namespace Casper.Network.SDK.Types
                 Kind = EntityKindEnum.Contract;
         }
 
-        public AddressableEntityKey(byte[] key) : this( 
+        public AddressableEntityKey(byte[] key) : this(
             key[0] == (byte)EntityKindEnum.System
                 ? EntityKindEnum.System.ToKeyPrefix() + CEP57Checksum.Encode(key.Slice(1))
                 : (key[0] == (byte)EntityKindEnum.Account
@@ -86,27 +91,15 @@ namespace Casper.Network.SDK.Types
             Kind = (EntityKindEnum)tag;
             Key = Kind.ToKeyPrefix() + Hex.ToHexString(addr);
         }
-        
-        /// <summary>
-        /// Returns an EntityIdentifier object as defined in the RPC schema for an account hash key.
-        /// </summary>
-        public Dictionary<string, object> GetEntityIdentifier()
-        {
-            return new Dictionary<string, object>
-            {
-                {"EntityAddr", Key}
-            };
-        }
-        
-        
+
         protected override byte[] _GetRawBytesFromKey(string key)
         {
             return this.GetBytes();
         }
-        
+
         public override byte[] GetBytes()
         {
-            var key = Key.Substring(Key.LastIndexOf('-')+1);
+            var key = Key.Substring(Key.LastIndexOf('-') + 1);
             var rawBytes = Hex.Decode(key);
             var ms = new MemoryStream();
             ms.WriteByte((byte)this.Kind);
@@ -114,7 +107,18 @@ namespace Casper.Network.SDK.Types
 
             return ms.ToArray();
         }
-        
+
+        /// <summary>
+        /// Returns an EntityIdentifier object as defined in the RPC schema for an account hash key.
+        /// </summary>
+        public Dictionary<string, object> GetEntityIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                { "EntityAddr", Key }
+            };
+        }
+
         /// <summary>
         /// Returns a PurseIdentifier object as defined in the RPC schema for an entity address
         /// </summary>
@@ -122,8 +126,34 @@ namespace Casper.Network.SDK.Types
         {
             return new Dictionary<string, object>
             {
-                {"main_purse_under_entity_addr", this.ToString()}
+                { "main_purse_under_entity_addr", this.ToString() }
             };
+        }
+
+        public class AddressableEntityKeyConverter : JsonConverter<AddressableEntityKey>
+        {
+            public override AddressableEntityKey Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                try
+                {
+                    return new AddressableEntityKey(reader.GetString());
+                }
+                catch (Exception e)
+                {
+                    throw new JsonException(e.Message);
+                }
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                AddressableEntityKey addressableEntity,
+                JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(addressableEntity.Key);
+            }
         }
     }
 }

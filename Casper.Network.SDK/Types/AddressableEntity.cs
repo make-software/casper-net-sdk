@@ -28,7 +28,7 @@ namespace Casper.Network.SDK.Types
         Auction,
     }
 
-    
+
     [JsonConverter(typeof(EntityKindConverter))]
     public class EntityKind
     {
@@ -67,6 +67,7 @@ namespace Casper.Network.SDK.Types
                         SmartContract = true,
                     };
                 }
+
                 if (reader.TokenType == JsonTokenType.StartObject)
                 {
                     reader.Read();
@@ -90,6 +91,7 @@ namespace Casper.Network.SDK.Types
                                 };
                                 break;
                         }
+
                         reader.Read();
                         if (entity != null)
                             return entity;
@@ -183,4 +185,3 @@ namespace Casper.Network.SDK.Types
         public List<MessageTopic> MessageTopics { get; init; }
     }
 }
-
