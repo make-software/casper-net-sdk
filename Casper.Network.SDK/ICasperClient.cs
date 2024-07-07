@@ -28,6 +28,10 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, int blockHeight);
 
+        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, string blockHash = null);
+
+        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, int blockHeight);
+        
         Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, string blockHash = null);
 
         Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, ulong blockHeight);
