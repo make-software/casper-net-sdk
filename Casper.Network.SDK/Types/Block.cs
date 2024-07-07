@@ -188,21 +188,24 @@ namespace Casper.Network.SDK.Types
             {
                 try
                 {
-                    reader.Read();
-                    var version = reader.GetString();
-                    reader.Read();
-                    switch (version)
+                    using (JsonDocument document = JsonDocument.ParseValue(ref reader))
                     {
-                        case "Version1":
-                            var blockHeaderv1 = JsonSerializer.Deserialize<BlockHeaderV1>(ref reader, options);
-                            reader.Read();
-                            return (BlockHeader)blockHeaderv1;
-                        case "Version2":
-                            var blockHeaderv2 = JsonSerializer.Deserialize<BlockHeaderV2>(ref reader, options);
-                            reader.Read();
-                            return (BlockHeader)blockHeaderv2;
-                        default:
-                            throw new JsonException("Expected Version1 or Version2");
+                        if (document.RootElement.TryGetProperty("parent_hash", out var header))
+                        {
+                            var blockHeaderV1 = JsonSerializer.Deserialize<BlockHeaderV1>(document.RootElement.GetRawText());
+                            return (BlockHeader)blockHeaderV1;
+                        }
+                        if (document.RootElement.TryGetProperty("Version1", out var headerV1))
+                        {
+                            var blockHeaderV1 = JsonSerializer.Deserialize<BlockHeaderV1>(headerV1.GetRawText());
+                            return (BlockHeader)blockHeaderV1;
+                        }
+                        if (document.RootElement.TryGetProperty("Version2", out var headerV2))
+                        {
+                            var blockHeaderV2 = JsonSerializer.Deserialize<BlockHeaderV2>(headerV1.GetRawText());
+                            return (BlockHeader)blockHeaderV2;
+                        }
+                        throw new JsonException("Cannot deserialize BlockHeader");
                     }
                 }
                 catch (Exception e)
