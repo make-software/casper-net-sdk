@@ -28,7 +28,7 @@ namespace Casper.Network.SDK.Types
         Auction,
     }
 
-    
+
     [JsonConverter(typeof(EntityKindConverter))]
     public class EntityKind
     {
@@ -47,7 +47,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Packages associated with Wasm stored on chain.
         /// </summary>
-        public string SmartContract { get; init; }
+        public TransactionRuntime? SmartContract { get; init; }
 
         /// <summary>
         /// Json converter class to serialize/deserialize a Block to/from Json
@@ -75,19 +75,20 @@ namespace Casper.Network.SDK.Types
                                     Account = new AccountHashKey(reader.GetString()),
                                 };
                                 break;
+                            case "SmartContract":
+                                entity = new EntityKind()
+                                {
+                                    SmartContract = EnumCompat.Parse<TransactionRuntime>(reader.GetString()),
+                                };
+                                break;
                             case "System":
                                 entity = new EntityKind()
                                 {
                                     System = EnumCompat.Parse<SystemEntityType>(reader.GetString()),
                                 };
                                 break;
-                            case "SmartContract":
-                                entity = new EntityKind()
-                                {
-                                    SmartContract = reader.GetString(),
-                                };
-                                break;
                         }
+
                         reader.Read();
                         if (entity != null)
                             return entity;

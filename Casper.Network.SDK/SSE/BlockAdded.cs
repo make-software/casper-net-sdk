@@ -5,7 +5,6 @@ using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.SSE
 {
-   
     /// <summary>
     /// A <see cref="Block">Block</see> that has been added to the linear chain and stored in the node.
     /// </summary>

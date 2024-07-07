@@ -386,6 +386,10 @@ namespace Casper.Network.SDK.Types
         {
         }
         
+        public AccountHashKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        {
+        }
+        
         /// <summary>
         /// Returns a PurseIdentifier object as defined in the RPC schema for an account hash key.
         /// </summary>
