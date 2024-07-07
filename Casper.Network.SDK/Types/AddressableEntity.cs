@@ -5,6 +5,19 @@ using System.Text.Json.Serialization;
 
 namespace Casper.Network.SDK.Types
 {
+    public enum TransactionRuntime
+    {
+        /// <summary>
+        /// The Casper Version 1 Virtual Machine.
+        /// </summary>
+        VmCasperV1,
+
+        /// <summary>
+        /// The Casper Version 2 Virtual Machine.
+        /// </summary>
+        VmCasperV2,
+    }
+    
     public enum SystemEntityType
     {
         /// <summary>
@@ -47,7 +60,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Packages associated with Wasm stored on chain.
         /// </summary>
-        public bool? SmartContract { get; init; }
+        public TransactionRuntime? SmartContract { get; init; }
 
         /// <summary>
         /// Json converter class to serialize/deserialize a Block to/from Json
@@ -59,15 +72,6 @@ namespace Casper.Network.SDK.Types
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
-                if (reader.TokenType == JsonTokenType.String &&
-                    reader.GetString().Equals("SmartContract", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return new EntityKind()
-                    {
-                        SmartContract = true,
-                    };
-                }
-
                 if (reader.TokenType == JsonTokenType.StartObject)
                 {
                     reader.Read();
@@ -82,6 +86,12 @@ namespace Casper.Network.SDK.Types
                                 entity = new EntityKind()
                                 {
                                     Account = new AccountHashKey(reader.GetString()),
+                                };
+                                break;
+                            case "SmartContract":
+                                entity = new EntityKind()
+                                {
+                                    SmartContract = EnumCompat.Parse<TransactionRuntime>(reader.GetString()),
                                 };
                                 break;
                             case "System":
@@ -147,7 +157,8 @@ namespace Casper.Network.SDK.Types
         /// The hex-encoded address of the Package.
         /// </summary>
         [JsonPropertyName("package_hash")]
-        public string PackageHash { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public PackageKey Package { get; init; }
 
         /// <summary>
         /// The hash address of the contract wasm.
