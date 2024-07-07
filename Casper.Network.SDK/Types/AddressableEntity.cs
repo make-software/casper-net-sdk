@@ -144,7 +144,8 @@ namespace Casper.Network.SDK.Types
         /// The hex-encoded address of the Package.
         /// </summary>
         [JsonPropertyName("package_hash")]
-        public string PackageHash { get; init; }
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public PackageKey Package { get; init; }
 
         /// <summary>
         /// The hash address of the contract wasm.
