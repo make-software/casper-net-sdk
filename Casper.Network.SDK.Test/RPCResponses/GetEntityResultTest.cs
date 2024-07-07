@@ -54,13 +54,14 @@ namespace NetCasperTest.RPCResponses
             Assert.AreEqual("uref-96cd0453fb2e1d063c9438c158c0d804d0121a96f3423046150ee355cfadefb6-007", result.NamedKeys[1].Key.ToString().ToLower());
             
             Assert.IsTrue(result.EntryPoints.Count > 0);
-            Assert.AreEqual("allowance", result.EntryPoints[1].Name);
-            Assert.AreEqual(2, result.EntryPoints[1].Args.Count);
-            Assert.AreEqual("spender", result.EntryPoints[1].Args[1].Name);
-            Assert.AreEqual(CLType.Key, result.EntryPoints[1].Args[1].CLType);
-            Assert.AreEqual(CLType.U256, result.EntryPoints[1].Ret);
-            Assert.IsTrue(result.EntryPoints[1].Access.IsPublic);
-            Assert.AreEqual(EntryPointType.Called, result.EntryPoints[1].EntryPointType);
+            Assert.AreEqual("allowance", result.EntryPoints[1].V1CasperVm.Name);
+            Assert.AreEqual(2, result.EntryPoints[1].V1CasperVm.Args.Count);
+            Assert.AreEqual("spender", result.EntryPoints[1].V1CasperVm.Args[1].Name);
+            Assert.AreEqual(CLType.Key, result.EntryPoints[1].V1CasperVm.Args[1].CLType.Type);
+            Assert.AreEqual(CLType.U256, result.EntryPoints[1].V1CasperVm.Ret.Type);
+            Assert.IsTrue(result.EntryPoints[1].V1CasperVm.Access.IsPublic);
+            Assert.AreEqual(EntryPointType.Called, result.EntryPoints[1].V1CasperVm.EntryPointType);
+            Assert.AreEqual(EntryPointPayment.Caller, result.EntryPoints[1].V1CasperVm.EntryPointPayment);
         }
     }
 }
