@@ -171,13 +171,6 @@ namespace Casper.Network.SDK.Types
         public URef MainPurse { get; init; }
 
         /// <summary>
-        /// List of entry points or methods in the package.
-        /// </summary>
-        [JsonPropertyName("entry_points")]
-        [JsonConverter(typeof(EntryPoint.NamedEntryPointsConverter))]
-        public List<EntryPoint> EntryPoints { get; init; }
-
-        /// <summary>
         /// Set of public keys allowed to provide signatures on deploys for the package
         /// </summary>
         [JsonPropertyName("associated_keys")]
