@@ -25,7 +25,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// <summary>
         /// Array of entry points defined in the entity
         /// </summary>
-        public List<EntryPoint> EntryPoints { get; init; }
+        public List<VersionedEntryPoint> EntryPoints { get; init; }
         
         /// <summary>
         /// A legacy account.
@@ -47,7 +47,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
                 string api_version = null;
                 AddressableEntity entity = null;
                 var namedKeys = new List<NamedKey>();
-                var entryPoints = new List<EntryPoint>();
+                var entryPoints = new List<VersionedEntryPoint>();
                 Account legacyAccount = null;
                 string merkle_proof = null;
                 uint skippedEntityWrapperCount = 0;
@@ -75,7 +75,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
                             namedKeys = JsonSerializer.Deserialize<List<NamedKey>>(ref reader, options);
                             break;
                         case "entry_points":
-                            entryPoints = JsonSerializer.Deserialize<List<EntryPoint>>(ref reader, options);
+                            entryPoints = JsonSerializer.Deserialize<List<VersionedEntryPoint>>(ref reader, options);
                             break;
                         case "LegacyAccount":
                             if (reader.TokenType != JsonTokenType.Null)
