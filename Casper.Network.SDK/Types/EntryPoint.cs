@@ -95,6 +95,14 @@ namespace Casper.Network.SDK.Types
         /// Extract a subset of bytecode and installs it as a new smart contract. Runs using the called entity's context.
         /// </summary>
         Factory,
+        /// <summary>
+        /// Casper v1.x only. Executes in the contract context.
+        /// </summary>
+        Contract,
+        /// <summary>
+        /// Casper v1.x only. Executes in the caller account context.
+        /// </summary>
+        Session,
     }
 
     public enum EntryPointPayment
@@ -112,7 +120,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         SelfOnward,
     }
-
+    
     /// <summary>
     /// Parameter to a method
     /// </summary>
@@ -135,7 +143,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// Type signature of a method. Order of arguments matter since can be referenced by index as well as name.
     /// </summary>
-    public class EntryPointV1
+    public class EntryPoint
     {
         /// <summary>
         /// Access control options for a contract entry point
@@ -176,8 +184,6 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("ret")]
         [JsonConverter(typeof(CLTypeInfoConverter))]
         public CLTypeInfo Ret { get; init; }
-        
-        
     }
 
     public class EntryPointV2
@@ -188,14 +194,13 @@ namespace Casper.Network.SDK.Types
         }
     }
     
-    public class EntryPoint
+    public class VersionedEntryPoint
     {
-        public EntryPointV1 V1CasperVm { get; init; }
+        public EntryPoint V1CasperVm { get; init; }
         
         public EntryPointV2 V2CasperVm { get; init; }
     }
         
-    //TODO: Remove this if finally is not used
     public class NamedEntryPoint
     {
         [JsonPropertyName("name")]

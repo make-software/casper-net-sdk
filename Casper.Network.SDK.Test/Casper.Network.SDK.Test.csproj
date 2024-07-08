@@ -32,5 +32,9 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="NctlGetXTest.cs" />
+      <Compile Remove="NctlTransferTest.cs" />
+    </ItemGroup>
 
 </Project>

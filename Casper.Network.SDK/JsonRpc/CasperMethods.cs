@@ -210,48 +210,27 @@ namespace Casper.Network.SDK.JsonRpc
         {
             this.Parameters = new Dictionary<string, object>
             {
-                {"state_root_hash", stateRootHash},
-                {"purse_uref", purseURef}
+                { "state_root_hash", stateRootHash },
+                { "purse_uref", purseURef }
             };
         }
+    }
 
-        public GetBalance(URef uref, StateIdentifier stateIdentifier) : base("query_balance")
+    public class QueryBalance : RpcMethod
+    {
+        /// <summary>
+        /// Query for balance information using a purse identifier and a state identifier
+        /// </summary>
+        /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
+        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public QueryBalance(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance")
         {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"purse_uref", uref.ToString()}
-            };
             this.Parameters = new Dictionary<string, object>
             {
-                {"purse_identifier", mainPurse}
+                {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
             };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
-        }
-
-        public GetBalance(AccountHashKey key, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"main_purse_under_account_hash", key.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
-        }
-
-        public GetBalance(PublicKey key, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"main_purse_under_public_key", key.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
     }
 
@@ -261,44 +240,15 @@ namespace Casper.Network.SDK.JsonRpc
         /// Query for full balance information using a purse identifier and a state identifier
         /// </summary>
         /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
-        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
-        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, IBlockIdentifier blockIdentifier = null) : base("query_balance_details")
+        /// <param name="stateIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance_details")
         {
             this.Parameters = new Dictionary<string, object>
             {
                 {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
             };
-            if(blockIdentifier != null)
-                this.Parameters.Add("state_identifier", new Dictionary<string, object>
-                {
-                    { "block", blockIdentifier.GetBlockIdentifier()}
-                });
-        }
-        
-        /// <summary>
-        /// Query for full balance information using a purse identifier and a state identifier
-        /// </summary>
-        /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
-        /// <param name="stateRootHash">The state root hash used for the query.</param>
-        /// <param name="timestamp">Timestamp for holds lookup.</param>
-        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, string stateRootHash, string timestamp) : base("query_balance_details")
-        {
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
-                {"state_identifier", 
-                    new Dictionary<string, object>
-                    {
-                        {
-                            "state_root", new Dictionary<string, object>
-                            {
-                                {"state_root_hash", stateRootHash},
-                                {"timestamp", timestamp},
-                            }
-                        },
-                    }
-                },
-            };
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
     }
     

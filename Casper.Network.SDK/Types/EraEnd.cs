@@ -100,12 +100,19 @@ namespace Casper.Network.SDK.Types
         /// The rewards distributed to the validators.
         /// </summary>
         [JsonPropertyName("rewards")]
-        public Dictionary<string, string> Rewards { get; init; }
+        public Dictionary<string, List<string>> Rewards { get; init; }
         
         /// <summary>
         /// Next Era gas price
         /// </summary>
         [JsonPropertyName("next_era_gas_price")]
         public UInt16 NextEraGasPrice { get; init; }
+    }
+
+    /// <summary>
+    /// Information related to the end of an era, and validator weights for the following era (alias for EraEndV2).
+    /// </summary>
+    public class EraEnd: EraEndV2
+    {
     }
 }
