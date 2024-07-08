@@ -35,6 +35,11 @@
     <ItemGroup>
       <Compile Remove="NctlGetXTest.cs" />
       <Compile Remove="NctlTransferTest.cs" />
+      <Compile Remove="NctlContractTest.cs" />
+      <Compile Remove="NctlMyDictContractTest.cs" />
+      <Compile Remove="NctlTransferTest.cs" />
+      <Compile Remove="RpcResultTest.cs" />
+      <Compile Remove="ServerEventsClientTest.cs" />
+      <Compile Remove="NctlQueryGlobalStateTest.cs" />
     </ItemGroup>
-
 </Project>

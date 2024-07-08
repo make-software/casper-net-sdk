@@ -1,4 +1,4 @@
-using Casper.Network.SDK.Utils;
+using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
@@ -11,7 +11,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Package;
         }
 
-        public PackageKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public PackageKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }

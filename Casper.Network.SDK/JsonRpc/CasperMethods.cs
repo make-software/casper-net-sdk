@@ -287,6 +287,62 @@ namespace Casper.Network.SDK.JsonRpc
                 this.Parameters.Add("finalized_approvals", true);
         }
     }
+	
+	
+    public class PutTransaction : RpcMethod
+    {
+        /// <summary>
+        /// Sends a Transaction to the network for its execution.
+        /// </summary>
+        /// <param name="transaction">The deploy object.</param>
+        public PutTransaction(TransactionV1 transaction) : base("account_put_transaction")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction", new Dictionary<string, object>
+                    {
+                        { "Version1", transaction},
+                    }
+                }
+            };
+        }
+    }
+    public class GetTransaction : RpcMethod
+    {
+        public GetTransaction(string deployHash, bool finalizedApprovals = false) : base("info_get_transaction")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction_hash", new Dictionary<string, object>
+                    {
+                        { "Deploy", deployHash }
+                    }
+                },
+            };
+            if (finalizedApprovals)
+                this.Parameters.Add("finalized_approvals", true);
+        }
+        
+        public GetTransaction(TransactionHash transactionHash, bool finalizedApprovals = false) : base("info_get_transaction")
+        {
+            var hashDict = new Dictionary<string, object>();
+            if(transactionHash.Deploy != null)
+                hashDict.Add("Deploy", transactionHash.Deploy);
+            if(transactionHash.Version1 != null)
+                hashDict.Add("Version1", transactionHash.Version1);
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction_hash", hashDict
+                },
+            };
+            if (finalizedApprovals)
+                this.Parameters.Add("finalized_approvals", true);
+        }
+    }
 
     public class GetBlock : RpcMethod
     {

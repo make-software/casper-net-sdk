@@ -1,15 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
+using System.Numerics;
 
 namespace Casper.Network.SDK.Types
 {
-    /// <summary>
-    /// An entry in the validator map.
-    /// </summary>
-    public class Bid
+    public class ValidatorBid
     {
         /// <summary>
         /// The purse that was used for bonding.
@@ -25,10 +22,6 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("delegation_rate")]
         public uint DelegationRate { get; init; }
 
-        [JsonPropertyName("delegators")]
-        [JsonConverter(typeof(Delegator.PublicKeyAndDelegatorListConverter))]
-        public List<Delegator> Delegators { get; init; }
-        
         /// <summary>
         /// `true` if validator has been "evicted"
         /// </summary>
@@ -50,9 +43,15 @@ namespace Casper.Network.SDK.Types
         public PublicKey PublicKey { get; init; }
 
         /// <summary>
-        /// Vesting schedule for a genesis validator. `None` if non-genesis validator.
+        /// Minimum allowed delegation amount in motes
         /// </summary>
-        [JsonPropertyName("vesting_schedule")]
-        public VestingSchedule VestingSchedule { get; init; }
+        [JsonPropertyName("minimum_delegation_amount")]
+        public ulong MinimumDelegationAmount { get; init; }
+        
+        /// <summary>
+        /// Maximum allowed delegation amount in motes
+        /// </summary>
+        [JsonPropertyName("maximum_delegation_amount")]
+        public ulong MaximumDelegationAmount { get; init; }
     }
 }

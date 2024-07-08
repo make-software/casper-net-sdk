@@ -6,7 +6,7 @@ using Casper.Network.SDK.Types;
 namespace Casper.Network.SDK.SSE
 {
     /// <summary>
-    /// A <see cref="Deploy">Deploy</see> that has been executed, committed and forms part of a <see cref="BlockV1">Block</see>..
+    /// A <see cref="Deploy">Deploy</see> that has been executed, committed and forms part of a <see cref="Block">Block</see>..
     /// </summary>
     public class DeployProcessed
     {
@@ -52,7 +52,7 @@ namespace Casper.Network.SDK.SSE
         /// The result of executing a this <see cref="Deploy">Deploy</see>.
         /// </summary>
         [JsonPropertyName("execution_result")]
-        [JsonConverter(typeof(ExecutionResultV1.ExecutionResultConverter))]
+        [JsonConverter(typeof(ExecutionResultV1.ExecutionResultV1Converter))]
         public ExecutionResultV1 ExecutionResult { get; init; }
     }
 }

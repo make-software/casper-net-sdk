@@ -18,7 +18,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// The result of executing the <see cref="Deploy">Deploy</see>.
         /// </summary>
         [JsonPropertyName("execution_result")]
-        [JsonConverter(typeof(ExecutionResultV1.ExecutionResultConverter))]
+        [JsonConverter(typeof(ExecutionResultV1.ExecutionResultV1Converter))]
         public ExecutionResultV1 ExecutionResult { get; init; }
     }
 }
