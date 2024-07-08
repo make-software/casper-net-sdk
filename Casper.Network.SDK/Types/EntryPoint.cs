@@ -105,22 +105,6 @@ namespace Casper.Network.SDK.Types
         Session,
     }
 
-    public enum EntryPointPayment
-    {
-        /// <summary>
-        /// The caller must cover cost.
-        /// </summary>
-        Caller,
-        /// <summary>
-        /// Will cover cost to execute self but not cost of any subsequent invoked contracts.
-        /// </summary>
-        SelfOnly,
-        /// <summary>
-        /// Will cover cost to execute self and the cost of any subsequent invoked contracts.
-        /// </summary>
-        SelfOnward,
-    }
-
     /// <summary>
     /// Parameter to a method
     /// </summary>

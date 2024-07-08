@@ -41,5 +41,4 @@
       <Compile Remove="ServerEventsClientTest.cs" />
       <Compile Remove="NctlQueryGlobalStateTest.cs" />
     </ItemGroup>
-
 </Project>
