@@ -49,7 +49,7 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(_contractDeployHash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            var execResult = getResponse.Parse().ExecutionResult;
             Assert.IsTrue(execResult.IsSuccess);
             Assert.AreEqual(64, execResult.BlockHash.Length);
             Assert.IsNull(execResult.ErrorMessage);

@@ -134,27 +134,5 @@ namespace Casper.Network.SDK.Utils
             
             return bytes;
         }
-        
-        public class HashWithChecksumConverter : JsonConverter<string>
-        {
-            public override string Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options)
-            {
-                var hex = reader.GetString();
-                CEP57Checksum.Decode(hex, out var checksumResult);
-                if (checksumResult == CEP57Checksum.InvalidChecksum)
-                    throw new JsonException("Wrong checksum in hexadecimal string.");
-
-                return hex;
-            }
-
-            public override void Write(
-                Utf8JsonWriter writer,
-                string hash,
-                JsonSerializerOptions options) =>
-                writer.WriteStringValue(hash);
-        }
     }
 }

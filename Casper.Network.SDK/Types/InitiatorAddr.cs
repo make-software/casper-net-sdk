@@ -11,6 +11,7 @@ namespace Casper.Network.SDK.Types
         /// The public key of the initiator
         /// </summary>
         [JsonPropertyName("PublicKey")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey PublicKey { get; init; }
         
@@ -18,6 +19,7 @@ namespace Casper.Network.SDK.Types
         /// The account hash derived from the public key of the initiator
         /// </summary>
         [JsonPropertyName("AccountHash")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public AccountHashKey AccountHash { get; init; }
 

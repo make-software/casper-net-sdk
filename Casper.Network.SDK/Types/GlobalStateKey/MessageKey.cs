@@ -7,35 +7,22 @@ namespace Casper.Network.SDK.Types
 {
     public class MessageKey : GlobalStateKey
     {
-        private const string MESSAGE_PREFIX = "message-";
+        private const string KEY_PREFIX = "message-";
         private const string TOPIC_PREFIX = "topic-";
         
-        private static readonly string CONTRACT_TOPIC_KEYPREFIX = "message-topic-entity-contract-";
-        private static readonly string CONTRACT_MSG_KEYPREFIX = "message-entity-contract-";
-
         public AddressableEntityKey AddressableEntity { get; init; }
         
         public string TopicHash { get; init; }
         
         public UInt32? Index { get; init; }
         
-        private static string GetPrefix(string key)
-        {
-            if (key.StartsWith(CONTRACT_TOPIC_KEYPREFIX))
-                return CONTRACT_TOPIC_KEYPREFIX;
-            if (key.StartsWith(CONTRACT_MSG_KEYPREFIX))
-                return CONTRACT_MSG_KEYPREFIX;
-            
-            throw new Exception("Unexpected key prefix in ByteCodeKey: " + key);
-        }
-        
         public MessageKey(string key) : base(key)
         {
             KeyIdentifier = KeyIdentifier.Message;
             
-            if (!key.StartsWith(MESSAGE_PREFIX))
-                throw new ArgumentException($"Key not valid. It should start with '{MESSAGE_PREFIX}'.");
-            key = key.Substring(MESSAGE_PREFIX.Length);
+            if (!key.StartsWith(KEY_PREFIX))
+                throw new ArgumentException($"Key not valid. It should start with '{KEY_PREFIX}'.");
+            key = key.Substring(KEY_PREFIX.Length);
 
             if (key.StartsWith(TOPIC_PREFIX))
             {
@@ -78,7 +65,7 @@ namespace Casper.Network.SDK.Types
             if (optionIndexTag == 0x01)
                 Index = reader.ReadUInt32();
 
-            Key = MESSAGE_PREFIX +
+            Key = KEY_PREFIX +
                   (Index.HasValue ? "" : TOPIC_PREFIX) +
                   AddressableEntity.ToString() + "-" +
                   TopicHash +

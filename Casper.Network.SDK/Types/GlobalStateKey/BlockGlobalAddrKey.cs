@@ -1,5 +1,5 @@
 using System;
-using Casper.Network.SDK.Utils;
+using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
@@ -60,9 +60,9 @@ namespace Casper.Network.SDK.Types
 
         public BlockGlobalAddrKey(byte[] key) : this( 
             key[0] == (byte)BlockGlobalAddrTag.Time
-                ? BlockGlobalAddrTag.Time.ToKeyPrefix() + CEP57Checksum.Encode(key.Slice(1))
+                ? BlockGlobalAddrTag.Time.ToKeyPrefix() + Hex.ToHexString(key.Slice(1))
                 : (key[0] == (byte)BlockGlobalAddrTag.MessageCount
-                    ? BlockGlobalAddrTag.MessageCount.ToKeyPrefix() + CEP57Checksum.Encode(key.Slice(1))
+                    ? BlockGlobalAddrTag.MessageCount.ToKeyPrefix() + Hex.ToHexString(key.Slice(1))
                     :  throw new Exception($"Wrong kind tag '{key[0]}' for BlockGlobalAddrKey.")))
         {
         }

@@ -1,0 +1,225 @@
+{
+  "api_version": "2.0.0",
+  "deploy": {
+    "hash": "8738a51ca5c656e1c3eea5d4473fd07f92d6bb7dfd2d75d8d8dc59331545096c",
+    "header": {
+      "account": "0184f6d260f4ee6869ddb36affe15456de6ae045278fa2f467bb677561ce0dad55",
+      "timestamp": "2024-06-28T13:05:19.722Z",
+      "ttl": "3m",
+      "gas_price": 1,
+      "body_hash": "3cd24b57053a21605a0569edcd0da556782db67d5ee0529dedecc9e1271d34d6",
+      "dependencies": [],
+      "chain_name": "casper-net-1"
+    },
+    "payment": {
+      "ModuleBytes": {
+        "module_bytes": "",
+        "args": [
+          [
+            "amount",
+            {
+              "cl_type": "U512",
+              "bytes": "0500f2052a01",
+              "parsed": "5000000000"
+            }
+          ]
+        ]
+      }
+    },
+    "session": {
+      "StoredVersionedContractByHash": {
+        "hash": "2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb",
+        "version": null,
+        "entry_point": "transfer",
+        "args": [
+          [
+            "recipient",
+            {
+              "cl_type": "Key",
+              "bytes": "006bccb64a7904b7217dd4ed7d9e4163785fe2133d45d390250b18f9442917bc0a",
+              "parsed": "account-hash-6bccb64a7904b7217dd4ed7d9e4163785fe2133d45d390250b18f9442917bc0a"
+            }
+          ],
+          [
+            "amount",
+            {
+              "cl_type": "U256",
+              "bytes": "02d430",
+              "parsed": "12500"
+            }
+          ]
+        ]
+      }
+    },
+    "approvals": [
+      {
+        "signer": "0184f6d260f4ee6869ddb36affe15456de6ae045278fa2f467bb677561ce0dad55",
+        "signature": "01c5caded9fd67da7232ad55b1fe3f6781ee5212c3c71b755866d63543d014a2501dece11e3f3c1073b919dcaf41b09d1709b3da7caae07bbbb4eb2d01876c7c0a"
+      }
+    ]
+  },
+  "execution_info": {
+    "block_hash": "638d6a36843f153f173810569ca41129228d49e9f786bb96cd59c0215c2101b6",
+    "block_height": 1964,
+    "execution_result": {
+      "Version2": {
+        "initiator": {
+          "PublicKey": "0184f6d260f4ee6869ddb36affe15456de6ae045278fa2f467bb677561ce0dad55"
+        },
+        "error_message": null,
+        "limit": "500000000000",
+        "consumed": "537061384",
+        "cost": "500000000000",
+        "payment": [],
+        "transfers": [],
+        "size_estimate": 392,
+        "effects": [
+          {
+            "key": "balance-hold-01bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e1d4ef35e90010000",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "U512",
+                  "bytes": "050088526a74",
+                  "parsed": "500000000000"
+                }
+              }
+            }
+          },
+          {
+            "key": "package-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb",
+            "kind": "Identity"
+          },
+          {
+            "key": "entity-contract-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01",
+            "kind": "Identity"
+          },
+          {
+            "key": "package-2f5f35e499d33f7bbb03f6657c12c3bee0ca2eebd9cfe177fb5cc2dbb6378feb",
+            "kind": "Identity"
+          },
+          {
+            "key": "entry-point-v1-entity-contract-3ec4d7e8ec755ba06be9ee21dd0ffa69028fb92fbe4316e880bb417a13898d01-3820ce25e54df0470fb738e3e0f63ee50b2719cf2680da2bdb579e21aebc8f63",
+            "kind": "Identity"
+          },
+          {
+            "key": "byte-code-v1-wasm-906aa4db02430ae0894f6996c3dcb423013d9878037ad84a46c6f6ac78b7d5b1",
+            "kind": "Identity"
+          },
+          {
+            "key": "dictionary-3242adf99a374c325bbc98d29323805a5a0c7d81c0b55731027111bc1b220869",
+            "kind": "Identity"
+          },
+          {
+            "key": "dictionary-5f00faae08f256fdbbcab53942ae89f0961dbc28142c49d3f6fc7efb827887cf",
+            "kind": "Identity"
+          },
+          {
+            "key": "dictionary-3242adf99a374c325bbc98d29323805a5a0c7d81c0b55731027111bc1b220869",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "Any",
+                  "bytes": "050000000484379a3b0720000000aeae29762c24430dd4e6dd0ff93994abd53c43907103a27bfe7d3881fdcebbc02c0000004146612b2f424f6d2f574c686a7a5958414b58676a355a7041634e4e2b4151624e7579583155316758435065",
+                  "parsed": null
+                }
+              }
+            }
+          },
+          {
+            "key": "dictionary-5f00faae08f256fdbbcab53942ae89f0961dbc28142c49d3f6fc7efb827887cf",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "Any",
+                  "bytes": "03000000027c920720000000aeae29762c24430dd4e6dd0ff93994abd53c43907103a27bfe7d3881fdcebbc02c0000004147764d746b7035424c636866645474665a35425933686634684d3952644f514a5173592b5551704637774b",
+                  "parsed": null
+                }
+              }
+            }
+          },
+          {
+            "key": "uref-3d67308514d1a0c447a07f088b165d54aa13f601f9e58791e059bc6344cd84f9-000",
+            "kind": "Identity"
+          },
+          {
+            "key": "uref-c241213422d3c9adb0afa8437ea3dab8c69dd863c0cf44536d7586538545b482-000",
+            "kind": "Identity"
+          },
+          {
+            "key": "dictionary-b8404730e4b5686f96941958a9aabab4ee4997b2333cee681e96ed986d159107",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "Any",
+                  "bytes": "5b000000570000000e0000006576656e745f5472616e736665720056befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de006bccb64a7904b7217dd4ed7d9e4163785fe2133d45d390250b18f9442917bc0a02d4300e032000000083fe09fd54cc79ce67e513bdef50297936fdcef11fa7886f984a373aa2fa000c0100000032",
+                  "parsed": null
+                }
+              }
+            }
+          },
+          {
+            "key": "uref-c241213422d3c9adb0afa8437ea3dab8c69dd863c0cf44536d7586538545b482-000",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "U32",
+                  "bytes": "03000000",
+                  "parsed": 3
+                }
+              }
+            }
+          },
+          {
+            "key": "balance-hold-01bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e1d4ef35e90010000",
+            "kind": {
+              "Prune": "balance-hold-01bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e1d4ef35e90010000"
+            }
+          },
+          {
+            "key": "balance-hold-00bc174dc2398daae9d676470292db5f34c5c4aafb059ee08543e1d725667a7c1e1d4ef35e90010000",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "U512",
+                  "bytes": "050088526a74",
+                  "parsed": "500000000000"
+                }
+              }
+            }
+          },
+          {
+            "key": "entity-system-96d9230e1a4e2154023d3d8f581a9f0503bae015907aec8debdac83054e3c019",
+            "kind": "Identity"
+          },
+          {
+            "key": "entity-system-c3d73ae472263ea840378de7487c67b3b598dcd281d7851a429e783b25d4e959",
+            "kind": "Identity"
+          },
+          {
+            "key": "entity-system-bd8cb7d0da04ad619b8981e0ffa13ea80c3fa6deb8c56fbff435e922e4d92774",
+            "kind": "Identity"
+          },
+          {
+            "key": "bid-addr-011c50d14ca563d5afe0399a3da010bac01383f502bc7cce774cc03d858a94cf06",
+            "kind": "Identity"
+          },
+          {
+            "key": "bid-addr-041c50d14ca563d5afe0399a3da010bac01383f502bc7cce774cc03d858a94cf06ba00000000000000",
+            "kind": {
+              "Write": {
+                "BidKind": {
+                  "Credit": {
+                    "validator_public_key": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
+                    "era_id": 186,
+                    "amount": "500000000000"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
@@ -6,7 +7,7 @@ using Casper.Network.SDK.Converters;
 namespace Casper.Network.SDK.Types
 {
     /// <summary>
-    /// An entry in a founding validator map representing a bid.
+    /// An entry in the validator map.
     /// </summary>
     public class Bid
     {
@@ -24,13 +25,10 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("delegation_rate")]
         public uint DelegationRate { get; init; }
 
-        /// <summary>
-        /// The delegators.
-        /// </summary>
         [JsonPropertyName("delegators")]
-        [JsonConverter(typeof(GenericListConverter<Delegator, Delegator.DelegatorConverter>))]
+        [JsonConverter(typeof(Delegator.PublicKeyAndDelegatorListConverter))]
         public List<Delegator> Delegators { get; init; }
-
+        
         /// <summary>
         /// `true` if validator has been "evicted"
         /// </summary>
@@ -45,7 +43,7 @@ namespace Casper.Network.SDK.Types
         public BigInteger StakedAmount { get; init; }
 
         /// <summary>
-        /// Validator public key
+        /// Validator public key.
         /// </summary>
         [JsonPropertyName("validator_public_key")]
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]

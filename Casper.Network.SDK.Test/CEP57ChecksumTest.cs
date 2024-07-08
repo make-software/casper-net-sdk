@@ -25,59 +25,6 @@ namespace NetCasperTest
         }
         
         [Test]
-        public void CEP57DecodeEncode()
-        {
-            int result;
-
-            var hash = "66B754c5E2981B41D41af39B88C8583bD08EF176eB1a81F56b8F395685805968";
-            var bytes = CEP57Checksum.Decode(hash, out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-            
-            GlobalStateKey key = new HashKey(bytes);
-            Assert.AreEqual($"hash-{hash}", key.ToString());
-
-            hash = "eA1D6C19ccAeb35Ae717065c250E0F7F6Dc64AC3c6494a797E0b33A23CA1f1b9";
-            bytes = CEP57Checksum.Decode(hash, out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-            Assert.AreEqual(hash, CEP57Checksum.Encode(bytes));
-
-            key = new TransferKey(bytes);
-            Assert.AreEqual($"transfer-{hash}", key.ToString());
-
-            hash = "98d945f5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6";
-            bytes = CEP57Checksum.Decode(hash, out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-            Assert.AreEqual(hash, CEP57Checksum.Encode(bytes));
-
-            key = new DeployInfoKey(bytes);
-            Assert.AreEqual($"deploy-{hash}", key.ToString());
-
-            hash = "8cf5E4aCF51f54Eb59291599187838Dc3BC234089c46fc6cA8AD17e762aE4401";
-            bytes = CEP57Checksum.Decode(hash, out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-            Assert.AreEqual(hash, CEP57Checksum.Encode(bytes));
-
-            key = new BalanceKey(bytes);
-            Assert.AreEqual($"balance-{hash}", key.ToString());
-
-            hash = "010c3Fe81B7b862E50C77EF9A958a05BfA98444F26f96f23d37A13c96244cFB7";
-            bytes = CEP57Checksum.Decode(hash, out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-            Assert.AreEqual(hash, CEP57Checksum.Encode(bytes));
-
-            key = new BidKey(bytes);
-            Assert.AreEqual($"bid-{hash}", key.ToString());
-
-            hash = "98d945f5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6";
-            bytes = CEP57Checksum.Decode(hash, out result);
-            Assert.AreEqual(CEP57Checksum.ValidChecksum, result);
-            Assert.AreEqual(hash, CEP57Checksum.Encode(bytes));
-
-            key = new WithdrawKey(bytes);
-            Assert.AreEqual($"withdraw-{hash}", key.ToString());
-        }
-
-        [Test]
         public void CEP57HasChecksum()
         {
             const string hash = "010c3Fe81B7b862E50C77EF9A958a05BfA98444F26f96f23d37A13c96244cFB7";

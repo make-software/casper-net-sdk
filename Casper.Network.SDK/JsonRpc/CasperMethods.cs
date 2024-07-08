@@ -130,6 +130,35 @@ namespace Casper.Network.SDK.JsonRpc
         }
     }
 
+    public class GetEntity : RpcMethod
+    {
+        /// <summary>
+        /// Returns an AddressableEntity from the network for a Block from the network
+        /// </summary>
+        /// <param name="entityIdentifier">A PublicKey, an AccoountHashKey, or an AddressableEntityKey</param>
+        /// <param name="blockIdentifier">A a block identifier by hash or key. Null for the latest block</param>
+        public GetEntity(IEntityIdentifier entityIdentifier, IBlockIdentifier blockIdentifier = null) : base("state_get_entity")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "entity_identifier", entityIdentifier.GetEntityIdentifier() }
+            };
+            
+            if(blockIdentifier != null)
+                this.Parameters.Add("block_identifier", blockIdentifier.GetBlockIdentifier());
+        }
+
+        /// <summary>
+        /// Returns an AddressableEntity from the network for a Block from the network
+        /// </summary>
+        /// <param name="addressableEntity">A string with an addressable entity key.</param>
+        /// <param name="blockIdentifier">A a block identifier by hash or key. Null for the latest block</param>
+        public GetEntity(string addressableEntity, IBlockIdentifier blockIdentifier = null) 
+            : this(new AddressableEntityKey(addressableEntity), blockIdentifier)
+        {
+        }
+    }
+    
     public class GetItem : RpcMethod
     {
         /// <summary>
@@ -254,6 +283,62 @@ namespace Casper.Network.SDK.JsonRpc
                 {"deploy_hash", deployHash}
             };
 
+            if (finalizedApprovals)
+                this.Parameters.Add("finalized_approvals", true);
+        }
+    }
+	
+	
+    public class PutTransaction : RpcMethod
+    {
+        /// <summary>
+        /// Sends a Transaction to the network for its execution.
+        /// </summary>
+        /// <param name="transaction">The deploy object.</param>
+        public PutTransaction(TransactionV1 transaction) : base("account_put_transaction")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction", new Dictionary<string, object>
+                    {
+                        { "Version1", transaction},
+                    }
+                }
+            };
+        }
+    }
+    public class GetTransaction : RpcMethod
+    {
+        public GetTransaction(string deployHash, bool finalizedApprovals = false) : base("info_get_transaction")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction_hash", new Dictionary<string, object>
+                    {
+                        { "Deploy", deployHash }
+                    }
+                },
+            };
+            if (finalizedApprovals)
+                this.Parameters.Add("finalized_approvals", true);
+        }
+        
+        public GetTransaction(TransactionHash transactionHash, bool finalizedApprovals = false) : base("info_get_transaction")
+        {
+            var hashDict = new Dictionary<string, object>();
+            if(transactionHash.Deploy != null)
+                hashDict.Add("Deploy", transactionHash.Deploy);
+            if(transactionHash.Version1 != null)
+                hashDict.Add("Version1", transactionHash.Version1);
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction_hash", hashDict
+                },
+            };
             if (finalizedApprovals)
                 this.Parameters.Add("finalized_approvals", true);
         }

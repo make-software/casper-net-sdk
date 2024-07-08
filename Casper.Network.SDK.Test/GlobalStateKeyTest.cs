@@ -409,42 +409,13 @@ namespace NetCasperTest
         [Test]
         public void InvalidKeyIdentifierTest()
         {
-            var bytes = Hex.Decode("0F00");
+            var bytes = Hex.Decode("3F00");
             var ex = Assert.Catch<ArgumentException>(() =>
             {
                 GlobalStateKey.FromBytes(bytes);
             });
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex.Message.StartsWith("Unknown key identifier"));   
-        }
-
-        [Test]
-        public void CEP57ChecksumValidationTest()
-        {
-            var hashKey = "hash-98d945f5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6";
-
-            var key = GlobalStateKey.FromString(hashKey);
-            Assert.IsNotNull(key);
-
-            var invalidHashKey = "hash-98D945F5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6";
-            var ex = Assert.Catch<ArgumentException>(() =>
-            {
-                GlobalStateKey.FromString(invalidHashKey);
-            });
-            Assert.IsNotNull(ex);
-            Assert.IsTrue(ex.Message.StartsWith("Global State Key checksum mismatch."));
-
-            var urefKey = "uref-98d945f5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6-007";
-            key = GlobalStateKey.FromString(urefKey);
-            Assert.IsNotNull(key);
-            
-            var invalidURefKey = "uref-98D945F5324F865243B7c02C0417AB6eaC361c5c56602FD42ced834a1Ba201B6-007";
-            ex = Assert.Catch<ArgumentException>(() =>
-            {
-                GlobalStateKey.FromString(invalidURefKey);
-            });
-            Assert.IsNotNull(ex);
-            Assert.IsTrue(ex.Message.StartsWith("URef checksum mismatch."));
         }
         
         [Test]
@@ -467,7 +438,7 @@ namespace NetCasperTest
 
             var entityAddr = "0101010101010101010101010101010101010101010101010101010101010101";
 
-            var entities = new EntityKind[] { EntityKind.System, EntityKind.Account, EntityKind.Contract };
+            var entities = new EntityKindEnum[] { EntityKindEnum.System, EntityKindEnum.Account, EntityKindEnum.Contract };
             foreach (var entityKind in entities)
             {
                 var entityKey = $"{ENTITY_PREFIX}{entityKind.ToString().ToLower()}-{entityAddr}";
@@ -513,7 +484,7 @@ namespace NetCasperTest
             var entityAddr = "0101010101010101010101010101010101010101010101010101010101010101";
             var namedKeyAddr = "0202020202020202020202020202020202020202020202020202020202020202";
 
-            var entities = new EntityKind[] { EntityKind.System, EntityKind.Account, EntityKind.Contract };
+            var entities = new EntityKindEnum[] { EntityKindEnum.System, EntityKindEnum.Account, EntityKindEnum.Contract };
             foreach (var entityKind in entities)
             {
                 var namedKeyKey = $"{NAMEDKEY_PREFIX}{ENTITY_PREFIX}{entityKind.ToString().ToLower()}-{entityAddr}-{namedKeyAddr}";

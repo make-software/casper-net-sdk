@@ -41,7 +41,7 @@ namespace NetCasperTest
 
             var deploy = new Deploy(header, payment, session);
             
-            deploy.AddApproval(new DeployApproval()
+            deploy.AddApproval(new Approval()
             {
                 Signature = Signature.FromHexString("012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"),
                 Signer = PublicKey.FromHexString("01027c04a0210afdf4a83328d57e8c2a12247a86d872fb53367f22a84b1b53d2a9")
