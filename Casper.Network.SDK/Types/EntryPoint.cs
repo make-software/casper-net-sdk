@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
@@ -77,15 +78,49 @@ namespace Casper.Network.SDK.Types
     public enum EntryPointType
     {
         /// <summary>
-        /// Runs as session code
+        /// Runs using the calling entity's context. In v1.x this was used for both \"session\" code run using the
+        /// originating Account's context, and also for \"StoredSession\" code that ran in the caller's context.
+        /// While this made systemic sense due to the way the runtime context nesting works, this dual usage was
+        /// very confusing to most human beings.
+        /// In v2.x the renamed Caller variant is exclusively used for wasm run using the initiating account entity's
+        /// context. Previously installed 1.x stored session code should continue to work as the binary value matches
+        /// but we no longer allow such logic to be upgraded, nor do we allow new stored session to be installed.
+        /// </summary>
+        Caller,
+        /// <summary>
+        /// Runs using the called entity's context.
+        /// </summary>
+        Called,
+        /// <summary>
+        /// Extract a subset of bytecode and installs it as a new smart contract. Runs using the called entity's context.
+        /// </summary>
+        Factory,
+        /// <summary>
+        /// Casper v1.x only. Executes in the contract context.
+        /// </summary>
+        Contract,
+        /// <summary>
+        /// Casper v1.x only. Executes in the caller account context.
         /// </summary>
         Session,
-        /// <summary>
-        /// Runs within contract’s context
-        /// </summary>
-        Contract
     }
 
+    public enum EntryPointPayment
+    {
+        /// <summary>
+        /// The caller must cover cost.
+        /// </summary>
+        Caller,
+        /// <summary>
+        /// Will cover cost to execute self but not cost of any subsequent invoked contracts.
+        /// </summary>
+        SelfOnly,
+        /// <summary>
+        /// Will cover cost to execute self and the cost of any subsequent invoked contracts.
+        /// </summary>
+        SelfOnward,
+    }
+    
     /// <summary>
     /// Parameter to a method
     /// </summary>
@@ -131,6 +166,13 @@ namespace Casper.Network.SDK.Types
         public EntryPointType EntryPointType { get; init; }
 
         /// <summary>
+        /// Specifies who pays for the invocation and execution of the entrypoint.
+        /// </summary>
+        [JsonPropertyName("entry_point_payment")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public EntryPointPayment EntryPointPayment { get; init; }
+        
+        /// <summary>
         /// Name of the entry point
         /// </summary>
         [JsonPropertyName("name")]
@@ -142,5 +184,52 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("ret")]
         [JsonConverter(typeof(CLTypeInfoConverter))]
         public CLTypeInfo Ret { get; init; }
+    }
+
+    public class EntryPointV2
+    {
+        public EntryPointV2()
+        {
+            throw new NotImplementedException("V2CasperVm entry point not yet implemented");
+        }
+    }
+    
+    public class VersionedEntryPoint
+    {
+        public EntryPoint V1CasperVm { get; init; }
+        
+        public EntryPointV2 V2CasperVm { get; init; }
+    }
+        
+    public class NamedEntryPoint
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; init; }
+        
+        [JsonPropertyName("entry_point")]
+        public EntryPoint EntryPoint { get; init; }
+        
+        public class NamedEntryPointsConverter : JsonConverter<List<EntryPoint>>
+        {
+            public override List<EntryPoint> Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                var namedEntryPoints = JsonSerializer.Deserialize<List<NamedEntryPoint>>(ref reader, options);
+                if (namedEntryPoints != null)
+                    return namedEntryPoints.Select(e => e.EntryPoint).ToList();
+                
+                throw new JsonException("Cannot deserialize Array_of_NamedEntryPoint.");
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                List<EntryPoint> value,
+                JsonSerializerOptions options)
+            {
+                throw new NotImplementedException("Write method for Array_of_NamedEntryPoint not yet implemented.");
+            }
+        }
     }
 }

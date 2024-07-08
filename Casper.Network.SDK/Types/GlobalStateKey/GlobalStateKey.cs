@@ -344,7 +344,7 @@ namespace Casper.Network.SDK.Types
     /// Stores an account in the global state.
     /// Format: 32-byte length with prefix 'account-hash-'.
     /// </summary>
-    public class AccountHashKey : GlobalStateKey, IPurseIdentifier
+    public class AccountHashKey : GlobalStateKey, IPurseIdentifier, IEntityIdentifier
     {
         public static string KEYPREFIX = "account-hash-";
 
@@ -370,6 +370,17 @@ namespace Casper.Network.SDK.Types
             return new Dictionary<string, object>
             {
                 {"main_purse_under_account_hash", this.ToString()}
+            };
+        }
+        
+        /// <summary>
+        /// Returns an EntityIdentifier object as defined in the RPC schema for an account hash key.
+        /// </summary>
+        public Dictionary<string, object> GetEntityIdentifier()
+        {
+            return new Dictionary<string, object>
+            {
+                {"AccountHash", this.ToString()}
             };
         }
     }

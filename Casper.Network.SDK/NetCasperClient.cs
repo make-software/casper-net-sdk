@@ -178,6 +178,50 @@ namespace Casper.Network.SDK
         }
 
         /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityIdentifier">A PublicKey, an AccoountHashKey, or an AddressableEntityKey</param>
+        /// <param name="blockHash">A block hash for which the information of the entity is queried. Null for most recent information.</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, string blockHash = null)
+        {
+            var method = new GetEntity(entityIdentifier, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityIdentifier">A PublicKey, an AccoountHashKey, or an AddressableEntityKey</param>
+        /// <param name="blockHeight">A block height for which the information of the entity is queried..</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, ulong blockHeight)
+        {
+            var method = new GetEntity(entityIdentifier, new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityAddr">The entity address to get information of.</param>
+        /// <param name="blockHash">A block hash for which the information of the entity is queried. Null for most recent information.</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, string blockHash = null)
+        {
+            var method = new GetEntity(entityAddr, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns an AddressableEntity or a legacy Accountfrom the network for a Block from the network
+        /// </summary>
+        /// <param name="entityAddr">The entity address to get information of.</param>
+        /// <param name="blockHeight">A block height for which the information of the entity is queried..</param>
+        public async Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, ulong blockHeight)
+        {
+            var method = new GetEntity(entityAddr, new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<GetEntityResult>(method);
+        }
+        
+        /// <summary>
         /// Request a stored value from the network. This RPC is deprecated, use `QueryGlobalState` instead.
         /// </summary>
         /// <param name="keyHash">A global state key formatted as a string</param>
