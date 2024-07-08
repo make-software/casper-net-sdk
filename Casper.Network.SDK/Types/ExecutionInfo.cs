@@ -20,6 +20,7 @@ namespace Casper.Network.SDK.Types
         /// The map of block hash to execution result.
         /// </summary>
         [JsonPropertyName("execution_result")]
+        [JsonConverter(typeof(ExecutionResult.ExecutionResultConverter))]
         public ExecutionResult ExecutionResult { get; init; }
     }
 }
