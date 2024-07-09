@@ -55,7 +55,7 @@ or `BlockV2`. For example:
 if (block.Version == 2) {
     var blockv2 = (BlockV2)block;
     // ...
-} else if (blockVersion == 1) {
+} else if (block.Version == 1) {
     var blockv1 = (BlockV1)block;
     // ...
 }    
@@ -204,9 +204,37 @@ error. Finally, the cost in the no-fee model is the limit multiplied by the gas 
 
 ### Execution results
 
+The `ExecutionResult` class is a versioned object. Deploys processed before Condor upgrade are stored in the global
+state as `ExecutionResultV1`records. And deploys and transactions processed after Condor upgrade are stored
+as `ExecutionResultV2` records.
+
+The `GetTransaction` method always returns a `ExecutionResult` instance regardless the version. It has the same fields
+than `ExecutionResultV2`. The user can obtain the original structure with casting this instance to the correct version:
+
+```csharp
+if (executionResult.Version == 2) {
+    var executionResultV2 = (ExecutionResultV2)executionResult;
+    // ...
+} else if (executionResult.Version == 1) {
+    var executionResultV1 = (ExecutionResultV1)executionResult;
+    // ...
+}   
+```
+
+The `Effect` property contains a list of `Transforms` that modify the global state. Note that the `ExecutionEffect`
+which contained also a list of operations in addition to the transforms has been removed in Condor execution results.
 
 ## Other changes
+
+### Last switch block hash
+
+For a Condor network, it is possible to get the latest switch block hash with the `GetNodeStatus` method. The response
+contains the `LatestSwitchBlockHash` property with this value.
+
+Also, for blocks produced in Casper 2.0, the `Block` instance contains the previous switch block hash in
+the `LastSwitchBlockHash` property.
 
 ### Checksums (CEP-57)
 
 On SDK v3 only public keys are checksummed. The rest of keys and hashes are not checksummed anymore.
+
