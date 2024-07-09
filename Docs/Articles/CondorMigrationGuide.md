@@ -224,6 +224,49 @@ if (executionResult.Version == 2) {
 The `Effect` property contains a list of `Transforms` that modify the global state. Note that the `ExecutionEffect`
 which contained also a list of operations in addition to the transforms has been removed in Condor execution results.
 
+## Auction contract
+
+The auction contract also has changed in Condor. If your application tracks validator bids, rewards and delegators,
+you'll need to rework the way network responses are parsed and interpreted. A complete description of the changes cannot
+covered in this guide.
+
+## Server Sent Events
+
+The `ServerEventsClient` class can listen to both an event stream from a `v1.x` node as well as from `v2.x`.
+
+### Blocks
+
+`BlockedAdded` event contains a `Block` object. When needed, the original block structure `BlockV1` or `BlockV2` can be
+obtained with cast operator as described above.
+
+### Transactions
+
+On Condor, the events `DeployAccepted`, `DeployProcessed` and `DeployExpired` are replaced with the
+equivalent `TransactionAccepted`, `TransactionProcessed` and `TransactionExpired`. These new events are emitted for
+both `Deploy` and `TransactionV1` types of transactions.
+
+A `TransactionAccepted` event contains a `Transaction` property with either a `Deploy` or a `TransactionV1`.
+
+`TransactionProcessed` and `TransactionExpired` events contain a `TransactionHash` property with either a deploy hash or
+a transaction version 1 hash.
+
+### Finality signatures
+
+The `FinalitySignature` event contains an instance of the versioned `FinalitySignature` class. Version 2 of this type is
+an extension that contains all properties in version 1 plus the block height and the chain name hash.
+
+The user can obtain the original structure with casting this instance to the correct version:
+
+```csharp
+if (finalitySignature.Version == 2) {
+    var finalitySignatureV2 = (FinalitySignatureV2)finalitySignature;
+    // ...
+} else if (finalitySignature.Version == 1) {
+    var finalitySignatureV1 = (FinalitySignatureV1)finalitySignature;
+    // ...
+}   
+```
+
 ## Other changes
 
 ### Last switch block hash
