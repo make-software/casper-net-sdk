@@ -40,7 +40,7 @@ namespace NetCasperTest
                 new StoredContractByHashDeployItem(hash.ToHexString(),
                     "counter_inc");
             
-            Assert.AreEqual(CEP57Checksum.Encode(hash.RawBytes), storedContract.Hash);
+            Assert.AreEqual(Hex.ToHexString(hash.RawBytes), storedContract.Hash);
             Assert.AreEqual("counter_inc", storedContract.EntryPoint);
             Assert.IsNotNull(storedContract.RuntimeArgs);
             Assert.AreEqual(0, storedContract.RuntimeArgs.Count);
@@ -71,7 +71,7 @@ namespace NetCasperTest
             var storedContract =
                 new StoredVersionedContractByHashDeployItem(hash.ToHexString(), 1, "counter_inc");
             
-            Assert.AreEqual(CEP57Checksum.Encode(hash.RawBytes), storedContract.Hash);
+            Assert.AreEqual(Hex.ToHexString(hash.RawBytes), storedContract.Hash);
             Assert.AreEqual(1, storedContract.Version);
             Assert.AreEqual("counter_inc", storedContract.EntryPoint);
             Assert.IsNotNull(storedContract.RuntimeArgs);

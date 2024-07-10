@@ -91,7 +91,7 @@ namespace Casper.Network.SDK.Types
             }
         }
 
-        public BidAddrKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public BidAddrKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }

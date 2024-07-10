@@ -78,7 +78,6 @@ namespace Casper.Network.SDK.Types
         /// Hash of the contract.
         /// </summary>
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
         public string Hash { get; init; }
 
         /// <summary>
@@ -161,7 +160,6 @@ namespace Casper.Network.SDK.Types
         /// Hash of the contract package.
         /// </summary>
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
         public string Hash { get; init; }
 
         /// <summary>

@@ -98,7 +98,7 @@ namespace Casper.Network.SDK.Types
         public List<ContractVersion> Versions { get; init; }
         
         /// <summary>
-        /// The current state of node reactor.
+        /// The current state of the contract package.
         /// </summary>
         [JsonPropertyName("lock_status")] 
         [JsonConverter(typeof(JsonStringEnumConverter))]

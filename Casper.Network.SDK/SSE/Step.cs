@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.Converters;
 
 namespace Casper.Network.SDK.Types
 {
@@ -16,7 +18,8 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The effect of executing the deploy.
         /// </summary>
-        [JsonPropertyName("execution_effect")]
-        public ExecutionEffect Effect { get; init; }
+        [JsonPropertyName("execution_effects")]
+        [JsonConverter(typeof(GenericListConverter<Transform, Transform.TransformConverter>))]
+        public List<Transform> Effects { get; init; }
     }
 }

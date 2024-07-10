@@ -104,6 +104,10 @@ namespace Casper.Network.SDK.Types
         /// A `Key` under which a hold on a purse balance is stored.
         /// </summary>
         BalanceHold = 0x16,
+        /// <summary>
+        /// A `Key` under which a entrypoint record is written.
+        /// </summary>
+        EntryPoint = 0x17,
     }
     
     /// <summary>
@@ -138,12 +142,12 @@ namespace Casper.Network.SDK.Types
             if (checksumResult == CEP57Checksum.InvalidChecksum)
                 throw new ArgumentException("Global State Key checksum mismatch.");
             
-            Key = keyPrefix + CEP57Checksum.Encode(bytes);
+            Key = keyPrefix + Hex.ToHexString(bytes);
         }
 
         public string ToHexString()
         {
-            return CEP57Checksum.Encode(RawBytes);
+            return Hex.ToHexString(RawBytes);
         }
 
         /// <summary>
@@ -207,6 +211,8 @@ namespace Casper.Network.SDK.Types
                 return new ByteCodeKey(value);
             if (value.StartsWith("message-"))
                 return new MessageKey(value);
+            if (value.StartsWith("entry-point-"))
+                return new EntryPointKey(value);
             throw new ArgumentException($"Key not valid. Unknown key prefix in \"{value}\".");
         }
 
@@ -218,29 +224,30 @@ namespace Casper.Network.SDK.Types
         {
             return bytes[0] switch
             {
-                0x00 => new AccountHashKey("account-hash-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x01 => new HashKey("hash-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x00 => new AccountHashKey("account-hash-" + Hex.ToHexString(bytes.Slice(1))),
+                0x01 => new HashKey("hash-" + Hex.ToHexString(bytes.Slice(1))),
                 0x02 => new URef(bytes.Slice(1)),
-                0x03 => new TransferKey("transfer-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x04 => new DeployInfoKey("deploy-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x03 => new TransferKey("transfer-" + Hex.ToHexString(bytes.Slice(1))),
+                0x04 => new DeployInfoKey("deploy-" + Hex.ToHexString(bytes.Slice(1))),
                 0x05 => new EraInfoKey("era-" + BitConverter.ToInt64(bytes, 1)),
-                0x06 => new BalanceKey("balance-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x07 => new BidKey("bid-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x08 => new WithdrawKey("withdraw-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x09 => new DictionaryKey("dictionary-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x0a => new SystemContractRegistryKey("system-contract-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x0b => new EraSummaryKey("era-summary-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x0c => new UnbondKey("unbond-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x0d => new ChainspecRegistryKey("chainspec-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x0e => new ChecksumRegistryKey("checksum-registry-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x0f => new BidAddrKey("bid-addr-" + CEP57Checksum.Encode(bytes.Slice(1))),
-                0x10 => new PackageKey("package-" + CEP57Checksum.Encode(bytes.Slice(1))),
+                0x06 => new BalanceKey("balance-" + Hex.ToHexString(bytes.Slice(1))),
+                0x07 => new BidKey("bid-" + Hex.ToHexString(bytes.Slice(1))),
+                0x08 => new WithdrawKey("withdraw-" + Hex.ToHexString(bytes.Slice(1))),
+                0x09 => new DictionaryKey("dictionary-" + Hex.ToHexString(bytes.Slice(1))),
+                0x0a => new SystemContractRegistryKey("system-contract-registry-" + Hex.ToHexString(bytes.Slice(1))),
+                0x0b => new EraSummaryKey("era-summary-" + Hex.ToHexString(bytes.Slice(1))),
+                0x0c => new UnbondKey("unbond-" + Hex.ToHexString(bytes.Slice(1))),
+                0x0d => new ChainspecRegistryKey("chainspec-registry-" + Hex.ToHexString(bytes.Slice(1))),
+                0x0e => new ChecksumRegistryKey("checksum-registry-" + Hex.ToHexString(bytes.Slice(1))),
+                0x0f => new BidAddrKey("bid-addr-" + Hex.ToHexString(bytes.Slice(1))),
+                0x10 => new PackageKey("package-" + Hex.ToHexString(bytes.Slice(1))),
                 0x11 => new AddressableEntityKey(bytes.Slice(1)),
                 0x12 => new ByteCodeKey(bytes.Slice(1)),
                 0x13 => new MessageKey(bytes.Slice(1)),
                 0x14 => new NamedKeyKey(bytes.Slice(1)),
                 0x15 => new BlockGlobalAddrKey(bytes.Slice(1)),
                 0x16 => new BalanceHoldKey(bytes.Slice(1)),
+                0x17 => new EntryPointKey(bytes.Slice(1)),
                 _ => throw new ArgumentException($"Unknown key identifier '{bytes[0]}'")
             };
         }
@@ -262,6 +269,22 @@ namespace Casper.Network.SDK.Types
             return Key;
         }
 
+        public override bool Equals(object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || ! this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+
+            return Key.ToLowerInvariant().Equals(((GlobalStateKey) obj).Key.ToLowerInvariant());
+        }
+        
+        public override int GetHashCode()
+        {
+            return Key.ToLowerInvariant().GetHashCode();
+        }
+        
         /// <summary>
         /// Json converter class to serialize/deserialize an object derived from
         /// GlobalStateKey to/from Json
@@ -293,7 +316,8 @@ namespace Casper.Network.SDK.Types
                        typeToConvert == typeof(MessageKey) ||
                        typeToConvert == typeof(NamedKeyKey) ||
                        typeToConvert == typeof(BlockGlobalAddrKey) ||
-                       typeToConvert == typeof(BalanceHoldKey);
+                       typeToConvert == typeof(BalanceHoldKey) ||
+                       typeToConvert == typeof(EntryPointKey);
             }
 
             public override JsonConverter CreateConverter(
@@ -357,8 +381,8 @@ namespace Casper.Network.SDK.Types
             : base(publicKey.GetAccountHash(), KEYPREFIX)
         {
         }
-        
-        public AccountHashKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+
+        public AccountHashKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
         
@@ -398,7 +422,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Hash;
         }
 
-        public HashKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public HashKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -416,7 +440,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Transfer;
         }
         
-        public TransferKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public TransferKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -434,7 +458,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.DeployInfo;
         }
         
-        public DeployInfoKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public DeployInfoKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -499,7 +523,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Balance;
         }
         
-        public BalanceKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public BalanceKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -517,7 +541,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Bid;
         }
         
-        public BidKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public BidKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -535,7 +559,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Withdraw;
         }
         
-        public WithdrawKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public WithdrawKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -553,7 +577,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Dictionary;
         }
 
-        public DictionaryKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public DictionaryKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -577,7 +601,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.SystemContractRegistry;
         }
 
-        public SystemContractRegistryKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public SystemContractRegistryKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -609,7 +633,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.Unbond;
         }
 
-        public UnbondKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public UnbondKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -633,7 +657,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.ChainspecRegistry;
         }
 
-        public ChainspecRegistryKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public ChainspecRegistryKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }
@@ -656,7 +680,7 @@ namespace Casper.Network.SDK.Types
             KeyIdentifier = KeyIdentifier.ChecksumRegistry;
         }
 
-        public ChecksumRegistryKey(byte[] key) : this(KEYPREFIX + CEP57Checksum.Encode(key))
+        public ChecksumRegistryKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
     }

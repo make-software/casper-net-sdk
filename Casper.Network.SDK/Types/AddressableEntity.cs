@@ -5,19 +5,6 @@ using System.Text.Json.Serialization;
 
 namespace Casper.Network.SDK.Types
 {
-    public enum TransactionRuntime
-    {
-        /// <summary>
-        /// The Casper Version 1 Virtual Machine.
-        /// </summary>
-        VmCasperV1,
-
-        /// <summary>
-        /// The Casper Version 2 Virtual Machine.
-        /// </summary>
-        VmCasperV2,
-    }
-    
     public enum SystemEntityType
     {
         /// <summary>
@@ -40,8 +27,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         Auction,
     }
-
-
+    
     [JsonConverter(typeof(EntityKindConverter))]
     public class EntityKind
     {

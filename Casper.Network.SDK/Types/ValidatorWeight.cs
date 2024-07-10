@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Casper.Network.SDK.Types
 {
     /// <summary>
-    /// A validator's weight.
+    /// A validator's public key paired with its weight, i.e. the total number of motes staked by it and its delegators.
     /// </summary>
     public class ValidatorWeight
     {

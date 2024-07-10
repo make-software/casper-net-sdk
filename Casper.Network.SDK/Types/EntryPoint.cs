@@ -105,6 +105,9 @@ namespace Casper.Network.SDK.Types
         Session,
     }
 
+    /// <summary>
+    /// Defines who pays for the execution of the entry point.
+    /// </summary>
     public enum EntryPointPayment
     {
         /// <summary>
@@ -120,7 +123,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         SelfOnward,
     }
-    
+
     /// <summary>
     /// Parameter to a method
     /// </summary>
