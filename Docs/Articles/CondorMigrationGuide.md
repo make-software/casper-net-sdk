@@ -97,7 +97,7 @@ version. That's not the case with Casper .NET SDK v3.
 
 ## Transfers
 
-The response in `GetBlockTransfers()` method contains a list of `Transfer` objects. This is also a versioned object. It contains all the information related to the information.
+The `Transfer` class contained in the response for a `GetBlockTransfers()` call or in a `ExecutionResult` object is also a versioned object. It contains all the information related to the transfer.
 
 If you need to recover the original format, cast an instance to a `TransferV1` or `TransferV2` object:
 
@@ -160,6 +160,11 @@ Condor introduces a new transaction model to support advanced use cases. While `
 Similar to the `DeployTemplates` class, which provides deploy templates for most common use cases, we plan to implement a TransactionV1Templates class for the new transaction model in the next release of this SDK.
 
 Use the new method `PutTransaction` to send a `TransactionV1` to the network. Use the new `GetTransaction` method to retrieve an accepted transaction. Both methods can also be used to send and retrieve a Deploy. For unprocessed transactions, the ExecutionInfo in the response is `null`. Upon processing, this property contains all information about the execution, including cost, payments, errors (if any), and execution effects.
+
+
+### GetDeploy()
+
+Response from the `GetDeploy()` method has changed. Instead of a list of `ExecutionResult` objects, it now returns an instance of `ExecutionInfo` for a processed deploy. This instance contains block information and a results object.
 
 ### Payments and costs
 
