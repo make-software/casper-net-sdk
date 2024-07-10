@@ -95,6 +95,24 @@ The category, version (either a legacy Deploy or the new TransactionV1 type), an
 The type to represent block height is now `ulong` everywhere. `int` was used in some methods or types in the previous
 version. That's not the case with Casper .NET SDK v3.
 
+## Transfers
+
+The response in `GetBlockTransfers()` method contains a list of `Transfer` objects. This is also a versioned object. It contains all the information related to the information.
+
+If you need to recover the original format, cast an instance to a `TransferV1` or `TransferV2` object:
+
+```csharp
+var response = await rpcClient.GetBlockTransfers();
+var result = response.Parse();
+foreach(var transfer in result.Transfers)
+{
+    if (transfer.Version == 1) {
+        var transferv1 = (TransferV1)transfer;
+        // ...
+    }
+}
+```
+
 ## Account/Contract Merge
 
 On Condor, accounts and contracts are stored with the new type AddressableEntity. The EntityKind property in this type permits knowing whether the record is an Account, a stored SmartContract, or a System contract.
