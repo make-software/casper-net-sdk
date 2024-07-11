@@ -82,45 +82,69 @@ namespace Casper.Network.SDK.Types
                 JsonSerializerOptions options)
             {
                 var delegators = new List<Delegator>();
-      
-                if (reader.TokenType != JsonTokenType.StartArray)
-                    throw new JsonException("StartArray token expected to deserialize a list of delegators.");
-                
-                reader.Read();
-                
-                while (reader.TokenType != JsonTokenType.EndArray)
-                {
-                    try
-                    {
-                        using (JsonDocument document = JsonDocument.ParseValue(ref reader))
-                        {
-                            if (document.RootElement.TryGetProperty("delegator_public_key", out var delegatorPublicKey))
-                            {
-                                var pkAndDelegator = JsonSerializer.Deserialize<PublicKeyAndDelegator>(document.RootElement.GetRawText());
-                                delegators.Add(pkAndDelegator.Delegator);
-                            }
-                            else
-                            {
-                                var pkAndDelegator = JsonSerializer.Deserialize<DelegatorV1>(document.RootElement.GetRawText());
-                                delegators.Add(new Delegator()
-                                {
-                                    BondingPurse = pkAndDelegator.BondingPurse,
-                                    StakedAmount = pkAndDelegator.StakedAmount,
-                                    DelegatorPublicKey = pkAndDelegator.DelegatorPublicKey,
-                                    ValidatorPublicKey = pkAndDelegator.ValidatorPublicKey,
-                                });
-                            }
-                        }
 
-                        reader.Read(); // skip end object
-                    }
-                    catch (Exception e)
+                if (reader.TokenType == JsonTokenType.StartArray)
+                {
+                    reader.Read();
+
+                    while (reader.TokenType != JsonTokenType.EndArray)
                     {
-                        throw new JsonException("Cannot parse list of delegators. " + e.Message);
+                        try
+                        {
+                            using (JsonDocument document = JsonDocument.ParseValue(ref reader))
+                            {
+                                if (document.RootElement.TryGetProperty("delegator_public_key",
+                                        out var delegatorPublicKey))
+                                {
+                                    var pkAndDelegator =
+                                        JsonSerializer.Deserialize<PublicKeyAndDelegator>(document.RootElement
+                                            .GetRawText());
+                                    delegators.Add(pkAndDelegator.Delegator);
+                                }
+                                else
+                                {
+                                    var pkAndDelegator =
+                                        JsonSerializer.Deserialize<DelegatorV1>(document.RootElement.GetRawText());
+                                    delegators.Add(new Delegator()
+                                    {
+                                        BondingPurse = pkAndDelegator.BondingPurse,
+                                        StakedAmount = pkAndDelegator.StakedAmount,
+                                        DelegatorPublicKey = pkAndDelegator.DelegatorPublicKey,
+                                        ValidatorPublicKey = pkAndDelegator.ValidatorPublicKey,
+                                    });
+                                }
+                            }
+
+                            reader.Read(); // skip end object
+                        }
+                        catch (Exception e)
+                        {
+                            throw new JsonException("Cannot parse list of delegators. " + e.Message);
+                        }
                     }
+
+                    return delegators;
                 }
 
-                return delegators;
+                if (reader.TokenType == JsonTokenType.StartObject)
+                {
+                    reader.Read(); // skip start object
+
+                    while (reader.TokenType == JsonTokenType.PropertyName)
+                    {
+                        reader.Read(); // skip public key
+                        
+                        var delegator =
+                            JsonSerializer.Deserialize<Delegator>(ref reader, options);
+                        reader.Read();
+                        delegators.Add(delegator);
+                    }
+
+                    return delegators;
+                }
+                
+                throw new JsonException("StartArray or StartObject token expected to deserialize a list of delegators.");
+
             }
 
             public override void Write(

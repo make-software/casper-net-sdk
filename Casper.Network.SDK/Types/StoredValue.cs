@@ -22,7 +22,7 @@ namespace Casper.Network.SDK.Types
 
         public ContractPackage ContractPackage { get; init; }
 
-        public Transfer LegacyTransfer { get; init; }
+        public Transfer Transfer { get; init; }
 
         public DeployInfo DeployInfo { get; init; }
 
@@ -94,13 +94,27 @@ namespace Casper.Network.SDK.Types
                             throw new JsonException("Cannot deserialize StoredValue. PropertyName expected.");
 
                         var propertyName = reader.GetString();
+                        
                         var propertyInfo = typeof(StoredValue).GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                        if (propertyInfo == null)
-                            throw new JsonException($"Unknown property: {propertyName}.");
+                        if (propertyInfo != null)
+                        {
+                            reader.Read();
+                            var propertyValue = JsonSerializer.Deserialize(ref reader, propertyInfo.PropertyType, options);
+                            propertyInfo.SetValue(storedValue, propertyValue);
+                        }
+                        else if(propertyName.Equals("LegacyTransfer", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            reader.Read();
 
-                        reader.Read();
-                        var propertyValue = JsonSerializer.Deserialize(ref reader, propertyInfo.PropertyType, options);
-                        propertyInfo.SetValue(storedValue, propertyValue);
+                            var serializerOptions = new JsonSerializerOptions(options);
+                            serializerOptions.Converters.Add(new Transfer.TransferConverter());
+
+                            var t = JsonSerializer.Deserialize<Transfer>(ref reader, serializerOptions);
+                            propertyInfo = typeof(StoredValue).GetProperty("Transfer", BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                            propertyInfo?.SetValue(storedValue, t);
+                        }
+                        else
+                            throw new JsonException($"Unknown property: {propertyName}.");
                     }
 
                     return storedValue;

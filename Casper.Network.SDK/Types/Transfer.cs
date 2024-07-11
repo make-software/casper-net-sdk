@@ -69,6 +69,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// Represents a version 2 transfer from one purse to another
     /// </summary>
+    [JsonConverter(typeof(TransferConverter))]
     public class Transfer
     {
         protected int _version;
