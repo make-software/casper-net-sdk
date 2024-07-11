@@ -90,6 +90,15 @@ namespace Casper.Network.SDK.Types
         public string ErrorMessage { get; init; }
         
         /// <summary>
+        /// True if the transaction was completed without error.
+        /// </summary>
+        [JsonIgnore] 
+        public bool IsSuccess
+        {
+            get { return ErrorMessage == null; }
+        }
+        
+        /// <summary>
         /// A record of transfers performed while executing this transaction.
         /// </summary>
         [JsonPropertyName("transfers")] 
