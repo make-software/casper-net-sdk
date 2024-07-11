@@ -103,7 +103,8 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(deploy.Hash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            var execInfo = getResponse.Parse().ExecutionInfo;
+            var execResult = (ExecutionResultV1)execInfo.ExecutionResult;
             Assert.IsTrue(execResult.IsSuccess);
         }
 
@@ -167,10 +168,10 @@ namespace NetCasperTest
             await MakeTransfer();
 
             int retries = 0;
-            while(nDeployProcessed == 0 && retries++ < 5)
+            while(nDeployProcessed == 0 && retries++ < 3)
                 Thread.Sleep(5000);
 
-            sse.StopListening().Wait();
+            await sse.StopListening();
 
             Assert.IsTrue(nApiVersion  > 0);
             Assert.IsTrue(nBlocks > 0);

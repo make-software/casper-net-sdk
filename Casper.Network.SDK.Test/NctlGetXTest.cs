@@ -47,7 +47,7 @@ namespace NetCasperTest
             try
             {
                 var block = (await _client.GetBlock()).Parse().Block;
-                var blockHeight = (int) block.Header.Height;
+                var blockHeight = (int) block.Height;
                 var blockHash = block.Hash;
                 var stateRootHash = await _client.GetStateRootHash(blockHash);
 
@@ -75,46 +75,31 @@ namespace NetCasperTest
                 var accountInfo6 = response6.Parse();
                 Assert.AreEqual(accountInfo.Account.AccountHash.ToString(), accountInfo6.Account.AccountHash.ToString());
                 
-                var resp = await _client.GetAccountBalance(_faucetKey.PublicKey, stateRootHash);
+                var resp = await _client.GetBalance(accountInfo.Account.MainPurse.ToString(), stateRootHash);
                 var accountBalance = resp.Parse();
-                Assert.IsTrue(accountBalance.BalanceValue > 0);
-
-                resp = await _client.GetAccountBalance(accountInfo.Account.MainPurse, stateRootHash);
-                var accountBalanceCompare = resp.Parse();
-                Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
                 
-                resp = await _client.GetAccountBalance(accountInfo.Account.MainPurse.ToString(), stateRootHash);
-                accountBalanceCompare = resp.Parse();
-                Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
-                
-                resp = await _client.GetAccountBalance(new AccountHashKey(_faucetKey.PublicKey), stateRootHash);
-                accountBalanceCompare = resp.Parse();
-                Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
-                
-                
-                resp = await _client.GetAccountBalance(_faucetKey.PublicKey, blockHeight);
-                accountBalanceCompare = resp.Parse();
+                var respq = await _client.QueryBalance(_faucetKey.PublicKey, (ulong)blockHeight);
+                var accountBalanceCompare = respq.Parse();
                 Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
 
-                resp = await _client.GetAccountBalance(accountInfo.Account.MainPurse, blockHeight);
-                accountBalanceCompare = resp.Parse();
+                respq = await _client.QueryBalance(accountInfo.Account.MainPurse, (ulong)blockHeight);
+                accountBalanceCompare = respq.Parse();
                 Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
                 
-                resp = await _client.GetAccountBalance(new AccountHashKey(_faucetKey.PublicKey), blockHeight);
-                accountBalanceCompare = resp.Parse();
+                respq = await _client.QueryBalance(new AccountHashKey(_faucetKey.PublicKey), (ulong)blockHeight);
+                accountBalanceCompare = respq.Parse();
+                Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
+                
+                respq = await _client.QueryBalance(_faucetKey.PublicKey, blockHash);
+                accountBalanceCompare = respq.Parse();
                 Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
 
-                
-                resp = await _client.GetAccountBalanceWithBlockHash(_faucetKey.PublicKey, blockHash);
-                accountBalanceCompare = resp.Parse();
-                Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
-
-                resp = await _client.GetAccountBalanceWithBlockHash(accountInfo.Account.MainPurse, blockHash);
-                accountBalanceCompare = resp.Parse();
+                respq = await _client.QueryBalance(accountInfo.Account.MainPurse, blockHash);
+                accountBalanceCompare = respq.Parse();
                 Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
                 
-                resp = await _client.GetAccountBalanceWithBlockHash(new AccountHashKey(_faucetKey.PublicKey), blockHash);
-                accountBalanceCompare = resp.Parse();
+                respq = await _client.QueryBalance(new AccountHashKey(_faucetKey.PublicKey), blockHash);
+                accountBalanceCompare = respq.Parse();
                 Assert.AreEqual(accountBalance.BalanceValue, accountBalanceCompare.BalanceValue);
             }
             catch (RpcClientException e)
@@ -139,7 +124,7 @@ namespace NetCasperTest
             {
                 var key1 = KeyPair.CreateNew(KeyAlgo.ED25519);
 
-                await _client.GetAccountBalance(key1.PublicKey);
+                await _client.QueryBalance(key1.PublicKey);
                 Assert.Fail("Exception expected");
             }
             catch (RpcClientException e)
@@ -162,13 +147,13 @@ namespace NetCasperTest
                 var result2 = response2.Parse();
                 Assert.IsNotNull(result2.Block.Hash);
                 
-                Assert.AreEqual(result2.Block.Body.Proposer.IsSystem, result2.Block.Body.Proposer.isSystem);
+                Assert.AreEqual(result2.Block.Proposer.IsSystem, result2.Block.Proposer.isSystem);
                 
                 var response3 = await _client.GetBlock(result2.Block.Hash);
                 var result3 = response3.Parse();
                 Assert.AreEqual(result2.Block.Hash, result3.Block.Hash);
 
-                var response4 = await _client.GetBlock((int)result2.Block.Header.Height);
+                var response4 = await _client.GetBlock((int)result2.Block.Height);
                 var result4 = response4.Parse();
                 Assert.AreEqual(result2.Block.Hash, result4.Block.Hash);
 
@@ -176,14 +161,14 @@ namespace NetCasperTest
                 var result5 = response5.Parse();
                 Assert.AreEqual(0, result5.Transfers.Count);
                 
-                var response6 = await _client.GetBlockTransfers((int)result2.Block.Header.Height);
+                var response6 = await _client.GetBlockTransfers((int)result2.Block.Height);
                 var result6 = response6.Parse();
                 Assert.AreEqual(0, result6.Transfers.Count);
                 
                 var hash1 = await _client.GetStateRootHash(result2.Block.Hash);
                 Assert.AreEqual(32*2, hash1.Length);
 
-                var hash2 = await _client.GetStateRootHash((int)result2.Block.Header.Height);
+                var hash2 = await _client.GetStateRootHash((int)result2.Block.Height);
                 Assert.AreEqual(hash1, hash2);
                 
                 var hash3 = await _client.GetStateRootHash();
@@ -216,8 +201,8 @@ namespace NetCasperTest
                 var response = await _client.GetBlock(0);
                 var result = response.Parse();
                 Assert.IsNotNull(result.Block.Hash);
-                Assert.IsTrue(result.Block.Body.Proposer.IsSystem);
-                Assert.AreEqual(result.Block.Body.Proposer.IsSystem, result.Block.Body.Proposer.isSystem);
+                Assert.IsTrue(result.Block.Proposer.IsSystem);
+                Assert.AreEqual(result.Block.Proposer.IsSystem, result.Block.Proposer.isSystem);
             }
             catch (RpcClientException e)
             {
@@ -276,7 +261,7 @@ namespace NetCasperTest
                 var result3 = response3.Parse();
                 Assert.IsNotNull(result3.Block.Hash);
                 
-                var response4 = await _client.GetEraSummary((int)result3.Block.Header.Height);
+                var response4 = await _client.GetEraSummary((int)result3.Block.Height);
                 var result4 = response4.Parse();
                 Assert.IsTrue(result4.EraSummary.EraId > 0);
                 Assert.IsNotNull(result4.EraSummary.StoredValue.EraInfo);

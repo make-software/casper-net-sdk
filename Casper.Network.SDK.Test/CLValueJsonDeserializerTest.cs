@@ -191,7 +191,7 @@ namespace NetCasperTest
             var doc = System.Text.Json.JsonDocument.Parse(json);
             Assert.AreEqual(3, doc.RootElement.EnumerateObject().Count());
             Assert.AreEqual("U512", doc.RootElement.GetProperty("cl_type").GetString());
-            Assert.AreEqual("05005550B405", doc.RootElement.GetProperty("bytes").GetString());
+            Assert.AreEqual("05005550b405", doc.RootElement.GetProperty("bytes").GetString().ToLower());
             Assert.AreEqual("24500000000", doc.RootElement.GetProperty("parsed").GetString());
 
             clValue = CLValue.U512(15000000000);
@@ -541,7 +541,7 @@ namespace NetCasperTest
             Assert.IsNotEmpty(json);
             Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
             Assert.IsTrue(json.Contains(@"""bytes"":""08b192"));
-            Assert.IsTrue(json.Contains(@"""parsed"":{""Withdraw"":""withdraw-B192"));
+            Assert.IsTrue(json.Contains(@"""parsed"":{""Withdraw"":""withdraw-b192"));
 
             gsKey = GlobalStateKey.FromString(
                 "uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007");
@@ -550,9 +550,9 @@ namespace NetCasperTest
             Assert.IsNotEmpty(json);
             Assert.IsTrue(json.Contains(@"""cl_type"":""Key"""));
             Assert.IsTrue(
-                json.Contains(@"""bytes"":""02e48935c79E96C490c01e1E8800dE5Ec5F4A857A57dB0DcFfED1e1E2b5d29b5E407"));
+                json.Contains(@"""bytes"":""02e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e407"));
             Assert.IsTrue(json.Contains(
-                @"""parsed"":{""URef"":""uref-E48935C79E96c490c01e1E8800de5Ec5F4A857A57db0dcffEd1E1E2B5D29b5E4-007"));
+                @"""parsed"":{""URef"":""uref-e48935c79e96c490c01e1e8800de5ec5f4a857a57db0dcffed1e1e2b5d29b5e4-007"));
 
             gsKey = GlobalStateKey.FromString("era-2685");
             clValue = CLValue.Key(gsKey);
