@@ -20,7 +20,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Returns the state root hash at a given Block
         /// </summary>
         /// <param name="height">Block height for which the state root is queried.</param>
-        public GetStateRootHash(int height) : base("chain_get_state_root_hash", height)
+        public GetStateRootHash(ulong height) : base("chain_get_state_root_hash", height)
         {
         }
     }
@@ -59,7 +59,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Returns the bids and validators at a given block.
         /// </summary>
         /// <param name="height">Block height for which the auction info is queried.</param>
-        public GetAuctionInfo(int height) : base("state_get_auction_info", height)
+        public GetAuctionInfo(ulong height) : base("state_get_auction_info", height)
         {
         }
     }
@@ -81,7 +81,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
-        public GetAccountInfo(PublicKey publicKey, int height) : base("state_get_account_info", height)
+        public GetAccountInfo(PublicKey publicKey, ulong height) : base("state_get_account_info", height)
         {
             this.Parameters.Add("account_identifier", publicKey);
         }
@@ -101,7 +101,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="accountHash">The account hash of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
-        public GetAccountInfo(AccountHashKey accountHash, int height) : base("state_get_account_info", height)
+        public GetAccountInfo(AccountHashKey accountHash, ulong height) : base("state_get_account_info", height)
         {
             // this.Parameters.Add("account_identifier", Hex.ToHexString(accountHash.GetBytes()));
             this.Parameters.Add("account_identifier", accountHash.ToString());
@@ -124,7 +124,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
         [Obsolete("For Casper node v1.5.5 or newer use the new method signature with PublicKey or AccountHashKey", false)]
-        public GetAccountInfo(string publicKey, int height) : base("state_get_account_info", height)
+        public GetAccountInfo(string publicKey, ulong height) : base("state_get_account_info", height)
         {
             this.Parameters.Add("public_key", publicKey);
         }
@@ -358,7 +358,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves a Block from the network by its height number.
         /// </summary>
         /// <param name="height">Height of the block to retrieve.</param>
-        public GetBlock(int height) : base("chain_get_block", height)
+        public GetBlock(ulong height) : base("chain_get_block", height)
         {
         }
     }
@@ -377,7 +377,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves all transfers for a Block from the network
         /// </summary>
         /// <param name="height">Height of the block to retrieve the transfers from.</param>
-        public GetBlockTransfers(int height) : base("chain_get_block_transfers", height)
+        public GetBlockTransfers(ulong height) : base("chain_get_block_transfers", height)
         {
         }
     }
@@ -396,7 +396,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves an EraInfo from the network given a switch block.
         /// </summary>
         /// <param name="height">Block height of a switch block.</param>
-        public GetEraInfoBySwitchBlock(int height) : base("chain_get_era_info_by_switch_block", height)
+        public GetEraInfoBySwitchBlock(ulong height) : base("chain_get_era_info_by_switch_block", height)
         {
         }
     }
@@ -415,7 +415,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves current era info from the network given a block height 
         /// </summary>
         /// <param name="height">Block height.</param>
-        public GetEraSummary(int height) : base("chain_get_era_summary", height)
+        public GetEraSummary(ulong height) : base("chain_get_era_summary", height)
         {
         }
     }

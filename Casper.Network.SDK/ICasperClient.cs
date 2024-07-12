@@ -10,7 +10,7 @@ namespace Casper.Network.SDK
     {
         Task<string> GetStateRootHash(string blockHash = null);
 
-        Task<string> GetStateRootHash(int blockHeight);
+        Task<string> GetStateRootHash(ulong blockHeight);
 
         Task<RpcResponse<GetNodeStatusResult>> GetNodeStatus();
 
@@ -18,19 +18,19 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(string blockHash = null);
 
-        Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(int blockHeight);
+        Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(ulong blockHeight);
 
         Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(PublicKey publicKey, string blockHash = null);
 
         Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, string blockHash = null);
 
-        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(PublicKey publicKey, int blockHeight);
+        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(PublicKey publicKey, ulong blockHeight);
 
-        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, int blockHeight);
+        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, ulong blockHeight);
 
         Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, string blockHash = null);
 
-        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, int blockHeight);
+        Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, ulong blockHeight);
 
         Task<RpcResponse<GetEntityResult>> GetEntity(IEntityIdentifier entityIdentifier, string blockHash = null);
 
@@ -40,6 +40,8 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, ulong blockHeight);
 
+        Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, ulong height,
+            string path = null);
         Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
             string path = null);
         
@@ -77,23 +79,37 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<GetDeployResult>> GetDeploy(string deployHash,
             CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<RpcResponse<GetDeployResult>> GetDeploy(string deployHash,
+            bool finalizedApprovals,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<RpcResponse<PutTransactionResult>> PutTransaction(TransactionV1 transaction);
         
         Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
+            bool finalizedApprovals = false,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(string version1Hash,
             bool finalizedApprovals = false,
             CancellationToken cancellationToken = default(CancellationToken));
         
         Task<RpcResponse<GetBlockResult>> GetBlock(string blockHash = null);
 
-        Task<RpcResponse<GetBlockResult>> GetBlock(int blockHeight);
+        Task<RpcResponse<GetBlockResult>> GetBlock(ulong blockHeight);
 
         Task<RpcResponse<GetBlockTransfersResult>> GetBlockTransfers(string blockHash = null);
         
-        Task<RpcResponse<GetBlockTransfersResult>> GetBlockTransfers(int blockHeight);
+        Task<RpcResponse<GetBlockTransfersResult>> GetBlockTransfers(ulong blockHeight);
 
         Task<RpcResponse<GetEraInfoBySwitchBlockResult>> GetEraInfoBySwitchBlock(string blockHash = null);
 
-        Task<RpcResponse<GetEraInfoBySwitchBlockResult>> GetEraInfoBySwitchBlock(int blockHeight);
+        Task<RpcResponse<GetEraInfoBySwitchBlockResult>> GetEraInfoBySwitchBlock(ulong blockHeight);
 
+        Task<RpcResponse<GetEraSummaryResult>> GetEraSummary(string blockHash = null);
+
+        Task<RpcResponse<GetEraSummaryResult>> GetEraSummary(ulong blockHeight);
+        
         Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItem(string dictionaryItem, string stateRootHash = null);
 
         Task<RpcResponse<GetDictionaryItemResult>> GetDictionaryItemByAccount(string accountKey, string dictionaryName,
@@ -108,5 +124,11 @@ namespace Casper.Network.SDK
         Task<RpcResponse<GetValidatorChangesResult>> GetValidatorChanges();
 
         Task<string> GetRpcSchema();
+
+        Task<RpcResponse<GetChainspecResult>> GetChainspec();
+
+        Task<RpcResponse<SpeculativeExecutionResult>> SpeceulativeExecution(Deploy deploy, string stateRootHash = null);
+
+        Task<RpcResponse<PutDeployResult>> SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null);
     }
 }

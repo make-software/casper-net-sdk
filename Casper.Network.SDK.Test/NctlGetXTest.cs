@@ -47,7 +47,7 @@ namespace NetCasperTest
             try
             {
                 var block = (await _client.GetBlock()).Parse().Block;
-                var blockHeight = (int) block.Height;
+                var blockHeight = block.Height;
                 var blockHash = block.Hash;
                 var stateRootHash = await _client.GetStateRootHash(blockHash);
 
@@ -147,13 +147,13 @@ namespace NetCasperTest
                 var result2 = response2.Parse();
                 Assert.IsNotNull(result2.Block.Hash);
                 
-                Assert.AreEqual(result2.Block.Proposer.IsSystem, result2.Block.Proposer.isSystem);
+                Assert.AreEqual(result2.Block.Proposer.IsSystem, result2.Block.Proposer.IsSystem);
                 
                 var response3 = await _client.GetBlock(result2.Block.Hash);
                 var result3 = response3.Parse();
                 Assert.AreEqual(result2.Block.Hash, result3.Block.Hash);
 
-                var response4 = await _client.GetBlock((int)result2.Block.Height);
+                var response4 = await _client.GetBlock(result2.Block.Height);
                 var result4 = response4.Parse();
                 Assert.AreEqual(result2.Block.Hash, result4.Block.Hash);
 
@@ -161,14 +161,14 @@ namespace NetCasperTest
                 var result5 = response5.Parse();
                 Assert.AreEqual(0, result5.Transfers.Count);
                 
-                var response6 = await _client.GetBlockTransfers((int)result2.Block.Height);
+                var response6 = await _client.GetBlockTransfers(result2.Block.Height);
                 var result6 = response6.Parse();
                 Assert.AreEqual(0, result6.Transfers.Count);
                 
                 var hash1 = await _client.GetStateRootHash(result2.Block.Hash);
                 Assert.AreEqual(32*2, hash1.Length);
 
-                var hash2 = await _client.GetStateRootHash((int)result2.Block.Height);
+                var hash2 = await _client.GetStateRootHash(result2.Block.Height);
                 Assert.AreEqual(hash1, hash2);
                 
                 var hash3 = await _client.GetStateRootHash();
@@ -202,7 +202,7 @@ namespace NetCasperTest
                 var result = response.Parse();
                 Assert.IsNotNull(result.Block.Hash);
                 Assert.IsTrue(result.Block.Proposer.IsSystem);
-                Assert.AreEqual(result.Block.Proposer.IsSystem, result.Block.Proposer.isSystem);
+                Assert.AreEqual(result.Block.Proposer.IsSystem, result.Block.Proposer.IsSystem);
             }
             catch (RpcClientException e)
             {
@@ -261,7 +261,7 @@ namespace NetCasperTest
                 var result3 = response3.Parse();
                 Assert.IsNotNull(result3.Block.Hash);
                 
-                var response4 = await _client.GetEraSummary((int)result3.Block.Height);
+                var response4 = await _client.GetEraSummary(result3.Block.Height);
                 var result4 = response4.Parse();
                 Assert.IsTrue(result4.EraSummary.EraId > 0);
                 Assert.IsNotNull(result4.EraSummary.StoredValue.EraInfo);
