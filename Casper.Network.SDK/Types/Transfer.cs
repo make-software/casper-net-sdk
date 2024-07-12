@@ -190,7 +190,7 @@ namespace Casper.Network.SDK.Types
 
                         if (root.TryGetProperty("Version2", out JsonElement v2Element))
                         {
-                            var transfer = JsonSerializer.Deserialize<Transfer>(v2Element.GetRawText());
+                            var transfer = JsonSerializer.Deserialize<TransferV2>(v2Element.GetRawText());
                             return transfer;
                         }
 
@@ -229,5 +229,10 @@ namespace Casper.Network.SDK.Types
                 }
             }
         }
+    }
+
+    internal class TransferV2 : Transfer
+    {
+        
     }
 }
