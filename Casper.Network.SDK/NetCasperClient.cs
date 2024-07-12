@@ -61,7 +61,7 @@ namespace Casper.Network.SDK
         /// </summary>
         /// <param name="blockHeight">Block height for which the state root is queried.</param>
         /// <returns></returns>
-        public async Task<string> GetStateRootHash(int blockHeight)
+        public async Task<string> GetStateRootHash(ulong blockHeight)
         {
             var method = new GetStateRootHash(blockHeight);
             var rpcResponse = await SendRpcRequestAsync<GetStateRootHashResult>(method);
@@ -101,7 +101,7 @@ namespace Casper.Network.SDK
         /// Request the bids and validators at a given block. 
         /// </summary>
         /// <param name="blockHeight">Block height for which the auction info is queried.</param>
-        public async Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(int blockHeight)
+        public async Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(ulong blockHeight)
         {
             var method = new GetAuctionInfo(blockHeight);
             return await SendRpcRequestAsync<GetAuctionInfoResult>(method);
@@ -149,7 +149,7 @@ namespace Casper.Network.SDK
         /// </summary>
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="blockHeight">A block height for which the information of the account is queried.</param>
-        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(PublicKey publicKey, int blockHeight)
+        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(PublicKey publicKey, ulong blockHeight)
         {
             var method = new GetAccountInfo(publicKey, blockHeight);
             return await SendRpcRequestAsync<GetAccountInfoResult>(method);
@@ -160,7 +160,7 @@ namespace Casper.Network.SDK
         /// </summary>
         /// <param name="accountHash">The account hash of the account.</param>
         /// <param name="blockHeight">A block height for which the information of the account is queried.</param>
-        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, int blockHeight)
+        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(AccountHashKey accountHash, ulong blockHeight)
         {
             var method = new GetAccountInfo(accountHash, blockHeight);
             return await SendRpcRequestAsync<GetAccountInfoResult>(method);
@@ -172,7 +172,7 @@ namespace Casper.Network.SDK
         /// <param name="publicKey">The public key of the account formatted as an hex-string.</param>
         /// <param name="blockHeight">A block height for which the information of the account is queried.</param>
         [Obsolete("For Casper node v1.5.5 or newer use the new method signature with PublicKey or AccountHashKey, ", false)]
-        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, int blockHeight)
+        public async Task<RpcResponse<GetAccountInfoResult>> GetAccountInfo(string publicKey, ulong blockHeight)
         {
             var method = new GetAccountInfo(publicKey, blockHeight);
             return await SendRpcRequestAsync<GetAccountInfoResult>(method);
@@ -537,7 +537,7 @@ namespace Casper.Network.SDK
         /// Request a Block from the network by its height number.
         /// </summary>
         /// <param name="blockHeight">Height of the block to retrieve.</param>
-        public async Task<RpcResponse<GetBlockResult>> GetBlock(int blockHeight)
+        public async Task<RpcResponse<GetBlockResult>> GetBlock(ulong blockHeight)
         {
             var method = new GetBlock(blockHeight);
             return await SendRpcRequestAsync<GetBlockResult>(method);
@@ -557,7 +557,7 @@ namespace Casper.Network.SDK
         /// Request all transfers for a Block by its height number.
         /// </summary>
         /// <param name="blockHeight">Height of the block to retrieve the transfers from.</param>
-        public async Task<RpcResponse<GetBlockTransfersResult>> GetBlockTransfers(int blockHeight)
+        public async Task<RpcResponse<GetBlockTransfersResult>> GetBlockTransfers(ulong blockHeight)
         {
             var method = new GetBlockTransfers(blockHeight);
             return await SendRpcRequestAsync<GetBlockTransfersResult>(method);
@@ -579,7 +579,7 @@ namespace Casper.Network.SDK
         /// For a non-switch block this method returns an empty response.
         /// </summary>
         /// <param name="blockHeight">Block height of a switch block.</param>
-        public async Task<RpcResponse<GetEraInfoBySwitchBlockResult>> GetEraInfoBySwitchBlock(int blockHeight)
+        public async Task<RpcResponse<GetEraInfoBySwitchBlockResult>> GetEraInfoBySwitchBlock(ulong blockHeight)
         {
             var method = new GetEraInfoBySwitchBlock(blockHeight);
             return await SendRpcRequestAsync<GetEraInfoBySwitchBlockResult>(method);
@@ -599,7 +599,7 @@ namespace Casper.Network.SDK
         /// Request current Era Info from the network given a block hash
         /// </summary>
         /// <param name="blockHeight">Block height.</param>
-        public async Task<RpcResponse<GetEraSummaryResult>> GetEraSummary(int blockHeight)
+        public async Task<RpcResponse<GetEraSummaryResult>> GetEraSummary(ulong blockHeight)
         {
             var method = new GetEraSummary(blockHeight);
             return await SendRpcRequestAsync<GetEraSummaryResult>(method);
