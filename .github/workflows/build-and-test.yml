@@ -14,8 +14,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: net7.0
-            framework: net7.0
+          - name: net8.0
+            framework: net8.0
           - name: netstandard2.0
             framework: netstandard2.0         
     steps:
@@ -23,7 +23,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
