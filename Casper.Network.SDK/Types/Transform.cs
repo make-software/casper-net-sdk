@@ -128,6 +128,8 @@ namespace Casper.Network.SDK.Types
 
             return new Transform
             {
+                _version = 1,
+                _transformV1 = transform,
                 Key = transform.Key,
                 TransformKind = kind,
                 Value = transform.Value,

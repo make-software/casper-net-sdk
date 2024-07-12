@@ -12,7 +12,7 @@ namespace NetCasperTest
         private string deploy1 = TestContext.CurrentContext.TestDirectory + "/TestData/transfer-deploy.json";
         private string signer1 = "017b8058863Aad49c7b89c77019ceF3a4D863BDf1c0c61499776F94b18465810F7";
         private string signature1 =
-            "012a0c5896aB9D6Cf029268Cf454Ba9D42bcD40Bd909C984890F326739EeF13201d1d2a9a95938B2a966F2E650D1bDd80931F0374e3A92403e025B806Aa1065109";
+            "012a0c5896ab9d6cf029268cf454ba9d42bcd40bd909c984890f326739eef13201d1d2a9a95938b2a966f2e650d1bdd80931f0374e3a92403e025b806aa1065109";
         
         [Test]
         public void LoadDeployFromFileTest()
