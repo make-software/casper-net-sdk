@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <LangVersion>9.0</LangVersion>
         <IsPackable>false</IsPackable>
         <RootNamespace>NetCasperTest</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
-        <PackageReference Include="NUnit" Version="3.13.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+        <PackageReference Include="NUnit" Version="3.14.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
         <PackageReference Include="coverlet.collector" Version="3.2.0" />
     </ItemGroup>
@@ -18,11 +18,11 @@
     <PropertyGroup>
         <CustomTargetFramework Condition="'$(TEST_FRAMEWORK)' != ''">$(TEST_FRAMEWORK)</CustomTargetFramework>
         <!-- Fallback to a default framework if the environment variable is not set -->
-        <CustomTargetFramework Condition="'$(CustomTargetFramework)' == ''">net7.0</CustomTargetFramework>
+        <CustomTargetFramework Condition="'$(CustomTargetFramework)' == ''">net8.0</CustomTargetFramework>
     </PropertyGroup>
     
-    <ItemGroup Condition="'$(CustomTargetFramework)' == 'net7.0'">
-        <ProjectReference Include="..\Casper.Network.SDK\Casper.Network.SDK.csproj" Properties="TargetFramework=net7.0" />
+    <ItemGroup Condition="'$(CustomTargetFramework)' == 'net8.0'">
+        <ProjectReference Include="..\Casper.Network.SDK\Casper.Network.SDK.csproj" Properties="TargetFramework=net8.0" />
     </ItemGroup>
     <ItemGroup Condition="'$(CustomTargetFramework)' == 'netstandard2.0'">
         <ProjectReference Include="..\Casper.Network.SDK\Casper.Network.SDK.csproj" Properties="TargetFramework=netstandard2.0" />
