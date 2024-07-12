@@ -6,7 +6,7 @@ This guide outlines the changes necessary for your application. However, it's wo
 
 ## Blocks
 
-With Condor, produced blocks are stored in a new format that extends the information contained compared to old blocks. Blocks produced before the upgrade keep their original format. Thus, the SDK implements `BlockV1` and `BlocV2` classes to handle old and new block formats, respectively.
+With Condor, produced blocks are stored in a new format that extends the information contained compared to old blocks. Blocks produced before the upgrade keep their original format. Thus, the SDK implements `BlockV1` and `BlockV2` classes to handle old and new block formats, respectively.
 
 To facilitate handling different versions, the SDK also implements the type `Block`, which can represent either a V1 or V2 type in the network. This is the type obtained by default in the RPC queries and the SSE channel and contains all the data you may want to query:
 
@@ -34,7 +34,7 @@ public class Block
 
 Note that `Block` does not have a header or body parts.
 
-Also, some properties may have a `null` value if they’re not part of the versioned block. For example, `LastSwitchBlockHas` is present only for V2 blocks and `null` for V1 blocks.
+Also, some properties may have a `null` value if they’re not part of the versioned block. For example, `LastSwitchBlockHash` is present only for V2 blocks and `null` for V1 blocks.
 
 ### Recovering the versioned block object
 
