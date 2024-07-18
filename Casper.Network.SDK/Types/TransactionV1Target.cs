@@ -2,7 +2,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
-using Org.BouncyCastle.Tls.Crypto.Impl.BC;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
@@ -27,7 +26,7 @@ namespace Casper.Network.SDK.Types
 
     public class ByPackageHashInvocationTarget : IInvocationTarget
     {
-        [JsonPropertyName("addr")] public string Addr { get; init; }
+        [JsonPropertyName("addr")] public string Hash { get; init; }
 
         [JsonPropertyName("version")] public UInt32? Version { get; init; }
     }
@@ -134,69 +133,89 @@ namespace Casper.Network.SDK.Types
         VmCasperV2,
     }
 
-    public class TransactionTarget
+    public interface ITransactionV1Target
     {
-        public TransactionTargetType Type { get; init; }
+    }
 
-        [JsonPropertyName("id")] public IInvocationTarget Id { get; init; }
+    public class NativeTransactionV1Target : ITransactionV1Target
+    {
+    }
+
+    public class StoredTransactionV1Target : ITransactionV1Target
+    {
+        [JsonPropertyName("id")] 
+        public IInvocationTarget Id { get; init; }
 
         /// <summary>
-        /// wasm Bytes
+        /// Targeted Casper VM version.
+        /// </summary>
+        [JsonPropertyName("runtime")]
+        public TransactionRuntime Runtime { get; set; }
+    }
+
+    public class SessionTransactionV1Target : ITransactionV1Target
+    {
+        /// <summary>
+        /// Wasm bytes for a Session transaction type.
         /// </summary>
         [JsonPropertyName("module_bytes")]
         [JsonConverter(typeof(HexBytesConverter))]
         public byte[] ModuleBytes { get; init; }
-
-        [JsonPropertyName("runtime")] public TransactionRuntime Runtime { get; set; }
-
-        public static TransactionTarget StoredByHash(string hash)
+        
+        /// <summary>
+        /// Targeted Casper VM version.
+        /// </summary>
+        [JsonPropertyName("runtime")]
+        public TransactionRuntime Runtime { get; set; }
+    }
+    
+    public class TransactionV1Target
+    {
+        public static ITransactionV1Target Native => new NativeTransactionV1Target();
+        
+        public static ITransactionV1Target StoredByHash(string contractHash)
         {
-            return new TransactionTarget()
+            return new StoredTransactionV1Target()
             {
-                Type = TransactionTargetType.Stored,
-                Id = new ByHashInvocationTarget { Hash = hash }
+                Id = new ByHashInvocationTarget { Hash = contractHash }
             };
         }
 
-        public static TransactionTarget StoredByName(string name)
+        public static ITransactionV1Target StoredByName(string name)
         {
-            return new TransactionTarget()
+            return new StoredTransactionV1Target()
             {
-                Type = TransactionTargetType.Stored,
                 Id = new ByNameInvocationTarget { Name = name }
             };
         }
 
-        public static TransactionTarget StoredByPackageHash(string hash, UInt32? version = null)
+        public static ITransactionV1Target StoredByPackageHash(string packageHash, UInt32? version = null)
         {
-            return new TransactionTarget()
+            return new StoredTransactionV1Target()
             {
-                Type = TransactionTargetType.Stored,
-                Id = new ByPackageHashInvocationTarget { Addr = hash, Version = version }
+                Id = new ByPackageHashInvocationTarget { Hash = packageHash, Version = version }
             };
         }
 
-        public static TransactionTarget StoredByPackageName(string name, UInt32? version = null)
+        public static ITransactionV1Target StoredByPackageName(string name, UInt32? version = null)
         {
-            return new TransactionTarget()
+            return new StoredTransactionV1Target()
             {
-                Type = TransactionTargetType.Stored,
                 Id = new ByPackageNameInvocationTarget() { Name = name, Version = version }
             };
         }
 
-        public static TransactionTarget Session(byte[] moduleBytes)
+        public static ITransactionV1Target Session(byte[] moduleBytes)
         {
-            return new TransactionTarget()
+            return new SessionTransactionV1Target()
             {
-                Type = TransactionTargetType.Session,
                 ModuleBytes = moduleBytes,
             };
         }
 
-        public class TransactionTargetConverter : JsonConverter<TransactionTarget>
+        public class TransactionTargetConverter : JsonConverter<ITransactionV1Target>
         {
-            public override TransactionTarget Read(
+            public override ITransactionV1Target Read(
                 ref Utf8JsonReader reader,
                 Type typeToConvert,
                 JsonSerializerOptions options)
@@ -205,25 +224,21 @@ namespace Casper.Network.SDK.Types
                 {
                     var targetType = reader.GetString();
 
-                    var type = EnumCompat.Parse<TransactionTargetType>(targetType);
                     switch (targetType)
                     {
                         case "Native":
-                            return new TransactionTarget
-                            {
-                                Type = TransactionTargetType.Native,
-                            };
+                            return new NativeTransactionV1Target();
                         default:
                             throw new JsonException($"TransactionTargetType '{targetType}' not supported.");
                     }
                 }
-                else if (reader.TokenType == JsonTokenType.StartObject)
+                if (reader.TokenType == JsonTokenType.StartObject)
                 {
-                    TransactionTarget transactionTarget = null;
+                    ITransactionV1Target transactionTarget = null;
                     IInvocationTarget id = null;
                     string module_bytes = null;
-                    string runtime = null;
-      
+                    TransactionRuntime runtime = TransactionRuntime.VmCasperV1;
+
                     reader.Read(); // skip start object
                     var targetType = reader.GetString();
                     reader.Read();
@@ -243,7 +258,7 @@ namespace Casper.Network.SDK.Types
                                         reader.Read();
                                         break;
                                     case "runtime":
-                                        runtime = reader.GetString();
+                                        runtime = EnumCompat.Parse<TransactionRuntime>(reader.GetString());
                                         reader.Read(); // skip end object
                                         break;
                                 }
@@ -251,13 +266,11 @@ namespace Casper.Network.SDK.Types
 
                             reader.Read(); // skip end object
 
-                            transactionTarget = new TransactionTarget()
+                            transactionTarget = new StoredTransactionV1Target()
                             {
-                                Type = EnumCompat.Parse<TransactionTargetType>(targetType), 
                                 Id = id,
+                                Runtime = runtime,
                             };
-                            if (runtime != null)
-                                transactionTarget.Runtime = EnumCompat.Parse<TransactionRuntime>(runtime);
                             break;
                         case "Session":
                             reader.Read();
@@ -271,18 +284,17 @@ namespace Casper.Network.SDK.Types
                                         module_bytes = reader.GetString();
                                         break;
                                     case "runtime":
-                                        runtime = reader.GetString();
+                                        runtime = EnumCompat.Parse<TransactionRuntime>(reader.GetString());
                                         break;
                                 }
                             }
 
                             reader.Read(); // skip end object
-                            
-                            transactionTarget = new TransactionTarget()
+
+                            transactionTarget = new SessionTransactionV1Target()
                             {
-                                Type = EnumCompat.Parse<TransactionTargetType>(targetType), 
                                 ModuleBytes = Hex.Decode(module_bytes),
-                                Runtime = EnumCompat.Parse<TransactionRuntime>(runtime),
+                                Runtime = runtime,
                             };
                             break;
                         default:
@@ -297,28 +309,28 @@ namespace Casper.Network.SDK.Types
 
             public override void Write(
                 Utf8JsonWriter writer,
-                TransactionTarget value,
+                ITransactionV1Target value,
                 JsonSerializerOptions options)
             {
-                switch (value.Type)
+                switch (value)
                 {
-                    case TransactionTargetType.Native:
+                    case NativeTransactionV1Target:
                         writer.WriteStringValue("Native");
                         break;
-                    case TransactionTargetType.Stored:
+                    case StoredTransactionV1Target storedTarget:
                         writer.WriteStartObject();
                         writer.WriteStartObject("Stored");
                         writer.WritePropertyName("id");
-                        JsonSerializer.Serialize(writer, value.Id);
-                        writer.WriteString("runtime", value.Runtime.ToString());
+                        JsonSerializer.Serialize(writer, storedTarget.Id);
+                        writer.WriteString("runtime", storedTarget.Runtime.ToString());
                         writer.WriteEndObject();
                         writer.WriteEndObject();
                         break;
-                    case TransactionTargetType.Session:
+                    case SessionTransactionV1Target sessionTarget:
                         writer.WriteStartObject();
                         writer.WriteStartObject("Session");
-                        writer.WriteString("module_bytes", Hex.ToHexString(value.ModuleBytes));
-                        writer.WriteString("runtime", value.Runtime.ToString());
+                        writer.WriteString("module_bytes", Hex.ToHexString(sessionTarget.ModuleBytes));
+                        writer.WriteString("runtime", sessionTarget.Runtime.ToString());
                         writer.WriteEndObject();
                         writer.WriteEndObject();
                         break;

@@ -507,24 +507,46 @@ namespace Casper.Network.SDK.Types
     }
     
     public enum TransactionCategory {
+        /// <summary>
         /// Native mint interaction (the default).
+        /// </summary>
         Mint = 0,
+        /// <summary>
+        /// Transfer from a Deploy transaction.
+        /// </summary>
+        [Obsolete("Use Mint instead of DeployTransfer")]
+        DeployTransfer = 1,
+        /// <summary>
         /// Native auction interaction.
+        /// </summary>
         Auction = 1,
+        /// <summary>
         /// Install or Upgrade.
+        /// </summary>
         InstallUpgrade = 2,
+        /// <summary>
         /// A large Wasm based transaction.
+        /// </summary>
         Large = 3,
+        /// <summary>
+        /// A non-native Deploy transaction.
+        /// </summary>
+        [Obsolete("Use Large instead of DeployLarge")]
+        DeployLarge = 3,
+        /// <summary>
         /// A medium Wasm based transaction.
+        /// </summary>
         Medium = 4,
+        /// <summary>
         /// A small Wasm based transaction.
+        /// </summary>
         Small = 5,
     }
 
     public enum TransactionVersion
     {
         Deploy = 0,
-        Version1 = 1,
+        TransactionV1 = 1,
     }
     
     public class BlockTransaction
@@ -558,7 +580,7 @@ namespace Casper.Network.SDK.Types
                             {
                                 Category = category,
                                 Hash = t.Deploy != null ? t.Deploy : t.Version1,
-                                Version = t.Deploy != null ? TransactionVersion.Deploy : TransactionVersion.Version1,
+                                Version = t.Deploy != null ? TransactionVersion.Deploy : TransactionVersion.TransactionV1,
                             }));
                         }
                     }

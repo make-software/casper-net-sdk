@@ -474,6 +474,25 @@ namespace Casper.Network.SDK
         }
         
         /// <summary>
+        /// Send a Transaction to the network for its execution.
+        /// </summary>
+        /// <param name="transaction">The transaction object.</param>
+        /// <exception cref="System.Exception">Throws an exception if the transaction is not signed.</exception>
+        public async Task<RpcResponse<PutTransactionResult>> PutTransaction(Transaction transaction)
+        {
+            RpcMethod method;
+            
+            if (transaction.Approvals.Count == 0)
+                throw new Exception("Sign the transaction before sending it to the network.");
+
+            if(transaction.Version == TransactionVersion.Deploy)
+                method = new PutTransaction((Deploy)transaction);
+            else
+                method = new PutTransaction((TransactionV1)transaction);
+            return await SendRpcRequestAsync<PutTransactionResult>(method);
+        }
+        
+        /// <summary>
         /// Request a Transaction object from the network by the transaction (or deploy) hash.
         /// When a cancellation token is included this method waits until the transaction is
         /// executed, i.e. until the transaction contains the execution result information.
@@ -504,22 +523,53 @@ namespace Casper.Network.SDK
         }
         
         /// <summary>
+        /// Request a Transaction object from the network by the transaction (or deploy) hash.
+        /// When a cancellation token is included this method waits until the transaction is
+        /// executed, i.e. until the transaction contains the execution result information.
+        /// </summary>
+        /// <param name="transactionHash">An v1 transaction hash or a deploy hash</param>
+        /// <param name="cancellationToken">A CancellationToken. Do not include this parameter to return
+        /// with the first transaction object returned by the network, even it's not executed.</param>
+        /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
+        public async Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await GetTransaction(transactionHash, false, cancellationToken);
+        }
+        
+        /// <summary>
         /// Request a Transaction object from the network by the transaction hash.
         /// When a cancellation token is included this method waits until the transaction is
         /// executed, i.e. until the transaction contains the execution result information.
         /// </summary>
-        /// <param name="version1Hash">A v1 transaction hash</param>
+        /// <param name="transactionV1Hash">A TransactionV1 hash</param>
         /// <param name="finalizedApprovals">Whether to return the transaction with the finalized approvals
         /// substituted. If `false` or omitted, returns the transaction with the approvals that were originally
         /// received by the node.</param>
         /// <param name="cancellationToken">A CancellationToken. Do not include this parameter to return
         /// with the first transaction object returned by the network, even it's not executed.</param>
         /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
-        public async Task<RpcResponse<GetTransactionResult>> GetTransaction(string version1Hash,
+        public async Task<RpcResponse<GetTransactionResult>> GetTransaction(string transactionV1Hash,
             bool finalizedApprovals = false,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await this.GetTransaction(new TransactionHash { Version1 = version1Hash }, finalizedApprovals,
+            return await this.GetTransaction(new TransactionHash { Version1 = transactionV1Hash }, finalizedApprovals,
+                cancellationToken);
+        }
+        
+        /// <summary>
+        /// Request a Transaction object from the network by the transaction hash.
+        /// When a cancellation token is included this method waits until the transaction is
+        /// executed, i.e. until the transaction contains the execution result information.
+        /// </summary>
+        /// <param name="transactionV1Hash">A TransactionV1 hash</param>
+        /// <param name="cancellationToken">A CancellationToken. Do not include this parameter to return
+        /// with the first transaction object returned by the network, even it's not executed.</param>
+        /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
+        public async Task<RpcResponse<GetTransactionResult>> GetTransaction(string transactionV1Hash,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await this.GetTransaction(new TransactionHash { Version1 = transactionV1Hash }, false,
                 cancellationToken);
         }
 
