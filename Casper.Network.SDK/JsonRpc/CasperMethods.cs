@@ -546,6 +546,90 @@ namespace Casper.Network.SDK.JsonRpc
         }
     }
 
+    public class GetValidatorReward : RpcMethod
+    {
+        /// <summary>
+        /// Returns the reward for a given era and a validator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public GetValidatorReward(PublicKey validator, IBlockIdentifier blockIdentifier = null) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() }
+            };
+
+            if (blockIdentifier != null)
+                this.Parameters.Add("era_identifier", new Dictionary<string, object>
+                {
+                    { "Block", blockIdentifier.GetBlockIdentifier() }
+                });
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a validator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="eraId">Id of the Era to retrieve the rewards from.</param>
+        public GetValidatorReward(PublicKey validator, ulong eraId ) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() },
+                { "era_identifier", new Dictionary<string, object>
+                    {
+                        { "Era", eraId }
+                    }
+                }
+            };
+        }
+    }
+    
+    public class GetDelegatorReward : RpcMethod
+    {
+        /// <summary>
+        /// Returns the reward for a given era and a delegator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="delegator">The public key of the delegator.</param>
+        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public GetDelegatorReward(PublicKey validator, PublicKey delegator, IBlockIdentifier blockIdentifier = null) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() },
+                { "delegator", delegator.ToString() }
+            };
+
+            if (blockIdentifier != null)
+                this.Parameters.Add("era_identifier", new Dictionary<string, object>
+                {
+                    { "Block", blockIdentifier.GetBlockIdentifier() }
+                });
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a delegator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="delegator">The public key of the delegator.</param>
+        /// <param name="eraId">Id of the Era to retrieve the rewards from.</param>
+        public GetDelegatorReward(PublicKey validator, PublicKey delegator, ulong eraId ) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() },
+                { "delegator", delegator.ToString() },
+                { "era_identifier", new Dictionary<string, object>
+                    {
+                        { "Era", eraId }
+                    }
+                }
+            };
+        }
+    }
+    
     public class GetRpcSchema : RpcMethod
     {
         /// <summary>

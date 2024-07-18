@@ -679,6 +679,75 @@ namespace Casper.Network.SDK
         }
 
         /// <summary>
+        /// Returns the reward for a given era and a validator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="blockHash">Hash of the block to retrieve the rewards from. Null for the most recent era</param>
+        public async Task<RpcResponse<GetRewardResult>> GetValidatorReward(PublicKey validator, string blockHash = null)
+        {
+            var method = new GetValidatorReward(validator, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<GetRewardResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a validator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="blockHeight">Height of the block to retrieve the rewards from.</param>
+        public async Task<RpcResponse<GetRewardResult>> GetValidatorReward(PublicKey validator, ulong blockHeight)
+        {
+            var method = new GetValidatorReward(validator, new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<GetRewardResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a validator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="eraId">Id of the Era to retrieve the rewards from.</param>
+        public async Task<RpcResponse<GetRewardResult>> GetValidatorRewardWithEraId(PublicKey validator, ulong eraId)
+        {
+            var method = new GetValidatorReward(validator, eraId);
+            return await SendRpcRequestAsync<GetRewardResult>(method);
+        }
+
+        /// <summary>
+        /// Returns the reward for a given era and a delegator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="delegator">The public key of the delegator.</param>
+        /// <param name="blockHash">Hash of the block to retrieve the rewards from. Null for the most recent era</param>
+        public async Task<RpcResponse<GetRewardResult>> GetDelegatorReward(PublicKey validator, PublicKey delegator, string blockHash = null)
+        {
+            var method = new GetDelegatorReward(validator, delegator, blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<GetRewardResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a delegator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="delegator">The public key of the delegator.</param>
+        /// <param name="blockHeight">Height of the block to retrieve the rewards from.</param>
+        public async Task<RpcResponse<GetRewardResult>> GetDelegatorReward(PublicKey validator, PublicKey delegator, ulong blockHeight)
+        {
+            var method = new GetDelegatorReward(validator, delegator, new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<GetRewardResult>(method);
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a delegator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="delegator">The public key of the delegator.</param>
+        /// <param name="eraId">Id of the Era to retrieve the rewards from.</param>
+        public async Task<RpcResponse<GetRewardResult>> GetDelegatorRewardWithEraId(PublicKey validator, PublicKey delegator, ulong eraId)
+        {
+            var method = new GetDelegatorReward(validator, delegator, eraId);
+            return await SendRpcRequestAsync<GetRewardResult>(method);
+        }
+        
+        /// <summary>
         /// Request the RPC Json schema to the network node.
         /// </summary>
         public async Task<string> GetRpcSchema()
