@@ -505,7 +505,7 @@ namespace Casper.Network.SDK
         /// with the first transaction object returned by the network, even it's not executed.</param>
         /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
         public async Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
-            bool finalizedApprovals = false,
+            bool finalizedApprovals,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var method = new GetTransaction(transactionHash, finalizedApprovals);
@@ -550,7 +550,7 @@ namespace Casper.Network.SDK
         /// with the first transaction object returned by the network, even it's not executed.</param>
         /// <exception cref="TaskCanceledException">The token has cancelled the operation before the deploy has been executed.</exception>
         public async Task<RpcResponse<GetTransactionResult>> GetTransaction(string transactionV1Hash,
-            bool finalizedApprovals = false,
+            bool finalizedApprovals,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.GetTransaction(new TransactionHash { Version1 = transactionV1Hash }, finalizedApprovals,
