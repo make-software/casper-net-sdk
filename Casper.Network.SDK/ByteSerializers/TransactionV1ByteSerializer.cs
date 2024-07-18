@@ -7,84 +7,98 @@ namespace Casper.Network.SDK.ByteSerializers
 {
     public class TransactionV1ByteSerializer : BaseByteSerializer, IByteSerializer<TransactionV1>
     {
-        public byte[] ToBytes(TransactionTarget source)
+        public byte[] ToBytes(ITransactionV1Target source)
         {
             var ms = new MemoryStream();
 
-            WriteByte(ms, (byte)source.Type);
-
-            if (source.Type == TransactionTargetType.Stored)
+            switch (source)
             {
-                switch (source.Id)
+                case NativeTransactionV1Target:
+                    WriteByte(ms, (byte)TransactionTargetType.Native);
+                    break;
+                case StoredTransactionV1Target storedTarget:
+                    WriteByte(ms, (byte)TransactionTargetType.Stored);
+                    switch (storedTarget.Id)
+                    {
+                        case ByHashInvocationTarget byHash:
+                            WriteByte(ms, (byte)InvocationTargetTag.ByHash);
+                            WriteBytes(ms, Hex.Decode(byHash.Hash));
+                            break;
+                        case ByNameInvocationTarget byName:
+                            WriteByte(ms, (byte)InvocationTargetTag.ByName);
+                            WriteString(ms, byName.Name);
+                            break;
+                        case ByPackageHashInvocationTarget byPackageHash:
+                            WriteByte(ms, (byte)InvocationTargetTag.ByPackageHash);
+                            WriteBytes(ms, Hex.Decode(byPackageHash.Hash));
+                            WriteMaybeUInteger(ms, byPackageHash.Version);
+                            break;
+                        case ByPackageNameInvocationTarget byPackageName:
+                            WriteByte(ms, (byte)InvocationTargetTag.ByPackageName);
+                            WriteString(ms, byPackageName.Name);
+                            WriteMaybeUInteger(ms, byPackageName.Version);
+                            break;
+                    }
+                    WriteByte(ms, (byte)storedTarget.Runtime);
+                    break;
+                case SessionTransactionV1Target sessionTarget:
                 {
-                    case ByHashInvocationTarget byHash:
-                        WriteByte(ms, (byte)InvocationTargetTag.ByHash);
-                        WriteBytes(ms, Hex.Decode(byHash.Hash));
-                        break;
-                    case ByNameInvocationTarget byName:
-                        WriteByte(ms, (byte)InvocationTargetTag.ByName);
-                        WriteString(ms, byName.Name);
-                        break;
-                    case ByPackageHashInvocationTarget byPackageHash:
-                        WriteByte(ms, (byte)InvocationTargetTag.ByPackageHash);
-                        WriteBytes(ms, Hex.Decode(byPackageHash.Addr));
-                        WriteMaybeUInteger(ms, byPackageHash.Version);
-                        break;
-                    case ByPackageNameInvocationTarget byPackageName:
-                        WriteByte(ms, (byte)InvocationTargetTag.ByPackageName);
-                        WriteString(ms, byPackageName.Name);
-                        WriteMaybeUInteger(ms, byPackageName.Version);
-                        break;
-                }
-                WriteByte(ms, (byte)source.Runtime);
-            }
-            else if (source.Type == TransactionTargetType.Session)
-            {
-                if (source.ModuleBytes == null || source.ModuleBytes.Length == 0)
-                    WriteInteger(ms, 0);
-                else
-                {
-                    WriteInteger(ms, source.ModuleBytes.Length);
-                    WriteBytes(ms, source.ModuleBytes);
-                }
+                    WriteByte(ms, (byte)TransactionTargetType.Session);
+                
+                    if (sessionTarget.ModuleBytes == null || sessionTarget.ModuleBytes.Length == 0)
+                        WriteInteger(ms, 0);
+                    else
+                    {
+                        WriteInteger(ms, sessionTarget.ModuleBytes.Length);
+                        WriteBytes(ms, sessionTarget.ModuleBytes);
+                    }
 
-                WriteByte(ms, (byte)source.Runtime);
+                    WriteByte(ms, (byte)sessionTarget.Runtime);
+                    break;
+                }
             }
 
             return ms.ToArray();
         }
 
-        public byte[] ToBytes(TransactionEntryPoint source)
+        public byte[] ToBytes(ITransactionV1EntryPoint source)
         {
             var ms = new MemoryStream();
 
-            if (source.Custom != null)
+            switch (source)
             {
-                WriteByte(ms, 0x00);
-                WriteString(ms, source.Custom);
-            }
-            else if (source.Native.HasValue)
-            {
-                WriteByte(ms, (byte)source.Native.Value);
-            }
-            else
-            {
-                throw new Exception("Cannot serialize empty TransactionEntryPoint to bytes");
+                case CustomTransactionV1EntryPoint customEntryPoint:
+                    WriteByte(ms, 0x00);
+                    WriteString(ms, customEntryPoint.Name);
+                    break;
+                case NativeTransactionV1EntryPoint nativeEntryPoint:
+                    WriteByte(ms, (byte)nativeEntryPoint.Type);
+                    break;
+                default:
+                    throw new Exception("Cannot serialize empty TransactionEntryPoint to bytes");
             }
 
             return ms.ToArray();
         }
 
-        public byte[] ToBytes(TransactionScheduling source)
+        public byte[] ToBytes(ITransactionV1Scheduling source)
         {
             var ms = new MemoryStream();
 
-            WriteByte(ms, (byte)source.Type);
-
-            if (source.Type == TransactionSchedulingType.FutureEra)
-                WriteULong(ms, source.EraId);
-            if (source.Type == TransactionSchedulingType.FutureTimestamp)
-                WriteULong(ms, source.Timestamp);
+            switch (source)
+            {
+                case StandardTransactionV1Scheduling:
+                    WriteByte(ms, (byte)TransactionV1SchedulingType.Standard);
+                    break;
+                case FutureEraTransactionV1Scheduling eraScheduling:
+                    WriteByte(ms, (byte)TransactionV1SchedulingType.FutureEra);
+                    WriteULong(ms, eraScheduling.EraId);
+                    break;
+                case FutureTimestampTransactionV1Scheduling timestampScheduling:
+                    WriteByte(ms, (byte)TransactionV1SchedulingType.FutureTimestamp);
+                    WriteULong(ms, timestampScheduling.Timestamp);
+                    break;
+            }
 
             return ms.ToArray();
         }
@@ -101,7 +115,7 @@ namespace Casper.Network.SDK.ByteSerializers
 
             WriteBytes(ms, ToBytes(source.Target));
             WriteBytes(ms, ToBytes(source.EntryPoint));
-            WriteByte(ms, source.TransactionCategory);
+            WriteByte(ms, (byte)source.Category);
             WriteBytes(ms, ToBytes(source.Scheduling));
 
             return ms.ToArray();
@@ -111,27 +125,23 @@ namespace Casper.Network.SDK.ByteSerializers
         {
             var ms = new MemoryStream();
 
-            if (source.Type == PricingModeType.Classic &&
-                source.PaymentAmount.HasValue &&
-                source.GasPriceTolerance.HasValue &&
-                source.StandardPayment.HasValue)
+            switch (source.Type)
             {
-                ms.WriteByte((byte)PricingModeType.Classic);
-                WriteULong(ms, (ulong)source.PaymentAmount.Value);
-                WriteByte(ms, (byte)source.GasPriceTolerance.Value);
-                WriteByte(ms, (byte)(source.StandardPayment.Value ? 0x01 : 0x00));
-            }
-            else if (source.Type == PricingModeType.Fixed &&
-                     source.GasPriceTolerance.HasValue)
-            {
-                ms.WriteByte((byte)PricingModeType.Fixed);
-                WriteByte(ms, (byte)source.GasPriceTolerance.Value);
-            }
-            else if (source.Type == PricingModeType.Reserved &&
-                     source.Receipt != null)
-            {
-                ms.WriteByte((byte)PricingModeType.Reserved);
-                WriteBytes(ms, Hex.Decode(source.Receipt));
+                case PricingModeType.Classic:
+                    ms.WriteByte((byte)PricingModeType.Classic);
+                    WriteULong(ms, (ulong)source.PaymentAmount);
+                    WriteByte(ms, (byte)source.GasPriceTolerance);
+                    WriteByte(ms, (byte)(source.StandardPayment ? 0x01 : 0x00));
+                    break;
+                case PricingModeType.Fixed:
+                    ms.WriteByte((byte)PricingModeType.Fixed);
+                    WriteByte(ms, (byte)source.GasPriceTolerance);
+                    break;
+                case PricingModeType.Reserved when
+                    source.Receipt != null:
+                    ms.WriteByte((byte)PricingModeType.Reserved);
+                    WriteBytes(ms, Hex.Decode(source.Receipt));
+                    break;
             }
 
             return ms.ToArray();

@@ -49,5 +49,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("chain_name")]
         public string ChainName { get; set; }
+
+        public TransactionV1Header()
+        {
+            Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow);
+            Ttl = 1800000;
+        }
     }
 }

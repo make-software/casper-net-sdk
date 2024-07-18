@@ -90,8 +90,14 @@ namespace Casper.Network.SDK
             bool finalizedApprovals = false,
             CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<RpcResponse<GetTransactionResult>> GetTransaction(string version1Hash,
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
+            CancellationToken cancellationToken = default(CancellationToken));
+        
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(string transactionV1Hash,
             bool finalizedApprovals = false,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(string transactionV1Hash,
             CancellationToken cancellationToken = default(CancellationToken));
         
         Task<RpcResponse<GetBlockResult>> GetBlock(string blockHash = null);

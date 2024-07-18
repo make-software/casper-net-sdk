@@ -36,6 +36,16 @@ namespace Casper.Network.SDK.Types
         {
             this.AccountHash = accountHash;
         }
+
+        public static InitiatorAddr FromPublicKey(PublicKey publicKey)
+        {
+            return new InitiatorAddr(publicKey);
+        }
+        
+        public static InitiatorAddr FromAccountHash(AccountHashKey accountHashKey)
+        {
+            return new InitiatorAddr(accountHashKey);
+        }
         
         public override string ToString()
         {

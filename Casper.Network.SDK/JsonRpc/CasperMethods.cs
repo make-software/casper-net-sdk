@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Casper.Network.SDK.JsonRpc;
 using Casper.Network.SDK.Types;
-using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.JsonRpc
 {
@@ -294,37 +292,40 @@ namespace Casper.Network.SDK.JsonRpc
         /// <summary>
         /// Sends a Transaction to the network for its execution.
         /// </summary>
-        /// <param name="transaction">The deploy object.</param>
+        /// <param name="transaction">The Transactionv1 object.</param>
         public PutTransaction(TransactionV1 transaction) : base("account_put_transaction")
         {
+            var txParameter = new Dictionary<string, object>();
+            txParameter.Add("Version1", transaction);
+            
             this.Parameters = new Dictionary<string, object>
             {
                 {
-                    "transaction", new Dictionary<string, object>
-                    {
-                        { "Version1", transaction},
-                    }
+                    "transaction", txParameter
+                }
+            };
+        }
+        
+        /// <summary>
+        /// Sends a Transaction to the network for its execution.
+        /// </summary>
+        /// <param name="transaction">The Deploy object.</param>
+        public PutTransaction(Deploy transaction) : base("account_put_transaction")
+        {
+            var txParameter = new Dictionary<string, object>();
+            txParameter.Add("Deploy", transaction);
+            
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction", txParameter
                 }
             };
         }
     }
+    
     public class GetTransaction : RpcMethod
     {
-        public GetTransaction(string deployHash, bool finalizedApprovals = false) : base("info_get_transaction")
-        {
-            this.Parameters = new Dictionary<string, object>
-            {
-                {
-                    "transaction_hash", new Dictionary<string, object>
-                    {
-                        { "Deploy", deployHash }
-                    }
-                },
-            };
-            if (finalizedApprovals)
-                this.Parameters.Add("finalized_approvals", true);
-        }
-        
         public GetTransaction(TransactionHash transactionHash, bool finalizedApprovals = false) : base("info_get_transaction")
         {
             var hashDict = new Dictionary<string, object>();
