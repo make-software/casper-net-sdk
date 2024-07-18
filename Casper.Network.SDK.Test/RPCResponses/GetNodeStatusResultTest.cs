@@ -16,7 +16,8 @@ namespace NetCasperTest.RPCResponses
 
             var result = RpcResult.Parse<GetNodeStatusResult>(json);
             Assert.IsNotNull(result);
-            Assert.AreEqual("2.0.0", result.ApiVersion);
+            Assert.AreEqual("1.2.3", result.ApiVersion);
+            Assert.AreEqual("5.4.3", result.ProtocolVersion);
             Assert.AreEqual(4, result.Peers.Count);
             Assert.IsNotNull(result.Peers[1].NodeId);            
             Assert.IsNotNull(result.Peers[1].Address);   

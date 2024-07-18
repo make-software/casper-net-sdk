@@ -85,5 +85,11 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// The hash of the latest switch block.
         /// </summary>
         [JsonPropertyName("latest_switch_block_hash")] public string LatestSwitchBlockHash { get; init; }
+        
+        /// <summary>
+        /// The protocol version running in the node
+        /// </summary>
+        [JsonPropertyName("protocol_version")]
+        public string ProtocolVersion { get; init; }
     }
 }
