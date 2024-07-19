@@ -72,7 +72,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Pricing mode of a Transaction.
         /// </summary>
-        public PricingMode PricingMode { get; set; }
+        public IPricingMode PricingMode { get; set; }
         
         public ITransactionScheduling Scheduling { get; set; }
         
@@ -236,27 +236,17 @@ namespace Casper.Network.SDK.Types
                 throw new ArgumentException("No valid session object in the deploy to convert to Transaction");
             }
 
-            PricingMode pricingMode;
+            IPricingMode pricingMode;
             if (deploy.Payment is ModuleBytesDeployItem paymentModule)
             {
                 var amountArg = paymentModule.RuntimeArgs.FirstOrDefault(arg => arg.Name == "amount");
                 if (amountArg == null)
-                    pricingMode = new PricingMode()
-                    {
-                        Type = PricingModeType.Classic,
-                        StandardPayment = false,
-                    };
+                    pricingMode = Types.PricingMode.Classic(0, 1, false);
                 else
                 {
-                    var paymentAmount = amountArg.Value.ToBigInteger();
-                    pricingMode = new PricingMode()
-                    {
-                        Type = PricingModeType.Classic,
-                        StandardPayment = paymentModule.ModuleBytes == null,
-                        PaymentAmount = (ulong)paymentAmount,
-                    };
+                    var paymentAmount = (ulong)amountArg.Value.ToBigInteger();
+                    pricingMode = Types.PricingMode.Classic(paymentAmount, 1, paymentModule.ModuleBytes == null);
                 }
-                    
             }
             else
             {

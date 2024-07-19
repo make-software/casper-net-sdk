@@ -7,6 +7,11 @@ public static class EnumCompat
     {
         return (TEnum)Enum.Parse(typeof(TEnum), value);
     }
+    
+    public static bool TryParse<TEnum>(this String value, out TEnum e) where TEnum : struct
+    {
+        return Enum.TryParse( value, true, out e);
+    }
 
     public static string GetName<TEnum>(TEnum value) where TEnum : Enum
     {

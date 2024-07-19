@@ -24,38 +24,61 @@ public enum PricingModeType
         Reserved = 2,
     }
 
+    public interface IPricingMode
+    {
+#if NET7_0_OR_GREATER
+        public bool IsClassic => this is ClassicPricingMode;
+        public bool IsFixed => this is FixedPricingMode;
+        public bool IsReserved => this is ReservedPricingMode;
+#endif
+    }
+    
+    public class ClassicPricingMode: IPricingMode
+    {
+        /// <summary>
+        /// Payment amount.
+        /// </summary>
+        [JsonPropertyName("payment_amount")]
+        public ulong PaymentAmount { get; init; }
+       
+        /// <summary>
+        /// Standard payment.
+        /// </summary>
+        [JsonPropertyName("standard_payment")]
+        public bool StandardPayment { get; init; }
+        
+        /// <summary>
+        /// User-specified gas_price tolerance (minimum 1). This is interpreted to mean "do not include this
+        /// transaction in a block if the current gas price is greater than this number".
+        /// </summary>
+        [JsonPropertyName("gas_price_tolerance")]
+        public byte GasPriceTolerance { get; init; }
+    }
+    
+    public class FixedPricingMode: IPricingMode
+    {
+        /// <summary>
+        /// User-specified gas_price tolerance (minimum 1). This is interpreted to mean "do not include this
+        /// transaction in a block if the current gas price is greater than this number".
+        /// </summary>
+        [JsonPropertyName("gas_price_tolerance")]
+        public byte GasPriceTolerance { get; init; }
+    }
+    
+    public class ReservedPricingMode: IPricingMode
+    {
+        /// <summary>
+        /// Pre-paid receipt in the Reserved Pricing mode.
+        /// </summary>
+        [JsonPropertyName("receipt")]
+        public string Receipt { get; init; }
+    }
+    
     /// <summary>
     /// Pricing mode of a Transaction.
     /// </summary>
     public class PricingMode
     {
-        /// <summary>
-        /// Pricing mode used: Classic, Fixed, Reserved.
-        /// <see cref="PricingModeType"/>
-        /// </summary>
-        public PricingModeType Type { get; init; }
-
-        /// <summary>
-        /// Payment amount.
-        /// </summary>
-        public ulong PaymentAmount { get; set; }
-
-        /// <summary>
-        /// User-specified gas_price tolerance (minimum 1). This is interpreted to mean "do not include this
-        /// transaction in a block if the current gas price is greater than this number".
-        /// </summary>
-        public byte GasPriceTolerance { get; set; }
-
-        /// <summary>
-        /// Standard payment.
-        /// </summary>
-        public bool StandardPayment { get; set; }
-
-        /// <summary>
-        /// Pre-paid receipt in the Reserved Pricing mode.
-        /// </summary>
-        public string Receipt { get; init; }
-
         /// <summary>
         /// The original payment model, where the creator of the transaction
         /// specifies how much they will pay, at what gas price.
@@ -63,11 +86,10 @@ public enum PricingModeType
         /// <param name="paymentAmount">Amount in motes to pay for the transaction.</param>
         /// <param name="gasPriceTolerance">Defaults to 1. Gas price tolerance admitted.</param>
         /// <param name="standardPayment">Defaults to true. Indicates if this is a standar payment (non-standard payments are handled via wasm code).</param>
-        public static PricingMode Classic(ulong paymentAmount, byte gasPriceTolerance = 1, bool standardPayment = true)
+        public static IPricingMode Classic(ulong paymentAmount, byte gasPriceTolerance = 1, bool standardPayment = true)
         {
-            return new PricingMode()
+            return new ClassicPricingMode()
             {
-                Type = PricingModeType.Classic,
                 StandardPayment = standardPayment,
                 GasPriceTolerance = gasPriceTolerance,
                 PaymentAmount = paymentAmount,
@@ -78,11 +100,10 @@ public enum PricingModeType
         /// The cost of the transaction is determined by the cost table, per the transaction category.
         /// </summary>
         /// <param name="gasPriceTolerance">Defaults to 1. Gas price tolerance admitted.</param>
-        public static PricingMode Fixed(byte gasPriceTolerance = 1)
+        public static IPricingMode Fixed(byte gasPriceTolerance = 1)
         {
-            return new PricingMode()
+            return new FixedPricingMode()
             {
-                Type = PricingModeType.Fixed,
                 GasPriceTolerance = gasPriceTolerance,
             };
         }
@@ -91,22 +112,23 @@ public enum PricingModeType
         /// The payment for this transaction was previously reserved, as proven by the receipt hash.
         /// </summary>
         /// <param name="receipt">Pre-paid receipt.</param>
-        public static PricingMode Reserved(string receipt)
+        public static IPricingMode Reserved(string receipt)
         {
-            return new PricingMode()
+            return new ReservedPricingMode()
             {
-                Type = PricingModeType.Reserved,
                 Receipt = receipt,
             };
         }
         
-        public class PricingModeConverter : JsonConverter<PricingMode>
+        public class PricingModeConverter : JsonConverter<IPricingMode>
         {
-            public override PricingMode Read(
+            public override IPricingMode Read(
                 ref Utf8JsonReader reader,
                 Type typeToConvert,
                 JsonSerializerOptions options)
             {
+                IPricingMode pricingMode = null;
+                
                 if (reader.TokenType != JsonTokenType.StartObject)
                     throw new JsonException("Cannot deserialize PricingMode. StartObject expected");
                 reader.Read();
@@ -114,86 +136,56 @@ public enum PricingModeType
                 if (reader.TokenType != JsonTokenType.PropertyName)
                     throw new JsonException("Cannot deserialize PricingMode. PropertyName expected");
 
-                string pricingModeType = reader.GetString();
+                if(!EnumCompat.TryParse(reader.GetString(), out PricingModeType pricingModeType))
+                    throw new Exception($"Unknown pricing mode '{reader.GetString()}'");
+
                 reader.Read();
 
                 if (reader.TokenType != JsonTokenType.StartObject)
                     throw new JsonException("Cannot deserialize PricingMode. StartObject expected");
-                reader.Read();
-
-                ulong paymentAmount = 0;
-                byte gasPriceTolerance = 0;
-                bool standardPayment = false;
-                string receipt = null;
-
-                while (reader.TokenType == JsonTokenType.PropertyName)
-                {
-                    var field = reader.GetString();
-                    reader.Read();
-                    switch (field)
-                    {
-                        case "payment_amount":
-                            paymentAmount = reader.GetUInt64();
-                            break;
-                        case "standard_payment":
-                            standardPayment = reader.GetBoolean();
-                            break;
-                        case "gas_price_tolerance":
-                            gasPriceTolerance = reader.GetByte();
-                            break;
-                        case "receipt":
-                            receipt = reader.GetString();
-                            break;
-                    }
-
-                    reader.Read();
-                }
-
-                reader.Read();
                 
-                return new PricingMode()
+                switch (pricingModeType)
                 {
-                    Type = EnumCompat.Parse<PricingModeType>(pricingModeType),
-                    PaymentAmount = paymentAmount,
-                    GasPriceTolerance = gasPriceTolerance,
-                    StandardPayment = standardPayment,
-                    Receipt = receipt,
-                };
+                    case PricingModeType.Classic:
+                        pricingMode = JsonSerializer.Deserialize<ClassicPricingMode>(ref reader, options);
+                        break;
+                    case PricingModeType.Fixed:
+                        pricingMode = JsonSerializer.Deserialize<FixedPricingMode>(ref reader, options);
+                        break;
+                    case PricingModeType.Reserved:
+                        pricingMode = JsonSerializer.Deserialize<ReservedPricingMode>(ref reader, options);
+                        break;
+                }
+                reader.Read();
+
+                return pricingMode;
             }
 
             public override void Write(
                 Utf8JsonWriter writer,
-                PricingMode value,
+                IPricingMode value,
                 JsonSerializerOptions options)
             {
-                if (value.Type == PricingModeType.Classic)
+                switch (value)
                 {
-                    writer.WriteStartObject();
-                    writer.WritePropertyName("Classic");
-                    writer.WriteStartObject();
-                    writer.WriteNumber("payment_amount", value.PaymentAmount);
-                    writer.WriteNumber("gas_price_tolerance", value.GasPriceTolerance);
-                    writer.WriteBoolean("standard_payment", value.StandardPayment);
-                    writer.WriteEndObject();
-                    writer.WriteEndObject();
-                }
-                else if (value.Type == PricingModeType.Fixed)
-                {
-                    writer.WriteStartObject();
-                    writer.WritePropertyName("Fixed");
-                    writer.WriteStartObject();
-                    writer.WriteNumber("gas_price_tolerance", value.GasPriceTolerance);
-                    writer.WriteEndObject();
-                    writer.WriteEndObject();
-                }
-                else if (value.Type == PricingModeType.Reserved)
-                {
-                    writer.WriteStartObject();
-                    writer.WritePropertyName("Reserved");
-                    writer.WriteStartObject();
-                    writer.WriteString("receipt", value.Receipt);
-                    writer.WriteEndObject();
-                    writer.WriteEndObject();
+                    case ClassicPricingMode classicPricingMode:
+                        writer.WriteStartObject();
+                        writer.WritePropertyName("Classic");
+                        JsonSerializer.Serialize(writer, classicPricingMode);
+                        writer.WriteEndObject();
+                        break;
+                    case FixedPricingMode fixedPricingMode:
+                        writer.WriteStartObject();
+                        writer.WritePropertyName("Fixed");
+                        JsonSerializer.Serialize(writer, fixedPricingMode);
+                        writer.WriteEndObject();
+                        break;
+                    case ReservedPricingMode reservedPricingMode:
+                        writer.WriteStartObject();
+                        writer.WritePropertyName("Reserved");
+                        JsonSerializer.Serialize(writer, reservedPricingMode);
+                        writer.WriteEndObject();
+                        break;
                 }
             }
         }
