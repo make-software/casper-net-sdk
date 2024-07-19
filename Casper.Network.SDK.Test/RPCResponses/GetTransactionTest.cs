@@ -99,6 +99,8 @@ namespace NetCasperTest.RPCResponses
             Assert.AreEqual("01020304",  Hex.ToHexString((transaction.Invocation as Transaction.SessionTransactionInvocation)!.Wasm));
             Assert.AreEqual(TransactionCategory.InstallUpgrade, transaction.Category);
             Assert.IsTrue(transaction.Scheduling is StandardTransactionScheduling);
+            Assert.IsTrue(transaction.PricingMode is FixedPricingMode);
+            Assert.AreEqual(2, ((FixedPricingMode)transaction.PricingMode).GasPriceTolerance);
             Assert.AreEqual(transactionV1.Approvals.Count, transaction.Approvals.Count);
             Assert.AreEqual(transactionV1.Approvals[0].Signature, transaction.Approvals[0].Signature);
 

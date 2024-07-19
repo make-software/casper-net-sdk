@@ -121,26 +121,25 @@ namespace Casper.Network.SDK.ByteSerializers
             return ms.ToArray();
         }
 
-        public byte[] ToBytes(PricingMode source)
+        public byte[] ToBytes(IPricingMode source)
         {
             var ms = new MemoryStream();
 
-            switch (source.Type)
+            switch (source)
             {
-                case PricingModeType.Classic:
+                case ClassicPricingMode classicPricingMode:
                     ms.WriteByte((byte)PricingModeType.Classic);
-                    WriteULong(ms, (ulong)source.PaymentAmount);
-                    WriteByte(ms, (byte)source.GasPriceTolerance);
-                    WriteByte(ms, (byte)(source.StandardPayment ? 0x01 : 0x00));
+                    WriteULong(ms, (ulong)classicPricingMode.PaymentAmount);
+                    WriteByte(ms, (byte)classicPricingMode.GasPriceTolerance);
+                    WriteByte(ms, (byte)(classicPricingMode.StandardPayment ? 0x01 : 0x00));
                     break;
-                case PricingModeType.Fixed:
+                case FixedPricingMode fixedPricingMode:
                     ms.WriteByte((byte)PricingModeType.Fixed);
-                    WriteByte(ms, (byte)source.GasPriceTolerance);
+                    WriteByte(ms, (byte)fixedPricingMode.GasPriceTolerance);
                     break;
-                case PricingModeType.Reserved when
-                    source.Receipt != null:
+                case ReservedPricingMode reservedPricingMode:
                     ms.WriteByte((byte)PricingModeType.Reserved);
-                    WriteBytes(ms, Hex.Decode(source.Receipt));
+                    WriteBytes(ms, Hex.Decode(reservedPricingMode.Receipt));
                     break;
             }
 
