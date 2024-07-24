@@ -26,7 +26,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A versioned wrapper for a TransactionV1 or Deploy.
     /// </summary>
-    public class Transaction
+    public partial class Transaction
     {
         protected TransactionVersion _version;
 
@@ -241,11 +241,11 @@ namespace Casper.Network.SDK.Types
             {
                 var amountArg = paymentModule.RuntimeArgs.FirstOrDefault(arg => arg.Name == "amount");
                 if (amountArg == null)
-                    pricingMode = Types.PricingMode.Classic(0, 1, false);
+                    pricingMode = Types.PricingMode.Classic(0, (byte)deploy.Header.GasPrice, false);
                 else
                 {
                     var paymentAmount = (ulong)amountArg.Value.ToBigInteger();
-                    pricingMode = Types.PricingMode.Classic(paymentAmount, 1, paymentModule.ModuleBytes == null);
+                    pricingMode = Types.PricingMode.Classic(paymentAmount, (byte)deploy.Header.GasPrice, paymentModule.ModuleBytes == null);
                 }
             }
             else
