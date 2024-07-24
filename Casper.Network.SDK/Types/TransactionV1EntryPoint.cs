@@ -105,7 +105,8 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class TransactionV1EntryPoint
     {
-        public static ITransactionV1EntryPoint Transfer => new NativeTransactionV1EntryPoint(NativeEntryPoint.Transfer);
+        public static ITransactionV1EntryPoint Transfer => 
+            new NativeTransactionV1EntryPoint(NativeEntryPoint.Transfer);
 
         public static ITransactionV1EntryPoint AddBid =>
             new NativeTransactionV1EntryPoint(NativeEntryPoint.AddBid);
@@ -131,6 +132,9 @@ namespace Casper.Network.SDK.Types
         public static ITransactionV1EntryPoint Call =>
             new NativeTransactionV1EntryPoint(NativeEntryPoint.Call);
 
+        public static ITransactionV1EntryPoint Custom(string name) => 
+            new CustomTransactionV1EntryPoint(name);
+        
         public class TransactionEntryPointConverter : JsonConverter<ITransactionV1EntryPoint>
         {
             public override ITransactionV1EntryPoint Read(
