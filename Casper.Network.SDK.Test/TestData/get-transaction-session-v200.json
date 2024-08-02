@@ -10,7 +10,7 @@
         "body_hash": "9b1d4002bb1af17ec9fc4193ac5ba7db6535b6dd813034b730829a94b13ebc46",
         "pricing_mode": {
           "Fixed": {
-            "gas_price_tolerance": 3
+            "gas_price_tolerance": 2
           }
         },
         "initiator_addr": {

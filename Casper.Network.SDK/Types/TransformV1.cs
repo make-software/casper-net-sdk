@@ -167,6 +167,8 @@ namespace Casper.Network.SDK.Types
                                     value = JsonSerializer.Deserialize<BidKind>(ref reader, options);
                                     reader.Read();
                                     break;  
+                                default:
+                                    throw new Exception("Unkown TransformV1 kind: " + type.ToString());
                             }
 
                             reader.Read(); //end object
