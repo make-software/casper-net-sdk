@@ -129,6 +129,21 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<GetValidatorChangesResult>> GetValidatorChanges();
 
+        Task<RpcResponse<GetRewardResult>> GetValidatorReward(PublicKey validator, string blockHash = null);
+
+        Task<RpcResponse<GetRewardResult>> GetValidatorReward(PublicKey validator, ulong blockHeight);
+
+        Task<RpcResponse<GetRewardResult>> GetValidatorRewardWithEraId(PublicKey validator, ulong eraId);
+
+        Task<RpcResponse<GetRewardResult>> GetDelegatorReward(PublicKey validator, PublicKey delegator,
+            string blockHash = null);
+
+        Task<RpcResponse<GetRewardResult>> GetDelegatorReward(PublicKey validator, PublicKey delegator,
+            ulong blockHeight);
+
+        Task<RpcResponse<GetRewardResult>> GetDelegatorRewardWithEraId(PublicKey validator, PublicKey delegator,
+            ulong eraId);
+        
         Task<string> GetRpcSchema();
 
         Task<RpcResponse<GetChainspecResult>> GetChainspec();
