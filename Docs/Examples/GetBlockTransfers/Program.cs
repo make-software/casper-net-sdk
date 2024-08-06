@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Casper.Network.SDK;
 using Casper.Network.SDK.JsonRpc;
-using Casper.Network.SDK.Types;
 
 namespace Casper.NET.SDK.Examples
 {
@@ -10,23 +9,21 @@ namespace Casper.NET.SDK.Examples
     {
         public static async Task Main(string[] args)
         {
-            string nodeAddress = "http://52.35.59.254:7777/rpc";
-            string blockHash = "c7148e1e2e115d8fba357e04be2073d721847c982dc70d5c36b5f6d3cf66331c";
-            int blockHeight = 20652;
+            string nodeAddress = "http://127.0.0.1:11101/rpc";
+            
+            // find a block height with transfers using a block explorer
+            ulong blockHeight = 222; 
 
             try
             {
                 var casperSdk = new NetCasperClient(nodeAddress);
 
-                //Get latest block
+                // Get latest block transfers
                 var rpcResponse = await casperSdk.GetBlockTransfers();
                 var transfers = rpcResponse.Parse().Transfers;
                 Console.WriteLine("Number of transfers in latest block: " + transfers.Count);
                 
-                //Get block by hash
-                rpcResponse = await casperSdk.GetBlockTransfers(blockHash);
-                
-                // //Get block by height
+                // Get block transfers by block height
                 rpcResponse = await casperSdk.GetBlockTransfers(blockHeight);
                 transfers = rpcResponse.Parse().Transfers;
 
@@ -35,6 +32,8 @@ namespace Casper.NET.SDK.Examples
                 foreach (var transfer in transfers)
                 {
                     Console.WriteLine("Transfer amount: " + transfer.Amount);
+                    Console.WriteLine("Transfer from: " + transfer.From);
+                    Console.WriteLine("Transfer to: " + transfer.To);
                 }
             }
             catch (RpcClientException e)
