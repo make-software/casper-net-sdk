@@ -78,7 +78,7 @@ namespace Casper.Network.SDK.Types
         public URef AccessKey { get; init; }
         
         /// <summary>
-        /// All versions (enabled & disabled).
+        /// All versions (enabled and disabled).
         /// </summary>
         [JsonPropertyName("versions")]
         public List<EntityVersionAndHash> Versions { get; init; }

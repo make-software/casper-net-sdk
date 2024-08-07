@@ -36,7 +36,7 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("pricing_mode")]
         [JsonConverter(typeof(PricingMode.PricingModeConverter))]
-        public PricingMode PricingMode { get; set; }
+        public IPricingMode PricingMode { get; set; }
 
         /// <summary>
         /// Hash of the body part of this Deploy.
@@ -49,5 +49,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("chain_name")]
         public string ChainName { get; set; }
+
+        public TransactionV1Header()
+        {
+            Timestamp = DateUtils.ToEpochTime(DateTime.UtcNow);
+            Ttl = 1800000;
+        }
     }
 }

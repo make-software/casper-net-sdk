@@ -87,11 +87,17 @@ namespace Casper.Network.SDK
         Task<RpcResponse<PutTransactionResult>> PutTransaction(TransactionV1 transaction);
         
         Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
-            bool finalizedApprovals = false,
+            bool finalizedApprovals,
             CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<RpcResponse<GetTransactionResult>> GetTransaction(string version1Hash,
-            bool finalizedApprovals = false,
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(TransactionHash transactionHash,
+            CancellationToken cancellationToken = default(CancellationToken));
+        
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(string transactionV1Hash,
+            bool finalizedApprovals,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<RpcResponse<GetTransactionResult>> GetTransaction(string transactionV1Hash,
             CancellationToken cancellationToken = default(CancellationToken));
         
         Task<RpcResponse<GetBlockResult>> GetBlock(string blockHash = null);

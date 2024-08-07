@@ -12,6 +12,7 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// The deploy.
         /// </summary>
         [JsonPropertyName("transaction")]
+        [JsonConverter(typeof(Transaction.TransactionConverter))]
         public Transaction Transaction { get; init; }
 
         /// <summary>
