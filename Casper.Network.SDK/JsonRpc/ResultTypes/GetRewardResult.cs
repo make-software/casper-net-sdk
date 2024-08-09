@@ -27,5 +27,11 @@ namespace Casper.Network.SDK.JsonRpc.ResultTypes
         /// </summary>
         [JsonPropertyName("delegation_rate")]
         public uint DelegationRate { get; init; }
+        
+        /// <summary>
+        /// The switch block hash at which the reward was distributed.
+        /// </summary>
+        [JsonPropertyName("switch_block_hash")]
+        public string SwitchBlockHash { get; init; }
     }
 }
