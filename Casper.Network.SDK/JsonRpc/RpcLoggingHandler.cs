@@ -12,8 +12,13 @@ namespace Casper.Network.SDK.JsonRpc
     /// </summary>
     public class RpcLoggingHandler : DelegatingHandler
     {
-        public StreamWriter LoggerStream { get; init; }
-
+        private readonly TextWriter _loggerStream;
+        public TextWriter LoggerStream
+        {
+           get => _loggerStream;
+           init => _loggerStream = TextWriter.Synchronized(value);
+        }
+    
         private volatile bool _disposed;
 
         public RpcLoggingHandler(HttpMessageHandler innerHandler)
