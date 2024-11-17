@@ -221,7 +221,35 @@ namespace Casper.Network.SDK
             var method = new GetEntity(entityAddr, new BlockIdentifier(blockHeight));
             return await SendRpcRequestAsync<GetEntityResult>(method);
         }
-        
+
+        /// <summary>
+        /// Returns a Package from the network
+        /// </summary>
+        /// <param name="entityAddr">The entity address to get information of.</param>
+        /// <param name="blockHash">A block hash for which the information of the entity is queried. Null for most recent information.</param>
+        public async Task<RpcResponse<GetPackageResult>> GetPackage(string packageHash, string blockHash = null)
+        {
+            var method = new GetPackage(packageHash.StartsWith("package-")
+                    ? PackageIdentifier.FromPackageAddr(packageHash)
+                    : PackageIdentifier.FromContractPackageHash(packageHash),
+                blockHash != null ? new BlockIdentifier(blockHash) : null);
+            return await SendRpcRequestAsync<GetPackageResult>(method);
+        }
+
+        /// <summary>
+        /// Returns a Package from the network
+        /// </summary>
+        /// <param name="entityAddr">The package address or contract package hash to get information of.</param>
+        /// <param name="blockHeight">A block height for which the information of the package is queried.</param>
+        public async Task<RpcResponse<GetPackageResult>> GetPackage(string packageHash, ulong blockHeight)
+        {
+            var method = new GetPackage(packageHash.StartsWith("package-")
+                    ? PackageIdentifier.FromPackageAddr(packageHash)
+                    : PackageIdentifier.FromContractPackageHash(packageHash),
+                new BlockIdentifier(blockHeight));
+            return await SendRpcRequestAsync<GetPackageResult>(method);
+        }
+
         /// <summary>
         /// Request a stored value from the network. This RPC is deprecated, use `QueryGlobalState` instead.
         /// </summary>

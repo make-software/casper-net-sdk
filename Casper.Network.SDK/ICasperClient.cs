@@ -40,6 +40,8 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<GetEntityResult>> GetEntity(string entityAddr, ulong blockHeight);
 
+        Task<RpcResponse<GetPackageResult>> GetPackage(string packageHash, string blockHash = null);
+        
         Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, ulong height,
             string path = null);
         Task<RpcResponse<QueryGlobalStateResult>> QueryGlobalState(string key, string stateRootHash = null,
