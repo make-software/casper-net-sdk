@@ -156,6 +156,20 @@ namespace Casper.Network.SDK.JsonRpc
         {
         }
     }
+
+    public class GetPackage : RpcMethod
+    {
+        public GetPackage(IPackageIdentifier packageIdentifier, IBlockIdentifier blockIdentifier = null) : base("state_get_package")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "package_identifier", packageIdentifier.GetPackageIdentifier() }
+            };
+
+            if(blockIdentifier != null)
+                this.Parameters.Add("block_identifier", blockIdentifier.GetBlockIdentifier());
+        }
+    }
     
     public class GetItem : RpcMethod
     {
