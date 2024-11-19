@@ -736,13 +736,13 @@ namespace Casper.Network.SDK.Types
                     case 1:
                         writer.WritePropertyName("Version1");
                         writer.WriteStartObject();
-                        JsonSerializer.Serialize((BlockV1)block, options);
+                        JsonSerializer.Serialize(writer, (BlockV1)block, options);
                         writer.WriteEndObject();
                         break;
                     case 2:
                         writer.WritePropertyName("Version2");
                         writer.WriteStartObject();
-                        JsonSerializer.Serialize(block, options);
+                        JsonSerializer.Serialize(writer, block, options);
                         writer.WriteEndObject();
                         break;
                     default:

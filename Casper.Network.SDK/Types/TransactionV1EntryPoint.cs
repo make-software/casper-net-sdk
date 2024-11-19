@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.ByteSerializers;
 
 namespace Casper.Network.SDK.Types
 {
@@ -54,12 +55,24 @@ namespace Casper.Network.SDK.Types
         /// Used to call entry point call() in session transactions
         /// </summary>
         Call = 9,
+        
+        /// <summary>
+        /// The `add_reservations` native entry point, used to add delegators to validator's reserve list.
+        /// </summary>
+        AddReservations = 10,
+        
+        /// <summary>
+        /// The `cancel_reservations` native entry point, used to remove delegators from validator's reserve list.
+        /// </summary>
+        CancelReservations = 11,
     }
 
 
     public interface ITransactionV1EntryPoint
     {
         public string Name { get; }
+        
+        public byte[] ToBytes();
     }
 
     public class NativeTransactionV1EntryPoint : ITransactionV1EntryPoint
@@ -88,6 +101,41 @@ namespace Casper.Network.SDK.Types
                 throw new Exception($"Invalid name for a TransactionV1NativeEntryPoint ({name}).");
             }
         }
+
+        const ushort TAG_FIELD_INDEX = 0;
+        const byte CALL_VARIANT_TAG = 1;
+        const byte TRANSFER_VARIANT_TAG = 2;
+        const byte ADD_BID_VARIANT_TAG = 3;
+        const byte WITHDRAW_BID_VARIANT_TAG = 4;
+        const byte DELEGATE_VARIANT_TAG = 5;
+        const byte UNDELEGATE_VARIANT_TAG = 6;
+        const byte REDELEGATE_VARIANT_TAG = 7;
+        const byte ACTIVATE_BID_VARIANT_TAG = 8;
+        const byte CHANGE_BID_PUBLIC_KEY_VARIANT_TAG = 9;
+        const byte ADD_RESERVATIONS_VARIANT_TAG = 10;
+        const byte CANCEL_RESERVATIONS_VARIANT_TAG = 11;
+        
+        public byte[] ToBytes()
+        {
+            var tag = Type switch
+            {
+                NativeEntryPoint.Call => CALL_VARIANT_TAG,
+                NativeEntryPoint.Transfer => TRANSFER_VARIANT_TAG,
+                NativeEntryPoint.AddBid => ADD_BID_VARIANT_TAG,
+                NativeEntryPoint.Delegate => DELEGATE_VARIANT_TAG,
+                NativeEntryPoint.WithdrawBid => WITHDRAW_BID_VARIANT_TAG,
+                NativeEntryPoint.Undelegate => UNDELEGATE_VARIANT_TAG,
+                NativeEntryPoint.Redelegate => REDELEGATE_VARIANT_TAG,
+                NativeEntryPoint.ActivateBid => ACTIVATE_BID_VARIANT_TAG,
+                NativeEntryPoint.ChangeBidPublicKey => CHANGE_BID_PUBLIC_KEY_VARIANT_TAG,
+                NativeEntryPoint.AddReservations => ADD_RESERVATIONS_VARIANT_TAG,
+                NativeEntryPoint.CancelReservations => CANCEL_RESERVATIONS_VARIANT_TAG,
+                _ => throw new Exception($"Unknown NativeEntryPoint type: {Type}")
+            };
+            return new CalltableSerialization()
+                .AddField(TAG_FIELD_INDEX, new byte[] {tag})
+                .GetBytes();
+        }
     }
 
     public class CustomTransactionV1EntryPoint : ITransactionV1EntryPoint
@@ -97,6 +145,18 @@ namespace Casper.Network.SDK.Types
         public CustomTransactionV1EntryPoint(string name)
         {
             Name = name;
+        }
+        
+        const ushort TAG_FIELD_INDEX = 0;
+        const byte CUSTOM_VARIANT_TAG = 1;
+        const ushort CUSTOM_CUSTOM_INDEX = 1;
+
+        public byte[] ToBytes()
+        {
+            return new CalltableSerialization()
+                .AddField(TAG_FIELD_INDEX, new byte[] {CUSTOM_VARIANT_TAG})
+                .AddField(CUSTOM_CUSTOM_INDEX, CLValue.String(Name))
+                .GetBytes();
         }
     }
 

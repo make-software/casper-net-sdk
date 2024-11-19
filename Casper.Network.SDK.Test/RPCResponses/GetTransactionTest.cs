@@ -90,10 +90,9 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNotNull(transactionV1);
             
             Assert.AreEqual(transactionV1.Hash, transaction.Hash);
-            Assert.AreEqual("9b1d4002bb1af17ec9fc4193ac5ba7db6535b6dd813034b730829a94b13ebc46", transactionV1.Header.BodyHash);
-            Assert.AreEqual(transactionV1.Header.ChainName, transaction.ChainName);
-            Assert.AreEqual(transactionV1.Header.Timestamp, transaction.Timestamp);
-            Assert.AreEqual(transactionV1.Header.InitiatorAddr.PublicKey, transaction.InitiatorAddr.PublicKey);
+            Assert.AreEqual(transactionV1.Payload.ChainName, transaction.ChainName);
+            Assert.AreEqual(transactionV1.Payload.Timestamp, transaction.Timestamp);
+            Assert.AreEqual(transactionV1.Payload.InitiatorAddr.PublicKey, transaction.InitiatorAddr.PublicKey);
             Assert.IsNull(transaction.InitiatorAddr.AccountHash);
             Assert.IsTrue(transaction.Invocation is Transaction.SessionTransactionInvocation);
             Assert.AreEqual("01020304",  Hex.ToHexString((transaction.Invocation as Transaction.SessionTransactionInvocation)!.Wasm));
@@ -126,10 +125,9 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNotNull(transactionV1);
             
             Assert.AreEqual(transactionV1.Hash, transaction.Hash);
-            Assert.AreEqual("07ed52f990a206153d2a29f6a42eb754009c4b120981dd3fd0842d4057ee7484", transactionV1.Header.BodyHash);
-            Assert.AreEqual(transactionV1.Header.ChainName, transaction.ChainName);
-            Assert.AreEqual(transactionV1.Header.Timestamp, transaction.Timestamp);
-            Assert.AreEqual(transactionV1.Header.InitiatorAddr.AccountHash, transaction.InitiatorAddr.AccountHash);
+            Assert.AreEqual(transactionV1.Payload.ChainName, transaction.ChainName);
+            Assert.AreEqual(transactionV1.Payload.Timestamp, transaction.Timestamp);
+            Assert.AreEqual(transactionV1.Payload.InitiatorAddr.AccountHash, transaction.InitiatorAddr.AccountHash);
             Assert.AreEqual("account-hash-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f", transaction.InitiatorAddr.AccountHash.ToString().ToLower());
             Assert.IsNull(transaction.InitiatorAddr.PublicKey);
             Assert.IsTrue(transaction.Invocation is Transaction.StoredTransactionInvocation);

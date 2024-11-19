@@ -241,11 +241,11 @@ namespace Casper.Network.SDK.Types
             {
                 var amountArg = paymentModule.RuntimeArgs.FirstOrDefault(arg => arg.Name == "amount");
                 if (amountArg == null)
-                    pricingMode = Types.PricingMode.Classic(0, (byte)deploy.Header.GasPrice, false);
+                    pricingMode = Types.PricingMode.PaymentLimited(0, (byte)deploy.Header.GasPrice, false);
                 else
                 {
                     var paymentAmount = (ulong)amountArg.Value.ToBigInteger();
-                    pricingMode = Types.PricingMode.Classic(paymentAmount, (byte)deploy.Header.GasPrice, paymentModule.ModuleBytes == null);
+                    pricingMode = Types.PricingMode.PaymentLimited(paymentAmount, (byte)deploy.Header.GasPrice, paymentModule.ModuleBytes == null);
                 }
             }
             else
@@ -274,35 +274,32 @@ namespace Casper.Network.SDK.Types
         {
             ITransactionInvocation transactionInvocation;
 
-            if(transactionV1.Body.Target is NativeTransactionV1Target &&
-               transactionV1.Body.EntryPoint is NativeTransactionV1EntryPoint nativeEntryPoint)
+            if(transactionV1.Payload.Target is NativeTransactionV1Target &&
+               transactionV1.Payload.EntryPoint is NativeTransactionV1EntryPoint nativeEntryPoint)
             {
                 transactionInvocation = new NativeTransactionInvocation()
                 {
                     Type = nativeEntryPoint.Type,
-                    RuntimeArgs = transactionV1.Body.RuntimeArgs,
-                    Category = transactionV1.Body.Category,
+                    RuntimeArgs = transactionV1.Payload.RuntimeArgs,
                 };
             }
-            else if (transactionV1.Body.Target is StoredTransactionV1Target storedTarget &&
-                     transactionV1.Body.EntryPoint is CustomTransactionV1EntryPoint customEntryPoint)
+            else if (transactionV1.Payload.Target is StoredTransactionV1Target storedTarget &&
+                     transactionV1.Payload.EntryPoint is CustomTransactionV1EntryPoint customEntryPoint)
             {
                 transactionInvocation = new StoredTransactionInvocation()
                 {
                     InvocationTarget = storedTarget.Id,
                     EntryPoint = customEntryPoint.Name,
-                    RuntimeArgs = transactionV1.Body.RuntimeArgs,
-                    Category = transactionV1.Body.Category,
+                    RuntimeArgs = transactionV1.Payload.RuntimeArgs,
                 };
             }
-            else if (transactionV1.Body.Target is SessionTransactionV1Target sessionTarget &&
-                     transactionV1.Body.EntryPoint.Name.Equals("Call", StringComparison.InvariantCultureIgnoreCase))
+            else if (transactionV1.Payload.Target is SessionTransactionV1Target sessionTarget &&
+                     transactionV1.Payload.EntryPoint.Name.Equals("Call", StringComparison.InvariantCultureIgnoreCase))
             {
                 transactionInvocation = new SessionTransactionInvocation()
                 {
                     Wasm = sessionTarget.ModuleBytes,
-                    RuntimeArgs = transactionV1.Body.RuntimeArgs,
-                    Category = transactionV1.Body.Category,
+                    RuntimeArgs = transactionV1.Payload.RuntimeArgs,
                 };
             }
             else
@@ -315,14 +312,13 @@ namespace Casper.Network.SDK.Types
                 _transactionV1 = transactionV1,
                 _version = TransactionVersion.TransactionV1,
                 Hash = transactionV1.Hash,
-                InitiatorAddr = transactionV1.Header.InitiatorAddr,
-                Timestamp = transactionV1.Header.Timestamp,
-                Ttl = transactionV1.Header.Ttl,
-                ChainName = transactionV1.Header.ChainName,
-                PricingMode = transactionV1.Header.PricingMode,
+                InitiatorAddr = transactionV1.Payload.InitiatorAddr,
+                Timestamp = transactionV1.Payload.Timestamp,
+                Ttl = transactionV1.Payload.Ttl,
+                ChainName = transactionV1.Payload.ChainName,
+                PricingMode = transactionV1.Payload.PricingMode,
                 Approvals = transactionV1.Approvals,
-                Scheduling = transactionV1.Body.Scheduling,
-                Category = transactionV1.Body.Category,
+                Scheduling = transactionV1.Payload.Scheduling,
                 Invocation = transactionInvocation,
             };
         }

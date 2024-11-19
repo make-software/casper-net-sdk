@@ -59,24 +59,19 @@ namespace Casper.Network.SDK.Types
             
             public virtual TransactionV1 Build()
             {
-                var body = new TransactionV1Body()
-                {
-                    RuntimeArgs = _runtimeArgs,
-                    Target = _invocationTarget,
-                    EntryPoint = _entryPoint,
-                    Scheduling = _scheduling,
-                    Category = _category,
-                };
-                var header = new TransactionV1Header()
+                var payload = new TransactionV1Payload()
                 {
                     InitiatorAddr = _from,
                     Timestamp = DateUtils.ToEpochTime(_timestamp.HasValue ? _timestamp.Value : DateTime.UtcNow),
                     Ttl = _ttl,
                     ChainName = _chainName,
                     PricingMode = Types.PricingMode.Fixed(_gasPriceTolerance),
+                    RuntimeArgs = _runtimeArgs,
+                    Target = _invocationTarget,
+                    EntryPoint = _entryPoint,
+                    Scheduling = _scheduling,
                 };
-                var transaction = new TransactionV1(header, body);
-                return transaction;
+                return new TransactionV1(payload);
             }
         }
         
