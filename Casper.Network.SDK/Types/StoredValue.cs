@@ -67,11 +67,16 @@ namespace Casper.Network.SDK.Types
         public NamedKeyValue NamedKey { get; init; }
         
         /// <summary>
-        /// Stores location, type and data for a gas reservation.
+        /// Stores location, type and data for a gas pre-payment.
         /// </summary>
-        public Reservation Reservation { get; init; }
+        public Prepayment Prepaid { get; init; }
         
         public EntryPoint EntryPoint { get; init; }
+        
+        /// <summary>
+        /// Raw bytes. Similar to a [`crate::StoredValue::CLValue`] but does not incur overhead of a [`crate::CLValue`] and [`crate::CLType`].
+        /// </summary>
+        public byte[] RawBytes { get; init; }
         
         public class StoredValueConverter : JsonConverter<StoredValue>
         {
