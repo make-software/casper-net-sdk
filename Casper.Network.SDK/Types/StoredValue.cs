@@ -18,7 +18,7 @@ namespace Casper.Network.SDK.Types
 
         public Account Account { get; init; }
 
-        public string ContractWasm { get; init; }
+        public ContractWasm ContractWasm { get; init; }
 
         public ContractPackage ContractPackage { get; init; }
 
