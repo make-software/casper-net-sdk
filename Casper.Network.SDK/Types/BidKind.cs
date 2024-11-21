@@ -9,7 +9,6 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class Bridge
     {
-        
         /// <summary>
         /// Previous validator public key associated with the bid.
         /// </summary>
@@ -56,6 +55,33 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey Validator { get; init; }
     }
+
+    /// <summary>
+    /// Represents a validator reserving a slot for specific delegator"
+    /// </summary>
+    public class Reservation
+    {
+        /// <summary>
+        /// The validator public key.
+        /// </summary>
+        [JsonPropertyName("validator_public_key")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey ValidatorPublicKey { get; init; }
+
+        /// <summary>
+        /// The delegator public key.
+        /// </summary>
+        [JsonPropertyName("delegator_public_key")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey DelegatorPublicKey { get; init; }
+        
+        /// <summary>
+        /// The delegation rate.
+        /// </summary>
+        /// <returns></returns>
+        [JsonPropertyName("delegation_rate")]
+        public uint DelegationRate { get; init; }
+    }
     
     /// <summary>
     /// Auction bid variants.
@@ -93,5 +119,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("Credit")]
         public ValidatorCredit Credit { get; init; }
+        
+        /// <summary>
+        /// Represents a validator reserving a slot for specific delegator"
+        /// </summary>
+        [JsonPropertyName("Reservation")]
+        public Reservation Reservation { get; init; }
     }
 }
