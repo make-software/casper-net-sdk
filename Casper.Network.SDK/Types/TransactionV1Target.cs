@@ -341,5 +341,132 @@ namespace Casper.Network.SDK.Types
                 ModuleBytes = moduleBytes,
             };
         }
+        
+        public class TransactionTargetConverter : JsonConverter<ITransactionV1Target>
+        {
+            public override ITransactionV1Target Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                if (reader.TokenType == JsonTokenType.String)
+                {
+                    var targetType = reader.GetString();
+
+                    switch (targetType)
+                    {
+                        case "Native":
+                            return new NativeTransactionV1Target();
+                        default:
+                            throw new JsonException($"TransactionTargetType '{targetType}' not supported.");
+                    }
+                }
+                if (reader.TokenType == JsonTokenType.StartObject)
+                {
+                    ITransactionV1Target transactionTarget = null;
+                    IInvocationTarget id = null;
+                    string module_bytes = null;
+                    TransactionRuntime runtime = TransactionRuntime.VmCasperV1;
+
+                    reader.Read(); // skip start object
+                    var targetType = reader.GetString();
+                    reader.Read();
+
+                    switch (targetType)
+                    {
+                        case "Stored":
+                            reader.Read();
+                            while (reader.TokenType != JsonTokenType.EndObject)
+                            {
+                                var prop = reader.GetString();
+                                reader.Read();
+                                switch (prop)
+                                {
+                                    case "id":
+                                        id = JsonSerializer.Deserialize<IInvocationTarget>(ref reader, options);
+                                        reader.Read();
+                                        break;
+                                    case "runtime":
+                                        runtime = EnumCompat.Parse<TransactionRuntime>(reader.GetString());
+                                        reader.Read(); // skip end object
+                                        break;
+                                }
+                            }
+
+                            reader.Read(); // skip end object
+
+                            transactionTarget = new StoredTransactionV1Target()
+                            {
+                                Id = id,
+                                Runtime = runtime,
+                            };
+                            break;
+                        case "Session":
+                            reader.Read();
+                            while (reader.TokenType != JsonTokenType.EndObject)
+                            {
+                                var prop = reader.GetString();
+                                reader.Read();
+                                switch (prop)
+                                {
+                                    case "module_bytes":
+                                        module_bytes = reader.GetString();
+                                        break;
+                                    case "runtime":
+                                        runtime = EnumCompat.Parse<TransactionRuntime>(reader.GetString());
+                                        break;
+                                }
+                            }
+
+                            reader.Read(); // skip end object
+
+                            transactionTarget = new SessionTransactionV1Target()
+                            {
+                                ModuleBytes = Hex.Decode(module_bytes),
+                                Runtime = runtime,
+                            };
+                            break;
+                        default:
+                            throw new JsonException($"TransactionTargetType '{targetType}' not supported.");
+                    }
+
+                    return transactionTarget;
+                }
+
+                throw new JsonException("Cannot deserialize TransactionTarget. PropertyName expected");
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                ITransactionV1Target value,
+                JsonSerializerOptions options)
+            {
+                switch (value)
+                {
+                    case NativeTransactionV1Target:
+                        writer.WriteStringValue("Native");
+                        break;
+                    case StoredTransactionV1Target storedTarget:
+                        writer.WriteStartObject();
+                        writer.WriteStartObject("Stored");
+                        writer.WritePropertyName("id");
+                        JsonSerializer.Serialize(writer, storedTarget.Id);
+                        writer.WriteString("runtime", storedTarget.Runtime.ToString());
+                        writer.WriteEndObject();
+                        writer.WriteEndObject();
+                        break;
+                    case SessionTransactionV1Target sessionTarget:
+                        writer.WriteStartObject();
+                        writer.WriteStartObject("Session");
+                        writer.WriteString("module_bytes", Hex.ToHexString(sessionTarget.ModuleBytes));
+                        writer.WriteString("runtime", sessionTarget.Runtime.ToString());
+                        writer.WriteEndObject();
+                        writer.WriteEndObject();
+                        break;
+                    default:
+                        throw new JsonException("Cannot serialize empty transaction target.");
+                }
+            }
+        }
     }
 }

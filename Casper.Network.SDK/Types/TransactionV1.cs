@@ -22,17 +22,17 @@ namespace Casper.Network.SDK.Types
         public string Hash { get; }
 
         /// <summary>
-        /// List of signers and signatures for this transaction.
-        /// </summary>
-        [JsonPropertyName("approvals")]
-        public List<Approval> Approvals { get; } = new List<Approval>();
-
-        /// <summary>
         /// Payload  for this transaction.
         /// </summary>
         [JsonPropertyName("payload")]
         public TransactionV1Payload Payload { get; init; }
 
+        /// <summary>
+        /// List of signers and signatures for this transaction.
+        /// </summary>
+        [JsonPropertyName("approvals")]
+        public List<Approval> Approvals { get; } = new List<Approval>();
+        
         /// <summary>
         /// Loads and deserializes a TransactionV1 from a file.
         /// </summary>
@@ -173,20 +173,30 @@ namespace Casper.Network.SDK.Types
             return this.ToBytes().Length;
         }
 
+        const ushort HASH_FIELD_INDEX = 0;
+        const ushort PAYLOAD_FIELD_INDEX = 1;
+        const ushort APPROVALS_FIELD_INDEX = 2;
+
+            
         public byte[] ToBytes()
         {
+            // add the approvals
+            //
             var ms = new MemoryStream();
-
-            ms.Write(Hex.Decode(this.Hash));
-
-            ms.Write(this.Payload.ToBytes());
-
-            var approvalSerializer = new DeployApprovalByteSerializer();
-            ms.Write(LittleEndianConverter.GetBytes(this.Approvals.Count));
+            var count = LittleEndianConverter.GetBytes(this.Approvals.Count);
+            ms.Write(count, 0, count.Length);
             foreach (var approval in this.Approvals)
-                ms.Write(approvalSerializer.ToBytes(approval));
-
-            return ms.ToArray();
+            {
+                var approvalSerializer = new DeployApprovalByteSerializer();
+                var approvalBytes = approvalSerializer.ToBytes(approval); 
+                ms.Write(approvalBytes, 0, approvalBytes.Length);
+            }
+            
+            return new CalltableSerialization()
+                .AddField(HASH_FIELD_INDEX, Hex.Decode(this.Hash))
+                .AddField(PAYLOAD_FIELD_INDEX, this.Payload.ToBytes())
+                .AddField(APPROVALS_FIELD_INDEX, ms.ToArray())
+                .GetBytes();
         }
     }
 }

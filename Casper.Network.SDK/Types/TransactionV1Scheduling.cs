@@ -109,7 +109,85 @@ namespace Casper.Network.SDK.Types
     }
     
     public class TransactionV1Scheduling : TransactionScheduling
-    {
-        
+    { 
+        public class TransactionV1SchedulingConverter : JsonConverter<ITransactionV1Scheduling>
+        {
+            public override ITransactionV1Scheduling Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                ITransactionV1Scheduling v1Scheduling;
+
+                if (reader.TokenType == JsonTokenType.String)
+                {
+                    var schedulingType = reader.GetString();
+                    switch (schedulingType)
+                    {
+                        case "Standard":
+                            v1Scheduling = new StandardTransactionV1Scheduling();
+                            break;
+                        default:
+                            throw new JsonException(
+                                "Cannot deserialize TransactionScheduling. Unknown scheduling type");
+                    }
+                }
+                else if (reader.TokenType == JsonTokenType.StartObject)
+                {
+                    reader.Read(); // skip start object
+                    var schedulingType = reader.GetString();
+                    reader.Read();
+                    switch (schedulingType)
+                    {
+                        case "FutureEra":
+                            v1Scheduling = new FutureEraTransactionV1Scheduling
+                            {
+                                EraId = reader.GetUInt64(),
+                            };
+                            break;
+                        case "FutureTimestamp":
+                            v1Scheduling = new FutureTimestampTransactionV1Scheduling
+                            {
+                                Timestamp = DateUtils.ToEpochTime(reader.GetString()),
+                            };
+                            break;
+                        default:
+                            throw new JsonException(
+                                "Cannot deserialize TransactionScheduling. Unknown scheduling type");
+                    }
+
+                    reader.Read();
+                }
+                else
+                    throw new JsonException("Cannot deserialize TransactionScheduling.");
+
+                return v1Scheduling;
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                ITransactionV1Scheduling value,
+                JsonSerializerOptions options)
+            {
+                switch (value)
+                {
+                    case StandardTransactionV1Scheduling:
+                        writer.WriteStringValue("Standard");
+                        break;
+                    case FutureEraTransactionV1Scheduling eraScheduling:
+                        writer.WriteStartObject();
+                        writer.WriteNumber("FutureEra", eraScheduling.EraId);
+                        writer.WriteEndObject();
+                        break;
+                    case FutureTimestampTransactionV1Scheduling timestampScheduling:
+                        writer.WriteStartObject();
+                        writer.WriteString("FutureTimestamp", DateUtils.ToISOString(timestampScheduling.Timestamp));
+                        writer.WriteEndObject();
+                        break;
+                    default:
+                        throw new JsonException("Cannot serialize due to unkown transaction scheduling type.");
+                }
+            }
+        }
     }
 }

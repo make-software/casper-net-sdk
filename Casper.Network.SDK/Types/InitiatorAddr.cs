@@ -80,7 +80,7 @@ namespace Casper.Network.SDK.Types
             if(AccountHash != null)
                 return new CalltableSerialization()
                     .AddField(TAG_FIELD_INDEX, new byte[] { ACCOUNT_HASH_VARIANT_TAG })
-                    .AddField(PUBLIC_KEY_FIELD_INDEX, CLValue.Key(AccountHash))
+                    .AddField(PUBLIC_KEY_FIELD_INDEX, AccountHash.RawBytes)
                     .GetBytes();
             
             throw new Exception("Unable to serialize initiator addr");

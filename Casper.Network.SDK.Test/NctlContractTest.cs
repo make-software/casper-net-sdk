@@ -79,7 +79,7 @@ namespace NetCasperTest
             var contractWasmKey = GlobalStateKey.FromString(contractInfo.ContractWasmHash);
             var rpcResponse4 = await _client.QueryGlobalState(contractWasmKey);
             var contractWasmInfo = rpcResponse4.Parse().StoredValue.ContractWasm;
-            Assert.IsFalse(string.IsNullOrWhiteSpace(contractWasmInfo));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(contractWasmInfo.Bytes));
         }
 
         [Test, Order(4)]

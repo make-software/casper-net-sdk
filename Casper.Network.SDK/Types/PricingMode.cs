@@ -78,13 +78,6 @@ namespace Casper.Network.SDK.Types
     public class FixedPricingMode : IPricingMode
     {
         /// <summary>
-        /// User-specified gas_price tolerance (minimum 1). This is interpreted to mean "do not include this
-        /// transaction in a block if the current gas price is greater than this number".
-        /// </summary>
-        [JsonPropertyName("gas_price_tolerance")]
-        public byte GasPriceTolerance { get; init; }
-        
-        /// <summary>
         /// User-specified additional computation factor (minimum 0). If "0" is provided,
         ///  no additional logic is applied to the computation limit. Each value above "0"
         ///  tells the node that it needs to treat the transaction as if it uses more gas
@@ -95,6 +88,13 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("additional_computation_factor")]
         public byte AdditionalComputationFactor { get; init; }
+        
+        /// <summary>
+        /// User-specified gas_price tolerance (minimum 1). This is interpreted to mean "do not include this
+        /// transaction in a block if the current gas price is greater than this number".
+        /// </summary>
+        [JsonPropertyName("gas_price_tolerance")]
+        public byte GasPriceTolerance { get; init; }
         
         const ushort TAG_FIELD_INDEX = 0;
         const byte FIXED_VARIANT_TAG = 1;

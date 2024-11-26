@@ -11,9 +11,24 @@ using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
-    [JsonConverter(typeof(PayloadFieldsConverter))]
     public class PayloadFields : BaseByteSerializer
     {
+        [JsonPropertyName("args")]
+        [JsonConverter(typeof(NamedArgsListConverter<NamedArg, NamedArg.NamedArgConverter>))]
+        public List<NamedArg> RuntimeArgs { get; init; }
+        
+        [JsonPropertyName("entry_point")] 
+        [JsonConverter(typeof(TransactionV1EntryPoint.TransactionEntryPointConverter))]
+        public ITransactionV1EntryPoint EntryPoint { get; init; }
+        
+        [JsonPropertyName("scheduling")] 
+        [JsonConverter(typeof(TransactionV1Scheduling.TransactionV1SchedulingConverter))]
+        public ITransactionV1Scheduling Scheduling { get; init; }
+        
+        [JsonPropertyName("target")] 
+        [JsonConverter(typeof(TransactionV1Target.TransactionTargetConverter))]
+        public ITransactionV1Target Target { get; init; }
+        
         private readonly Dictionary<ushort, byte[]> _fields = new Dictionary<ushort, byte[]>();
 
         public void AddField(ushort field, byte[] value)
@@ -21,58 +36,6 @@ namespace Casper.Network.SDK.Types
             _fields.Add(field, value);
         }
 
-        public class PayloadFieldsConverter : JsonConverter<PayloadFields>
-        {
-            public override PayloadFields Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options)
-            {
-                var payload = new PayloadFields();
-                try
-                {
-                    reader.Read(); // skip start object
-                    while (reader.TokenType == JsonTokenType.PropertyName)
-                    {
-                        var fieldKey = reader.GetString();
-                        if (ushort.TryParse(fieldKey, out var field))
-                        {
-                            reader.Read();
-                            var value = reader.GetString();
-                            payload._fields.Add(field, Hex.Decode(value));
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new JsonException(e.Message);
-                }
-
-                return payload;
-            }
-
-            const ushort ARGS_MAP_KEY = 0;
-            const ushort TARGET_MAP_KEY = 1;
-            const ushort ENTRY_POINT_MAP_KEY = 2;
-            const ushort SCHEDULING_MAP_KEY = 3;
-            
-            public override void Write(
-                Utf8JsonWriter writer,
-                PayloadFields payload,
-                JsonSerializerOptions options)
-            {
-                writer.WriteStartObject();
-                if(payload._fields.TryGetValue(ARGS_MAP_KEY, out var argsMapField))
-                    writer.WriteString(ARGS_MAP_KEY.ToString(), Hex.ToHexString(argsMapField));
-                if(payload._fields.TryGetValue(TARGET_MAP_KEY, out var targetMapField))
-                    writer.WriteString(TARGET_MAP_KEY.ToString(), Hex.ToHexString(targetMapField));
-                if(payload._fields.TryGetValue(ENTRY_POINT_MAP_KEY, out var entryPointMapField))
-                    writer.WriteString(ENTRY_POINT_MAP_KEY.ToString(), Hex.ToHexString(entryPointMapField));
-                if(payload._fields.TryGetValue(SCHEDULING_MAP_KEY, out var schedulingMapField))
-                    writer.WriteString(SCHEDULING_MAP_KEY.ToString(), Hex.ToHexString(schedulingMapField));
-                writer.WriteEndObject();
-            }
-        }
         public byte[] ToBytes()
         {
             var fields_bytes = new MemoryStream();
@@ -87,7 +50,7 @@ namespace Casper.Network.SDK.Types
         }
     }
 
-    internal class TransactionV1PayloadJson
+    public class TransactionV1PayloadJson
     {
         [JsonPropertyName("initiator_addr")]
         public InitiatorAddr InitiatorAddr { get; set; }
@@ -105,26 +68,20 @@ namespace Casper.Network.SDK.Types
         public ulong Ttl { get; set; }
 
         /// <summary>
-        /// Pricing mode of a Transaction.
-        /// </summary>
-        [JsonPropertyName("pricing_mode")]
-        [JsonConverter(typeof(PricingMode.PricingModeConverter))]
-        public IPricingMode PricingMode { get; set; }
-
-        /// <summary>
         /// Name of the chain where the deploy is executed.
         /// </summary>
         [JsonPropertyName("chain_name")]
         public string ChainName { get; set; }
         
+        /// <summary>
+        /// Pricing mode of a Transaction.
+        /// </summary>
+        [JsonPropertyName("pricing_mode")]
+        [JsonConverter(typeof(PricingMode.PricingModeConverter))]
+        public IPricingMode PricingMode { get; set; }
+        
         [JsonPropertyName("fields")]
-        [JsonConverter(typeof(PayloadFields.PayloadFieldsConverter))]
         public PayloadFields Fields { get; set; }
-
-        public TransactionV1PayloadJson()
-        {
-            Fields = new PayloadFields();
-        }
     }
     
     /// <summary>
@@ -160,12 +117,6 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(PricingMode.PricingModeConverter))]
         public IPricingMode PricingMode { get; set; }
 
-        /// <summary>
-        /// Name of the chain where the deploy is executed.
-        /// </summary>
-        [JsonPropertyName("chain_name")]
-        public string ChainName { get; set; }
-        
         // [JsonPropertyName("fields")]
         // public PayloadFields Fields { get; set; }
         
@@ -208,7 +159,7 @@ namespace Casper.Network.SDK.Types
             {
                 try
                 {
-                    reader.Read(); // skip start object
+                    // reader.Read(); // skip start object
                     var payloadJson = JsonSerializer.Deserialize<TransactionV1PayloadJson>(ref reader, options);
 
                     return new TransactionV1Payload()
@@ -218,7 +169,11 @@ namespace Casper.Network.SDK.Types
                         Ttl = payloadJson.Ttl,
                         PricingMode = payloadJson.PricingMode,
                         ChainName = payloadJson.ChainName,
-                    }; //TODO: Deserialize fields!!!
+                        RuntimeArgs = payloadJson.Fields.RuntimeArgs,
+                        Target = payloadJson.Fields.Target,
+                        EntryPoint = payloadJson.Fields.EntryPoint,
+                        Scheduling = payloadJson.Fields.Scheduling,
+                    };
                 }
                 catch (Exception e)
                 {
@@ -238,16 +193,14 @@ namespace Casper.Network.SDK.Types
                     Ttl = payload.Ttl,
                     PricingMode = payload.PricingMode,
                     ChainName = payload.ChainName,
+                    Fields = new PayloadFields()
+                    {
+                        RuntimeArgs = payload.RuntimeArgs,
+                        Target = payload.Target,
+                        EntryPoint = payload.EntryPoint,
+                        Scheduling = payload.Scheduling,
+                    }
                 };
-                var ms = new MemoryStream();
-                var namedArgSerializer = new NamedArgByteSerializer();
-                ms.Write(BitConverter.GetBytes(payload.RuntimeArgs.Count));
-                foreach (var args in payload.RuntimeArgs)
-                    ms.Write(namedArgSerializer.ToBytes(args));
-                payloadJson.Fields.AddField(0, ms.ToArray());
-                payloadJson.Fields.AddField(1, payload.Target.ToBytes());
-                payloadJson.Fields.AddField(2, payload.EntryPoint.ToBytes());
-                payloadJson.Fields.AddField(3, payload.Scheduling.ToBytes());
                 JsonSerializer.Serialize(writer, payloadJson, options);
             }
         }
@@ -268,15 +221,32 @@ namespace Casper.Network.SDK.Types
         {
             var ms = new MemoryStream();
             var namedArgSerializer = new NamedArgByteSerializer();
+            ms.WriteByte(0x00);
             ms.Write(BitConverter.GetBytes(RuntimeArgs.Count));
             foreach (var args in RuntimeArgs)
                 ms.Write(namedArgSerializer.ToBytes(args));
+
+            var ms2 = new MemoryStream();
+            ms2.Write(BitConverter.GetBytes(ms.ToArray().Length));
+            ms2.Write(ms.ToArray());
             
             var fields = new PayloadFields();
-            fields.AddField(ARGS_MAP_KEY, ms.ToArray());
-            fields.AddField(TARGET_MAP_KEY, Target.ToBytes());
-            fields.AddField(ENTRY_POINT_MAP_KEY, EntryPoint.ToBytes());
-            fields.AddField(SCHEDULING_MAP_KEY, Scheduling.ToBytes());
+            fields.AddField(ARGS_MAP_KEY, ms2.ToArray());
+
+            ms2 = new MemoryStream();
+            ms2.Write(BitConverter.GetBytes(Target.ToBytes().Length));
+            ms2.Write(Target.ToBytes());
+            fields.AddField(TARGET_MAP_KEY, ms2.ToArray());
+            
+            ms2 = new MemoryStream();
+            ms2.Write(BitConverter.GetBytes(EntryPoint.ToBytes().Length));
+            ms2.Write(EntryPoint.ToBytes());
+            fields.AddField(ENTRY_POINT_MAP_KEY, ms2.ToArray());
+            
+            ms2 = new MemoryStream();
+            ms2.Write(BitConverter.GetBytes(Scheduling.ToBytes().Length));
+            ms2.Write(Scheduling.ToBytes());
+            fields.AddField(SCHEDULING_MAP_KEY, ms2.ToArray());
             
             return new CalltableSerialization()
                 .AddField(INITIATOR_ADDR_FIELD_INDEX, InitiatorAddr.ToBytes())
