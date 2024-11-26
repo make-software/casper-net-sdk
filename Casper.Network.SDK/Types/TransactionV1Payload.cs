@@ -111,6 +111,12 @@ namespace Casper.Network.SDK.Types
         public ulong Ttl { get; set; }
 
         /// <summary>
+        /// Name of the chain where the deploy is executed.
+        /// </summary>
+        [JsonPropertyName("chain_name")]
+        public string ChainName { get; set; }
+        
+        /// <summary>
         /// Pricing mode of a Transaction.
         /// </summary>
         [JsonPropertyName("pricing_mode")]
