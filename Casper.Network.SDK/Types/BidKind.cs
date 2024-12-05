@@ -55,33 +55,6 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey Validator { get; init; }
     }
-
-    /// <summary>
-    /// Represents a validator reserving a slot for specific delegator"
-    /// </summary>
-    public class Reservation
-    {
-        /// <summary>
-        /// The validator public key.
-        /// </summary>
-        [JsonPropertyName("validator_public_key")]
-        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
-        public PublicKey ValidatorPublicKey { get; init; }
-
-        /// <summary>
-        /// The delegator public key.
-        /// </summary>
-        [JsonPropertyName("delegator_public_key")]
-        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
-        public PublicKey DelegatorPublicKey { get; init; }
-        
-        /// <summary>
-        /// The delegation rate.
-        /// </summary>
-        /// <returns></returns>
-        [JsonPropertyName("delegation_rate")]
-        public uint DelegationRate { get; init; }
-    }
     
     /// <summary>
     /// Auction bid variants.
@@ -106,7 +79,7 @@ namespace Casper.Network.SDK.Types
         /// A bid record containing only delegator data.
         /// </summary>
         [JsonPropertyName("Delegator")]
-        public Delegator Delegator { get; init; }
+        public DelegatorBid Delegator { get; init; }
         
         /// <summary>
         /// A bridge record pointing to a new `ValidatorBid` after the public key was changed.
