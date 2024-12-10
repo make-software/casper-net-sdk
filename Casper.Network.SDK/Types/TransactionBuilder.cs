@@ -9,28 +9,38 @@ namespace Casper.Network.SDK.Types
 {
     public partial class Transaction
     {
+        [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+        public class RequiredArgAttribute : Attribute
+        {
+        }
+        
         public abstract class TransactionV1Builder<T> where T : TransactionV1Builder<T>
         {
-            protected InitiatorAddr _from = null;
-            protected string _chainName = null;
-            protected DateTime? _timestamp = null;
+            [RequiredArg]
+            protected InitiatorAddr _initiatorAddr;
+            [RequiredArg]
+            protected string _chainName;
+            protected DateTime? _timestamp;
             protected ulong _ttl = 1800000; //30m
-
+            [RequiredArg]
             protected IPricingMode _pricingMode;
+            [RequiredArg]
             protected ITransactionV1Target _invocationTarget;
+            [RequiredArg]
             protected ITransactionV1EntryPoint _entryPoint;
             protected ITransactionV1Scheduling _scheduling = TransactionScheduling.Standard;
+            [RequiredArg]
             protected List<NamedArg> _runtimeArgs = new();
 
             public T From(PublicKey publicKey)
             {
-                _from = Types.InitiatorAddr.FromPublicKey(publicKey);
+                _initiatorAddr = Types.InitiatorAddr.FromPublicKey(publicKey);
                 return (T)this;
             }
 
             public T From(AccountHashKey accountHashKey)
             {
-                _from = Types.InitiatorAddr.FromAccountHash(accountHashKey);
+                _initiatorAddr = Types.InitiatorAddr.FromAccountHash(accountHashKey);
                 return (T)this;
             }
 
@@ -57,12 +67,26 @@ namespace Casper.Network.SDK.Types
                 _pricingMode = pricingMode;
                 return (T)this;
             }
+            
+            protected void ValidateRequiredProperties()
+            {
+                var missingProperties = this.GetType()
+                    .GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                    .Where(field => Attribute.IsDefined(field, typeof(RequiredArgAttribute)) && field.GetValue(this) == null)
+                    .Select(field => field.Name)
+                    .ToList();
+
+                if (missingProperties.Any())
+                {
+                    throw new InvalidOperationException($"The following required properties are missing: {string.Join(", ", missingProperties)}");
+                }
+            }
 
             public virtual TransactionV1 Build()
             {
                 var payload = new TransactionV1Payload()
                 {
-                    InitiatorAddr = _from,
+                    InitiatorAddr = _initiatorAddr,
                     Timestamp = DateUtils.ToEpochTime(_timestamp.HasValue ? _timestamp.Value : DateTime.UtcNow),
                     Ttl = _ttl,
                     ChainName = _chainName,
@@ -79,9 +103,11 @@ namespace Casper.Network.SDK.Types
         public class NativeTransferBuilder : TransactionV1Builder<NativeTransferBuilder>
         {
             //specific tx properties
-            private CLValue _target = null;
+            [RequiredArg]
+            private CLValue _target;
+            [RequiredArg]
             private CLValue _amount = CLValue.U512((BigInteger)0);
-            private ulong? _idTransfer = null;
+            private ulong? _idTransfer;
 
             public NativeTransferBuilder()
             {
@@ -121,6 +147,8 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+
                 _runtimeArgs = new List<NamedArg>();
                 _runtimeArgs.Add(new NamedArg("target", _target));
                 _runtimeArgs.Add(new NamedArg("amount", _amount));
@@ -132,11 +160,135 @@ namespace Casper.Network.SDK.Types
                 return base.Build();
             }
         }
+        
+        public class NativeAddBidBuilder : TransactionV1Builder<NativeAddBidBuilder>
+        {
+            //specific tx properties
+            [RequiredArg]
+            private CLValue _validator;
+            [RequiredArg]
+            private CLValue _amount;
+            [RequiredArg]
+            private CLValue _delegationRate;
+            private CLValue _minimumDelegationAmount;
+            private CLValue _maximumDelegationAmount;
+            private CLValue _reservedSlots;
+            
+            public NativeAddBidBuilder()
+            {
+                _invocationTarget = TransactionV1Target.Native;
+                _entryPoint = TransactionV1EntryPoint.AddBid;
+            }
+
+            public NativeAddBidBuilder Validator(PublicKey publicKey)
+            {
+                _validator = CLValue.PublicKey(publicKey);
+                return this;
+            }
+
+            public NativeAddBidBuilder Amount(ulong amount)
+            {
+                _amount = CLValue.U512(amount);
+                return this;
+            }
+
+            public NativeAddBidBuilder Amount(BigInteger amount)
+            {
+                _amount = CLValue.U512(amount);
+                return this;
+            }
+
+            public NativeAddBidBuilder DelegationRate(byte delegationRate)
+            {
+                _delegationRate = CLValue.U8(delegationRate);
+                return this;
+            }
+
+            public NativeAddBidBuilder MinimumDelegationAmount(ulong minimumDelegationAmount)
+            {
+                _minimumDelegationAmount = CLValue.U64(minimumDelegationAmount);
+                return this;
+            }
+
+            public NativeAddBidBuilder MaximumDelegationAmount(ulong maximumDelegationAmount)
+            {
+                _maximumDelegationAmount = CLValue.U64(maximumDelegationAmount);
+                return this;
+            }
+
+            public NativeAddBidBuilder ReservedSlots(uint reservedSlots)
+            {
+                _reservedSlots = CLValue.U32(reservedSlots);
+                return this;
+            }
+
+            public override TransactionV1 Build()
+            {
+                ValidateRequiredProperties();
+                
+                _runtimeArgs = new List<NamedArg>();
+                _runtimeArgs.Add(new NamedArg("public_key", _validator));
+                _runtimeArgs.Add(new NamedArg("amount", _amount));
+                _runtimeArgs.Add(new NamedArg("delegation_rate", _delegationRate));
+                if(_minimumDelegationAmount != null)
+                    _runtimeArgs.Add(new NamedArg("minimum_delegation_amount", _minimumDelegationAmount));
+                if(_maximumDelegationAmount != null)
+                _runtimeArgs.Add(new NamedArg("maximum_delegation_amount", _maximumDelegationAmount));
+                if(_reservedSlots != null) 
+                    _runtimeArgs.Add(new NamedArg("reserved_slots", _reservedSlots));
+                return base.Build();
+            }
+        }
+
+        public class NativeWithdrawBidBuilder : TransactionV1Builder<NativeWithdrawBidBuilder>
+        {
+            //specific tx properties
+            [RequiredArg]
+            private CLValue _validator;
+            [RequiredArg]
+            private CLValue _amount = CLValue.U512((BigInteger)0);
+
+            public NativeWithdrawBidBuilder()
+            {
+                _invocationTarget = TransactionV1Target.Native;
+                _entryPoint = TransactionV1EntryPoint.WithdrawBid;
+            }
+
+            public NativeWithdrawBidBuilder Validator(PublicKey publicKey)
+            {
+                _validator = CLValue.PublicKey(publicKey);
+                return this;
+            }
+
+            public NativeWithdrawBidBuilder Amount(ulong amount)
+            {
+                _amount = CLValue.U512(amount);
+                return this;
+            }
+
+            public NativeWithdrawBidBuilder Amount(BigInteger amount)
+            {
+                _amount = CLValue.U512(amount);
+                return this;
+            }
+
+            public override TransactionV1 Build()
+            {
+                ValidateRequiredProperties();
+
+                _runtimeArgs = new List<NamedArg>();
+                _runtimeArgs.Add(new NamedArg("public_key", _validator));
+                _runtimeArgs.Add(new NamedArg("amount", _amount));
+                return base.Build();
+            }
+        }
 
         public class NativeDelegateBuilder : TransactionV1Builder<NativeDelegateBuilder>
         {
             //specific tx properties
-            private CLValue _validator = null;
+            [RequiredArg]
+            private CLValue _validator;
+            [RequiredArg]
             private CLValue _amount = CLValue.U512((BigInteger)0);
 
             public NativeDelegateBuilder()
@@ -165,8 +317,10 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+
                 _runtimeArgs = new List<NamedArg>();
-                _runtimeArgs.Add(new NamedArg("delegator", CLValue.PublicKey(_from.PublicKey)));
+                _runtimeArgs.Add(new NamedArg("delegator", CLValue.PublicKey(_initiatorAddr.PublicKey)));
                 _runtimeArgs.Add(new NamedArg("validator", _validator));
                 _runtimeArgs.Add(new NamedArg("amount", _amount));
 
@@ -177,7 +331,9 @@ namespace Casper.Network.SDK.Types
         public class NativeUndelegateBuilder : TransactionV1Builder<NativeUndelegateBuilder>
         {
             //specific tx properties
-            private CLValue _validator = null;
+            [RequiredArg]
+            private CLValue _validator;
+            [RequiredArg]
             private CLValue _amount = CLValue.U512((BigInteger)0);
 
             public NativeUndelegateBuilder()
@@ -206,8 +362,10 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+
                 _runtimeArgs = new List<NamedArg>();
-                _runtimeArgs.Add(new NamedArg("delegator", CLValue.PublicKey(_from.PublicKey)));
+                _runtimeArgs.Add(new NamedArg("delegator", CLValue.PublicKey(_initiatorAddr.PublicKey)));
                 _runtimeArgs.Add(new NamedArg("validator", _validator));
                 _runtimeArgs.Add(new NamedArg("amount", _amount));
 
@@ -218,8 +376,11 @@ namespace Casper.Network.SDK.Types
         public class NativeRedelegateBuilder : TransactionV1Builder<NativeRedelegateBuilder>
         {
             //specific tx properties
-            private CLValue _validator = null;
-            private CLValue _newValidator = null;
+            [RequiredArg]
+            private CLValue _validator;
+            [RequiredArg]
+            private CLValue _newValidator;
+            [RequiredArg]
             private CLValue _amount = CLValue.U512((BigInteger)0);
 
             public NativeRedelegateBuilder()
@@ -254,10 +415,12 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+
                 _runtimeArgs = new List<NamedArg>();
-                _runtimeArgs.Add(new NamedArg("delegator", CLValue.PublicKey(_from.PublicKey)));
+                _runtimeArgs.Add(new NamedArg("delegator", CLValue.PublicKey(_initiatorAddr.PublicKey)));
                 _runtimeArgs.Add(new NamedArg("validator", _validator));
-                _runtimeArgs.Add(new NamedArg("new_validator", _validator));
+                _runtimeArgs.Add(new NamedArg("new_validator", _newValidator));
                 _runtimeArgs.Add(new NamedArg("amount", _amount));
 
                 return base.Build();
@@ -267,7 +430,8 @@ namespace Casper.Network.SDK.Types
         public class NativeActivateBidBuilder : TransactionV1Builder<NativeActivateBidBuilder>
         {
             //specific tx properties
-            private CLValue _validator = null;
+            [RequiredArg]
+            private CLValue _validator;
 
             public NativeActivateBidBuilder()
             {
@@ -283,17 +447,21 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+            
                 _runtimeArgs = new List<NamedArg>();
                 _runtimeArgs.Add(new NamedArg("validator", _validator));
                 return base.Build();
             }
         }
-
+        
         public class NativeChangeBidPublicKeyBuilder : TransactionV1Builder<NativeChangeBidPublicKeyBuilder>
         {
             //specific tx properties
-            private CLValue _public_key = null;
-            private CLValue _new_public_key = null;
+            [RequiredArg]
+            private CLValue _public_key;
+            [RequiredArg]
+            private CLValue _new_public_key;
 
             public NativeChangeBidPublicKeyBuilder()
             {
@@ -315,6 +483,8 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+
                 _runtimeArgs = new List<NamedArg>();
                 _runtimeArgs.Add(new NamedArg("public_key", _public_key));
                 _runtimeArgs.Add(new NamedArg("new_public_key", _new_public_key));
@@ -322,124 +492,11 @@ namespace Casper.Network.SDK.Types
             }
         }
 
-        public class NativeAddBidBuilder : TransactionV1Builder<NativeAddBidBuilder>
-        {
-            //specific tx properties
-            private CLValue _validator = null;
-            private CLValue _amount = CLValue.U512((BigInteger)0);
-            private CLValue _delegationRate = CLValue.U8(100);
-            private CLValue _minimumDelegationAmount = CLValue.OptionNone(CLType.U64);
-            private CLValue _maximumDelegationAmount = CLValue.OptionNone(CLType.U64);
-            private CLValue _reservedSlots = null;
-            
-            public NativeAddBidBuilder()
-            {
-                _invocationTarget = TransactionV1Target.Native;
-                _entryPoint = TransactionV1EntryPoint.AddBid;
-            }
-
-            public NativeAddBidBuilder Validator(PublicKey publicKey)
-            {
-                _validator = CLValue.PublicKey(publicKey);
-                return this;
-            }
-
-            public NativeAddBidBuilder Amount(ulong amount)
-            {
-                _amount = CLValue.U512(amount);
-                return this;
-            }
-
-            public NativeAddBidBuilder Amount(BigInteger amount)
-            {
-                _amount = CLValue.U512(amount);
-                return this;
-            }
-
-            public NativeAddBidBuilder DelegationRate(byte delegationRate)
-            {
-                _delegationRate = CLValue.U8(delegationRate);
-                return this;
-            }
-
-            public NativeAddBidBuilder MinimumDelegationAmount(ulong minimumDelegationAmount)
-            {
-                _minimumDelegationAmount = CLValue.Option(CLValue.U64(minimumDelegationAmount));
-                _minimumDelegationAmount = CLValue.U64(minimumDelegationAmount);
-                return this;
-            }
-
-            public NativeAddBidBuilder MaximumDelegationAmount(ulong maximumDelegationAmount)
-            {
-                _maximumDelegationAmount = CLValue.Option(CLValue.U64(maximumDelegationAmount));
-                _maximumDelegationAmount = CLValue.U64(maximumDelegationAmount);
-                return this;
-            }
-
-            public NativeAddBidBuilder ReservedSlots(uint reservedSlots)
-            {
-                _reservedSlots = CLValue.U32(reservedSlots);
-                // _reservedSlots = CLValue.OptionNone(CLType.U32);
-                return this;
-            }
-
-            public override TransactionV1 Build()
-            {
-                _runtimeArgs = new List<NamedArg>();
-                _runtimeArgs.Add(new NamedArg("public_key", _validator));
-                _runtimeArgs.Add(new NamedArg("amount", _amount));
-                _runtimeArgs.Add(new NamedArg("delegation_rate", _delegationRate));
-                _runtimeArgs.Add(new NamedArg("minimum_delegation_amount", _minimumDelegationAmount));
-                _runtimeArgs.Add(new NamedArg("maximum_delegation_amount", _maximumDelegationAmount));
-                if(_reservedSlots != null) 
-                    _runtimeArgs.Add(new NamedArg("reserved_slots", _reservedSlots));
-                return base.Build();
-            }
-        }
-
-        public class NativeWithdrawBidBuilder : TransactionV1Builder<NativeWithdrawBidBuilder>
-        {
-            //specific tx properties
-            private CLValue _validator = null;
-            private CLValue _amount = CLValue.U512((BigInteger)0);
-
-            public NativeWithdrawBidBuilder()
-            {
-                _invocationTarget = TransactionV1Target.Native;
-                _entryPoint = TransactionV1EntryPoint.WithdrawBid;
-            }
-
-            public NativeWithdrawBidBuilder Validator(PublicKey publicKey)
-            {
-                _validator = CLValue.PublicKey(publicKey);
-                return this;
-            }
-
-            public NativeWithdrawBidBuilder Amount(ulong amount)
-            {
-                _amount = CLValue.U512(amount);
-                return this;
-            }
-
-            public NativeWithdrawBidBuilder Amount(BigInteger amount)
-            {
-                _amount = CLValue.U512(amount);
-                return this;
-            }
-
-            public override TransactionV1 Build()
-            {
-                _runtimeArgs = new List<NamedArg>();
-                _runtimeArgs.Add(new NamedArg("public_key", _validator));
-                _runtimeArgs.Add(new NamedArg("amount", _amount));
-                return base.Build();
-            }
-        }
-
         public class NativeAddReservationsBuilder : TransactionV1Builder<NativeAddReservationsBuilder>
         {
             //specific tx properties
-            private List<Reservation> _reservations = null;
+            [RequiredArg]
+            private List<Reservation> _reservations;
 
             public NativeAddReservationsBuilder()
             {
@@ -455,6 +512,8 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+
                 var list = _reservations.Select(r => r.ToCLValue());
                 _runtimeArgs.Add(new NamedArg("reservations", CLValue.List(list.ToArray())));
                 return base.Build();
@@ -464,8 +523,10 @@ namespace Casper.Network.SDK.Types
         public class NativeCancelReservationsBuilder : TransactionV1Builder<NativeCancelReservationsBuilder>
         {
             //specific tx properties
-            private PublicKey _validator = null;
-            private List<DelegatorKind> _delegators = null;
+            [RequiredArg]
+            private PublicKey _validator;
+            [RequiredArg]
+            private List<DelegatorKind> _delegators;
 
             public NativeCancelReservationsBuilder()
             {
@@ -487,9 +548,10 @@ namespace Casper.Network.SDK.Types
 
             public override TransactionV1 Build()
             {
+                ValidateRequiredProperties();
+
                 _runtimeArgs.Add(new NamedArg("validator", CLValue.PublicKey(_validator)));
-                // var list = _delegators.Select(r => r.ToCLValue());
-                var list = _delegators.Select(r => CLValue.PublicKey(r.PublicKey));
+                var list = _delegators.Select(r => r.ToCLValue());
                 _runtimeArgs.Add(new NamedArg("delegators", CLValue.List(list.ToArray())));
                 return base.Build();
             }
