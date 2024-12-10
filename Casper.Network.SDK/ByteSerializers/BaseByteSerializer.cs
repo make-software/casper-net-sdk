@@ -43,6 +43,7 @@ namespace Casper.Network.SDK.ByteSerializers
             ms.Write(value);
         }
         
+        
         protected static void WriteString(MemoryStream ms, string value)
         {
             var valueBytes = System.Text.Encoding.UTF8.GetBytes(value);

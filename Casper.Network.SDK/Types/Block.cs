@@ -515,7 +515,7 @@ namespace Casper.Network.SDK.Types
         /// Transfer from a Deploy transaction.
         /// </summary>
         [Obsolete("Use Mint instead of DeployTransfer")]
-        DeployTransfer = 1,
+        DeployTransfer = 0,
         /// <summary>
         /// Native auction interaction.
         /// </summary>

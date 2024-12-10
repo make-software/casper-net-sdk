@@ -192,6 +192,12 @@ namespace Casper.Network.SDK.Types
         public static ITransactionV1EntryPoint Call =>
             new NativeTransactionV1EntryPoint(NativeEntryPoint.Call);
 
+        public static ITransactionV1EntryPoint AddReservations =>
+            new NativeTransactionV1EntryPoint(NativeEntryPoint.AddReservations);
+        
+        public static ITransactionV1EntryPoint CancelReservations =>
+            new NativeTransactionV1EntryPoint(NativeEntryPoint.CancelReservations);
+        
         public static ITransactionV1EntryPoint Custom(string name) => 
             new CustomTransactionV1EntryPoint(name);
         

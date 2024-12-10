@@ -17,11 +17,31 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Delegator BidAddr,
         /// </summary>
-        Delegator = 2,
+        DelegatedAccount = 2,
+        /// <summary>
+        /// BidAddr for delegated purse bid.
+        /// </summary>
+        DelegatedPurse = 3,
         /// <summary>
         /// BidAddr for auction credit.
         /// </summary>
         Credit = 4,
+        /// <summary>
+        /// BidAddr for reserved delegation account bid.
+        /// </summary>
+        ReservedDelegationAccount = 5,
+        /// <summary>
+        /// BidAddr for reserved delegation purse bid.
+        /// </summary>
+        ReservedDelegationPurse = 6,
+        /// <summary>
+        /// BidAddr for unbonding accounts.
+        /// </summary>
+        UnbondAccount = 7,
+        /// <summary>
+        /// BidAddr for unbonding purses.
+        /// </summary>
+        UnbondPurse = 8,
     }
     
     public class BidAddrKey : GlobalStateKey
@@ -43,7 +63,12 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The delegator address.
         /// </summary>
-        public AccountHashKey Delegator { get; init; }
+        public AccountHashKey DelegatorAccount { get; init; }
+        
+        /// <summary>
+        /// The delegator purse address.
+        /// </summary>
+        public string DelegatorPurseAddress { get; init; }
         
         /// <summary>
         /// The era id.
@@ -72,12 +97,19 @@ namespace Casper.Network.SDK.Types
                         throw new Exception("Wrong key length for Validator BidAddr. Expected 33 bytes.");
                     Validator = new AccountHashKey(bytes.Slice(1, 33));
                     break;
-                case (byte)BidAddrTag.Delegator:
-                    Tag = BidAddrTag.Delegator;
+                case (byte)BidAddrTag.DelegatedAccount:
+                    Tag = BidAddrTag.DelegatedAccount;
                     if (bytes.Length != 65)
-                        throw new Exception("Wrong key length for Unified BidAddr. Expected 65 bytes.");
+                        throw new Exception("Wrong key length for DelegatedAccount BidAddr. Expected 65 bytes.");
                     Validator = new AccountHashKey(bytes.Slice(1, 33));
-                    Delegator = new AccountHashKey(bytes.Slice(33));
+                    DelegatorAccount = new AccountHashKey(bytes.Slice(33));
+                    break;
+                case (byte)BidAddrTag.DelegatedPurse:
+                    Tag = BidAddrTag.DelegatedPurse;
+                    if (bytes.Length != 65)
+                        throw new Exception("Wrong key length for DelegatedPurse BidAddr. Expected 65 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
+                    DelegatorPurseAddress = Hex.ToHexString(bytes.Slice(33));
                     break;
                 case (byte)BidAddrTag.Credit:
                     Tag = BidAddrTag.Credit;
@@ -85,6 +117,34 @@ namespace Casper.Network.SDK.Types
                         throw new Exception("Wrong key length for Credit BidAddr. Expected 41 bytes.");
                     Validator = new AccountHashKey(bytes.Slice(1, 33));
                     EraId = BitConverterExtensions.ToUInt64(bytes.Slice(33));
+                    break;
+                case (byte)BidAddrTag.ReservedDelegationAccount:
+                    Tag = BidAddrTag.ReservedDelegationAccount;
+                    if (bytes.Length != 65)
+                        throw new Exception("Wrong key length for ReservedDelegationAccount BidAddr. Expected 65 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
+                    DelegatorAccount = new AccountHashKey(bytes.Slice(33));
+                    break;
+                case (byte)BidAddrTag.ReservedDelegationPurse:
+                    Tag = BidAddrTag.ReservedDelegationPurse;
+                    if (bytes.Length != 65)
+                        throw new Exception("Wrong key length for ReservedDelegationPurse BidAddr. Expected 65 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
+                    DelegatorPurseAddress = Hex.ToHexString(bytes.Slice(33));
+                    break;
+                case (byte)BidAddrTag.UnbondAccount:
+                    Tag = BidAddrTag.UnbondAccount;
+                    if (bytes.Length != 65)
+                        throw new Exception("Wrong key length for UnbondAccount BidAddr. Expected 65 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
+                    DelegatorAccount = new AccountHashKey(bytes.Slice(33));
+                    break;
+                case (byte)BidAddrTag.UnbondPurse:
+                    Tag = BidAddrTag.UnbondPurse;
+                    if (bytes.Length != 65)
+                        throw new Exception("Wrong key length for UnbondPurse BidAddr. Expected 65 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
+                    DelegatorPurseAddress = Hex.ToHexString(bytes.Slice(33));
                     break;
                 default:
                     throw new Exception($"Wrong BidAddr tag '{bytes[0]}'.");

@@ -212,7 +212,7 @@ namespace Casper.Network.SDK.Types
     public class StoredTransactionV1Target : ITransactionV1Target
     {
         [JsonPropertyName("id")] 
-        public IInvocationTarget Id { get; init; }
+        public IInvocationTarget Id { get; set; }
 
         /// <summary>
         /// Targeted Casper VM version.
@@ -224,7 +224,7 @@ namespace Casper.Network.SDK.Types
         /// The amount of motes to transfer before code is executed.
         /// </summary>
         [JsonPropertyName("transferred_value")]
-        public ulong TransferredValue { get; init; }
+        public ulong TransferredValue { get; set; }
         
         const ushort TAG_FIELD_INDEX = 0;
         const byte STORED_VARIANT = 1;
@@ -248,14 +248,14 @@ namespace Casper.Network.SDK.Types
         /// Flag determining if the Wasm is an install/upgrade.
         /// </summary>
         [JsonPropertyName("is_install_upgrade")]
-        public bool IsInstallUpgrade { get; init; }
+        public bool IsInstallUpgrade { get; set; }
         
         /// <summary>
         /// Wasm bytes for a Session transaction type.
         /// </summary>
         [JsonPropertyName("module_bytes")]
         [JsonConverter(typeof(HexBytesConverter))]
-        public byte[] ModuleBytes { get; init; }
+        public byte[] ModuleBytes { get; set; }
         
         /// <summary>
         /// Targeted Casper VM version.
@@ -270,13 +270,13 @@ namespace Casper.Network.SDK.Types
         /// that can be transferred from the caller account to the session account.
         /// </summary>
         [JsonPropertyName("transferred_value")]
-        public ulong TransferredValue { get; init; }
+        public ulong TransferredValue { get; set; }
         
         /// <summary>
         /// The seed for the session code that is used for an installer.
         /// </summary>
         [JsonPropertyName("seed")]
-        public string Seed { get; init; }
+        public string Seed { get; set; }
         
         const ushort TAG_FIELD_INDEX = 0;
         const byte SESSION_VARIANT = 2;
@@ -302,43 +302,48 @@ namespace Casper.Network.SDK.Types
     {
         public static ITransactionV1Target Native => new NativeTransactionV1Target();
         
-        public static ITransactionV1Target StoredByHash(string contractHash)
+        public static StoredTransactionV1Target StoredByHash(string contractHash, ulong transferredValue = 0)
         {
             return new StoredTransactionV1Target()
             {
-                Id = new ByHashInvocationTarget { Hash = contractHash }
+                Id = new ByHashInvocationTarget { Hash = contractHash },
+                TransferredValue = transferredValue,
             };
         }
 
-        public static ITransactionV1Target StoredByName(string name)
+        public static StoredTransactionV1Target StoredByName(string name, ulong transferredValue = 0)
         {
             return new StoredTransactionV1Target()
             {
-                Id = new ByNameInvocationTarget { Name = name }
+                Id = new ByNameInvocationTarget { Name = name },
+                TransferredValue = transferredValue,
             };
         }
 
-        public static ITransactionV1Target StoredByPackageHash(string packageHash, UInt32? version = null)
+        public static StoredTransactionV1Target StoredByPackageHash(string packageHash, UInt32? version = null, ulong transferredValue = 0)
         {
             return new StoredTransactionV1Target()
             {
-                Id = new ByPackageHashInvocationTarget { Hash = packageHash, Version = version }
+                Id = new ByPackageHashInvocationTarget { Hash = packageHash, Version = version },
+                TransferredValue = transferredValue,
             };
         }
 
-        public static ITransactionV1Target StoredByPackageName(string name, UInt32? version = null)
+        public static StoredTransactionV1Target StoredByPackageName(string name, UInt32? version = null, ulong transferredValue = 0)
         {
             return new StoredTransactionV1Target()
             {
-                Id = new ByPackageNameInvocationTarget() { Name = name, Version = version }
+                Id = new ByPackageNameInvocationTarget() { Name = name, Version = version },
+                TransferredValue = transferredValue,
             };
         }
 
-        public static ITransactionV1Target Session(byte[] moduleBytes)
+        public static SessionTransactionV1Target Session(byte[] moduleBytes, ulong transferredValue = 0)
         {
             return new SessionTransactionV1Target()
             {
                 ModuleBytes = moduleBytes,
+                TransferredValue = transferredValue,
             };
         }
         
@@ -366,6 +371,7 @@ namespace Casper.Network.SDK.Types
                     ITransactionV1Target transactionTarget = null;
                     IInvocationTarget id = null;
                     string module_bytes = null;
+                    ulong transferredValue = 0;;
                     TransactionRuntime runtime = TransactionRuntime.VmCasperV1;
 
                     reader.Read(); // skip start object
@@ -386,6 +392,10 @@ namespace Casper.Network.SDK.Types
                                         id = JsonSerializer.Deserialize<IInvocationTarget>(ref reader, options);
                                         reader.Read();
                                         break;
+                                    case "transferred_value":
+                                        transferredValue = reader.GetUInt64();
+                                        reader.Read();
+                                        break;
                                     case "runtime":
                                         runtime = EnumCompat.Parse<TransactionRuntime>(reader.GetString());
                                         reader.Read(); // skip end object
@@ -398,6 +408,7 @@ namespace Casper.Network.SDK.Types
                             transactionTarget = new StoredTransactionV1Target()
                             {
                                 Id = id,
+                                TransferredValue = transferredValue,
                                 Runtime = runtime,
                             };
                             break;
@@ -412,6 +423,10 @@ namespace Casper.Network.SDK.Types
                                     case "module_bytes":
                                         module_bytes = reader.GetString();
                                         break;
+                                    case "transferred_value":
+                                        transferredValue = reader.GetUInt64();
+                                        reader.Read();
+                                        break;
                                     case "runtime":
                                         runtime = EnumCompat.Parse<TransactionRuntime>(reader.GetString());
                                         break;
@@ -423,6 +438,7 @@ namespace Casper.Network.SDK.Types
                             transactionTarget = new SessionTransactionV1Target()
                             {
                                 ModuleBytes = Hex.Decode(module_bytes),
+                                TransferredValue = transferredValue,
                                 Runtime = runtime,
                             };
                             break;
@@ -451,6 +467,8 @@ namespace Casper.Network.SDK.Types
                         writer.WriteStartObject("Stored");
                         writer.WritePropertyName("id");
                         JsonSerializer.Serialize(writer, storedTarget.Id);
+                        writer.WritePropertyName("transferred_value");
+                        writer.WriteNumberValue(storedTarget.TransferredValue);
                         writer.WriteString("runtime", storedTarget.Runtime.ToString());
                         writer.WriteEndObject();
                         writer.WriteEndObject();
@@ -459,6 +477,8 @@ namespace Casper.Network.SDK.Types
                         writer.WriteStartObject();
                         writer.WriteStartObject("Session");
                         writer.WriteString("module_bytes", Hex.ToHexString(sessionTarget.ModuleBytes));
+                        writer.WritePropertyName("transferred_value");
+                        writer.WriteNumberValue(sessionTarget.TransferredValue);
                         writer.WriteString("runtime", sessionTarget.Runtime.ToString());
                         writer.WriteEndObject();
                         writer.WriteEndObject();

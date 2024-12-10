@@ -9,7 +9,6 @@ namespace Casper.Network.SDK.Types
     /// </summary>
     public class Bridge
     {
-        
         /// <summary>
         /// Previous validator public key associated with the bid.
         /// </summary>
@@ -80,7 +79,7 @@ namespace Casper.Network.SDK.Types
         /// A bid record containing only delegator data.
         /// </summary>
         [JsonPropertyName("Delegator")]
-        public Delegator Delegator { get; init; }
+        public DelegatorBid Delegator { get; init; }
         
         /// <summary>
         /// A bridge record pointing to a new `ValidatorBid` after the public key was changed.
@@ -93,5 +92,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("Credit")]
         public ValidatorCredit Credit { get; init; }
+        
+        /// <summary>
+        /// Represents a validator reserving a slot for specific delegator"
+        /// </summary>
+        [JsonPropertyName("Reservation")]
+        public Reservation Reservation { get; init; }
     }
 }
