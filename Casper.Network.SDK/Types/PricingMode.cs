@@ -31,7 +31,7 @@ namespace Casper.Network.SDK.Types
 #if NET7_0_OR_GREATER
         public bool IsPaymentLimited => this is PaymentLimitedPricingMode;
         public bool IsFixed => this is FixedPricingMode;
-        public bool IsReserved => this is PrepaidPricingMode;
+        public bool IsPrepaid => this is PrepaidPricingMode;
 #endif
         
         public byte[] ToBytes();
@@ -120,13 +120,13 @@ namespace Casper.Network.SDK.Types
         public string Receipt { get; init; }
         
         const ushort TAG_FIELD_INDEX = 0;
-        const byte RESERVED_VARIANT_TAG = 2;
-        const ushort RESERVED_RECEIPT_INDEX = 1;
+        const byte PREPAID_VARIANT_TAG = 2;
+        const ushort PREPAID_RECEIPT_INDEX = 1;
         public byte[] ToBytes()
         {
             return new CalltableSerialization()
-                .AddField(TAG_FIELD_INDEX, CLValue.U8(RESERVED_VARIANT_TAG))
-                .AddField(RESERVED_RECEIPT_INDEX, Hex.Decode(Receipt))
+                .AddField(TAG_FIELD_INDEX, CLValue.U8(PREPAID_VARIANT_TAG))
+                .AddField(PREPAID_RECEIPT_INDEX, Hex.Decode(Receipt))
                 .GetBytes();
         }
     }

@@ -69,7 +69,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Stores location, type and data for a gas pre-payment.
         /// </summary>
-        public Prepayment Prepaid { get; init; }
+        public Prepayment Prepayment { get; init; }
         
         public EntryPoint EntryPoint { get; init; }
         
