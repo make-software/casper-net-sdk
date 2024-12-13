@@ -40,7 +40,7 @@ namespace Casper.NET.SDK.Examples
                                   $"{rewards.ToString("N9"),35} $CSPR");
 
                 var delegators = group.Where(a => a.IsDelegator)
-                    .GroupBy(a => a.DelegatorPublicKey);
+                    .GroupBy(a => a.DelegatorKind.PublicKey);
                 foreach (var delegatorAllocations in delegators)
                 {
                     var delegatorRewards = delegatorAllocations.Sum(a =>  (double)a.Amount);

@@ -53,5 +53,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("maximum_delegation_amount")]
         public ulong MaximumDelegationAmount { get; init; }
+        
+        /// <summary>
+        /// Number of slots reserved for specific delegators
+        /// </summary>
+        [JsonPropertyName("reserved_slots")]
+        public uint ReservedSlots { get; init; }
     }
 }

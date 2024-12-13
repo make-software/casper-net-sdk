@@ -1,4 +1,6 @@
+using System;
 using System.Text.Json.Serialization;
+using Casper.Network.SDK.ByteSerializers;
 
 namespace Casper.Network.SDK.Types
 {
@@ -51,18 +53,37 @@ namespace Casper.Network.SDK.Types
         {
             return PublicKey != null
                 ? PublicKey.ToString()
-                : (AccountHash != null
-                    ? AccountHash.ToString()
-                    : null);
+                : AccountHash?.ToString();
         }
         
         public string ToHexString()
         {
             return PublicKey != null
                 ? PublicKey.ToString()
-                : (AccountHash != null
-                    ? AccountHash.ToHexString()
-                    : null);
+                : AccountHash?.ToHexString();
+        }
+
+        const ushort TAG_FIELD_INDEX = 0;
+        const byte PUBLIC_KEY_VARIANT_TAG = 0;
+        const ushort PUBLIC_KEY_FIELD_INDEX = 1;
+        const byte ACCOUNT_HASH_VARIANT_TAG = 1;
+        const ushort ACCOUNT_HASH_FIELD_INDEX = 1;
+            
+        public byte[] ToBytes()
+        {
+            if(PublicKey != null)
+                return new CalltableSerialization()
+                    .AddField(TAG_FIELD_INDEX, new byte[] { PUBLIC_KEY_VARIANT_TAG })
+                    .AddField(PUBLIC_KEY_FIELD_INDEX, CLValue.PublicKey(PublicKey))
+                    .GetBytes();
+                    
+            if(AccountHash != null)
+                return new CalltableSerialization()
+                    .AddField(TAG_FIELD_INDEX, new byte[] { ACCOUNT_HASH_VARIANT_TAG })
+                    .AddField(PUBLIC_KEY_FIELD_INDEX, AccountHash.RawBytes)
+                    .GetBytes();
+            
+            throw new Exception("Unable to serialize initiator addr");
         }
     }
 }

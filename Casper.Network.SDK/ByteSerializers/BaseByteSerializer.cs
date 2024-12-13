@@ -12,6 +12,13 @@ namespace Casper.Network.SDK.ByteSerializers
             ms.Write(bytes);
         }
         
+        protected static void WriteUShort(MemoryStream ms, ushort value)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            if(!BitConverter.IsLittleEndian) Array.Reverse(bytes);
+            ms.Write(bytes);
+        }
+        
         protected static void WriteUInteger(MemoryStream ms, uint value)
         {
             var bytes = BitConverter.GetBytes(value);
@@ -35,6 +42,7 @@ namespace Casper.Network.SDK.ByteSerializers
         {
             ms.Write(value);
         }
+        
         
         protected static void WriteString(MemoryStream ms, string value)
         {

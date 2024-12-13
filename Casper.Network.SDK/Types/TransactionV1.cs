@@ -20,24 +20,18 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("hash")]
         public string Hash { get; }
-        
+
+        /// <summary>
+        /// Payload  for this transaction.
+        /// </summary>
+        [JsonPropertyName("payload")]
+        public TransactionV1Payload Payload { get; init; }
+
         /// <summary>
         /// List of signers and signatures for this transaction.
         /// </summary>
-        [JsonPropertyName("approvals")] 
+        [JsonPropertyName("approvals")]
         public List<Approval> Approvals { get; } = new List<Approval>();
-        
-        /// <summary>
-        /// Header for this transaction.
-        /// </summary>
-        [JsonPropertyName("header")] 
-        public TransactionV1Header Header { get; init; }
-
-        /// <summary>
-        /// Body for this transaction.
-        /// </summary>
-        [JsonPropertyName("body")] 
-        public TransactionV1Body Body { get; init; }
         
         /// <summary>
         /// Loads and deserializes a TransactionV1 from a file.
@@ -47,7 +41,7 @@ namespace Casper.Network.SDK.Types
             var data = File.ReadAllText(filename);
             return TransactionV1.Parse(data);
         }
-        
+
         /// <summary>
         /// Parses a Transaction from a string with json.
         /// </summary>
@@ -67,7 +61,7 @@ namespace Casper.Network.SDK.Types
                 throw new Exception(message);
             }
         }
-        
+
         /// <summary>
         /// Saves a transaction object to a file.
         /// </summary>
@@ -75,7 +69,7 @@ namespace Casper.Network.SDK.Types
         {
             File.WriteAllText(filename, JsonSerializer.Serialize(this));
         }
-        
+
         /// <summary>
         /// Returns a json string with the transaction.
         /// </summary>
@@ -83,36 +77,31 @@ namespace Casper.Network.SDK.Types
         {
             return JsonSerializer.Serialize(this);
         }
-        
+
         [JsonConstructor]
         public TransactionV1(string hash,
-            TransactionV1Header header,
-            TransactionV1Body body,
+            TransactionV1Payload payload,
             List<Approval> approvals)
         {
             this.Hash = hash;
-            this.Header = header;
-            this.Body = body;
+            this.Payload = payload;
             this.Approvals = approvals;
         }
-        
-        public TransactionV1(TransactionV1Header header,
-            TransactionV1Body body)
+
+        public TransactionV1(TransactionV1Payload payload)
         {
-            var bodyHash = ComputeBodyHash(body);
-            this.Header = new TransactionV1Header()
-            {
-                ChainName = header.ChainName,
-                Timestamp = header.Timestamp,
-                Ttl = header.Ttl,
-                BodyHash = Hex.ToHexString(bodyHash),
-                PricingMode = header.PricingMode,
-                InitiatorAddr = header.InitiatorAddr,
-            };
-            this.Hash = Hex.ToHexString(ComputeHeaderHash(this.Header));
-            this.Body = body;
+            var payloadBytes = payload.ToBytes();
+            var blake2BDigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
+
+            blake2BDigest.BlockUpdate(payloadBytes, 0, payloadBytes.Length);
+
+            var hash = new byte[blake2BDigest.GetDigestSize()];
+            blake2BDigest.DoFinal(hash, 0);
+
+            this.Payload = payload;
+            this.Hash = Hex.ToHexString(hash);
         }
-        
+
         /// <summary>
         /// Signs the transaction with a private key and adds a new Approval to it.
         /// </summary>
@@ -126,7 +115,7 @@ namespace Casper.Network.SDK.Types
                 Signer = keyPair.PublicKey
             });
         }
-        
+
         /// <summary>
         /// Adds an approval to the transaction. No check is done to the approval signature.
         /// </summary>
@@ -134,34 +123,25 @@ namespace Casper.Network.SDK.Types
         {
             this.Approvals.Add(approval);
         }
-        
+
         /// <summary>
-        /// Validates the body and header hashes in the transaction.
+        /// Validates the transaction hash.
         /// </summary>
         /// <param name="message">output string with a validation error message if validation fails. empty otherwise.</param>
-        /// <returns>false if the validation of hashes is not successful</returns>
+        /// <returns>false if the validation of hash is not successful</returns>
         public bool ValidateHashes(out string message)
         {
-            var computedHash = ComputeBodyHash(this.Body);
-            if (!Hex.Decode(this.Header.BodyHash).SequenceEqual(computedHash))
-            {
-                message = "Computed Body Hash does not match value in transaction header. " +
-                          $"Expected: '{this.Header.BodyHash}'. " +
-                          $"Computed: '{computedHash}'.";
-                return false;
-            }
-
-            computedHash = ComputeHeaderHash(this.Header);
+            var computedHash = this.ToBytes();
             if (!Hex.Decode(this.Hash).SequenceEqual(computedHash))
             {
-                message = "Computed Hash does not match value in transaction object. " +
+                message = "Computed hash does not match value in transaction object." +
                           $"Expected: '{this.Hash}'. " +
                           $"Computed: '{computedHash}'.";
                 return false;
             }
 
             message = "";
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -172,61 +152,51 @@ namespace Casper.Network.SDK.Types
         public bool VerifySignatures(out string message)
         {
             message = string.Empty;
+            
+            var decodedHash = Hex.Decode(this.Hash);
 
-            foreach (var approval in Approvals)
+            foreach (var approval in Approvals.Where(approval => !approval.Signer
+                         .VerifySignature(decodedHash, approval.Signature.RawBytes)))
             {
-                if (!approval.Signer.VerifySignature(Hex.Decode(this.Hash), 
-                        approval.Signature.RawBytes))
-                {
-                    message = $"Error verifying signature with signer '{approval.Signer}'.";
-                    return false;
-                }
+                message = $"Error verifying signature with signer '{approval.Signer}'.";
+                return false;
             }
 
             return true;
         }
-        
+
         /// <summary>
         /// returns the number of bytes resulting from the binary serialization of the Deploy.
         /// </summary>
         public int GetTransactionSizeInBytes()
         {
-            var serializer = new TransactionV1ByteSerializer();
-            return serializer.ToBytes(this).Length;
+            return this.ToBytes().Length;
         }
-        
-        private byte[] ComputeBodyHash(TransactionV1Body body)
-        {
-            var ms = new MemoryStream();
 
-            var serializer = new TransactionV1ByteSerializer();
+        const ushort HASH_FIELD_INDEX = 0;
+        const ushort PAYLOAD_FIELD_INDEX = 1;
+        const ushort APPROVALS_FIELD_INDEX = 2;
+
             
-            ms.Write(serializer.ToBytes(body));
-
-            var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
-            var bBody = ms.ToArray();
-
-            bcBl2bdigest.BlockUpdate(bBody, 0, bBody.Length);
-
-            var hash = new byte[bcBl2bdigest.GetDigestSize()];
-            bcBl2bdigest.DoFinal(hash, 0);
-
-            return hash;
-        }
-        
-        private byte[] ComputeHeaderHash(TransactionV1Header header)
+        public byte[] ToBytes()
         {
-            var serializer = new TransactionV1ByteSerializer();
-            var bHeader = serializer.ToBytes(header);
-
-            var bcBl2bdigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
-
-            bcBl2bdigest.BlockUpdate(bHeader, 0, bHeader.Length);
-
-            var hash = new byte[bcBl2bdigest.GetDigestSize()];
-            bcBl2bdigest.DoFinal(hash, 0);
-
-            return hash;
+            // add the approvals
+            //
+            var ms = new MemoryStream();
+            var count = LittleEndianConverter.GetBytes(this.Approvals.Count);
+            ms.Write(count, 0, count.Length);
+            foreach (var approval in this.Approvals)
+            {
+                var approvalSerializer = new DeployApprovalByteSerializer();
+                var approvalBytes = approvalSerializer.ToBytes(approval); 
+                ms.Write(approvalBytes, 0, approvalBytes.Length);
+            }
+            
+            return new CalltableSerialization()
+                .AddField(HASH_FIELD_INDEX, Hex.Decode(this.Hash))
+                .AddField(PAYLOAD_FIELD_INDEX, this.Payload.ToBytes())
+                .AddField(APPROVALS_FIELD_INDEX, ms.ToArray())
+                .GetBytes();
         }
     }
 }
