@@ -75,9 +75,10 @@ namespace Casper.Network.SDK.Types
                                 };
                                 break;
                             case "SmartContract":
+                                var tag = reader.GetString();
                                 entity = new EntityKind()
                                 {
-                                    SmartContract = EnumCompat.Parse<TransactionRuntime>(reader.GetString()),
+                                    SmartContract = TransactionRuntime.FromString(tag),
                                 };
                                 break;
                             case "System":

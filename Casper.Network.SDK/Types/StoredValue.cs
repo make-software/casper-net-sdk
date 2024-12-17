@@ -44,7 +44,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Stores a package.
         /// </summary>
-        public Package Package { get; init; }
+        public Package SmartContract { get; init; }
         
         /// <summary>
         /// A record of byte code.
@@ -76,7 +76,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Raw bytes. Similar to a [`crate::StoredValue::CLValue`] but does not incur overhead of a [`crate::CLValue`] and [`crate::CLType`].
         /// </summary>
-        public byte[] RawBytes { get; init; }
+        public string RawBytes { get; init; }
         
         public class StoredValueConverter : JsonConverter<StoredValue>
         {
