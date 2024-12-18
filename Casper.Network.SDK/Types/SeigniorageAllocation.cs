@@ -62,7 +62,11 @@ namespace Casper.Network.SDK.Types
                     var field = reader.GetString();
                     reader.Read();
                     if (field == "delegator_public_key")
-                        delegatorKind = JsonSerializer.Deserialize<DelegatorKind>(ref reader, options);
+                    {
+                        delegatorKind = reader.TokenType == JsonTokenType.String 
+                            ? new DelegatorKind() { PublicKey = PublicKey.FromHexString(reader.GetString()) } 
+                            : JsonSerializer.Deserialize<DelegatorKind>(ref reader, options);
+                    }
                     else if (field == "validator_public_key")
                         validatorPk = reader.GetString();
                     else if (field == "amount")
