@@ -76,14 +76,10 @@ namespace Casper.Network.SDK.Types
         
         public ITransactionScheduling Scheduling { get; set; }
         
-        public TransactionCategory Category { get; set; }
-        
         public ITransactionInvocation Invocation { get; init; }
         
         public interface ITransactionInvocation
         {
-            TransactionCategory Category { get; init; }
-
             List<NamedArg> RuntimeArgs { get; init; }
 
             CLValue GetRuntimeArgValue(string name);
@@ -91,8 +87,6 @@ namespace Casper.Network.SDK.Types
         
         public abstract class TransactionInvocation : ITransactionInvocation
         {
-            public TransactionCategory Category { get; init; }
-
             public List<NamedArg> RuntimeArgs { get; init; }
             
             public CLValue GetRuntimeArgValue(string name)
@@ -265,7 +259,6 @@ namespace Casper.Network.SDK.Types
                 PricingMode = pricingMode,
                 Approvals = deploy.Approvals,
                 Scheduling = TransactionScheduling.Standard,
-                Category = deploy.Session is TransferDeployItem ? TransactionCategory.Mint : TransactionCategory.Large,
                 Invocation = invocation,
             };
         }

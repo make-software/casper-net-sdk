@@ -29,7 +29,6 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNull(result.Transaction.InitiatorAddr.AccountHash);
             Assert.IsTrue(result.Transaction.Invocation is Transaction.NativeTransactionInvocation);
             Assert.AreEqual(NativeEntryPoint.Transfer, (result.Transaction.Invocation as Transaction.NativeTransactionInvocation)!.Type);
-            Assert.AreEqual(TransactionCategory.Mint, result.Transaction.Category);
             Assert.IsTrue(result.Transaction.Scheduling is StandardTransactionScheduling);
             Assert.AreEqual(deploy.Approvals.Count, result.Transaction.Approvals.Count);
             Assert.AreEqual(deploy.Approvals[0].Signature, result.Transaction.Approvals[0].Signature);
@@ -63,7 +62,6 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNull(transaction.InitiatorAddr.AccountHash);
             Assert.IsTrue(transaction.Invocation is Transaction.NativeTransactionInvocation);
             Assert.AreEqual(NativeEntryPoint.Transfer, (transaction.Invocation as Transaction.NativeTransactionInvocation)!.Type);
-            Assert.AreEqual(TransactionCategory.Mint, transaction.Category);
             Assert.IsTrue(transaction.Scheduling is StandardTransactionScheduling);
             Assert.AreEqual(deploy.Approvals.Count, transaction.Approvals.Count);
             Assert.AreEqual(deploy.Approvals[0].Signature, transaction.Approvals[0].Signature);
@@ -96,10 +94,9 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNull(transaction.InitiatorAddr.AccountHash);
             Assert.IsTrue(transaction.Invocation is Transaction.SessionTransactionInvocation);
             Assert.AreEqual("01020304",  Hex.ToHexString((transaction.Invocation as Transaction.SessionTransactionInvocation)!.Wasm));
-            Assert.AreEqual(TransactionCategory.InstallUpgrade, transaction.Category);
             Assert.IsTrue(transaction.Scheduling is StandardTransactionScheduling);
-            Assert.IsTrue(transaction.PricingMode is FixedPricingMode);
-            Assert.AreEqual(2, ((FixedPricingMode)transaction.PricingMode).GasPriceTolerance);
+            Assert.IsTrue(transaction.PricingMode is PaymentLimitedPricingMode);
+            Assert.AreEqual(1, ((PaymentLimitedPricingMode)transaction.PricingMode).GasPriceTolerance);
             Assert.AreEqual(transactionV1.Approvals.Count, transaction.Approvals.Count);
             Assert.AreEqual(transactionV1.Approvals[0].Signature, transaction.Approvals[0].Signature);
 
@@ -128,11 +125,10 @@ namespace NetCasperTest.RPCResponses
             Assert.AreEqual(transactionV1.Payload.ChainName, transaction.ChainName);
             Assert.AreEqual(transactionV1.Payload.Timestamp, transaction.Timestamp);
             Assert.AreEqual(transactionV1.Payload.InitiatorAddr.AccountHash, transaction.InitiatorAddr.AccountHash);
-            Assert.AreEqual("account-hash-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f", transaction.InitiatorAddr.AccountHash.ToString().ToLower());
-            Assert.IsNull(transaction.InitiatorAddr.PublicKey);
+            Assert.AreEqual("01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a", transaction.InitiatorAddr.PublicKey.ToString().ToLower());
+            Assert.IsNull(transaction.InitiatorAddr.AccountHash);
             Assert.IsTrue(transaction.Invocation is Transaction.StoredTransactionInvocation);
             Assert.AreEqual("transfer", (transaction.Invocation as Transaction.StoredTransactionInvocation)!.EntryPoint);
-            Assert.AreEqual(TransactionCategory.Medium, transaction.Category);
             Assert.IsTrue(transaction.Scheduling is StandardTransactionScheduling);
             Assert.AreEqual(transactionV1.Approvals.Count, transaction.Approvals.Count);
             Assert.AreEqual(transactionV1.Approvals[0].Signature, transaction.Approvals[0].Signature);
@@ -167,7 +163,6 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNull(transaction.InitiatorAddr.AccountHash);
             Assert.IsTrue(transaction.Invocation is Transaction.StoredTransactionInvocation);
             Assert.AreEqual("transfer", (transaction.Invocation as Transaction.StoredTransactionInvocation)!.EntryPoint);
-            Assert.AreEqual(TransactionCategory.Large, transaction.Category);
             Assert.IsTrue(transaction.Scheduling is StandardTransactionScheduling);
              Assert.AreEqual(deploy.Approvals.Count, transaction.Approvals.Count);
             Assert.AreEqual(deploy.Approvals[0].Signature, transaction.Approvals[0].Signature);
