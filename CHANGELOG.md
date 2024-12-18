@@ -9,6 +9,27 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+## [3.0.0-beta2]
+
+### Added
+
+* Added `GetDelegatorReward` and `GetValidatorReward` methods to the RPC client. [PR#76](https://github.com/make-software/casper-net-sdk/pull/76) and [PR#80](https://github.com/make-software/casper-net-sdk/pull/80).
+* Added `GetStatePackage` method to the RPC client. [PR#82](https://github.com/make-software/casper-net-sdk/pull/82).
+* Added `ProtocolVersion` to Get Node Status RPC response. [PR#77](https://github.com/make-software/casper-net-sdk/pull/77).
+* Added a `TransactionBuilder` to build `TransactionV1` transactions for the different type of invocations ( to mint/auction system contracts, user stored contracts) and session deployments. [PR#79](https://github.com/make-software/casper-net-sdk/pull/79).
+
+### Changed
+
+* The `Transaction` type is now an abstraction for `TransactionV1` and `Deploy` transaction models. [PR#79](https://github.com/make-software/casper-net-sdk/pull/79).
+* Updated `TransactionV1` JSON and bytes serialization in alignment to `casper-node v2.0.0-rc5`. [PR-84](https://github.com/make-software/casper-net-sdk/pull/84) and [PR-85](https://github.com/make-software/casper-net-sdk/pull/85)
+* Updated `MessageKey` key type in alignment to `casper-node v2.0.0-rc5`. [PR-86](https://github.com/make-software/casper-net-sdk/pull/86)
+* `EntryPointPayment.SelfOnly` constant replaced with `EntryPointPayment.DirectInvocationOnly`.[PR#87](https://github.com/make-software/casper-net-sdk/pull/87).
+
+### Fixed
+
+* Fixed a multi-thread bug when using the RPCLoggingHandler in the RPC client class. [PR#81](https://github.com/make-software/casper-net-sdk/pull/81).
+* v3.0.0-beta1 did not parse correctly `Step` event emmitted by nodes in Casper v1.x. [PR#78](https://github.com/make-software/casper-net-sdk/pull/78).
+
 ## [3.0.0-beta1]
 
 This version is compatible with Casper node v2.0.0-rc3 and Casper node v1.5.6.
@@ -131,6 +152,7 @@ This new type permits to parse correctly the value `"00"` used for system blocks
 ### Added
 * Initial release of Casper .NET SDK.
 
+[3.0.0-beta2]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta2
 [3.0.0-beta1]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta1
 [2.3.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.3.0
 [2.2.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.2.0
