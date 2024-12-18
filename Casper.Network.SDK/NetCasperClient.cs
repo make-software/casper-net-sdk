@@ -225,7 +225,7 @@ namespace Casper.Network.SDK
         /// <summary>
         /// Returns a Package from the network
         /// </summary>
-        /// <param name="entityAddr">The entity address to get information of.</param>
+        /// <param name="packageHash">The entity address to get information of.</param>
         /// <param name="blockHash">A block hash for which the information of the entity is queried. Null for most recent information.</param>
         public async Task<RpcResponse<GetPackageResult>> GetPackage(string packageHash, string blockHash = null)
         {
@@ -239,7 +239,7 @@ namespace Casper.Network.SDK
         /// <summary>
         /// Returns a Package from the network
         /// </summary>
-        /// <param name="entityAddr">The package address or contract package hash to get information of.</param>
+        /// <param name="packageHash">The package address or contract package hash to get information of.</param>
         /// <param name="blockHeight">A block height for which the information of the package is queried.</param>
         public async Task<RpcResponse<GetPackageResult>> GetPackage(string packageHash, ulong blockHeight)
         {

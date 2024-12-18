@@ -142,6 +142,7 @@ namespace Casper.Network.SDK.SSE
         /// </summary>
         /// <param name="host">IP or domain name of the node.</param>
         /// <param name="port">Event stream port.</param>
+        /// <param name="nodeVersion">2 for Casper 2.x; 1 for Casper 1.x.</param>
         public ServerEventsClient(string host, int port, int nodeVersion = 2) : this()
         {
             _host = host;

@@ -234,7 +234,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Query for balance information using a purse identifier and a state identifier
         /// </summary>
         /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
-        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        /// <param name="stateIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
         public QueryBalance(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance")
         {
             this.Parameters = new Dictionary<string, object>

@@ -1,12 +1,12 @@
 # Migration from Casper .NET SDK v2.x to v3.0
 
-To migrate your application from Casper .NET SDK v2.x to Casper .NET SDK v3.0, you’ll need to make several changes to your code. The good news is that version 3 of this SDK keeps compatibility with Casper v1.5.6 nodes; therefore, once you update your application, it will work before and after the Condor upgrade.
+To migrate your application from Casper .NET SDK v2.x to Casper .NET SDK v3.0, you’ll need to make several changes to your code. The good news is that version 3 of this SDK keeps compatibility with Casper v1.5.6 nodes; therefore, once you update your application, it will work before and after the Casper 2.0 upgrade.
 
-This guide outlines the changes necessary for your application. However, it's worth noting that it doesn't replace other Condor-related documents introducing the new concepts in Casper 2.0 or migration guides. We strongly advise the reader to understand these new concepts first, as they will significantly aid in grasping the changes.
+This guide outlines the changes necessary for your application. However, it's worth noting that it doesn't replace other documents introducing the new concepts in Casper 2.0 or migration guides. We strongly advise the reader to understand these new concepts first, as they will significantly aid in grasping the changes.
 
 ## Blocks
 
-With Condor, produced blocks are stored in a new format that extends the information contained compared to old blocks. Blocks produced before the upgrade keep their original format. Thus, the SDK implements `BlockV1` and `BlockV2` classes to handle old and new block formats, respectively.
+With Casper 2.0, produced blocks are stored in a new format that extends the information contained compared to old blocks. Blocks produced before the upgrade keep their original format. Thus, the SDK implements `BlockV1` and `BlockV2` classes to handle old and new block formats, respectively.
 
 To facilitate handling different versions, the SDK also implements the type `Block`, which can represent either a V1 or V2 type in the network. This is the type obtained by default in the RPC queries and the SSE channel and contains all the data you may want to query:
 
@@ -34,7 +34,7 @@ public class Block
 
 Note that `Block` does not have a header or body parts.
 
-Also, some properties may have a `null` value if they’re not part of the versioned block. For example, `LastSwitchBlockHash` is present only for V2 blocks and `null` for V1 blocks.
+Also, some properties may have a `null` value if they’re not part of the versioned block version. For example, `LastSwitchBlockHash` is present only for V2 blocks and `null` for V1 blocks.
 
 ### Recovering the versioned block object
 
@@ -52,7 +52,7 @@ if (block.Version == 2) {
 
 ### EraEnd
 
-EraEnd structure also differs for switch blocks produced before and after Condor. In most cases, you can just use the EraEnd object from the common Block class. But again, if necessary, you can recover an EraEndV1 object from a Version 1 Block instance:
+EraEnd structure also differs for switch blocks produced before and after Casper 2.0. In most cases, you can just use the EraEnd object from the common Block class. But again, if necessary, you can recover an EraEndV1 object from a version 1 block instance:
 
 ```csharp
 if (block.Version == 1) {
@@ -64,7 +64,7 @@ if (block.Version == 1) {
 
 ### Transactions included in a block
 
-Blocks produced on Casper v1.x contain a list of deploys that differentiate between native transfers and all other types of deploys. On Condor, transactions (this includes legacy deploys too) have a category field that determines the processing lane to which the transaction is sent. The chainspec of the network determines the properties of each lane:
+Blocks produced on Casper v1.x contain a list of deploys that differentiate between native transfers and all other types of deploys. On Casper 2.0, transactions (this includes legacy deploys too) have a category field that determines the processing lane to which the transaction is sent. The chainspec of the network determines the properties of each lane:
 
 1. Maximum transaction size in bytes for a given transaction in a certain lane.
 2. Maximum args length size in bytes for a given transaction in a certain lane.
@@ -88,7 +88,7 @@ public List<BlockTransaction> Transactions { get; init; }
 
 The category, version (either a legacy Deploy or the new TransactionV1 type), and the hash are provided for each transaction.
 
-`Deploy`s in V1 blocks are categorized as `Mint` for native transfer deploys and `Large` for all the rest. The same happens for legacy deploys sent to a Casper v2.x node.
+`Deploy`s in V1 blocks are categorized as `Mint` for native transfer deploys and `Large` for all the rest. The same applies to legacy deploys sent to a Casper v2.x node.
 
 ### Block height type
 
@@ -113,41 +113,9 @@ foreach(var transfer in result.Transfers)
 }
 ```
 
-## Account/Contract Merge
-
-On Condor, accounts and contracts are stored with the new type AddressableEntity. The EntityKind property in this type permits knowing whether the record is an Account, a stored SmartContract, or a System contract.
-
-### GetEntity RPC method
-
-Use the new method GetEntity(IEntityIdentifier) in the RPC interface to retrieve a record. PublicKey, AccountHashKey, and AddressableEntityKey implement the IEntityIdentiifer interface and can be used to retrieve an AddressableEntity from the network. While PublicKey and AccountHashKeyare known types from Casper v1.x, the AddressableEntitykey is new, but the developer must become familiar with it to work with Condor. Some examples of this key are:
-
-```
-entity-account-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309
-entity-contract-a5cf5917505ef60a6f0df395dd19e86a0f075d00f2e6ce49f5aa0e18f6e26f5d
-entity-system-a1b5f200a58533875ef83cb98de14f128342b34162cbc14d4f41f3ccbc451dc3
-```
-
-### Legacy accounts
-
-Existing accounts are migrated either during the Condor upgrade or when they interact with the network for the first time after the upgrade. The exact time depends on the `chainspec` agreed for the Condor upgrade. Hash values for the `AccountHashKey` and the `EntityKey` are shared and remain unchanged for migrated accounts.
-
-Non-migrated accounts can also be retrieved using the new `GetEntity` method. In this case, the response contains the account info in the `LegacyAccount` property instead of the `Entity` property.
-
-Alternatively, the legacy method `GetAccountInfo` also works for non-migrated accounts.
-
-### Contract information
-
-Like accounts, contract records have also been migrated to the new `AddressableEntity`. After the migration, only the `GetEntity` method can be used to retrieve contract information. Hash values for contracts and packages remain unchanged for the migrated records.
-
-To retrieve information about the contract package, use the `QueryGlobalState` method with the `PackageKey` of the contract.
-
-### Backwards compatibility
-
-When using the SDK v3 with a Casper v1.x network, only GetAccountInfo can be used to retrieve account information. For contract and package information use QueryGlobalState.
-
 ## Balances
 
-The new `NoFee` mode in Condor introduces the concept of a ‘balance hold’. In this mode of operation, for each transaction, the network holds the amount paid for its execution in the paying purse. Thus, entities have a total balance and an available balance, where the available balance is equal to the total balance minus the balance holds.
+The new `NoFee` mode in Casper 2.0 introduces the concept of a ‘balance hold’. In this mode of operation, for each transaction, the network holds the amount paid for its execution in the paying purse. Thus, entities have a total balance and an available balance, where the available balance is equal to the total balance minus the held balance.
 
 To get detailed information on an entity balance, use the new method `QueryBalanceDetails(IPurseIdentifier)` with a purse identifier. `PublicKey`, `AccountHashKey`, `AddressableEntityKey`, and `URef` keys implement the `IPurseIdentifier` interface and can be used to retrieve the balance details for an entity.
 
@@ -157,9 +125,9 @@ To get detailed information on an entity balance, use the new method `QueryBalan
 
 Condor introduces a new transaction model to support advanced use cases. While `Deploy`s continue to work in Condor, this type is deprecated, and Casper recommends switching to the new `TransactionV1` type.
 
-Similar to the `DeployTemplates` class, which provides deploy templates for most common use cases, we plan to implement a TransactionV1Templates class for the new transaction model in the next release of this SDK.
+Similar to the `DeployTemplates` class, which provides deploy templates for most common use cases, we've implemented a `TransactionBuilder` class to facilitate the creation of transactions using the new `TransactionV1` model for different use cases. Check the documentation and the examples for more information.
 
-Use the new method `PutTransaction` to send a `TransactionV1` to the network. Use the new `GetTransaction` method to retrieve an accepted transaction. Both methods can also be used to send and retrieve a Deploy. For unprocessed transactions, the ExecutionInfo in the response is `null`. Upon processing, this property contains all information about the execution, including cost, payments, errors (if any), and execution effects.
+Use the new method `PutTransaction` to send a `TransactionV1` to the network. Use the new `GetTransaction` method to retrieve an accepted transaction. Both methods can also be used to send and retrieve a `Deploy`. For unprocessed transactions, the ExecutionInfo in the response is `null`. Upon processing, this property contains all information about the execution, including cost, payments, errors (if any), and execution effects.
 
 
 ### GetDeploy()
@@ -180,7 +148,7 @@ In the NoFee model, the user does not specify any amount for payment. Instead, h
 
 The `ExecutionResult` class is a versioned object. Deploys processed before the Condor upgrade are stored in the global state as `ExecutionResultV1`records, and deploys and transactions processed after the Condor upgrade are stored as `ExecutionResultV2` records.
 
-For a processed transaction, the `GetTransaction` method always returns an `ExecutionResult` instance regardless of the version. It has the same fields as `ExecutionResultV2`. The user can obtain the original structure by casting this instance to the correct version:
+For a processed transaction, the `GetTransaction` method always returns an `ExecutionResult` instance regardless of the version. It has the same fields as `ExecutionResultV2`. You can obtain the original structure by casting this instance to the correct version:
 
 ```csharp
 if (executionResult.Version == 2) {
@@ -196,11 +164,11 @@ The Effect property contains a list of Transforms that modify the global state d
 
 ## Auction contract
 
-The auction contract also has changed in Condor. If your application tracks validator bids, rewards, and delegators, you must rework how network responses are parsed and interpreted. A complete description of the changes cannot covered in this guide.
+The auction contract has also changed in Condor. If your application tracks validator bids, rewards, and delegators, you must rework how network responses are parsed and interpreted. A complete description of the changes cannot be covered in this guide.
 
 ## Server Sent Events
 
-The ServerEventsClient class can listen to an event stream from a v1.x node and from v2.x.
+The ServerEventsClient class listens to an event stream from a v1.x node and from v2.x. By default, the client class expects a 2.x network. To listen to a 1.x network change the `nodeVersion` property to `1`. 
 
 ### Blocks
 
@@ -216,7 +184,7 @@ A `TransactionAccepted` event contains a `Transaction` property with either a `D
 
 The `FinalitySignature` event contains an instance of the versioned `FinalitySignature` class. Version 2 of this type is an extension that contains all properties in version 1 plus the block height and the chain name hash.
 
-The user can obtain the original structure by casting this instance to the correct version:
+The user can obtain the original structure by casting this instance to the appropriate version:
 
 ```csharp
 if (finalitySignature.Version == 2) {

@@ -603,7 +603,6 @@ namespace Casper.Network.SDK.Types
         public class SessionBuilder : TransactionV1Builder<SessionBuilder>
         {
             private bool _isInstallOrUpgrade = false;
-            private byte[] _wasm = null;
 
             public SessionBuilder()
             {
