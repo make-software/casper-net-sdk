@@ -539,9 +539,9 @@ namespace NetCasperTest
         [Test]
         public void MessageTopicKeyTest()
         {
-            var entityKeyStr = "entity-contract-55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
+            var hashAddr = "55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
             var topicStr = "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1";
-            var msgKeyStr = $"message-topic-{entityKeyStr}-{topicStr}";
+            var msgKeyStr = $"message-topic-{hashAddr}-{topicStr}";
         
             var key = GlobalStateKey.FromString(msgKeyStr);
             Assert.IsNotNull(key);
@@ -549,8 +549,8 @@ namespace NetCasperTest
 
             var messageKey = key as MessageKey;
             Assert.IsNotNull(messageKey);
-            Assert.IsNotNull(messageKey.AddressableEntity);
-            Assert.AreEqual(entityKeyStr, messageKey.AddressableEntity.ToString().ToLower());
+            Assert.IsNotNull(messageKey.HashAddr);
+            Assert.AreEqual(hashAddr, messageKey.HashAddr);
             Assert.AreEqual(topicStr, messageKey.TopicHash);
             Assert.IsFalse(messageKey.Index.HasValue);
             Assert.AreEqual(msgKeyStr, messageKey.ToString().ToLower());
@@ -560,10 +560,10 @@ namespace NetCasperTest
         [Test]
         public void MessageIndexKeyTest()
         {
-            var entityKeyStr = "entity-contract-55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
+            var hashAddr = "55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
             var topicStr = "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1";
             var indexStr = "f";
-            var msgKeyStr = $"message-{entityKeyStr}-{topicStr}-{indexStr}";
+            var msgKeyStr = $"message-{hashAddr}-{topicStr}-{indexStr}";
         
             var key = GlobalStateKey.FromString(msgKeyStr);
             Assert.IsNotNull(key);
@@ -571,8 +571,8 @@ namespace NetCasperTest
 
             var messageKey = key as MessageKey;
             Assert.IsNotNull(messageKey);
-            Assert.IsNotNull(messageKey.AddressableEntity);
-            Assert.AreEqual(entityKeyStr, messageKey.AddressableEntity.ToString().ToLower());
+            Assert.IsNotNull(messageKey.HashAddr);
+            Assert.AreEqual(hashAddr, messageKey.HashAddr);
             Assert.AreEqual(topicStr, messageKey.TopicHash);
             Assert.IsTrue(messageKey.Index.HasValue);
             Assert.AreEqual(15, messageKey.Index.Value);
@@ -592,7 +592,7 @@ namespace NetCasperTest
                 var bidAddrKey = key as BidAddrKey;
                 Assert.AreEqual(BidAddrTag.Unified, bidAddrKey.Tag);
                 Assert.AreEqual("account-hash-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309", bidAddrKey.Unified.ToString().ToLower());
-                Assert.IsNull(bidAddrKey.Delegator);
+                Assert.IsNull(bidAddrKey.DelegatorAccount);
                 Assert.AreEqual(0, bidAddrKey.EraId);
 
             }
@@ -605,7 +605,7 @@ namespace NetCasperTest
                 var bidAddrKey = key as BidAddrKey;
                 Assert.AreEqual(BidAddrTag.Validator, bidAddrKey.Tag);
                 Assert.AreEqual("account-hash-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309", bidAddrKey.Validator.ToString().ToLower());
-                Assert.IsNull(bidAddrKey.Delegator);
+                Assert.IsNull(bidAddrKey.DelegatorAccount);
                 Assert.AreEqual(0, bidAddrKey.EraId);
             }
             {
@@ -615,9 +615,9 @@ namespace NetCasperTest
                 Assert.AreEqual(KeyIdentifier.BidAddr, key.KeyIdentifier);
 
                 var bidAddrKey = key as BidAddrKey;
-                Assert.AreEqual(BidAddrTag.Delegator, bidAddrKey.Tag);
+                Assert.AreEqual(BidAddrTag.DelegatedAccount, bidAddrKey.Tag);
                 Assert.AreEqual("account-hash-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309", bidAddrKey.Validator.ToString().ToLower());
-                Assert.AreEqual("account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4", bidAddrKey.Delegator.ToString().ToLower());
+                Assert.AreEqual("account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4", bidAddrKey.DelegatorAccount.ToString().ToLower());
                 Assert.AreEqual(0, bidAddrKey.EraId);
 
             }
@@ -631,7 +631,7 @@ namespace NetCasperTest
                 var bidAddrKey = key as BidAddrKey;
                 Assert.AreEqual(BidAddrTag.Credit, bidAddrKey.Tag);
                 Assert.AreEqual("account-hash-520037cd249ccbcfeb0b9feae07d8d4f7d922cf88adc4f3e8691f9d34ccc8d09", bidAddrKey.Validator.ToString().ToLower());
-                Assert.IsNull(bidAddrKey.Delegator);
+                Assert.IsNull(bidAddrKey.DelegatorAccount);
                 Assert.AreEqual(127, bidAddrKey.EraId);
             }
         }
