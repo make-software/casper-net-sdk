@@ -1,0 +1,156 @@
+{
+  "EraInfo": {
+    "seigniorage_allocations": [
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "018b46617b2b97e633b36530f2964b3f4c15916235910a2737e83d4fa2c7fad542"
+          },
+          "validator_public_key": "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6",
+          "amount": "2515330120214391"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6",
+          "amount": "2728720430156545"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "018b46617b2b97e633b36530f2964b3f4c15916235910a2737e83d4fa2c7fad542"
+          },
+          "validator_public_key": "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6",
+          "amount": "109303520813010"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6",
+          "amount": "118554941151112"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "0197b79d1a1351f8fb922b9f7f556d2bbfdba5105df9eaa6caa07804c703a641ed"
+          },
+          "validator_public_key": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+          "amount": "8599696498056110"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+          "amount": "9377950843219784"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "0197b79d1a1351f8fb922b9f7f556d2bbfdba5105df9eaa6caa07804c703a641ed"
+          },
+          "validator_public_key": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+          "amount": "285067736921916"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+          "amount": "310701366981535"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
+          },
+          "validator_public_key": "01c867ff3cf1d4e4e68fc00922fdcb740304def196e223091dee62012f444b9eba",
+          "amount": "5976757455713484"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01c867ff3cf1d4e4e68fc00922fdcb740304def196e223091dee62012f444b9eba",
+          "amount": "6492754998004464"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
+          },
+          "validator_public_key": "01c867ff3cf1d4e4e68fc00922fdcb740304def196e223091dee62012f444b9eba",
+          "amount": "162277940193805"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01c867ff3cf1d4e4e68fc00922fdcb740304def196e223091dee62012f444b9eba",
+          "amount": "176125500882714"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "0106ed45915392c02b37136618372ac8dde8e0e3b8ee6190b2ca6db539b354ede4"
+          },
+          "validator_public_key": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
+          "amount": "6111063397723576"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
+          "amount": "6660504858490961"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "0106ed45915392c02b37136618372ac8dde8e0e3b8ee6190b2ca6db539b354ede4"
+          },
+          "validator_public_key": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
+          "amount": "183204228041446"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
+          "amount": "199637730476608"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "0184f6d260f4ee6869ddb36affe15456de6ae045278fa2f467bb677561ce0dad55"
+          },
+          "validator_public_key": "01fed662dc7f1f7af43ad785ba07a8cc05b7a96f9ee69613cfde43bc56bec1140b",
+          "amount": "2170319328593039"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01fed662dc7f1f7af43ad785ba07a8cc05b7a96f9ee69613cfde43bc56bec1140b",
+          "amount": "2366902069827651"
+        }
+      },
+      {
+        "Delegator": {
+          "delegator_kind": {
+            "PublicKey": "0184f6d260f4ee6869ddb36affe15456de6ae045278fa2f467bb677561ce0dad55"
+          },
+          "validator_public_key": "01fed662dc7f1f7af43ad785ba07a8cc05b7a96f9ee69613cfde43bc56bec1140b",
+          "amount": "217749920954248"
+        }
+      },
+      {
+        "Validator": {
+          "validator_public_key": "01fed662dc7f1f7af43ad785ba07a8cc05b7a96f9ee69613cfde43bc56bec1140b",
+          "amount": "237377113583604"
+        }
+      }
+    ]
+  }
+}
