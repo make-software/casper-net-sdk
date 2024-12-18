@@ -117,7 +117,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Will cover cost to execute self but not cost of any subsequent invoked contracts.
         /// </summary>
-        SelfOnly,
+        DirectInvocationOnly,
         /// <summary>
         /// Will cover cost to execute self and the cost of any subsequent invoked contracts.
         /// </summary>

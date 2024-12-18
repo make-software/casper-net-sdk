@@ -20,13 +20,7 @@
           "deployment": 1,
           "upgrade_management": 1,
           "key_management": 1
-        },
-        "message_topics": [
-          {
-            "topic_name": "events",
-            "topic_name_hash": "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1"
-          }
-        ]
+        }
       },
       "named_keys": [
         {
