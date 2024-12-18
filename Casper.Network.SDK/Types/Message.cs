@@ -44,9 +44,8 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The identity of the entity that produced the message.
         /// </summary>
-        [JsonPropertyName("entity_hash")]
-        [JsonConverter(typeof(AddressableEntityKey.AddressableEntityKeyConverter))]
-        public AddressableEntityKey AddressableEntity { get; init; }
+        [JsonPropertyName("hash_addr")]
+        public string HashAddr { get; init; }
         
         /// <summary>
         /// The payload of the message.

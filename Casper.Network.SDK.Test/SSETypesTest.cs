@@ -86,8 +86,16 @@ namespace NetCasperTest
             Assert.AreEqual("0dabde3e8b065e734247b7d5328ac18317af9842f0141ffe41173df15efd97a8", value.BlockHash);
             Assert.IsTrue(value.ExecutionResult.Effect.Count > 0);
 
-            Assert.AreEqual(0, value.Messages.Count);
-            Assert.AreEqual("ApiError::Formatting [18]", value.ExecutionResult.ErrorMessage);
+            Assert.AreEqual(1, value.Messages.Count);
+            var message = value.Messages[0];
+            Assert.AreEqual("9038763d3066f0217047263ebd48dc7c839fadfdde141f5b990866563655b44a",
+                message.HashAddr);
+            Assert.AreEqual("dummy-data", message.MessagePayload.String);
+            Assert.IsNull(message.MessagePayload.Bytes);
+            Assert.AreEqual("events", message.TopicName);
+            Assert.AreEqual("5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1", message.TopicNameHash);
+            Assert.AreEqual(1, message.TopicIndex);
+            Assert.AreEqual(2, message.BlockIndex);
         }
     }
 }
