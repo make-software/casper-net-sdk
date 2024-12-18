@@ -168,11 +168,5 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("action_thresholds")]
         public ActionThresholds ActionThresholds { get; init; }
-
-        /// <summary>
-        /// Message topic list for this entity
-        /// </summary>
-        [JsonPropertyName("message_topics")]
-        public List<MessageTopic> MessageTopics { get; init; }
     }
 }
