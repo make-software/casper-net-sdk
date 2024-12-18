@@ -559,41 +559,31 @@ namespace Casper.Network.SDK.Types
 
         public class ContractCallBuilder : TransactionV1Builder<ContractCallBuilder>
         {
-            private ulong _transferredValue = 0;
-
             public ContractCallBuilder()
             {
             }
 
             public ContractCallBuilder ByHash(string contractHash)
             {
-                _invocationTarget = TransactionV1Target.StoredByHash(contractHash, _transferredValue);
+                _invocationTarget = TransactionV1Target.StoredByHash(contractHash);
                 return this;
             }
 
             public ContractCallBuilder ByName(string name)
             {
-                _invocationTarget = TransactionV1Target.StoredByName(name, _transferredValue);
+                _invocationTarget = TransactionV1Target.StoredByName(name);
                 return this;
             }
 
             public ContractCallBuilder ByPackageHash(string contractHash, UInt32? version = null)
             {
-                _invocationTarget = TransactionV1Target.StoredByPackageHash(contractHash, version, _transferredValue);
+                _invocationTarget = TransactionV1Target.StoredByPackageHash(contractHash, version);
                 return this;
             }
 
             public ContractCallBuilder ByPackageName(string name, UInt32? version = null)
             {
-                _invocationTarget = TransactionV1Target.StoredByPackageName(name, version, _transferredValue);
-                return this;
-            }
-
-            public ContractCallBuilder TransferredValue(ulong transferredValue)
-            {
-                _transferredValue = transferredValue;
-                if (_invocationTarget is StoredTransactionV1Target storedTransactionV1Target)
-                    storedTransactionV1Target.TransferredValue = transferredValue;
+                _invocationTarget = TransactionV1Target.StoredByPackageName(name, version);
                 return this;
             }
 
@@ -613,8 +603,6 @@ namespace Casper.Network.SDK.Types
         public class SessionBuilder : TransactionV1Builder<SessionBuilder>
         {
             private bool _isInstallOrUpgrade = false;
-            private ulong _transferredValue = 0;
-            private string _seed = null;
             private byte[] _wasm = null;
 
             public SessionBuilder()
@@ -624,9 +612,8 @@ namespace Casper.Network.SDK.Types
 
             public SessionBuilder Wasm(byte[] wasmBytes)
             {
-                var target = TransactionV1Target.Session(wasmBytes, _transferredValue);
+                var target = TransactionV1Target.Session(wasmBytes);
                 target.IsInstallUpgrade = _isInstallOrUpgrade;
-                target.Seed = _seed;
                 _invocationTarget = target;
                 return this;
             }
@@ -636,22 +623,6 @@ namespace Casper.Network.SDK.Types
                 _isInstallOrUpgrade = true;
                 if (_invocationTarget is SessionTransactionV1Target sessionTarget)
                     sessionTarget.IsInstallUpgrade = true;
-                return this;
-            }
-
-            public SessionBuilder TransferredValue(ulong transferredValue)
-            {
-                _transferredValue = transferredValue;
-                if (_invocationTarget is SessionTransactionV1Target sessionTarget)
-                    sessionTarget.TransferredValue = transferredValue;
-                return this;
-            }
-
-            public SessionBuilder Seed(string seed)
-            {
-                _seed = seed;
-                if (_invocationTarget is SessionTransactionV1Target sessionTarget)
-                    sessionTarget.Seed = seed;
                 return this;
             }
 

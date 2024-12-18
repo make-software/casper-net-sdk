@@ -11,50 +11,55 @@ namespace Casper.Network.SDK.Types
     public enum NativeEntryPoint
     {
         /// <summary>
+        /// Used to call entry point call() in session transactions.
+        /// </summary>
+        Call = 0,
+        
+        /// <summary>
+        /// A non-native, arbitrary entry point.
+        /// </summary>
+        Custom = 1,
+        
+        /// <summary>
         /// The `transfer` native entry point, used to transfer `Motes` from a source purse to a target purse.
         /// </summary>
-        Transfer = 1,
+        Transfer = 2,
 
         /// <summary>
         /// The `add_bid` native entry point, used to create or top off a bid purse.
         /// </summary>
-        AddBid = 2,
+        AddBid = 3,
 
         /// <summary>
         /// The `withdraw_bid` native entry point, used to decrease a stake.
         /// </summary>
-        WithdrawBid = 3,
+        WithdrawBid = 4,
 
         /// <summary>
         /// The `delegate` native entry point, used to add a new delegator or increase an existing delegator's stake.
         /// </summary>
-        Delegate = 4,
+        Delegate = 5,
 
         /// <summary>
         /// The `undelegate` native entry point, used to reduce a delegator's stake or remove the delegator if the remaining stake is 0.
         /// </summary>
-        Undelegate = 5,
+        Undelegate = 6,
 
         /// <summary>
         /// The `redelegate` native entry point, used to reduce a delegator's stake or remove the delegator if
         /// the remaining stake is 0, and after the unbonding delay, automatically delegate to a new validator.
         /// </summary>
-        Redelegate = 6,
+        Redelegate = 7,
 
         /// <summary>
         /// The `activate_bid` native entry point, used to used to reactivate an inactive bid.
         /// </summary>
-        ActivateBid = 7,
+        ActivateBid = 8,
 
         /// <summary>
         /// The `change_bid_public_key` native entry point, used to change a bid's public key.
         /// </summary>
-        ChangeBidPublicKey = 8,
-
-        /// <summary>
-        /// Used to call entry point call() in session transactions
-        /// </summary>
-        Call = 9,
+        ChangeBidPublicKey = 9,
         
         /// <summary>
         /// The `add_reservations` native entry point, used to add delegators to validator's reserve list.
@@ -103,7 +108,8 @@ namespace Casper.Network.SDK.Types
         }
 
         const ushort TAG_FIELD_INDEX = 0;
-        const byte CALL_VARIANT_TAG = 1;
+        const byte CALL_VARIANT_TAG = 0;
+        const byte CUSTOM_VARIANT_TAG = 1;
         const byte TRANSFER_VARIANT_TAG = 2;
         const byte ADD_BID_VARIANT_TAG = 3;
         const byte WITHDRAW_BID_VARIANT_TAG = 4;
@@ -120,6 +126,7 @@ namespace Casper.Network.SDK.Types
             var tag = Type switch
             {
                 NativeEntryPoint.Call => CALL_VARIANT_TAG,
+                NativeEntryPoint.Custom => CUSTOM_VARIANT_TAG,
                 NativeEntryPoint.Transfer => TRANSFER_VARIANT_TAG,
                 NativeEntryPoint.AddBid => ADD_BID_VARIANT_TAG,
                 NativeEntryPoint.Delegate => DELEGATE_VARIANT_TAG,

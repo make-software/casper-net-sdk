@@ -40,7 +40,7 @@ namespace Casper.NET.SDK.Examples
                     .Amount(25_000_000_000)
                     .Id(DateUtils.ToEpochTime(DateTime.Now))
                     .ChainName(chainName)
-                    .GasPriceTolerance(1)
+                    .Payment(PricingMode.PaymentLimited(100_000_000, 1))
                     .Build();
 
                 // sign the transaction and send it to the network

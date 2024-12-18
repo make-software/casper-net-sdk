@@ -2,108 +2,110 @@
   "api_version": "2.0.0",
   "transaction": {
     "Version1": {
-      "hash": "45a4d4ce6ff79d7b49c34d2c7bdc55543d1734b1a03d66bea513e631ff21213b",
-      "header": {
-        "chain_name": "casper-net-1",
-        "timestamp": "2024-07-17T08:52:03.256Z",
-        "ttl": "30m",
-        "body_hash": "9b1d4002bb1af17ec9fc4193ac5ba7db6535b6dd813034b730829a94b13ebc46",
-        "pricing_mode": {
-          "Fixed": {
-            "gas_price_tolerance": 2
-          }
-        },
+      "hash": "22ef28d7e341c79d868e1be407ec4af4f25c267c0094201ba511045b3af191f6",
+      "payload": {
         "initiator_addr": {
-          "PublicKey": "0106ed45915392c02b37136618372ac8dde8e0e3b8ee6190b2ca6db539b354ede4"
-        }
-      },
-      "body": {
-        "args": [
-          [
-            "name",
-            {
-              "cl_type": "String",
-              "bytes": "0b000000434c49434b312054657374",
-              "parsed": "CLICK1 Test"
-            }
-          ],
-          [
-            "symbol",
-            {
-              "cl_type": "String",
-              "bytes": "06000000434c49434b31",
-              "parsed": "CLICK1"
-            }
-          ],
-          [
-            "decimals",
-            {
-              "cl_type": "U8",
-              "bytes": "09",
-              "parsed": 9
-            }
-          ],
-          [
-            "total_supply",
-            {
-              "cl_type": "U256",
-              "bytes": "070080c6a47e8d03",
-              "parsed": "1000000000000000"
-            }
-          ],
-          [
-            "events_mode",
-            {
-              "cl_type": "U8",
-              "bytes": "05",
-              "parsed": 5
-            }
-          ],
-          [
-            "enable_mint_burn",
-            {
-              "cl_type": "U8",
-              "bytes": "01",
-              "parsed": 1
-            }
-          ]
-        ],
-        "target": {
-          "Session": {
-            "module_bytes": "01020304",
-            "runtime": "VmCasperV1"
+          "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
+        },
+        "timestamp": "2024-12-18T09:03:15.790Z",
+        "ttl": "30m",
+        "chain_name": "casper-net-1",
+        "pricing_mode": {
+          "PaymentLimited": {
+            "payment_amount": 1000000000000,
+            "gas_price_tolerance": 1,
+            "standard_payment": true
           }
         },
-        "entry_point": "Call",
-        "transaction_category": 2,
-        "scheduling": "Standard"
+        "fields": {
+          "args": {
+            "Named": [
+              [
+                "name",
+                {
+                  "cl_type": "String",
+                  "bytes": "0b000000434c49434b542054657374",
+                  "parsed": "CLICKT Test"
+                }
+              ],
+              [
+                "symbol",
+                {
+                  "cl_type": "String",
+                  "bytes": "06000000434c49434b54",
+                  "parsed": "CLICKT"
+                }
+              ],
+              [
+                "decimals",
+                {
+                  "cl_type": "U8",
+                  "bytes": "09",
+                  "parsed": 9
+                }
+              ],
+              [
+                "total_supply",
+                {
+                  "cl_type": "U256",
+                  "bytes": "070080c6a47e8d03",
+                  "parsed": "1000000000000000"
+                }
+              ],
+              [
+                "events_mode",
+                {
+                  "cl_type": "U8",
+                  "bytes": "02",
+                  "parsed": 2
+                }
+              ],
+              [
+                "enable_mint_burn",
+                {
+                  "cl_type": "U8",
+                  "bytes": "01",
+                  "parsed": 1
+                }
+              ]
+            ]
+          },
+          "entry_point": "Call",
+          "scheduling": "Standard",
+          "target": {
+            "Session": {
+              "is_install_upgrade": true,
+              "module_bytes": "01020304",
+              "runtime": "VmCasperV1"
+            }
+          }
+        }
       },
       "approvals": [
         {
-          "signer": "0106ed45915392c02b37136618372ac8dde8e0e3b8ee6190b2ca6db539b354ede4",
-          "signature": "016a910dafe6b87b8f12daa5698c33c0ab06eda11e79e06cacc446d3de65d85176fa26a0a9036ad80272aca8b1dfe674227e9cfaa98509e60439879d4fde487b04"
+          "signer": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a",
+          "signature": "013bb82f647fcb53a4fa01871e43100bbee1a90370480361a96f426280b73c07adee7a7116b6a433f0173b8a2403d95c3fa84fbcb28f74535f6a598721d299300a"
         }
       ]
     }
   },
   "execution_info": {
-    "block_hash": "b84c248b4c1bee3abf77e84b921fcc0d09290a1556285327922da4dc23de3177",
-    "block_height": 1809,
+    "block_hash": "856ce7684bc53fc76e27d91a9dfda2c158fd18a69789fecbdf98535d3bddadf0",
+    "block_height": 72,
     "execution_result": {
       "Version2": {
         "initiator": {
-          "PublicKey": "0106ed45915392c02b37136618372ac8dde8e0e3b8ee6190b2ca6db539b354ede4"
+          "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
         },
         "error_message": null,
         "limit": "1000000000000",
-        "consumed": "350280524938",
+        "consumed": "314102340989",
         "cost": "1000000000000",
-        "payment": [],
         "transfers": [],
-        "size_estimate": 303776,
+        "size_estimate": 278442,
         "effects": [
           {
-            "key": "balance-hold-016f8eee1d8ea5eee794ffe69a9008c9c8620eea284ee2c49bf686ae8eee042215af3fe4bf90010000",
+            "key": "balance-hold-01e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520bee001d993010000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -115,31 +117,31 @@
             }
           },
           {
-            "key": "uref-5aa675065318455e193fc341bb4750174283add94ca195f71e4b4104e4c84b1a-000",
+            "key": "uref-6702ca24ad114bf8fe2e7e2169461b98e11f12ad7ad191d6e4b6594183f64ecf-000",
             "kind": {
               "Write": {
                 "CLValue": {
                   "cl_type": "String",
-                  "bytes": "0b000000434c49434b312054657374",
-                  "parsed": "CLICK1 Test"
+                  "bytes": "0b000000434c49434b542054657374",
+                  "parsed": "CLICKT Test"
                 }
               }
             }
           },
           {
-            "key": "uref-977f30046644e5c7a7e8cb297e5f8971a1680543dc31d1066ab4870c575b8a0d-000",
+            "key": "uref-644d8cce1ad2d0fb9a783a72e9542a4edc3e88e62f13e55d3d6a2899cd205619-000",
             "kind": {
               "Write": {
                 "CLValue": {
                   "cl_type": "String",
-                  "bytes": "06000000434c49434b31",
-                  "parsed": "CLICK1"
+                  "bytes": "06000000434c49434b54",
+                  "parsed": "CLICKT"
                 }
               }
             }
           },
           {
-            "key": "uref-63c283118dd23b4ceb6fb4eabe219941ca795a9588f5e09c1438cf7e4904d285-000",
+            "key": "uref-127a8c723a6df941dae0d26a9c181c26f1a80f86eaeb12eed786b4c9715b5b55-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -151,7 +153,7 @@
             }
           },
           {
-            "key": "uref-5b2eb4a8703d23be50b30625811388876b10ea57c6f79e613a144b59bc8eea1d-000",
+            "key": "uref-411a53953e73ddd23a115ad96e7ccb53e1867ec4beec03e62b8c7aa400be56fe-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -163,19 +165,19 @@
             }
           },
           {
-            "key": "uref-08f9c3e110c4d5cbc6e8ce71dd0cd535e4f41b34fe88c26cf3cd222004373db3-000",
+            "key": "uref-a0cb023abb00bf87f9898b5fdce36569d5b87b7891e2b5023e663a5bc78134e0-000",
             "kind": {
               "Write": {
                 "CLValue": {
                   "cl_type": "U8",
-                  "bytes": "05",
-                  "parsed": 5
+                  "bytes": "02",
+                  "parsed": 2
                 }
               }
             }
           },
           {
-            "key": "uref-ed2804ba22d80b1cc8abb02f72e1d87e93b3186d1225cf286b733e29c4df61e8-000",
+            "key": "uref-c09b022180e6a9221dfefe6ae62c6c8a93e09031742f284ffb64c5c1ddd23395-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -187,7 +189,7 @@
             }
           },
           {
-            "key": "uref-5ef62926d2a73b5982cab9cf546b59e75cd72b1c57c5eaaf2a01c90705fb6b9b-000",
+            "key": "uref-d8a4e0ed98096e0df3263828e46c1f6758255853d3abcb32ebaf0776483a46bb-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -199,10 +201,11 @@
             }
           },
           {
-            "key": "package-ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4",
+            "key": "hash-976b060d3ae59125f3521c5dd16ca5f55c9862b37a9effa05c3770a9a4d7b870",
             "kind": {
               "Write": {
-                "Package": {
+                "ContractPackage": {
+                  "access_key": "uref-d8a4e0ed98096e0df3263828e46c1f6758255853d3abcb32ebaf0776483a46bb-007",
                   "versions": [],
                   "disabled_versions": [],
                   "groups": [],
@@ -212,700 +215,390 @@
             }
           },
           {
-            "key": "named-key-entity-account-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f-fc71cc1c9046f7ac32c20c9f9897c6c3a0b6bb288e9e54eb29202867ca9b0d94",
+            "key": "account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4",
+            "kind": {
+              "AddKeys": [
+                {
+                  "name": "cep18_contract_package_CLICKT Test",
+                  "key": "package-976b060d3ae59125f3521c5dd16ca5f55c9862b37a9effa05c3770a9a4d7b870"
+                }
+              ]
+            }
+          },
+          {
+            "key": "account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4",
+            "kind": {
+              "AddKeys": [
+                {
+                  "name": "cep18_contract_package_access_CLICKT Test",
+                  "key": "uref-d8a4e0ed98096e0df3263828e46c1f6758255853d3abcb32ebaf0776483a46bb-007"
+                }
+              ]
+            }
+          },
+          {
+            "key": "hash-976b060d3ae59125f3521c5dd16ca5f55c9862b37a9effa05c3770a9a4d7b870",
+            "kind": "Identity"
+          },
+          {
+            "key": "message-topic-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
             "kind": {
               "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "10ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4",
-                    "parsed": "package-ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "2200000063657031385f636f6e74726163745f7061636b6167655f434c49434b312054657374",
-                    "parsed": "cep18_contract_package_CLICK1 Test"
-                  }
+                "MessageTopic": {
+                  "message_count": 0,
+                  "blocktime": 1734512599230,
+                  "topic_name": "events"
                 }
               }
             }
           },
           {
-            "key": "named-key-entity-account-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f-715bf96dd4d151db8e1135387b051ea188d8fc85ca004740d4f181c6ad038731",
+            "key": "hash-feb66b9d1f45bf0a4c11c2048c2b5c839f191128f883ad24d1c2508fc6ad285d",
             "kind": {
               "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "025ef62926d2a73b5982cab9cf546b59e75cd72b1c57c5eaaf2a01c90705fb6b9b07",
-                    "parsed": "uref-5ef62926d2a73b5982cab9cf546b59e75cd72b1c57c5eaaf2a01c90705fb6b9b-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "2900000063657031385f636f6e74726163745f7061636b6167655f6163636573735f434c49434b312054657374",
-                    "parsed": "cep18_contract_package_access_CLICK1 Test"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "package-ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4",
-            "kind": "Identity"
-          },
-          {
-            "key": "entity-system-989625d28e779749e3cacc7367403dd459c8e7082937436f16d5dbff7aec8292",
-            "kind": "Identity"
-          },
-          {
-            "key": "package-b94115849598c8b83bb94dd7ea211630a9e23827ceb089a8674e1518a8257a1a",
-            "kind": "Identity"
-          },
-          {
-            "key": "entry-point-v1-entity-system-989625d28e779749e3cacc7367403dd459c8e7082937436f16d5dbff7aec8292-21bddc7e4379ba445c7118cb51962954e0d1e5aa5cacc0c4ff6095b57eb9fb33",
-            "kind": "Identity"
-          },
-          {
-            "key": "uref-2b130d8c617d24bd5366bdd2843db98a5e93e594ed827ace443b4ea6e4772f01-000",
-            "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": "Unit",
-                  "bytes": "",
-                  "parsed": null
-                }
-              }
-            }
-          },
-          {
-            "key": "balance-2b130d8c617d24bd5366bdd2843db98a5e93e594ed827ace443b4ea6e4772f01",
-            "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": "U512",
-                  "bytes": "00",
-                  "parsed": "0"
-                }
-              }
-            }
-          },
-          {
-            "key": "byte-code-v1-wasm-800e35cfd87b0f36479afdaf68725cd7ef0f503e8d541ed33afad4a18c7fa6eb",
-            "kind": {
-              "Write": {
-                "ByteCode": {
-                  "kind": "V1CasperWasm",
+                "ContractWasm": {
                   "bytes": "01020304"
                 }
               }
             }
           },
           {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-be138e764d5f26cd174471e18c82a7bef961da4c7e7ade7df068038aebdda9bf",
+            "key": "hash-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4",
             "kind": {
               "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "0263c283118dd23b4ceb6fb4eabe219941ca795a9588f5e09c1438cf7e4904d28507",
-                    "parsed": "uref-63c283118dd23b4ceb6fb4eabe219941ca795a9588f5e09c1438cf7e4904d285-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "08000000646563696d616c73",
-                    "parsed": "decimals"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-f26520fac960fb1abac44a358923ab6a064baffb1707c885886d157f66c55209",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "02ed2804ba22d80b1cc8abb02f72e1d87e93b3186d1225cf286b733e29c4df61e807",
-                    "parsed": "uref-ed2804ba22d80b1cc8abb02f72e1d87e93b3186d1225cf286b733e29c4df61e8-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "10000000656e61626c655f6d696e745f6275726e",
-                    "parsed": "enable_mint_burn"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-7114a751e72d65a0290c975396374e0120ac8f3ddbb6e4e21e3c6810135b40d0",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "0208f9c3e110c4d5cbc6e8ce71dd0cd535e4f41b34fe88c26cf3cd222004373db307",
-                    "parsed": "uref-08f9c3e110c4d5cbc6e8ce71dd0cd535e4f41b34fe88c26cf3cd222004373db3-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0b0000006576656e74735f6d6f6465",
-                    "parsed": "events_mode"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-69cade231fc487185af830cfe041ce668a4763ab02ee5989b8baac6bee7e1a22",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "025aa675065318455e193fc341bb4750174283add94ca195f71e4b4104e4c84b1a07",
-                    "parsed": "uref-5aa675065318455e193fc341bb4750174283add94ca195f71e4b4104e4c84b1a-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "040000006e616d65",
-                    "parsed": "name"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-eef0c71bbea5a76f1da01cb395e12bc0388bec279852100e17e3843b3e559999",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "02977f30046644e5c7a7e8cb297e5f8971a1680543dc31d1066ab4870c575b8a0d07",
-                    "parsed": "uref-977f30046644e5c7a7e8cb297e5f8971a1680543dc31d1066ab4870c575b8a0d-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0600000073796d626f6c",
-                    "parsed": "symbol"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-f99c57f016ee238df5bcdf8bec27869b1ba087a415050a9c6668644eeda11af0",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "025b2eb4a8703d23be50b30625811388876b10ea57c6f79e613a144b59bc8eea1d07",
-                    "parsed": "uref-5b2eb4a8703d23be50b30625811388876b10ea57c6f79e613a144b59bc8eea1d-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0c000000746f74616c5f737570706c79",
-                    "parsed": "total_supply"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-1e3c8f46f39b1ee1cbadb774ffaf842226b7cbf1fef3bbc04abfa80b86daca11",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "allowance",
-                    "args": [
-                      {
-                        "name": "owner",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "spender",
-                        "cl_type": "Key"
-                      }
-                    ],
-                    "ret": "U256",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-44528c1898e30df62037a76e0c45123f4f4437336ca63236b10ebfc16a5edb78",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "approve",
-                    "args": [
-                      {
-                        "name": "spender",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "amount",
-                        "cl_type": "U256"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-fcc296caa05679d0d11121e7629b29f222a857018f50985046b73a56e9a10701",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "balance_of",
-                    "args": [
-                      {
-                        "name": "address",
-                        "cl_type": "Key"
-                      }
-                    ],
-                    "ret": "U256",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-768c370eb010604bd19029a409dca8b5fbf9af9bc14a36c2b294a2a7a922161e",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "burn",
-                    "args": [
-                      {
-                        "name": "owner",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "amount",
-                        "cl_type": "U256"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-bab8615f758ed79acb7dd7577b1a6c12d625d1a19592a2b1ded0dc352407e4d5",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "change_events_mode",
-                    "args": [
-                      {
-                        "name": "events_mode",
-                        "cl_type": "U8"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-82a811993cf9ccb5e46c9608c69d86e3c9b7b499520fd48cdca1424f2a08efdc",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "change_security",
-                    "args": [],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-45ffbf1854843af5eeec6b167e14a9e97bdb526e66205b07559d4fb3928fb11e",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "condor",
-                    "args": [],
-                    "ret": "String",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-be138e764d5f26cd174471e18c82a7bef961da4c7e7ade7df068038aebdda9bf",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "decimals",
-                    "args": [],
-                    "ret": "U8",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-ac07c23dc90a33282d553af890e30e62335c5ae986629d643778e2d4516f26ad",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "decrease_allowance",
-                    "args": [
-                      {
-                        "name": "spender",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "amount",
-                        "cl_type": "U256"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-a7e05838c728d16c4ba3e1980b6729c857ef4c21d1b0c34e6eefbb486cdc2b89",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "increase_allowance",
-                    "args": [
-                      {
-                        "name": "spender",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "amount",
-                        "cl_type": "U256"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-4ca60287ae6129662475a8ce0d41c450d072b2430a8759f6178adeeff38523da",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "init",
-                    "args": [],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-fc79236fd0e4521c8feddcc2094c6a0ea04fcaafb17fef63ef060744a6bab401",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "migrate_sec_keys",
-                    "args": [
-                      {
-                        "name": "events",
-                        "cl_type": "Bool"
-                      },
-                      {
-                        "name": "revert",
-                        "cl_type": "Bool"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-18bff854e9d908cf20fb1db53a47ab69968917b53b8c71371e7dd0f88b363e60",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "migrate_user_allowance_keys",
-                    "args": [
-                      {
-                        "name": "events",
-                        "cl_type": "Bool"
-                      },
-                      {
-                        "name": "revert",
-                        "cl_type": "Bool"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-1e7babf918642bd9636d3c121691bd85534b41084a5c22fe1e2bf196224dade6",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "migrate_user_balance_keys",
-                    "args": [
-                      {
-                        "name": "events",
-                        "cl_type": "Bool"
-                      },
-                      {
-                        "name": "revert",
-                        "cl_type": "Bool"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-233964bb1dc667b37a8abbb938d7647b2c4ab41f0c26dbbcd26c62e7870f72ba",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "mint",
-                    "args": [
-                      {
-                        "name": "owner",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "amount",
-                        "cl_type": "U256"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-69cade231fc487185af830cfe041ce668a4763ab02ee5989b8baac6bee7e1a22",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "name",
-                    "args": [],
-                    "ret": "String",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-eef0c71bbea5a76f1da01cb395e12bc0388bec279852100e17e3843b3e559999",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "symbol",
-                    "args": [],
-                    "ret": "String",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-f99c57f016ee238df5bcdf8bec27869b1ba087a415050a9c6668644eeda11af0",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "total_supply",
-                    "args": [],
-                    "ret": "U256",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-3820ce25e54df0470fb738e3e0f63ee50b2719cf2680da2bdb579e21aebc8f63",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "transfer",
-                    "args": [
-                      {
-                        "name": "recipient",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "amount",
-                        "cl_type": "U256"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-44208043191e40d3417df6878e1a23894172cf37cf2e4444384ada99e25430e7",
-            "kind": {
-              "Write": {
-                "EntryPoint": {
-                  "V1CasperVm": {
-                    "name": "transfer_from",
-                    "args": [
-                      {
-                        "name": "owner",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "recipient",
-                        "cl_type": "Key"
-                      },
-                      {
-                        "name": "amount",
-                        "cl_type": "U256"
-                      }
-                    ],
-                    "ret": "Unit",
-                    "access": "Public",
-                    "entry_point_type": "Called",
-                    "entry_point_payment": "Caller"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58",
-            "kind": {
-              "Write": {
-                "AddressableEntity": {
-                  "protocol_version": "2.0.0",
-                  "entity_kind": {
-                    "SmartContract": "VmCasperV1"
-                  },
-                  "package_hash": "package-ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4",
-                  "byte_code_hash": "byte-code-800e35cfd87b0f36479afdaf68725cd7ef0f503e8d541ed33afad4a18c7fa6eb",
-                  "main_purse": "uref-2b130d8c617d24bd5366bdd2843db98a5e93e594ed827ace443b4ea6e4772f01-007",
-                  "associated_keys": [
+                "Contract": {
+                  "contract_package_hash": "contract-package-976b060d3ae59125f3521c5dd16ca5f55c9862b37a9effa05c3770a9a4d7b870",
+                  "contract_wasm_hash": "contract-wasm-feb66b9d1f45bf0a4c11c2048c2b5c839f191128f883ad24d1c2508fc6ad285d",
+                  "named_keys": [
                     {
-                      "account_hash": "account-hash-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f",
-                      "weight": 1
+                      "name": "decimals",
+                      "key": "uref-127a8c723a6df941dae0d26a9c181c26f1a80f86eaeb12eed786b4c9715b5b55-007"
+                    },
+                    {
+                      "name": "enable_mint_burn",
+                      "key": "uref-c09b022180e6a9221dfefe6ae62c6c8a93e09031742f284ffb64c5c1ddd23395-007"
+                    },
+                    {
+                      "name": "events_mode",
+                      "key": "uref-a0cb023abb00bf87f9898b5fdce36569d5b87b7891e2b5023e663a5bc78134e0-007"
+                    },
+                    {
+                      "name": "name",
+                      "key": "uref-6702ca24ad114bf8fe2e7e2169461b98e11f12ad7ad191d6e4b6594183f64ecf-007"
+                    },
+                    {
+                      "name": "symbol",
+                      "key": "uref-644d8cce1ad2d0fb9a783a72e9542a4edc3e88e62f13e55d3d6a2899cd205619-007"
+                    },
+                    {
+                      "name": "total_supply",
+                      "key": "uref-411a53953e73ddd23a115ad96e7ccb53e1867ec4beec03e62b8c7aa400be56fe-007"
                     }
                   ],
-                  "action_thresholds": {
-                    "deployment": 1,
-                    "upgrade_management": 1,
-                    "key_management": 1
-                  }
+                  "entry_points": [
+                    {
+                      "name": "allowance",
+                      "entry_point": {
+                        "name": "allowance",
+                        "args": [
+                          {
+                            "name": "owner",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "spender",
+                            "cl_type": "Key"
+                          }
+                        ],
+                        "ret": "U256",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "approve",
+                      "entry_point": {
+                        "name": "approve",
+                        "args": [
+                          {
+                            "name": "spender",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "amount",
+                            "cl_type": "U256"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "balance_of",
+                      "entry_point": {
+                        "name": "balance_of",
+                        "args": [
+                          {
+                            "name": "address",
+                            "cl_type": "Key"
+                          }
+                        ],
+                        "ret": "U256",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "burn",
+                      "entry_point": {
+                        "name": "burn",
+                        "args": [
+                          {
+                            "name": "owner",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "amount",
+                            "cl_type": "U256"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "change_events_mode",
+                      "entry_point": {
+                        "name": "change_events_mode",
+                        "args": [
+                          {
+                            "name": "events_mode",
+                            "cl_type": "U8"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "change_security",
+                      "entry_point": {
+                        "name": "change_security",
+                        "args": [],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "condor",
+                      "entry_point": {
+                        "name": "condor",
+                        "args": [],
+                        "ret": "String",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "decimals",
+                      "entry_point": {
+                        "name": "decimals",
+                        "args": [],
+                        "ret": "U8",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "decrease_allowance",
+                      "entry_point": {
+                        "name": "decrease_allowance",
+                        "args": [
+                          {
+                            "name": "spender",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "amount",
+                            "cl_type": "U256"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "increase_allowance",
+                      "entry_point": {
+                        "name": "increase_allowance",
+                        "args": [
+                          {
+                            "name": "spender",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "amount",
+                            "cl_type": "U256"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "init",
+                      "entry_point": {
+                        "name": "init",
+                        "args": [],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "migrate_sec_keys",
+                      "entry_point": {
+                        "name": "migrate_sec_keys",
+                        "args": [],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "migrate_user_allowance_keys",
+                      "entry_point": {
+                        "name": "migrate_user_allowance_keys",
+                        "args": [],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "migrate_user_balance_keys",
+                      "entry_point": {
+                        "name": "migrate_user_balance_keys",
+                        "args": [],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "mint",
+                      "entry_point": {
+                        "name": "mint",
+                        "args": [
+                          {
+                            "name": "owner",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "amount",
+                            "cl_type": "U256"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "name",
+                      "entry_point": {
+                        "name": "name",
+                        "args": [],
+                        "ret": "String",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "symbol",
+                      "entry_point": {
+                        "name": "symbol",
+                        "args": [],
+                        "ret": "String",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "total_supply",
+                      "entry_point": {
+                        "name": "total_supply",
+                        "args": [],
+                        "ret": "U256",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "transfer",
+                      "entry_point": {
+                        "name": "transfer",
+                        "args": [
+                          {
+                            "name": "recipient",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "amount",
+                            "cl_type": "U256"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    },
+                    {
+                      "name": "transfer_from",
+                      "entry_point": {
+                        "name": "transfer_from",
+                        "args": [
+                          {
+                            "name": "owner",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "recipient",
+                            "cl_type": "Key"
+                          },
+                          {
+                            "name": "amount",
+                            "cl_type": "U256"
+                          }
+                        ],
+                        "ret": "Unit",
+                        "access": "Public",
+                        "entry_point_type": "Called"
+                      }
+                    }
+                  ],
+                  "protocol_version": "2.0.0"
                 }
               }
             }
           },
           {
-            "key": "package-ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4",
+            "key": "hash-976b060d3ae59125f3521c5dd16ca5f55c9862b37a9effa05c3770a9a4d7b870",
             "kind": {
               "Write": {
-                "Package": {
+                "ContractPackage": {
+                  "access_key": "uref-d8a4e0ed98096e0df3263828e46c1f6758255853d3abcb32ebaf0776483a46bb-007",
                   "versions": [
                     {
-                      "entity_version_key": {
-                        "protocol_version_major": 2,
-                        "entity_version": 1
-                      },
-                      "addressable_entity_hash": "addressable-entity-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58"
+                      "protocol_version_major": 2,
+                      "contract_version": 1,
+                      "contract_hash": "contract-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4"
                     }
                   ],
                   "disabled_versions": [],
@@ -916,48 +609,18 @@
             }
           },
           {
-            "key": "message-topic-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-b38b3a8f7a7cb169b9869f1b660e328df63941f4f078d284a0058140375ec7fc",
+            "key": "account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4",
             "kind": {
-              "Write": {
-                "MessageTopic": {
-                  "message_count": 0,
-                  "blocktime": 1721206325167
+              "AddKeys": [
+                {
+                  "name": "cep18_contract_hash_CLICKT Test",
+                  "key": "entity-contract-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "message-topic-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
-            "kind": {
-              "Write": {
-                "MessageTopic": {
-                  "message_count": 0,
-                  "blocktime": 1721206325167
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-account-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f-1b97fc9e53ff59b389432fd44a90c5d773bb65a2933b8196a5c441724819f8d6",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "1102d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58",
-                    "parsed": "entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "1f00000063657031385f636f6e74726163745f686173685f434c49434b312054657374",
-                    "parsed": "cep18_contract_hash_CLICK1 Test"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "uref-a6b391748c16be8f8c000b5658884cea53332255596e0537667e71f2d358af90-000",
+            "key": "uref-e2e2f2ee35996daeb226a3d756bc1bd245e635c2f66ea6c0acd15859bc543519-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -969,26 +632,18 @@
             }
           },
           {
-            "key": "named-key-entity-account-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f-50e82d25e72fda1f67a69b3ac3a3a56565971c80577ba72df18d6fbd73f2bb1d",
+            "key": "account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4",
             "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "02a6b391748c16be8f8c000b5658884cea53332255596e0537667e71f2d358af9007",
-                    "parsed": "uref-a6b391748c16be8f8c000b5658884cea53332255596e0537667e71f2d358af90-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "2200000063657031385f636f6e74726163745f76657273696f6e5f434c49434b312054657374",
-                    "parsed": "cep18_contract_version_CLICK1 Test"
-                  }
+              "AddKeys": [
+                {
+                  "name": "cep18_contract_version_CLICKT Test",
+                  "key": "uref-e2e2f2ee35996daeb226a3d756bc1bd245e635c2f66ea6c0acd15859bc543519-007"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "uref-419179eebe4ea6427e77a58aae6fac945c4d4135d042ff800d0be71ac17d7a8d-000",
+            "key": "uref-11aa02dd78243651d098b056c7a3761c9ba2024da11df432b350c36d6bc15d33-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -1000,80 +655,52 @@
             }
           },
           {
-            "key": "named-key-entity-account-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f-45ffbf1854843af5eeec6b167e14a9e97bdb526e66205b07559d4fb3928fb11e",
+            "key": "account-hash-9fa1fc0808d3a5b9ea9f3af4ca7c8c3655568fdf378d8afdf8a7e56e58abbfd4",
             "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "02419179eebe4ea6427e77a58aae6fac945c4d4135d042ff800d0be71ac17d7a8d07",
-                    "parsed": "uref-419179eebe4ea6427e77a58aae6fac945c4d4135d042ff800d0be71ac17d7a8d-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "06000000636f6e646f72",
-                    "parsed": "condor"
-                  }
+              "AddKeys": [
+                {
+                  "name": "condor",
+                  "key": "uref-11aa02dd78243651d098b056c7a3761c9ba2024da11df432b350c36d6bc15d33-007"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58",
+            "key": "hash-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4",
             "kind": "Identity"
           },
           {
-            "key": "package-ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4",
+            "key": "hash-976b060d3ae59125f3521c5dd16ca5f55c9862b37a9effa05c3770a9a4d7b870",
             "kind": "Identity"
           },
           {
-            "key": "entry-point-v1-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-4ca60287ae6129662475a8ce0d41c450d072b2430a8759f6178adeeff38523da",
+            "key": "hash-feb66b9d1f45bf0a4c11c2048c2b5c839f191128f883ad24d1c2508fc6ad285d",
             "kind": "Identity"
           },
           {
-            "key": "byte-code-v1-wasm-800e35cfd87b0f36479afdaf68725cd7ef0f503e8d541ed33afad4a18c7fa6eb",
-            "kind": "Identity"
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-c45567f4859db5b100d4c45a9638973ccdf0a7068a2a50f7a1c8709d5e84fbd2",
+            "key": "hash-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4",
             "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "10ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4",
-                    "parsed": "package-ab86f3895a5b0d8cd15113ec159f425037aceb9bb1b464affd9db54b592accf4"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0c0000007061636b6167655f68617368",
-                    "parsed": "package_hash"
-                  }
+              "AddKeys": [
+                {
+                  "name": "package_hash",
+                  "key": "package-976b060d3ae59125f3521c5dd16ca5f55c9862b37a9effa05c3770a9a4d7b870"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-d447c1e29c0d374421e2c3f290c580a73aa748eba54e1b6bb3da0acdd4cdcee5",
+            "key": "hash-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4",
             "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "1102d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58",
-                    "parsed": "entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0d000000636f6e74726163745f68617368",
-                    "parsed": "contract_hash"
-                  }
+              "AddKeys": [
+                {
+                  "name": "contract_hash",
+                  "key": "entity-contract-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "uref-e164c15c5fb035160a0d105a467fa4b6e7562746ffd2bdad6e5e3220878df19a-000",
+            "key": "uref-5014b553c6c195c6327fdbdf4c6f411cd1ad99aecaa1add06d6459b9452d66f5-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -1085,26 +712,18 @@
             }
           },
           {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-bce0df2b23ec57062235795dd9b7a1a6dc07885918c6cee5c5859a9df3d498e0",
+            "key": "hash-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4",
             "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "02e164c15c5fb035160a0d105a467fa4b6e7562746ffd2bdad6e5e3220878df19a07",
-                    "parsed": "uref-e164c15c5fb035160a0d105a467fa4b6e7562746ffd2bdad6e5e3220878df19a-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0a000000616c6c6f77616e636573",
-                    "parsed": "allowances"
-                  }
+              "AddKeys": [
+                {
+                  "name": "allowances",
+                  "key": "uref-5014b553c6c195c6327fdbdf4c6f411cd1ad99aecaa1add06d6459b9452d66f5-007"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "uref-f032be9ae9bd295ec0403aa886d7247d27c296751176bd88d3b02c996626fd05-000",
+            "key": "uref-85a731470d19fb7c4986f85f8bc889aec3bd578c5e3f499ce8ff3311fde230dc-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -1116,38 +735,30 @@
             }
           },
           {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-058ed80a0c85bcf8470ac5b8ca4c14f1086c3cd5ae00f1f0592fee3addf4073c",
+            "key": "hash-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4",
             "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "02f032be9ae9bd295ec0403aa886d7247d27c296751176bd88d3b02c996626fd0507",
-                    "parsed": "uref-f032be9ae9bd295ec0403aa886d7247d27c296751176bd88d3b02c996626fd05-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0800000062616c616e636573",
-                    "parsed": "balances"
-                  }
+              "AddKeys": [
+                {
+                  "name": "balances",
+                  "key": "uref-85a731470d19fb7c4986f85f8bc889aec3bd578c5e3f499ce8ff3311fde230dc-007"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "dictionary-ede600b099900d357796a3e23eecb1e5277bdfb93297c36f0c039d2c3a5c6557",
+            "key": "dictionary-02af2d6b9eb8e3c6c5e7403f44e01766ef86516bc40e674b360ea6d1c8ae21af",
             "kind": {
               "Write": {
                 "CLValue": {
                   "cl_type": "Any",
-                  "bytes": "08000000070080c6a47e8d030720000000f032be9ae9bd295ec0403aa886d7247d27c296751176bd88d3b02c996626fd053000000045514869587777376d477171476d7946376a5672365a7a5449506f66664f72356b6f6f2f765146647352386b44773d3d",
+                  "bytes": "08000000070080c6a47e8d03072000000085a731470d19fb7c4986f85f8bc889aec3bd578c5e3f499ce8ff3311fde230dc2c000000414a2b682f4167493036573536703836394d70386a445a56566f2f664e34324b2f66696e3557355971372f55",
                   "parsed": null
                 }
               }
             }
           },
           {
-            "key": "uref-6e6c902ff1c50971ab62f788d0fe0171ebffceb91be9861c02ce55993ae6bcdc-000",
+            "key": "uref-f9afa20f6ac96ed3aac01ddeecfef4067aee7ad0b90ba12ce76a02cf29557817-000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -1159,199 +770,52 @@
             }
           },
           {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-5f4fd818ad44d4ae056e151759a8585de97a1c7c4d53ceecac6631f9fbb39ab6",
+            "key": "hash-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4",
             "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "026e6c902ff1c50971ab62f788d0fe0171ebffceb91be9861c02ce55993ae6bcdc07",
-                    "parsed": "uref-6e6c902ff1c50971ab62f788d0fe0171ebffceb91be9861c02ce55993ae6bcdc-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0f00000073656375726974795f626164676573",
-                    "parsed": "security_badges"
-                  }
+              "AddKeys": [
+                {
+                  "name": "security_badges",
+                  "key": "uref-f9afa20f6ac96ed3aac01ddeecfef4067aee7ad0b90ba12ce76a02cf29557817-007"
                 }
-              }
+              ]
             }
           },
           {
-            "key": "dictionary-30b94b42bb8ec2d32652ac73cf74031df44c1327c946924c5c9ffe82a94b3dd0",
+            "key": "dictionary-a083f799ef84f75134c43548f59d20a3fb41c9993ba5295b000c1541c929ae98",
             "kind": {
               "Write": {
                 "CLValue": {
                   "cl_type": "Any",
-                  "bytes": "010000000003200000006e6c902ff1c50971ab62f788d0fe0171ebffceb91be9861c02ce55993ae6bcdc3000000045514869587777376d477171476d7946376a5672365a7a5449506f66664f72356b6f6f2f765146647352386b44773d3d",
+                  "bytes": "01000000000320000000f9afa20f6ac96ed3aac01ddeecfef4067aee7ad0b90ba12ce76a02cf295578172c000000414a2b682f4167493036573536703836394d70386a445a56566f2f664e34324b2f66696e3557355971372f55",
                   "parsed": null
                 }
               }
             }
           },
           {
-            "key": "uref-08f9c3e110c4d5cbc6e8ce71dd0cd535e4f41b34fe88c26cf3cd222004373db3-000",
+            "key": "uref-a0cb023abb00bf87f9898b5fdce36569d5b87b7891e2b5023e663a5bc78134e0-000",
             "kind": "Identity"
           },
           {
-            "key": "uref-9d1bc561e4c28250e3595b12b78989409f69ad336a8e398b4e9f6b91b3c28317-000",
-            "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": "Unit",
-                  "bytes": "",
-                  "parsed": null
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-0c12f81c2baaa55048b1b7f396d105681463f5ce8f43e9de903369fb55f29947",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "029d1bc561e4c28250e3595b12b78989409f69ad336a8e398b4e9f6b91b3c2831707",
-                    "parsed": "uref-9d1bc561e4c28250e3595b12b78989409f69ad336a8e398b4e9f6b91b3c28317-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "080000005f5f6576656e7473",
-                    "parsed": "__events"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "uref-ab3e2fffdfad1bea4c6cea416dc7b820f769dc1ce9071d524d63e704ff0c3ae4-000",
-            "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": "U32",
-                  "bytes": "00000000",
-                  "parsed": 0
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-dd93feca0896fb86350700d69861072bad6eae9c93e5f2ffeb43f2daa4f6fcc1",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "02ab3e2fffdfad1bea4c6cea416dc7b820f769dc1ce9071d524d63e704ff0c3ae407",
-                    "parsed": "uref-ab3e2fffdfad1bea4c6cea416dc7b820f769dc1ce9071d524d63e704ff0c3ae4-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0f0000005f5f6576656e74735f6c656e677468",
-                    "parsed": "__events_length"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "uref-8f51f4b1f048ba99b5b14e1021cfdb743af05c5c4452dd0350c5649a48cd3d09-000",
-            "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": {
-                    "Map": {
-                      "key": "String",
-                      "value": {
-                        "List": {
-                          "Tuple2": [
-                            "String",
-                            "Any"
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  "bytes": "09000000040000004275726e02000000050000006f776e65720b06000000616d6f756e7407100000004368616e67654576656e74734d6f6465010000000b0000006576656e74735f6d6f6465030e0000004368616e67655365637572697479020000000500000061646d696e0b0e0000007365635f6368616e67655f6d6170110b03110000004465637265617365416c6c6f77616e636504000000050000006f776e65720b070000007370656e6465720b09000000616c6c6f77616e63650707000000646563725f62790711000000496e637265617365416c6c6f77616e636504000000050000006f776e65720b070000007370656e6465720b09000000616c6c6f77616e63650706000000696e635f627907040000004d696e740200000009000000726563697069656e740b06000000616d6f756e74070c000000536574416c6c6f77616e636503000000050000006f776e65720b070000007370656e6465720b09000000616c6c6f77616e636507080000005472616e73666572030000000600000073656e6465720b09000000726563697069656e740b06000000616d6f756e74070c0000005472616e7366657246726f6d04000000070000007370656e6465720b050000006f776e65720b09000000726563697069656e740b06000000616d6f756e7407",
-                  "parsed": null
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-1668218bcb4abcca6eb423a234252322df6319372653092475d173c00714a089",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "028f51f4b1f048ba99b5b14e1021cfdb743af05c5c4452dd0350c5649a48cd3d0907",
-                    "parsed": "uref-8f51f4b1f048ba99b5b14e1021cfdb743af05c5c4452dd0350c5649a48cd3d09-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "0f0000005f5f6576656e74735f736368656d61",
-                    "parsed": "__events_schema"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "uref-8474015e6fe46390ce16ebe4f7f6dd9d88b9a1def98ae4c32f8808b53f66d582-000",
-            "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": "String",
-                  "bytes": "03000000312e31",
-                  "parsed": "1.1"
-                }
-              }
-            }
-          },
-          {
-            "key": "named-key-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-6cb1f5fa1d62a0d84f41d492ee1526320c547fd54ef072398e9aec731475e9d0",
-            "kind": {
-              "Write": {
-                "NamedKey": {
-                  "named_key": {
-                    "cl_type": "Key",
-                    "bytes": "028474015e6fe46390ce16ebe4f7f6dd9d88b9a1def98ae4c32f8808b53f66d58207",
-                    "parsed": "uref-8474015e6fe46390ce16ebe4f7f6dd9d88b9a1def98ae4c32f8808b53f66d582-007"
-                  },
-                  "name": {
-                    "cl_type": "String",
-                    "bytes": "140000005f5f6576656e74735f6365735f76657273696f6e",
-                    "parsed": "__events_ces_version"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "uref-08f9c3e110c4d5cbc6e8ce71dd0cd535e4f41b34fe88c26cf3cd222004373db3-000",
+            "key": "message-topic-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
             "kind": "Identity"
           },
           {
-            "key": "message-topic-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
-            "kind": "Identity"
-          },
-          {
-            "key": "message-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1-0",
+            "key": "message-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1-0",
             "kind": {
               "Write": {
-                "Message": "message-checksum-de44efda117cc02be18edf564107308f982498f7a781e7496f7f20d05957bb3c"
+                "Message": "message-checksum-4f9c3b0e96c2fd77a8a0d11c123c23ee4251c183707307205ae02ecd29c3385e"
               }
             }
           },
           {
-            "key": "message-topic-entity-contract-d8850e3227ce97cdb21a3e266fe360a196ec6c97058ee1ea242da0d03aa51c58-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+            "key": "message-topic-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
             "kind": {
               "Write": {
                 "MessageTopic": {
                   "message_count": 1,
-                  "blocktime": 1721206325167
+                  "blocktime": 1734512599230,
+                  "topic_name": "events"
                 }
               }
             }
@@ -1367,9 +831,9 @@
                       "U64"
                     ]
                   },
-                  "bytes": "af3fe4bf900100000100000000000000",
+                  "bytes": "bee001d9930100000100000000000000",
                   "parsed": [
-                    1721206325167,
+                    1734512599230,
                     1
                   ]
                 }
@@ -1377,41 +841,13 @@
             }
           },
           {
-            "key": "uref-ab3e2fffdfad1bea4c6cea416dc7b820f769dc1ce9071d524d63e704ff0c3ae4-000",
-            "kind": "Identity"
-          },
-          {
-            "key": "dictionary-17125c888001cf5f36a03240f55838b5d9e09172292589fff4a7b25ae6e6c5b2",
+            "key": "balance-hold-01e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520bee001d993010000",
             "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": "Any",
-                  "bytes": "3c000000380000000a0000006576656e745f4d696e741101e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f070080c6a47e8d030e03200000009d1bc561e4c28250e3595b12b78989409f69ad336a8e398b4e9f6b91b3c283170100000030",
-                  "parsed": null
-                }
-              }
+              "Prune": "balance-hold-01e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520bee001d993010000"
             }
           },
           {
-            "key": "uref-ab3e2fffdfad1bea4c6cea416dc7b820f769dc1ce9071d524d63e704ff0c3ae4-000",
-            "kind": {
-              "Write": {
-                "CLValue": {
-                  "cl_type": "U32",
-                  "bytes": "01000000",
-                  "parsed": 1
-                }
-              }
-            }
-          },
-          {
-            "key": "balance-hold-016f8eee1d8ea5eee794ffe69a9008c9c8620eea284ee2c49bf686ae8eee042215af3fe4bf90010000",
-            "kind": {
-              "Prune": "balance-hold-016f8eee1d8ea5eee794ffe69a9008c9c8620eea284ee2c49bf686ae8eee042215af3fe4bf90010000"
-            }
-          },
-          {
-            "key": "balance-hold-006f8eee1d8ea5eee794ffe69a9008c9c8620eea284ee2c49bf686ae8eee042215af3fe4bf90010000",
+            "key": "balance-hold-00e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520bee001d993010000",
             "kind": {
               "Write": {
                 "CLValue": {
@@ -1423,29 +859,17 @@
             }
           },
           {
-            "key": "entity-system-8499396a854bbe7e172a5ab675caf3c7b944f57e43cee5b7563971678f8650b2",
+            "key": "bid-addr-01dcd0c38c46c9d5c7083aa1a46b430e8e460f97f8f0bf8444776ac925187acfcc",
             "kind": "Identity"
           },
           {
-            "key": "entity-system-989625d28e779749e3cacc7367403dd459c8e7082937436f16d5dbff7aec8292",
-            "kind": "Identity"
-          },
-          {
-            "key": "entity-system-da2faf76ab117ec370d10f994e9407ff014ab974bedc50e58425a9e35428dd0c",
-            "kind": "Identity"
-          },
-          {
-            "key": "bid-addr-011c50d14ca563d5afe0399a3da010bac01383f502bc7cce774cc03d858a94cf06",
-            "kind": "Identity"
-          },
-          {
-            "key": "bid-addr-041c50d14ca563d5afe0399a3da010bac01383f502bc7cce774cc03d858a94cf06a700000000000000",
+            "key": "bid-addr-04dcd0c38c46c9d5c7083aa1a46b430e8e460f97f8f0bf8444776ac925187acfcc0800000000000000",
             "kind": {
               "Write": {
                 "BidKind": {
                   "Credit": {
-                    "validator_public_key": "01f58b94526d280881f79744effebc555426190950d5dfdd2f8aaf10ceaec010c6",
-                    "era_id": 167,
+                    "validator_public_key": "01509254f22690fbe7fb6134be574c4fbdb060dfa699964653b99753485e518ea6",
+                    "era_id": 8,
                     "amount": "1000000000000"
                   }
                 }

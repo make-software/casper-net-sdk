@@ -76,7 +76,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Raw bytes. Similar to a [`crate::StoredValue::CLValue`] but does not incur overhead of a [`crate::CLValue`] and [`crate::CLType`].
         /// </summary>
-        public byte[] RawBytes { get; init; }
+        public string RawBytes { get; init; }
         
         public class StoredValueConverter : JsonConverter<StoredValue>
         {
@@ -106,17 +106,6 @@ namespace Casper.Network.SDK.Types
                             reader.Read();
                             var propertyValue = JsonSerializer.Deserialize(ref reader, propertyInfo.PropertyType, options);
                             propertyInfo.SetValue(storedValue, propertyValue);
-                        }
-                        else if(propertyName.Equals("LegacyTransfer", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            reader.Read();
-
-                            var serializerOptions = new JsonSerializerOptions(options);
-                            serializerOptions.Converters.Add(new Transfer.TransferConverter());
-
-                            var t = JsonSerializer.Deserialize<Transfer>(ref reader, serializerOptions);
-                            propertyInfo = typeof(StoredValue).GetProperty("Transfer", BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                            propertyInfo?.SetValue(storedValue, t);
                         }
                         else
                             throw new JsonException($"Unknown property: {propertyName}.");
