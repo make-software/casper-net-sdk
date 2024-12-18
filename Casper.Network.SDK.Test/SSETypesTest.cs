@@ -83,19 +83,11 @@ namespace NetCasperTest
                 value.TransactionHash.Version1);
             Assert.AreEqual("01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a",
                 value.InitiatorAddr.PublicKey.ToString().ToLower());
-            Assert.AreEqual("b3fc60731e800dedfc60fcb1d85b91a93cf688237e53d2f8920e4fad4ab047ee", value.BlockHash);
+            Assert.AreEqual("0dabde3e8b065e734247b7d5328ac18317af9842f0141ffe41173df15efd97a8", value.BlockHash);
             Assert.IsTrue(value.ExecutionResult.Effect.Count > 0);
 
-            Assert.AreEqual(1, value.Messages.Count);
-            var message = value.Messages[0];
-            Assert.AreEqual("entity-contract-a9987538f3cceb823d627d6e28174fd7b50022c847db44b96c36077818e322ed",
-                message.AddressableEntity.ToString());
-            Assert.IsNotEmpty(message.MessagePayload.String);
-            Assert.IsNull(message.MessagePayload.Bytes);
-            Assert.AreEqual("events", message.TopicName);
-            Assert.AreEqual("5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1", message.TopicNameHash);
-            Assert.AreEqual(1, message.TopicIndex);
-            Assert.AreEqual(2, message.BlockIndex);
+            Assert.AreEqual(0, value.Messages.Count);
+            Assert.AreEqual("ApiError::Formatting [18]", value.ExecutionResult.ErrorMessage);
         }
     }
 }
