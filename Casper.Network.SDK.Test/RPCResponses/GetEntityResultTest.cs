@@ -45,7 +45,7 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNotNull(result.Entity.Package);
             Assert.IsNotNull(result.Entity.MainPurse);
             Assert.AreEqual("byte-code-85def61e3ee02e10a1e845cfb8e8b2d9640a18f605333158027a24ed8569d895", result.Entity.ByteCodeHash);
-            Assert.AreEqual(TransactionRuntime.VmCasperV1, result.Entity.EntityKind.SmartContract);
+            Assert.AreEqual(TransactionRuntime.VmCasperV1().ToString(), result.Entity.EntityKind.SmartContract);
             Assert.AreEqual(1, result.Entity.ActionThresholds.KeyManagement);
             Assert.AreEqual(1, result.Entity.ActionThresholds.Deployment);
             Assert.AreEqual(1, result.Entity.ActionThresholds.UpgradeManagement);

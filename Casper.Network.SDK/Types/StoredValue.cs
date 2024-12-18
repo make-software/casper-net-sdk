@@ -44,7 +44,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Stores a package.
         /// </summary>
-        public Package SmartContract { get; init; }
+        public Package Package { get; init; }
         
         /// <summary>
         /// A record of byte code.
@@ -106,17 +106,6 @@ namespace Casper.Network.SDK.Types
                             reader.Read();
                             var propertyValue = JsonSerializer.Deserialize(ref reader, propertyInfo.PropertyType, options);
                             propertyInfo.SetValue(storedValue, propertyValue);
-                        }
-                        else if(propertyName.Equals("LegacyTransfer", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            reader.Read();
-
-                            var serializerOptions = new JsonSerializerOptions(options);
-                            serializerOptions.Converters.Add(new Transfer.TransferConverter());
-
-                            var t = JsonSerializer.Deserialize<Transfer>(ref reader, serializerOptions);
-                            propertyInfo = typeof(StoredValue).GetProperty("Transfer", BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                            propertyInfo?.SetValue(storedValue, t);
                         }
                         else
                             throw new JsonException($"Unknown property: {propertyName}.");
