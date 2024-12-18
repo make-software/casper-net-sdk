@@ -889,17 +889,7 @@
                     "deployment": 1,
                     "upgrade_management": 1,
                     "key_management": 1
-                  },
-                  "message_topics": [
-                    {
-                      "topic_name": "errors",
-                      "topic_name_hash": "b38b3a8f7a7cb169b9869f1b660e328df63941f4f078d284a0058140375ec7fc"
-                    },
-                    {
-                      "topic_name": "events",
-                      "topic_name_hash": "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1"
-                    }
-                  ]
+                  }
                 }
               }
             }
