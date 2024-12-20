@@ -115,6 +115,18 @@ namespace Casper.Network.SDK.Types
             public byte[] Wasm { get; init; }
         }
 
+        /// <summary>
+        /// Signs the transaction with a private key and adds a new Approval to it.
+        /// </summary>
+        public void Sign(KeyPair keyPair)
+        {
+            if(_deploy is not null)
+                _deploy.Sign(keyPair);
+            
+            if(_transactionV1 is not null)
+                _transactionV1.Sign(keyPair);
+        }
+
         public class TransactionConverter : JsonConverter<Transaction>
         {
             public override Transaction Read(
