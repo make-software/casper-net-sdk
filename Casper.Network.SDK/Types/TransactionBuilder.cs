@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Casper.Network.SDK.Utils;
-using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.Types
 {
@@ -82,7 +81,7 @@ namespace Casper.Network.SDK.Types
                 }
             }
 
-            public virtual TransactionV1 Build()
+            public virtual Transaction Build()
             {
                 var payload = new TransactionV1Payload()
                 {
@@ -96,7 +95,8 @@ namespace Casper.Network.SDK.Types
                     EntryPoint = _entryPoint,
                     Scheduling = _scheduling,
                 };
-                return new TransactionV1(payload);
+                var transactionV1 = new TransactionV1(payload);
+                return (Transaction)transactionV1;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
@@ -222,7 +222,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
                 
@@ -272,7 +272,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
@@ -315,7 +315,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
@@ -360,7 +360,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
@@ -413,7 +413,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
@@ -445,7 +445,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
             
@@ -481,7 +481,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
@@ -510,7 +510,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
@@ -546,7 +546,7 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public override TransactionV1 Build()
+            public override Transaction Build()
             {
                 ValidateRequiredProperties();
 
