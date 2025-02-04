@@ -21,6 +21,8 @@ namespace Casper.Network.SDK
 
         private readonly RpcClient _rpcClient;
 
+        private int _nodeVersion;
+
         /// <summary>
         /// Create a new instance of the Casper client for a specific node in the network determined
         /// by the node address. Optionally, indicate a logging handler to log the requests and responses
@@ -44,6 +46,20 @@ namespace Casper.Network.SDK
             return _rpcClient.SendRpcRequestAsync<TRpcResult>(method);
         }
 
+        private async Task<int> GetNodeVersion()
+        {
+            if (_nodeVersion > 0)
+                return _nodeVersion;
+
+            var response = await this.GetNodeStatus();
+            var result = response.Parse();
+            _nodeVersion = result.BuildVersion.StartsWith("2")
+                    ? 2
+                    : 1;
+
+            return _nodeVersion;
+        }
+        
         /// <summary>
         /// Request the state root hash at a given Block.
         /// </summary>
@@ -93,8 +109,16 @@ namespace Casper.Network.SDK
         /// <returns></returns>
         public async Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(string blockHash = null)
         {
-            var method = new GetAuctionInfo(blockHash);
-            return await SendRpcRequestAsync<GetAuctionInfoResult>(method);
+            if (await GetNodeVersion() == 2)
+            {
+                var method = new GetAuctionInfoV2(blockHash);
+                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);
+            }
+            else
+            {
+                var method = new GetAuctionInfo(blockHash);
+                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);                
+            }
         }
 
         /// <summary>
@@ -103,8 +127,16 @@ namespace Casper.Network.SDK
         /// <param name="blockHeight">Block height for which the auction info is queried.</param>
         public async Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(ulong blockHeight)
         {
-            var method = new GetAuctionInfo(blockHeight);
-            return await SendRpcRequestAsync<GetAuctionInfoResult>(method);
+            if (await GetNodeVersion() == 2)
+            {
+                var method = new GetAuctionInfoV2(blockHeight);
+                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);
+            }
+            else
+            {
+                var method = new GetAuctionInfo(blockHeight);
+                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);                
+            }
         }
 
         /// <summary>

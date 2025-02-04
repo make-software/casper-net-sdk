@@ -6,15 +6,15 @@ using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.Converters
 {
-    public class BidsListConverter : JsonConverter<List<Bid>>
+    public class BidKindsListConverter : JsonConverter<List<BidKind>>
     {
-        public override List<Bid> Read(
+        public override List<BidKind> Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-            var bids = new List<Bid>();
-            
+            var bids = new List<BidKind>();
+
             if (reader.TokenType != JsonTokenType.StartArray)
                 throw new JsonException("StartArray token expected to deserialize a list of Bids");
 
@@ -23,10 +23,10 @@ namespace Casper.Network.SDK.Converters
             while (reader.TokenType != JsonTokenType.EndArray)
             {
                 reader.Read();
-                
+
                 string publicKey = null;
-                Bid bid = null;
-                
+                BidKind bid = null;
+
                 while (reader.TokenType == JsonTokenType.PropertyName)
                 {
                     var property = reader.GetString();
@@ -38,24 +38,51 @@ namespace Casper.Network.SDK.Converters
                             reader.Read();
                             break;
                         case "bid":
-                            bid = JsonSerializer.Deserialize<Bid>(ref reader, options);
-                            reader.Read(); // end object
+                            try
+                            {
+                                using (JsonDocument document = JsonDocument.ParseValue(ref reader))
+                                {
+                                    if (document.RootElement.TryGetProperty("bonding_purse", out var bondingPurse))
+                                    {
+                                        var unifiedBid =
+                                            JsonSerializer.Deserialize<Bid>(document.RootElement.GetRawText());
+                                        bid = new BidKind()
+                                        {
+                                            Unified = unifiedBid,
+                                        };
+                                    }
+                                    else
+                                    {
+                                        bid = JsonSerializer.Deserialize<BidKind>(document.RootElement.GetRawText());
+                                    }
+
+                                    reader.Read(); // read end of object
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                throw new JsonException(e.Message);
+                            }
+
                             break;
                         default:
                             throw new JsonException($"Unexpected property '{property}' deserializing Bid");
                     }
                 }
 
-                if (bid != null && bid.PublicKey == null && publicKey != null)
-                    bid = new Bid
+                if (publicKey != null && bid != null && bid.Unified != null && bid.Unified.PublicKey == null)
+                    bid = new BidKind()
                     {
-                        BondingPurse = bid.BondingPurse,
-                        DelegationRate = bid.DelegationRate,
-                        Delegators = bid.Delegators,
-                        Inactive = bid.Inactive,
-                        StakedAmount = bid.StakedAmount,
-                        PublicKey = PublicKey.FromHexString(publicKey),
-                        VestingSchedule = bid.VestingSchedule,
+                        Unified = new Bid()
+                        {
+                            BondingPurse = bid.Unified.BondingPurse,
+                            DelegationRate = bid.Unified.DelegationRate,
+                            Delegators = bid.Unified.Delegators,
+                            Inactive = bid.Unified.Inactive,
+                            StakedAmount = bid.Unified.StakedAmount,
+                            PublicKey = PublicKey.FromHexString(publicKey),
+                            VestingSchedule = bid.Unified.VestingSchedule,
+                        }
                     };
                 bids.Add(bid);
 
@@ -69,7 +96,7 @@ namespace Casper.Network.SDK.Converters
 
         public override void Write(
             Utf8JsonWriter writer,
-            List<Bid> value,
+            List<BidKind> value,
             JsonSerializerOptions options)
         {
             throw new NotImplementedException("Write method for Bid not yet implemented");
