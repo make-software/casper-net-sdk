@@ -134,16 +134,21 @@ namespace Casper.Network.SDK
         /// <param name="blockHeight">Block height for which the auction info is queried.</param>
         public async Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(ulong blockHeight)
         {
-            if (await GetNodeVersion() == 2)
+            var nodeVersion = await GetNodeVersion();
+            RpcMethod method = null;
+            
+            if (nodeVersion == 1)
+                method = new GetAuctionInfo(blockHeight);
+            else 
             {
-                var method = new GetAuctionInfoV2(blockHeight);
-                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);
+                var getBlockResponse = await GetBlock(blockHeight);
+                if (getBlockResponse.Parse().Block.Version == 2)
+                    method = new GetAuctionInfoV2(blockHeight);
+                else
+                    method = new GetAuctionInfo(blockHeight);
             }
-            else
-            {
-                var method = new GetAuctionInfo(blockHeight);
-                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);                
-            }
+            
+            return await SendRpcRequestAsync<GetAuctionInfoResult>(method);   
         }
 
         /// <summary>
