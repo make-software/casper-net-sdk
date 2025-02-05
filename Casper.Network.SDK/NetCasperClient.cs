@@ -109,16 +109,23 @@ namespace Casper.Network.SDK
         /// <returns></returns>
         public async Task<RpcResponse<GetAuctionInfoResult>> GetAuctionInfo(string blockHash = null)
         {
-            if (await GetNodeVersion() == 2)
+            var nodeVersion = await GetNodeVersion();
+            RpcMethod method = null;
+            
+            if (nodeVersion == 1)
+                method = new GetAuctionInfo(blockHash);
+            else if (blockHash == null)
+                method = new GetAuctionInfoV2(blockHash);
+            else 
             {
-                var method = new GetAuctionInfoV2(blockHash);
-                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);
+                var getBlockResponse = await GetBlock(blockHash);
+                if (getBlockResponse.Parse().Block.Version == 2)
+                    method = new GetAuctionInfoV2(blockHash);
+                else
+                    method = new GetAuctionInfo(blockHash);
             }
-            else
-            {
-                var method = new GetAuctionInfo(blockHash);
-                return await SendRpcRequestAsync<GetAuctionInfoResult>(method);                
-            }
+            
+            return await SendRpcRequestAsync<GetAuctionInfoResult>(method);                
         }
 
         /// <summary>
@@ -952,6 +959,17 @@ namespace Casper.Network.SDK
         {
             var uriBuilder = new UriBuilder("http", host, port, "metrics");
             return await GetNodeMetrics(uriBuilder.Uri.ToString());
+        }
+        
+        /// <summary>
+        /// Returns the validator bid.
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="blockHash">Hash of the block to retrieve the rewards from. Null for the most recent era</param>
+        public async Task<RpcResponse<QueryGlobalStateResult>> GetValidatorBid(PublicKey validator, string blockHash = null)
+        {
+            var bidAddr = BidAddrKey.FromValidatorKey(new AccountHashKey(validator));
+            return await QueryGlobalState(bidAddr, blockHash);
         }
         
         public void Dispose()

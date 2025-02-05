@@ -8,6 +8,9 @@ namespace Casper.Network.SDK.Converters
 {
     public class BidKindsListConverter : JsonConverter<List<BidKind>>
     {
+        const ulong DefaultMinimumDelegationAmount = 500l * 1_000_000_000l;
+        const ulong DefaultMaximumDelegationAmount = 1_000_000_000 * 1_000_000_000l;
+        
         public override List<BidKind> Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
@@ -70,21 +73,41 @@ namespace Casper.Network.SDK.Converters
                     }
                 }
 
-                if (publicKey != null && bid != null && bid.Unified != null && bid.Unified.PublicKey == null)
-                    bid = new BidKind()
+                if (bid?.Unified != null)
+                {
+                    // Convert Unified bids to 1 Validator BidKind and 1 Delegator BidKind per delegator included
+                    bids.Add(new BidKind()
                     {
-                        Unified = new Bid()
+                        Validator = new ValidatorBid()
                         {
+                            PublicKey = bid.Unified.PublicKey ?? PublicKey.FromHexString(publicKey),
                             BondingPurse = bid.Unified.BondingPurse,
                             DelegationRate = bid.Unified.DelegationRate,
-                            Delegators = bid.Unified.Delegators,
-                            Inactive = bid.Unified.Inactive,
                             StakedAmount = bid.Unified.StakedAmount,
-                            PublicKey = PublicKey.FromHexString(publicKey),
-                            VestingSchedule = bid.Unified.VestingSchedule,
+                            MinimumDelegationAmount = DefaultMinimumDelegationAmount,
+                            MaximumDelegationAmount = DefaultMaximumDelegationAmount,
+                            ReservedSlots = 0,
+                            Inactive = bid.Unified.Inactive,
                         }
-                    };
-                bids.Add(bid);
+                    });
+
+                    foreach (var delegator in bid.Unified.Delegators)
+                    {
+                        bids.Add(new BidKind()
+                        {
+                            Delegator = new DelegatorBid()
+                            {
+                                VestingSchedule = delegator.VestingSchedule,
+                                ValidatorPublicKey = delegator.ValidatorPublicKey,
+                                StakedAmount = delegator.StakedAmount,
+                                BondingPurse = delegator.BondingPurse,
+                                DelegatorKind = new DelegatorKind() { PublicKey = delegator.DelegatorPublicKey },
+                            }
+                        });
+                    }
+                }
+                else 
+                    bids.Add(bid);
 
                 if (reader.TokenType != JsonTokenType.EndObject)
                     throw new JsonException("End object token expected while deserializing a list of Bids");
