@@ -8,9 +8,16 @@
           "protocol_version_major": 2,
           "contract_version": 1,
           "contract_hash": "contract-25aa2d3cc62a302746c08ae885454d6e8a9c8609aaa7468b24284e5d29c5d2f1"
+        },
+        {
+          "protocol_version_major": 2,
+          "contract_version": 4,
+          "contract_hash": "contract-2222222222222222222222222222222222222222222222222222222222222222"
         }
       ],
-      "disabled_versions": [],
+      "disabled_versions": [
+        [2,4]
+      ],
       "groups": [],
       "lock_status": "Unlocked"
     }

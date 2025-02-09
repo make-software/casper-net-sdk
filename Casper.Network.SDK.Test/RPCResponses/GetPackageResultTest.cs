@@ -19,9 +19,11 @@ namespace NetCasperTest.RPCResponses
             Assert.IsNotNull(result.ContractPackage);
             Assert.IsNull(result.Package);
             Assert.AreEqual("uref-6fc684fea74b278cbb18b546a6d9242b810ce58a2ff05d17493b19aa08f540e0-007", result.ContractPackage.AccessKey.ToString());
-            Assert.AreEqual(1, result.ContractPackage.Versions.Count);
+            Assert.AreEqual(2, result.ContractPackage.Versions.Count);
             Assert.AreEqual(2, result.ContractPackage.Versions[0].ProtocolVersionMajor);
             Assert.AreEqual(1, result.ContractPackage.Versions[0].Version);
+            Assert.AreEqual(2, result.ContractPackage.DisabledVersions[0].ProtocolVersionMajor);
+            Assert.AreEqual(4, result.ContractPackage.DisabledVersions[0].Version);
             Assert.AreEqual("contract-25aa2d3cc62a302746c08ae885454d6e8a9c8609aaa7468b24284e5d29c5d2f1", result.ContractPackage.Versions[0].Hash);
             Assert.AreEqual(LockStatus.Unlocked, result.ContractPackage.LockStatus);
         }
