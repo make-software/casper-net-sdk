@@ -64,7 +64,7 @@ if (block.Version == 1) {
 
 ### Transactions included in a block
 
-Blocks produced on Casper v1.x contain a list of deploys that differentiate between native transfers and all other types of deploys. On Casper 2.0, transactions (this includes legacy deploys too) have a category field that determines the processing lane to which the transaction is sent. The chainspec of the network determines the properties of each lane:
+Blocks produced on Casper v1.x contain a list of deploys that differentiate between native transfers and all other types of deploys. On Casper 2.0, transactions (this includes legacy deploys too) the payment amount determines the processing lane to which the transaction is sent. The chainspec of the network determines the properties of each lane:
 
 1. Maximum transaction size in bytes for a given transaction in a certain lane.
 2. Maximum args length size in bytes for a given transaction in a certain lane.
@@ -113,30 +113,13 @@ foreach(var transfer in result.Transfers)
 }
 ```
 
-## Balances
-
-The new `NoFee` mode in Casper 2.0 introduces the concept of a ‘balance hold’. In this mode of operation, for each transaction, the network holds the amount paid for its execution in the paying purse. Thus, entities have a total balance and an available balance, where the available balance is equal to the total balance minus the held balance.
-
-To get detailed information on an entity balance, use the new method `QueryBalanceDetails(IPurseIdentifier)` with a purse identifier. `PublicKey`, `AccountHashKey`, `AddressableEntityKey`, and `URef` keys implement the `IPurseIdentifier` interface and can be used to retrieve the balance details for an entity.
-
-`GetAccountBalance` has been renamed to `GetBalance` since this method can be used for any type of entity, not only for accounts.
-
-## Deploys and Transactions
-
-Condor introduces a new transaction model to support advanced use cases. While `Deploy`s continue to work in Condor, this type is deprecated, and Casper recommends switching to the new `TransactionV1` type.
-
-Similar to the `DeployTemplates` class, which provides deploy templates for most common use cases, we've implemented a `TransactionBuilder` class to facilitate the creation of transactions using the new `TransactionV1` model for different use cases. Check the documentation and the examples for more information.
-
-Use the new method `PutTransaction` to send a `TransactionV1` to the network. Use the new `GetTransaction` method to retrieve an accepted transaction. Both methods can also be used to send and retrieve a `Deploy`. For unprocessed transactions, the ExecutionInfo in the response is `null`. Upon processing, this property contains all information about the execution, including cost, payments, errors (if any), and execution effects.
-
-
 ### GetDeploy()
 
 Response from the `GetDeploy()` method has changed. Instead of a list of `ExecutionResult` objects, it now returns an instance of `ExecutionInfo` for a processed deploy. This instance contains block information and a results object.
 
 ### Payments and costs
 
-For a transaction (old and new versions) processed in Condor, the execution results object contains three properties related to the gas consumed and the CSPR tokens paid:
+For a transaction (old and new versions) processed in Casper 2.0, the execution results object contains three properties related to the gas consumed and the CSPR tokens paid:
 
 - `limit`: The maximum allowed gas limit for the transaction.
 - `consumed`: Gas consumed executing the transaction.
@@ -146,7 +129,7 @@ In the NoFee model, the user does not specify any amount for payment. Instead, h
 
 ### Execution results
 
-The `ExecutionResult` class is a versioned object. Deploys processed before the Condor upgrade are stored in the global state as `ExecutionResultV1`records, and deploys and transactions processed after the Condor upgrade are stored as `ExecutionResultV2` records.
+The `ExecutionResult` class is a versioned object. Deploys processed before the Casper 2.0 upgrade are stored in the global state as `ExecutionResultV1`records, and deploys and transactions processed after the Casper 2.0 upgrade are stored as `ExecutionResultV2` records.
 
 For a processed transaction, the `GetTransaction` method always returns an `ExecutionResult` instance regardless of the version. It has the same fields as `ExecutionResultV2`. You can obtain the original structure by casting this instance to the correct version:
 
@@ -160,11 +143,11 @@ if (executionResult.Version == 2) {
 }   
 ```
 
-The Effect property contains a list of Transforms that modify the global state due to the transaction execution. Note that the ExecutionEffect type in Casper v1.x, which also contained a list of operations in addition to the transforms, has been removed in Condor execution results.
+The Effect property contains a list of Transforms that modify the global state due to the transaction execution. Note that the ExecutionEffect type in Casper v1.x, which also contained a list of operations in addition to the transforms, has been removed in Casper 2.0 execution results.
 
 ## Auction contract
 
-The auction contract has also changed in Condor. If your application tracks validator bids, rewards, and delegators, you must rework how network responses are parsed and interpreted. A complete description of the changes cannot be covered in this guide.
+The auction contract has also changed in Casper 2.0. If your application tracks validator bids, rewards, and delegators, you must rework how network responses are parsed and interpreted. A complete description of the changes cannot be covered in this guide.
 
 ## Server Sent Events
 
@@ -176,7 +159,7 @@ The BlockedAdded event contains a Block object. The original block structure, Bl
 
 ### Transactions
 
-On Condor, the `DeployAccepted`, `DeployProcessed`, and `DeployExpired` events are replaced with the equivalent `TransactionAccepted`, `TransactionProcessed`, and `TransactionExpired` events. These are emitted for both `Deploy` and `TransactionV1` types of transactions.
+On Casper 2.0, the `DeployAccepted`, `DeployProcessed`, and `DeployExpired` events are replaced with the equivalent `TransactionAccepted`, `TransactionProcessed`, and `TransactionExpired` events. These are emitted for both `Deploy` and `TransactionV1` types of transactions.
 
 A `TransactionAccepted` event contains a `Transaction` property with either a `Deploy` or a `TransactionV1`. `TransactionProcessed` and `TransactionExpired` events contain a `TransactionHash` property with either a deploy hash or a transaction version 1 hash.
 
@@ -200,7 +183,7 @@ if (finalitySignature.Version == 2) {
 
 ### Last switch block hash
 
-For a Condor network, the `GetNodeStatus` method can be used to get the latest switch block hash. The response contains the `LatestSwitchBlockHash` property with this value.
+For a Casper 2.0 network, the `GetNodeStatus` method can be used to get the latest switch block hash. The response contains the `LatestSwitchBlockHash` property with this value.
 
 Also, for blocks produced in Casper 2.0, the `Block` instance contains the previous switch block hash in the `LastSwitchBlockHash` property.
 
