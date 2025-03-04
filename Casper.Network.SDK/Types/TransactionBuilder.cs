@@ -67,6 +67,12 @@ namespace Casper.Network.SDK.Types
                 return (T)this;
             }
             
+            public T Payment(ulong amount, byte gasPriceTolerance = 1)
+            {
+                _pricingMode = Types.PricingMode.PaymentLimited(amount, gasPriceTolerance);
+                return (T)this;
+            }
+            
             protected void ValidateRequiredProperties()
             {
                 var missingProperties = this.GetType()

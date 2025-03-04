@@ -154,5 +154,11 @@ namespace Casper.Network.SDK.Types
         public BidAddrKey(byte[] key) : this(KEYPREFIX + Hex.ToHexString(key))
         {
         }
+
+        public static BidAddrKey FromValidatorKey(AccountHashKey accountHashKey)
+        {
+            return new BidAddrKey(KEYPREFIX + Hex.ToHexString(new byte[] {(byte)BidAddrTag.Validator}) + 
+                                  accountHashKey.ToHexString());
+        }
     }
 }

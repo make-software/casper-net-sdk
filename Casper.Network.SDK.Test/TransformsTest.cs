@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text.Json;
 using Casper.Network.SDK.JsonRpc.ResultTypes;
 using Casper.Network.SDK.Types;
 using NUnit.Framework;
@@ -57,5 +58,31 @@ namespace NetCasperTest
                                                   kind.Value.Unbonding is not null));
         }
 
+        [Test]
+        public void WriteContractTransform_v200()
+        {
+            string json = File.ReadAllText(TestContext.CurrentContext.TestDirectory +
+                                           "/TestData/write_contract_transform_v2.json");
+            
+            var  options = new JsonSerializerOptions()
+            {
+                WriteIndented = false,
+                Converters =
+                {
+                    new Transform.TransformConverter(),
+                    new StoredValue.StoredValueConverter(),
+                }
+            };
+            var transform = JsonSerializer.Deserialize<Transform>(json, options);
+
+            Assert.IsNotNull(transform);
+            Assert.IsNotNull(transform.Key);
+            var writeTransform = transform.Kind as WriteTransformKind;
+            Assert.IsNotNull(writeTransform);
+            Assert.IsNotNull(writeTransform.Value);
+            var contract = writeTransform.Value.Contract;
+            Assert.IsNotNull(contract);
+            Assert.IsTrue(contract.EntryPoints.Count > 0);
+        }
     }
 }
