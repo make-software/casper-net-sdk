@@ -131,8 +131,16 @@ namespace Casper.Network.SDK.Types
         /// <returns>false if the validation of hash is not successful</returns>
         public bool ValidateHashes(out string message)
         {
-            var computedHash = this.ToBytes();
-            if (!Hex.Decode(this.Hash).SequenceEqual(computedHash))
+            var payloadBytes = this.Payload.ToBytes();
+            var blake2BDigest = new Org.BouncyCastle.Crypto.Digests.Blake2bDigest(256);
+
+            blake2BDigest.BlockUpdate(payloadBytes, 0, payloadBytes.Length);
+
+            var hash = new byte[blake2BDigest.GetDigestSize()];
+            blake2BDigest.DoFinal(hash, 0);
+            
+            var computedHash = Hex.ToHexString(hash);
+            if (!this.Hash.Equals(computedHash, StringComparison.InvariantCultureIgnoreCase))
             {
                 message = "Computed hash does not match value in transaction object." +
                           $"Expected: '{this.Hash}'. " +
@@ -141,7 +149,7 @@ namespace Casper.Network.SDK.Types
             }
 
             message = "";
-            return false;
+            return true;
         }
 
         /// <summary>
