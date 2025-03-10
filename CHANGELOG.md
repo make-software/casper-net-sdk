@@ -78,6 +78,17 @@ This version is compatible with Casper node v2.0.0-rc3 and Casper node v1.5.6.
 
 * BouncyCastle package updated to 2.4.0 version.
 
+## [2.4.0]
+
+### Changed
+
+* Upgraded the project to .NET 8 (see Security section).
+
+### Security
+
+* Addressed [CVE-2024-30105](https://github.com/dotnet/runtime/issues/104619) by upgrading the project to .NET 8.
+* Updated BouncyCastle.Cryptography dependency to `v2.4.0` to address a vulnerability in `v2.3.0`.
+
 ## [2.3.0]
 
 ### Added
