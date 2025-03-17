@@ -10,8 +10,8 @@ namespace Casper.Network.SDK.Types
         private const string KEY_PREFIX = "message-";
         private const string TOPIC_PREFIX = "topic-";
         
-        public string HashAddr { get; init; }
-        
+        public AddressableEntityKey AddressableEntity { get; init; }
+
         public string TopicHash { get; init; }
         
         public UInt32? Index { get; init; }
@@ -28,28 +28,24 @@ namespace Casper.Network.SDK.Types
             {
                 key = key.Substring(TOPIC_PREFIX.Length);
                 var parts = key.Split('-');
-                if(parts.Length == 2)
-                {
-                    HashAddr = parts[0];
-                    TopicHash = parts[1];
-                }
-                else
-                    throw new Exception("Key not valid. It should have a hash address and a topic hash.");
+                if (parts.Length != 4)
+                    throw new Exception("Key not valid. It should have an entity address and a topic hash.");
+
+                AddressableEntity = new AddressableEntityKey($"{parts[0]}-{parts[1]}-{parts[2]}");
+                TopicHash = parts[3];
             }
             else
             {
                 var parts = key.Split('-');
-                if (parts.Length == 3)
-                {
-                    HashAddr = parts[0];
-                    TopicHash = parts[1];
-                    
-                    if(parts[2].Length == 0)
-                        throw new Exception("Key not valid. Expected a non-empty message index.");
-                    Index = Convert.ToUInt32(parts[2], 16);
-                }
-                else
-                    throw new Exception("Key not valid. It should have a hash address, a topic hash, and a message index.");
+                if (parts.Length != 5)
+                    throw new Exception("Key not valid. It should have an entity address, a topic hash, and a message index.");
+
+                AddressableEntity = new AddressableEntityKey($"{parts[0]}-{parts[1]}-{parts[2]}");
+                TopicHash = parts[3];
+                
+                if(parts[4].Length == 0)
+                    throw new Exception("Key not valid. Expected a non-empty message index.");
+                Index = Convert.ToUInt32(parts[4], 16);
             }
         }
     
@@ -60,8 +56,7 @@ namespace Casper.Network.SDK.Types
             var ms = new MemoryStream(key);
             var reader = new BinaryReader(ms);
             
-            var hash = reader.ReadBytes(32);
-            HashAddr = Hex.ToHexString(hash);
+            AddressableEntity = new AddressableEntityKey(reader);
             
             var topic = reader.ReadBytes(32);
             TopicHash = Hex.ToHexString(topic);
@@ -72,7 +67,7 @@ namespace Casper.Network.SDK.Types
 
             Key = KEY_PREFIX +
                   (Index.HasValue ? "" : TOPIC_PREFIX) +
-                  HashAddr + "-" +
+                  AddressableEntity.ToString() + "-" +
                   TopicHash +
                   (Index.HasValue ? "-" + Index.Value.ToString("x") : "");
         }

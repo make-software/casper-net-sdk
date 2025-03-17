@@ -539,7 +539,7 @@ namespace NetCasperTest
         [Test]
         public void MessageTopicKeyTest()
         {
-            var hashAddr = "55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
+            var hashAddr = "entity-contract-55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
             var topicStr = "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1";
             var msgKeyStr = $"message-topic-{hashAddr}-{topicStr}";
         
@@ -549,8 +549,8 @@ namespace NetCasperTest
 
             var messageKey = key as MessageKey;
             Assert.IsNotNull(messageKey);
-            Assert.IsNotNull(messageKey.HashAddr);
-            Assert.AreEqual(hashAddr, messageKey.HashAddr);
+            Assert.IsNotNull(messageKey.AddressableEntity);
+            Assert.AreEqual(hashAddr, messageKey.AddressableEntity.ToString());
             Assert.AreEqual(topicStr, messageKey.TopicHash);
             Assert.IsFalse(messageKey.Index.HasValue);
             Assert.AreEqual(msgKeyStr, messageKey.ToString().ToLower());
@@ -560,9 +560,9 @@ namespace NetCasperTest
         [Test]
         public void MessageIndexKeyTest()
         {
-            var hashAddr = "55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
+            var hashAddr = "entity-contract-55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
             var topicStr = "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1";
-            var indexStr = "f";
+            var indexStr = "0f";
             var msgKeyStr = $"message-{hashAddr}-{topicStr}-{indexStr}";
         
             var key = GlobalStateKey.FromString(msgKeyStr);
@@ -571,8 +571,8 @@ namespace NetCasperTest
 
             var messageKey = key as MessageKey;
             Assert.IsNotNull(messageKey);
-            Assert.IsNotNull(messageKey.HashAddr);
-            Assert.AreEqual(hashAddr, messageKey.HashAddr);
+            Assert.IsNotNull(messageKey.AddressableEntity);
+            Assert.AreEqual(hashAddr, messageKey.AddressableEntity.ToString());
             Assert.AreEqual(topicStr, messageKey.TopicHash);
             Assert.IsTrue(messageKey.Index.HasValue);
             Assert.AreEqual(15, messageKey.Index.Value);

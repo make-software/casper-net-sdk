@@ -8,7 +8,7 @@
             "protocol_version_major": 2,
             "entity_version": 1
           },
-          "addressable_entity_hash": "addressable-entity-e51af99d88fd26a282de00271c49a6c256232b344aa7907d2c8603b2bd5217c9"
+          "entity_addr": "entity-contract-e51af99d88fd26a282de00271c49a6c256232b344aa7907d2c8603b2bd5217c9"
         }
       ],
       "disabled_versions": [],
