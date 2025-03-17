@@ -47,8 +47,9 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// The hex-encoded address of the addressable entity.
         /// </summary>
-        [JsonPropertyName("addressable_entity_hash")]
-        public string AddressableEntityHash { get; init; }
+        [JsonPropertyName("entity_addr")]
+        [JsonConverter(typeof(AddressableEntityKey.AddressableEntityKeyConverter))]
+        public AddressableEntityKey AddressableEntity { get; init; }
     }
 
     public class NamedUserGroup
@@ -107,7 +108,7 @@ namespace Casper.Network.SDK.Types
                     {
                         EntityVersion = new EntityVersion()
                             { Version = v.Version, ProtocolVersionMajor = v.ProtocolVersionMajor },
-                        AddressableEntityHash = v.Hash,
+                        AddressableEntity = new AddressableEntityKey("entity-contract-" + v.Hash.Replace("contract-", "")),
                     }).ToList(),
                 Groups = contractPackage.Groups.Select(g => new NamedUserGroup()
                     {
