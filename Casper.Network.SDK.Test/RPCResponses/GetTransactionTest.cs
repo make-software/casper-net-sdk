@@ -2,6 +2,7 @@ using System.IO;
 using Casper.Network.SDK.JsonRpc.ResultTypes;
 using Casper.Network.SDK.Types;
 using NUnit.Framework;
+using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Utilities.Encoders;
 
 namespace NetCasperTest.RPCResponses
@@ -36,6 +37,8 @@ namespace NetCasperTest.RPCResponses
             AssertExtensions.IsHash(result.ExecutionInfo.BlockHash);
             Assert.IsTrue(result.ExecutionInfo.BlockHeight > 0);
             Assert.IsNotNull(result.ExecutionInfo.ExecutionResult);
+            Assert.AreEqual(1, result.ExecutionInfo.ExecutionResult.CurrentGasPrice);
+            Assert.AreEqual("30000", result.ExecutionInfo.ExecutionResult.Refund.ToString());
         }
         
         [Test]
@@ -136,6 +139,8 @@ namespace NetCasperTest.RPCResponses
             AssertExtensions.IsHash(result.ExecutionInfo.BlockHash);
             Assert.IsTrue(result.ExecutionInfo.BlockHeight > 0);
             Assert.IsNotNull(result.ExecutionInfo.ExecutionResult);
+            Assert.AreEqual(2, result.ExecutionInfo.ExecutionResult.CurrentGasPrice);
+            Assert.AreEqual("2123123123", result.ExecutionInfo.ExecutionResult.Refund.ToString());
         }
         
         [Test]
