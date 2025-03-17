@@ -27,6 +27,9 @@ namespace Casper.Network.SDK.Types
             if (key.StartsWith(TOPIC_PREFIX))
             {
                 key = key.Substring(TOPIC_PREFIX.Length);
+                key = key.Replace("entity-contract-", "");
+                key = key.Replace("entity-system-", "");
+                key = key.Replace("entity-account-", "");
                 var parts = key.Split('-');
                 if(parts.Length == 2)
                 {
@@ -38,6 +41,9 @@ namespace Casper.Network.SDK.Types
             }
             else
             {
+                key = key.Replace("entity-contract-", "");
+                key = key.Replace("entity-system-", "");
+                key = key.Replace("entity-account-", "");
                 var parts = key.Split('-');
                 if (parts.Length == 3)
                 {

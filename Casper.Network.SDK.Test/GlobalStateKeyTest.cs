@@ -541,7 +541,7 @@ namespace NetCasperTest
         {
             var hashAddr = "55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
             var topicStr = "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1";
-            var msgKeyStr = $"message-topic-{hashAddr}-{topicStr}";
+            var msgKeyStr = $"message-topic-entity-contract-{hashAddr}-{topicStr}";
         
             var key = GlobalStateKey.FromString(msgKeyStr);
             Assert.IsNotNull(key);
@@ -562,8 +562,8 @@ namespace NetCasperTest
         {
             var hashAddr = "55d4a6915291da12afded37fa5bc01f0803a2f0faf6acb7ec4c7ca6ab76f3330";
             var topicStr = "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1";
-            var indexStr = "f";
-            var msgKeyStr = $"message-{hashAddr}-{topicStr}-{indexStr}";
+            var indexStr = "0f";
+            var msgKeyStr = $"message-entity-contract-{hashAddr}-{topicStr}-{indexStr}";
         
             var key = GlobalStateKey.FromString(msgKeyStr);
             Assert.IsNotNull(key);
