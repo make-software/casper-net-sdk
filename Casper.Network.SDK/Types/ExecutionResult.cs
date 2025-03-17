@@ -53,6 +53,8 @@ namespace Casper.Network.SDK.Types
                 ErrorMessage = executionResult.ErrorMessage,
                 // Transfers = executionResult.Transfers,
                 Cost = executionResult.Cost,
+                Refund = 0,
+                CurrentGasPrice = 1,
                 Limit = 0,
                 Consumed = 0,
                 Effect = v2Effect,
@@ -81,6 +83,19 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("cost")]
         [JsonConverter(typeof(BigIntegerConverter))]
         public BigInteger Cost { get; init; }
+                
+        /// <summary>
+        /// How much was refunded (if any)
+        /// </summary>
+        [JsonPropertyName("refund")]
+        [JsonConverter(typeof(BigIntegerConverter))]
+        public BigInteger Refund { get; init; }
+        
+        /// <summary>
+        /// The gas price of the era.
+        /// </summary>
+        [JsonPropertyName("current_price")]
+        public UInt16 CurrentGasPrice { get; init; }
         
         /// <summary>
         /// If there is no error message, this execution was processed successfully. If there is an error message, this
@@ -150,6 +165,8 @@ namespace Casper.Network.SDK.Types
                                 ErrorMessage = erv2.ErrorMessage,
                                 Transfers = erv2.Transfers,
                                 Cost = erv2.Cost,
+                                Refund = erv2.Refund,
+                                CurrentGasPrice = erv2.CurrentGasPrice,
                                 Limit = erv2.Limit,
                                 Consumed = erv2.Consumed,
                                 Effect = erv2.Effect,
@@ -342,6 +359,19 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(BigIntegerConverter))]
         public BigInteger Cost { get; init; }
         
+        /// <summary>
+        /// How much was refunded (if any)
+        /// </summary>
+        [JsonPropertyName("refund")]
+        [JsonConverter(typeof(BigIntegerConverter))]
+        public BigInteger Refund { get; init; }
+        
+        /// <summary>
+        /// The gas price of the era.
+        /// </summary>
+        [JsonPropertyName("current_price")]
+        public UInt16 CurrentGasPrice { get; init; }
+
         /// <summary>
         /// If there is no error message, this execution was processed successfully. If there is an error message, this
         /// execution failed to fully process for the stated reason.

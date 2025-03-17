@@ -75,6 +75,8 @@
         "limit": "3000000000",
         "consumed": "1241925",
         "cost": "3000000000",
+        "refund": "2123123123",
+        "current_price": 2,
         "transfers": [],
         "size_estimate": 591,
         "effects": [
