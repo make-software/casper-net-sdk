@@ -75,7 +75,7 @@
           "Validator": {
             "validator_public_key": "01358a7e107668ae2eb092dcfbeb97d2ec3cc8354d2a77bc8f232fff6630a826c3",
             "bonding_purse": "uref-027d909fa0818f8b426b905795f608a6301168476b8013d7b3f682786796096f-007",
-              "staked_amount": "2500000000",
+            "staked_amount": "2500000000",
             "delegation_rate": 1,
             "vesting_schedule": null,
             "inactive": true,
@@ -126,6 +126,25 @@
             "bonding_purse": "uref-d34ee21f5fe61feee2d9f15e0e369367aba62ba1b689e59c1e6ddc581ca99fdf-007",
             "validator_public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
             "vesting_schedule": null
+          }
+        }
+      },
+      {
+        "public_key": "0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca",
+        "bid": {
+          "Unbond": {
+            "validator_public_key": "0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca",
+            "unbond_kind": {
+              "DelegatedPublicKey": "0154161886e8bcfea05f79efd7e8bfef2ed5a36c18d7d86d748fb21236f9e06d03"
+            },
+            "eras": [
+              {
+                "bonding_purse": "uref-a3c42d782f460513f2e1ee5569208d9efa80b34adf9736e011fdf1f5ca91bc08-007",
+                "era_of_creation": 17243,
+                "amount": "500000000000",
+                "new_validator": null
+              }
+            ]
           }
         }
       }
