@@ -26,6 +26,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A versioned wrapper for a TransactionV1 or Deploy.
     /// </summary>
+    [JsonConverter(typeof(TransactionConverter))]
     public partial class Transaction
     {
         protected TransactionVersion _version;

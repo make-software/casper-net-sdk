@@ -974,7 +974,7 @@ namespace Casper.Network.SDK
         public async Task<RpcResponse<QueryGlobalStateResult>> GetValidatorBid(PublicKey validator, string blockHash = null)
         {
             var bidAddr = BidAddrKey.FromValidatorKey(new AccountHashKey(validator));
-            return await QueryGlobalState(bidAddr, blockHash);
+            return await QueryGlobalStateWithBlockHash(bidAddr, blockHash);
         }
         
         public void Dispose()
