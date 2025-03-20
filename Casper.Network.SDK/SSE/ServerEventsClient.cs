@@ -192,6 +192,17 @@ namespace Casper.Network.SDK.SSE
 
         private void UpdateChannels(EventType eventType, int startFrom = int.MaxValue)
         {
+            if (_nodeVersion == 2)
+            {
+                _channels = new Dictionary<ChannelType, int>()
+                {
+                    { ChannelType.Main, startFrom },
+                };
+                return;
+            }
+            
+            // for _nodeVersion == 1, we need to listen to different channels
+            //
             var ch = new Dictionary<ChannelType, int>();
             foreach (var cb in _callbacks)
             {

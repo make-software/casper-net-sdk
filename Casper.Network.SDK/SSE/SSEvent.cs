@@ -56,7 +56,7 @@ namespace Casper.Network.SDK.SSE
             if (typeof(T) == typeof(Step))
                 json = this.Result.GetProperty("Step").GetRawText();
 
-            if (typeof(T) == typeof(TransactionAccepted))
+            if (typeof(T) == typeof(Transaction))
                 json = this.Result.GetProperty("TransactionAccepted").GetRawText();
 
             if (typeof(T) == typeof(TransactionProcessed))

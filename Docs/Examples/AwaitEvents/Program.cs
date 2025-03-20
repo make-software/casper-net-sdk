@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Casper.Network.SDK;
 using Casper.Network.SDK.SSE;
+using Casper.Network.SDK.Types;
 
 namespace Casper.NET.SDK.Examples
 {
@@ -42,7 +43,7 @@ namespace Casper.NET.SDK.Examples
                         }
                         else if (evt.EventType == EventType.TransactionAccepted)
                         {
-                            var transaction = evt.Parse<TransactionAccepted>();
+                            var transaction = evt.Parse<Transaction>();
                             Console.WriteLine("TransactionAccepted: " + transaction.Hash);
                         }
                         else if (evt.EventType == EventType.TransactionProcessed)
