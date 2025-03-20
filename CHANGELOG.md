@@ -9,6 +9,25 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+## [3.0.0-beta3]
+
+### Added
+
+* The `TransactionBuilder` now accepts amount as `ulong` type for the `Payment()` method.
+* New `GlobalStateKey.FromValidatorKey()` to get the bid address key of a validator.
+* New `GetNodeVersion()` in the main client class as a convenient method to check node version.
+* New `GetValidatorBid()` method to recover the bid information of a validator.
+
+### Changed
+
+* `MessageKey` contains an `AddressableEntity` property instead of a `HashAddr` to represent the related contract entity.
+* `GetAuctionInfo()` now uses the new `state_get_auction_info_v2` RPC method in Casper 2.0.
+
+### Fixed
+
+* [#99](https://github.com/make-software/casper-net-sdk/issues/99) SSE Listener emits the same event 3 times when listening to EventType.All
+* Fixed the `TransactionV1.ValidateHashes()` method to properly verify the hashes.
+
 ## [3.0.0-beta2]
 
 ### Added
@@ -163,6 +182,7 @@ This new type permits to parse correctly the value `"00"` used for system blocks
 ### Added
 * Initial release of Casper .NET SDK.
 
+[3.0.0-beta3]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta3
 [3.0.0-beta2]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta2
 [3.0.0-beta1]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta1
 [2.3.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v2.3.0
