@@ -241,7 +241,7 @@
             "kind": "Identity"
           },
           {
-            "key": "message-topic-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+            "key": "message-topic-entity-contract-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
             "kind": {
               "Write": {
                 "MessageTopic": {
@@ -797,11 +797,11 @@
             "kind": "Identity"
           },
           {
-            "key": "message-topic-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+            "key": "message-topic-entity-contract-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
             "kind": "Identity"
           },
           {
-            "key": "message-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1-0",
+            "key": "message-entity-contract-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1-0",
             "kind": {
               "Write": {
                 "Message": "message-checksum-4f9c3b0e96c2fd77a8a0d11c123c23ee4251c183707307205ae02ecd29c3385e"
@@ -809,7 +809,7 @@
             }
           },
           {
-            "key": "message-topic-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+            "key": "message-topic-entity-contract-783ac85c80ca97c0a3f699fedbde796c548e3cd0f8d015c3f3158090272eebd4-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
             "kind": {
               "Write": {
                 "MessageTopic": {
