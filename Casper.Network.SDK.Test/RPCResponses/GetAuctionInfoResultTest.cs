@@ -55,7 +55,7 @@ namespace NetCasperTest.RPCResponses
             Assert.AreEqual("017536433a73f7562526f3e9fcb8d720428ae2d28788a9909f3c6f637a9d848a4b", result.AuctionState.EraValidators[2].ValidatorWeights[3].PublicKey.ToString().ToLower());
             Assert.AreEqual(BigInteger.Parse("2030445261010189498"), result.AuctionState.EraValidators[2].ValidatorWeights[3].Weight);
             
-            Assert.AreEqual(4, result.AuctionState.Bids.Count);
+            Assert.AreEqual(5, result.AuctionState.Bids.Count);
             
             Assert.IsNotNull(result.AuctionState.Bids[0].Validator);
             Assert.AreEqual("01358a7e107668ae2eb092dcfbeb97d2ec3cc8354d2a77bc8f232fff6630a826c3", result.AuctionState.Bids[0].Validator.PublicKey.ToString().ToLower());
@@ -73,6 +73,11 @@ namespace NetCasperTest.RPCResponses
             Assert.AreEqual(BigInteger.Parse("1676515877735"), result.AuctionState.Bids[3].Delegator.StakedAmount);
             Assert.IsNull(result.AuctionState.Bids[3].Delegator.DelegatorKind.PublicKey);
             Assert.AreEqual("8af7b77811970792f98b806779dfc0d1a9fef5bad205c6be8bb884210d7d323c", result.AuctionState.Bids[3].Delegator.DelegatorKind.Purse);
+            
+            Assert.IsNotNull(result.AuctionState.Bids[4].Unbond);
+            Assert.AreEqual("0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca", result.AuctionState.Bids[4].Unbond.Validator.ToString().ToLower());
+            Assert.AreEqual(1, result.AuctionState.Bids[4].Unbond.Eras.Count);
+            Assert.AreEqual("uref-a3c42d782f460513f2e1ee5569208d9efa80b34adf9736e011fdf1f5ca91bc08-007", result.AuctionState.Bids[4].Unbond.Eras[0].BondingPurse.ToString());
         }
     }
 }

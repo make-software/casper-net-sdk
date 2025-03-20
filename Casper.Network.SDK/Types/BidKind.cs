@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.Converters;
@@ -55,6 +56,67 @@ namespace Casper.Network.SDK.Types
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey Validator { get; init; }
     }
+
+    public class UnbondKind
+    {
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey Validator { get; init; }
+        
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey DelegatedPublicKey { get; init; }
+        
+        public string DelegatedPurse { get; init; }
+    }
+
+    public class UnbondEra
+    {
+        /// <summary>
+        /// The purse that was used for bonding.
+        /// </summary>
+        [JsonPropertyName("bonding_purse")]
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
+        public URef BondingPurse { get; init; }
+        
+        /// <summary>
+        /// Era in which this unbonding request was created.
+        /// </summary>
+        [JsonPropertyName("era_of_creation")]
+        public ulong EraOfCreation { get; init; }
+        
+        /// <summary>
+        /// Unbonding Amount
+        /// </summary>
+        [JsonPropertyName("amount")]
+        [JsonConverter(typeof(BigIntegerConverter))]
+        public BigInteger Amount { get; init; }
+        
+        /// <summary>
+        /// The validator public key to re-delegate to.
+        /// </summary>
+        [JsonPropertyName("new_validator")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey NewValidator { get; init; }
+    }
+    
+    
+    public class Unbond
+    {
+        /// <summary>
+        /// Validator public key.
+        /// </summary>
+        [JsonPropertyName("validator_public_key")]
+        [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
+        public PublicKey Validator { get; init; }
+
+        /// <summary>
+        /// Unbond kind.
+        /// </summary>
+        [JsonPropertyName("unbond_kind")]
+        public UnbondKind Kind { get; init; }
+        
+        [JsonPropertyName("eras")]
+        public List<UnbondEra> Eras { get; init; }
+    }
     
     /// <summary>
     /// Auction bid variants.
@@ -98,5 +160,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         [JsonPropertyName("Reservation")]
         public Reservation Reservation { get; init; }
+        
+        /// <summary>
+        /// A bid record containing Unbond information
+        /// </summary>
+        [JsonPropertyName("Unbond")]
+        public Unbond Unbond { get; init; }
     }
 }
