@@ -9,8 +9,8 @@ namespace Casper.NET.SDK.Examples
     public static class AwaitEvents
     {
         // Testnet node and port
-        private static string localNetHost = "52.35.59.254";
-        private static int localNetPort = 9999; // use 18101 with NCTL
+        private static string localNetHost = "127.0.0.1";
+        private static int localNetPort = 18101;
         
         static NetCasperClient casperSdk;
 
@@ -39,7 +39,17 @@ namespace Casper.NET.SDK.Examples
                         else if (evt.EventType == EventType.BlockAdded)
                         {
                             var block = evt.Parse<BlockAdded>();
-                            Console.WriteLine("Block height: " + block.Block.Header.Height);
+                            Console.WriteLine("Block height: " + block.Block.Height);
+                        }
+                        else if (evt.EventType == EventType.TransactionAccepted)
+                        {
+                            var transaction = evt.Parse<Transaction>();
+                            Console.WriteLine("TransactionAccepted: " + transaction.Hash);
+                        }
+                        else if (evt.EventType == EventType.TransactionProcessed)
+                        {
+                            var transaction = evt.Parse<TransactionProcessed>();
+                            Console.WriteLine("TransactionProcessed: " + transaction.TransactionHash.ToString());
                         }
                         else if (evt.EventType == EventType.DeployAccepted)
                         {

@@ -4,16 +4,17 @@ using System.Threading.Tasks;
 using Casper.Network.SDK;
 using Casper.Network.SDK.JsonRpc;
 
-namespace ListRewards
+namespace Casper.NET.SDK.Examples
 {
     public static class ListRewards
     {
-        static string nodeAddress = "http://52.35.59.254:7777/rpc";
+        static string nodeAddress = "http://127.0.0.1:11101/rpc";
+
         static NetCasperClient casperSdk;
 
         public async static Task GetEraSummary()
         {
-            var rpcResponse = await casperSdk.GetEraInfoBySwitchBlock(435_733);
+            var rpcResponse = await casperSdk.GetEraSummary();
             var eraSummary = rpcResponse.Parse().EraSummary;
 
             Console.WriteLine("Block Hash: " + eraSummary.BlockHash);
@@ -23,19 +24,30 @@ namespace ListRewards
 
             // print the era rewards per validator
             //
-            Console.WriteLine("Validator                                                            Deleg.    Rewards");
-            Console.WriteLine("--------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("Validator");
+            Console.WriteLine("  Delegator                                                            Rewards");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
 
             var groupedByValidator = eraInfo.SeigniorageAllocations
                 .GroupBy(allocation => allocation.ValidatorPublicKey);
 
             foreach (var group in groupedByValidator)
             {
-                var eraRewards = group.Sum(a => (double)a.Amount);
-                eraRewards /= 1_000_000_000;
+                var rewards = group.Where(a => !a.IsDelegator).Sum(a => (double)a.Amount);
+                rewards /= 1_000_000_000;
 
-                Console.WriteLine($"{group.Key} - {group.Count(),5} - " +
-                                  $"{eraRewards.ToString("N9"),20} $CSPR");
+                Console.WriteLine($"{group.Key} " +
+                                  $"{rewards.ToString("N9"),35} $CSPR");
+
+                var delegators = group.Where(a => a.IsDelegator)
+                    .GroupBy(a => a.DelegatorKind.PublicKey);
+                foreach (var delegatorAllocations in delegators)
+                {
+                    var delegatorRewards = delegatorAllocations.Sum(a =>  (double)a.Amount);
+                    Console.WriteLine("  " + delegatorAllocations.Key + "  " +
+                                      $"{delegatorRewards.ToString("N9"),32} $CSPR");
+                }
+                Console.WriteLine();
             }
         }
 

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Casper.Network.SDK.JsonRpc;
 using Casper.Network.SDK.Types;
-using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Casper.Network.SDK.JsonRpc
 {
@@ -20,7 +18,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Returns the state root hash at a given Block
         /// </summary>
         /// <param name="height">Block height for which the state root is queried.</param>
-        public GetStateRootHash(int height) : base("chain_get_state_root_hash", height)
+        public GetStateRootHash(ulong height) : base("chain_get_state_root_hash", height)
         {
         }
     }
@@ -59,7 +57,26 @@ namespace Casper.Network.SDK.JsonRpc
         /// Returns the bids and validators at a given block.
         /// </summary>
         /// <param name="height">Block height for which the auction info is queried.</param>
-        public GetAuctionInfo(int height) : base("state_get_auction_info", height)
+        public GetAuctionInfo(ulong height) : base("state_get_auction_info", height)
+        {
+        }
+    }
+    
+    public class GetAuctionInfoV2 : RpcMethod
+    {
+        /// <summary>
+        /// Returns the bids and validators at a given block.
+        /// </summary>
+        /// <param name="blockHash">Block hash for which the auction info is queried. Null for the most recent auction info.</param>
+        public GetAuctionInfoV2(string blockHash) : base("state_get_auction_info_v2", blockHash)
+        {
+        }
+
+        /// <summary>
+        /// Returns the bids and validators at a given block.
+        /// </summary>
+        /// <param name="height">Block height for which the auction info is queried.</param>
+        public GetAuctionInfoV2(ulong height) : base("state_get_auction_info_v2", height)
         {
         }
     }
@@ -81,7 +98,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
-        public GetAccountInfo(PublicKey publicKey, int height) : base("state_get_account_info", height)
+        public GetAccountInfo(PublicKey publicKey, ulong height) : base("state_get_account_info", height)
         {
             this.Parameters.Add("account_identifier", publicKey);
         }
@@ -101,7 +118,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// </summary>
         /// <param name="accountHash">The account hash of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
-        public GetAccountInfo(AccountHashKey accountHash, int height) : base("state_get_account_info", height)
+        public GetAccountInfo(AccountHashKey accountHash, ulong height) : base("state_get_account_info", height)
         {
             // this.Parameters.Add("account_identifier", Hex.ToHexString(accountHash.GetBytes()));
             this.Parameters.Add("account_identifier", accountHash.ToString());
@@ -124,12 +141,55 @@ namespace Casper.Network.SDK.JsonRpc
         /// <param name="publicKey">The public key of the account.</param>
         /// <param name="height">A block height for which the information of the account is queried.</param>
         [Obsolete("For Casper node v1.5.5 or newer use the new method signature with PublicKey or AccountHashKey", false)]
-        public GetAccountInfo(string publicKey, int height) : base("state_get_account_info", height)
+        public GetAccountInfo(string publicKey, ulong height) : base("state_get_account_info", height)
         {
             this.Parameters.Add("public_key", publicKey);
         }
     }
 
+    public class GetEntity : RpcMethod
+    {
+        /// <summary>
+        /// Returns an AddressableEntity from the network for a Block from the network
+        /// </summary>
+        /// <param name="entityIdentifier">A PublicKey, an AccoountHashKey, or an AddressableEntityKey</param>
+        /// <param name="blockIdentifier">A a block identifier by hash or key. Null for the latest block</param>
+        public GetEntity(IEntityIdentifier entityIdentifier, IBlockIdentifier blockIdentifier = null) : base("state_get_entity")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "entity_identifier", entityIdentifier.GetEntityIdentifier() }
+            };
+            
+            if(blockIdentifier != null)
+                this.Parameters.Add("block_identifier", blockIdentifier.GetBlockIdentifier());
+        }
+
+        /// <summary>
+        /// Returns an AddressableEntity from the network for a Block from the network
+        /// </summary>
+        /// <param name="addressableEntity">A string with an addressable entity key.</param>
+        /// <param name="blockIdentifier">A a block identifier by hash or key. Null for the latest block</param>
+        public GetEntity(string addressableEntity, IBlockIdentifier blockIdentifier = null) 
+            : this(new AddressableEntityKey(addressableEntity), blockIdentifier)
+        {
+        }
+    }
+
+    public class GetPackage : RpcMethod
+    {
+        public GetPackage(IPackageIdentifier packageIdentifier, IBlockIdentifier blockIdentifier = null) : base("state_get_package")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "package_identifier", packageIdentifier.GetPackageIdentifier() }
+            };
+
+            if(blockIdentifier != null)
+                this.Parameters.Add("block_identifier", blockIdentifier.GetBlockIdentifier());
+        }
+    }
+    
     public class GetItem : RpcMethod
     {
         /// <summary>
@@ -181,51 +241,48 @@ namespace Casper.Network.SDK.JsonRpc
         {
             this.Parameters = new Dictionary<string, object>
             {
-                {"state_root_hash", stateRootHash},
-                {"purse_uref", purseURef}
+                { "state_root_hash", stateRootHash },
+                { "purse_uref", purseURef }
             };
-        }
-
-        public GetBalance(URef uref, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"purse_uref", uref.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
-        }
-
-        public GetBalance(AccountHashKey key, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"main_purse_under_account_hash", key.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
-        }
-
-        public GetBalance(PublicKey key, StateIdentifier stateIdentifier) : base("query_balance")
-        {
-            Dictionary<string, string> mainPurse = new Dictionary<string, string>
-            {
-                {"main_purse_under_public_key", key.ToString()}
-            };
-            this.Parameters = new Dictionary<string, object>
-            {
-                {"purse_identifier", mainPurse}
-            };
-            this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
         }
     }
 
+    public class QueryBalance : RpcMethod
+    {
+        /// <summary>
+        /// Query for balance information using a purse identifier and a state identifier
+        /// </summary>
+        /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
+        /// <param name="stateIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public QueryBalance(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
+            };
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
+        }
+    }
+
+    public class QueryBalanceDetails : RpcMethod
+    {
+        /// <summary>
+        /// Query for full balance information using a purse identifier and a state identifier
+        /// </summary>
+        /// <param name="purseIdentifier">The identifier to obtain the purse corresponding to balance query.</param>
+        /// <param name="stateIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public QueryBalanceDetails(IPurseIdentifier purseIdentifier, StateIdentifier stateIdentifier = null) : base("query_balance_details")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                {"purse_identifier", purseIdentifier.GetPurseIdentifier()},
+            };
+            if(stateIdentifier != null)
+                this.Parameters.Add("state_identifier", stateIdentifier.GetParam());
+        }
+    }
+    
     public class PutDeploy : RpcMethod
     {
         /// <summary>
@@ -261,6 +318,65 @@ namespace Casper.Network.SDK.JsonRpc
                 this.Parameters.Add("finalized_approvals", true);
         }
     }
+	
+	
+    public class PutTransaction : RpcMethod
+    {
+        /// <summary>
+        /// Sends a Transaction to the network for its execution.
+        /// </summary>
+        /// <param name="transaction">The Transactionv1 object.</param>
+        public PutTransaction(TransactionV1 transaction) : base("account_put_transaction")
+        {
+            var txParameter = new Dictionary<string, object>();
+            txParameter.Add("Version1", transaction);
+            
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction", txParameter
+                }
+            };
+        }
+        
+        /// <summary>
+        /// Sends a Transaction to the network for its execution.
+        /// </summary>
+        /// <param name="transaction">The Deploy object.</param>
+        public PutTransaction(Deploy transaction) : base("account_put_transaction")
+        {
+            var txParameter = new Dictionary<string, object>();
+            txParameter.Add("Deploy", transaction);
+            
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction", txParameter
+                }
+            };
+        }
+    }
+    
+    public class GetTransaction : RpcMethod
+    {
+        public GetTransaction(TransactionHash transactionHash, bool finalizedApprovals = false) : base("info_get_transaction")
+        {
+            var hashDict = new Dictionary<string, object>();
+            if(transactionHash.Deploy != null)
+                hashDict.Add("Deploy", transactionHash.Deploy);
+            if(transactionHash.Version1 != null)
+                hashDict.Add("Version1", transactionHash.Version1);
+
+            this.Parameters = new Dictionary<string, object>
+            {
+                {
+                    "transaction_hash", hashDict
+                },
+            };
+            if (finalizedApprovals)
+                this.Parameters.Add("finalized_approvals", true);
+        }
+    }
 
     public class GetBlock : RpcMethod
     {
@@ -276,7 +392,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves a Block from the network by its height number.
         /// </summary>
         /// <param name="height">Height of the block to retrieve.</param>
-        public GetBlock(int height) : base("chain_get_block", height)
+        public GetBlock(ulong height) : base("chain_get_block", height)
         {
         }
     }
@@ -295,7 +411,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves all transfers for a Block from the network
         /// </summary>
         /// <param name="height">Height of the block to retrieve the transfers from.</param>
-        public GetBlockTransfers(int height) : base("chain_get_block_transfers", height)
+        public GetBlockTransfers(ulong height) : base("chain_get_block_transfers", height)
         {
         }
     }
@@ -314,7 +430,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves an EraInfo from the network given a switch block.
         /// </summary>
         /// <param name="height">Block height of a switch block.</param>
-        public GetEraInfoBySwitchBlock(int height) : base("chain_get_era_info_by_switch_block", height)
+        public GetEraInfoBySwitchBlock(ulong height) : base("chain_get_era_info_by_switch_block", height)
         {
         }
     }
@@ -333,7 +449,7 @@ namespace Casper.Network.SDK.JsonRpc
         /// Retrieves current era info from the network given a block height 
         /// </summary>
         /// <param name="height">Block height.</param>
-        public GetEraSummary(int height) : base("chain_get_era_summary", height)
+        public GetEraSummary(ulong height) : base("chain_get_era_summary", height)
         {
         }
     }
@@ -464,6 +580,90 @@ namespace Casper.Network.SDK.JsonRpc
         }
     }
 
+    public class GetValidatorReward : RpcMethod
+    {
+        /// <summary>
+        /// Returns the reward for a given era and a validator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public GetValidatorReward(PublicKey validator, IBlockIdentifier blockIdentifier = null) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() }
+            };
+
+            if (blockIdentifier != null)
+                this.Parameters.Add("era_identifier", new Dictionary<string, object>
+                {
+                    { "Block", blockIdentifier.GetBlockIdentifier() }
+                });
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a validator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="eraId">Id of the Era to retrieve the rewards from.</param>
+        public GetValidatorReward(PublicKey validator, ulong eraId ) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() },
+                { "era_identifier", new Dictionary<string, object>
+                    {
+                        { "Era", eraId }
+                    }
+                }
+            };
+        }
+    }
+    
+    public class GetDelegatorReward : RpcMethod
+    {
+        /// <summary>
+        /// Returns the reward for a given era and a delegator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="delegator">The public key of the delegator.</param>
+        /// <param name="blockIdentifier">The identifier for the state used for the query, if none is passed, the latest block will be used.</param>
+        public GetDelegatorReward(PublicKey validator, PublicKey delegator, IBlockIdentifier blockIdentifier = null) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() },
+                { "delegator", delegator.ToString() }
+            };
+
+            if (blockIdentifier != null)
+                this.Parameters.Add("era_identifier", new Dictionary<string, object>
+                {
+                    { "Block", blockIdentifier.GetBlockIdentifier() }
+                });
+        }
+        
+        /// <summary>
+        /// Returns the reward for a given era and a delegator
+        /// </summary>
+        /// <param name="validator">The public key of the validator.</param>
+        /// <param name="delegator">The public key of the delegator.</param>
+        /// <param name="eraId">Id of the Era to retrieve the rewards from.</param>
+        public GetDelegatorReward(PublicKey validator, PublicKey delegator, ulong eraId ) : base("info_get_reward")
+        {
+            this.Parameters = new Dictionary<string, object>
+            {
+                { "validator", validator.ToString() },
+                { "delegator", delegator.ToString() },
+                { "era_identifier", new Dictionary<string, object>
+                    {
+                        { "Era", eraId }
+                    }
+                }
+            };
+        }
+    }
+    
     public class GetRpcSchema : RpcMethod
     {
         /// <summary>

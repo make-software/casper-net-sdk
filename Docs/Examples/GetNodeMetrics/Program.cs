@@ -10,7 +10,7 @@ namespace Casper.NET.SDK.Examples
     {
         public static async Task Main(string[] args)
         {
-            string nodeAddress = "http://52.35.59.254:8888/metrics";
+            string nodeAddress = "http://127.0.0.1:14101/metrics";
 
             try
             {

@@ -1,0 +1,153 @@
+{
+  "api_version": "2.0.0",
+  "auction_state": {
+    "state_root_hash": "c8228d6d6d45151766901ba3579461847a17db15a66ce9ef6ae2f3e3abffd132",
+    "block_height": 3480973,
+    "era_validators": [
+      {
+        "era_id": 14910,
+        "validator_weights": [
+          {
+            "public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
+            "weight": "2030345838471710063"
+          },
+          {
+            "public_key": "0126d4637eb0c0769274f03a696df1112383fa621c9f73f57af4c5c0fbadafa8cf",
+            "weight": "2030227732934792089"
+          },
+          {
+            "public_key": "0140afe8f752e5ff100e0189c080bc207e8805b3e5e82f792ec608de2f11f39f6c",
+            "weight": "2030338910449323803"
+          },
+          {
+            "public_key": "017536433a73f7562526f3e9fcb8d720428ae2d28788a9909f3c6f637a9d848a4b",
+            "weight": "2030266847164599460"
+          }
+        ]
+      },
+      {
+        "era_id": 14911,
+        "validator_weights": [
+          {
+            "public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
+            "weight": "2030438564141544419"
+          },
+          {
+            "public_key": "0126d4637eb0c0769274f03a696df1112383fa621c9f73f57af4c5c0fbadafa8cf",
+            "weight": "2030321963971741685"
+          },
+          {
+            "public_key": "0140afe8f752e5ff100e0189c080bc207e8805b3e5e82f792ec608de2f11f39f6c",
+            "weight": "2030431133219240217"
+          },
+          {
+            "public_key": "017536433a73f7562526f3e9fcb8d720428ae2d28788a9909f3c6f637a9d848a4b",
+            "weight": "2030357058487126289"
+          }
+        ]
+      },
+      {
+        "era_id": 14912,
+        "validator_weights": [
+          {
+            "public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
+            "weight": "2030529783588751162"
+          },
+          {
+            "public_key": "0126d4637eb0c0769274f03a696df1112383fa621c9f73f57af4c5c0fbadafa8cf",
+            "weight": "2030418207085001407"
+          },
+          {
+            "public_key": "0140afe8f752e5ff100e0189c080bc207e8805b3e5e82f792ec608de2f11f39f6c",
+            "weight": "2030524865448355568"
+          },
+          {
+            "public_key": "017536433a73f7562526f3e9fcb8d720428ae2d28788a9909f3c6f637a9d848a4b",
+            "weight": "2030445261010189498"
+          }
+        ]
+      }
+    ],
+    "bids": [
+      {
+        "public_key": "01358a7e107668ae2eb092dcfbeb97d2ec3cc8354d2a77bc8f232fff6630a826c3",
+        "bid": {
+          "Validator": {
+            "validator_public_key": "01358a7e107668ae2eb092dcfbeb97d2ec3cc8354d2a77bc8f232fff6630a826c3",
+            "bonding_purse": "uref-027d909fa0818f8b426b905795f608a6301168476b8013d7b3f682786796096f-007",
+            "staked_amount": "2500000000",
+            "delegation_rate": 1,
+            "vesting_schedule": null,
+            "inactive": true,
+            "minimum_delegation_amount": 500000000000,
+            "maximum_delegation_amount": 1000000000000000000,
+            "reserved_slots": 3
+          }
+        }
+      },
+      {
+        "public_key": "020234b6ebc6d9c826964a692951e4e7e0c1e7db2683ebbd4b9b209ad6ca5224f02c",
+        "bid": {
+          "Validator": {
+            "validator_public_key": "020234b6ebc6d9c826964a692951e4e7e0c1e7db2683ebbd4b9b209ad6ca5224f02c",
+            "bonding_purse": "uref-4a15ba727136c9cb324af202412f3a2cb0d53cd58913647c6e34336f80758f54-007",
+            "staked_amount": "1000000000",
+            "delegation_rate": 1,
+            "vesting_schedule": null,
+            "inactive": true,
+            "minimum_delegation_amount": 500000000000,
+            "maximum_delegation_amount": 1000000000000000000,
+            "reserved_slots": 0
+          }
+        }
+      },
+      {
+        "public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
+        "bid": {
+          "Delegator": {
+            "delegator_kind": {
+              "Purse": "1cd4fc41e3f750e52024f54b1ac3a757027baad64d47ffb6d4e968967618740b"
+            },
+            "staked_amount": "6435861748906",
+            "bonding_purse": "uref-30c3f9163e14b9b00c967daaecdba61d9a7a25f454b9f23d556200e1ab847955-007",
+            "validator_public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
+            "vesting_schedule": null
+          }
+        }
+      },
+      {
+        "public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
+        "bid": {
+          "Delegator": {
+            "delegator_kind": {
+              "Purse": "8af7b77811970792f98b806779dfc0d1a9fef5bad205c6be8bb884210d7d323c"
+            },
+            "staked_amount": "1676515877735",
+            "bonding_purse": "uref-d34ee21f5fe61feee2d9f15e0e369367aba62ba1b689e59c1e6ddc581ca99fdf-007",
+            "validator_public_key": "01032146b0b9de01e26aaec7b0d1769920de94681dbd432c3530bfe591752ded6c",
+            "vesting_schedule": null
+          }
+        }
+      },
+      {
+        "public_key": "0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca",
+        "bid": {
+          "Unbond": {
+            "validator_public_key": "0106ca7c39cd272dbf21a86eeb3b36b7c26e2e9b94af64292419f7862936bca2ca",
+            "unbond_kind": {
+              "DelegatedPublicKey": "0154161886e8bcfea05f79efd7e8bfef2ed5a36c18d7d86d748fb21236f9e06d03"
+            },
+            "eras": [
+              {
+                "bonding_purse": "uref-a3c42d782f460513f2e1ee5569208d9efa80b34adf9736e011fdf1f5ca91bc08-007",
+                "era_of_creation": 17243,
+                "amount": "500000000000",
+                "new_validator": null
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

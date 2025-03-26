@@ -1,0 +1,86 @@
+{
+  "transaction_hash": {
+    "Version1": "9749ce1dc5dbd0d9a611088f934fd81c2c8429dbab0a3a7d281359be0a92d29a"
+  },
+  "initiator_addr": {
+    "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
+  },
+  "timestamp": "2024-12-18T11:32:13.181Z",
+  "ttl": "30m",
+  "block_hash": "0dabde3e8b065e734247b7d5328ac18317af9842f0141ffe41173df15efd97a8",
+  "execution_result": {
+    "Version2": {
+      "initiator": {
+        "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
+      },
+      "error_message": "ApiError::Formatting [18]",
+      "limit": "3000000000",
+      "consumed": "1241925",
+      "cost": "3000000000",
+      "transfers": [],
+      "size_estimate": 591,
+      "effects": [
+        {
+          "key": "balance-hold-012cbc4e6c6edcb446920db63ec8c3d2e0e4e5922391ecf2a5e66d8208bbe394a473378ad993010000",
+          "kind": {
+            "Write": {
+              "CLValue": {
+                "cl_type": "U512",
+                "bytes": "04005ed0b2",
+                "parsed": "3000000000"
+              }
+            }
+          }
+        },
+        {
+          "key": "balance-hold-012cbc4e6c6edcb446920db63ec8c3d2e0e4e5922391ecf2a5e66d8208bbe394a473378ad993010000",
+          "kind": {
+            "Prune": "balance-hold-012cbc4e6c6edcb446920db63ec8c3d2e0e4e5922391ecf2a5e66d8208bbe394a473378ad993010000"
+          }
+        },
+        {
+          "key": "balance-hold-002cbc4e6c6edcb446920db63ec8c3d2e0e4e5922391ecf2a5e66d8208bbe394a473378ad993010000",
+          "kind": {
+            "Write": {
+              "CLValue": {
+                "cl_type": "U512",
+                "bytes": "04005ed0b2",
+                "parsed": "3000000000"
+              }
+            }
+          }
+        },
+        {
+          "key": "bid-addr-01520037cd249ccbcfeb0b9feae07d8d4f7d922cf88adc4f3e8691f9d34ccc8d09",
+          "kind": "Identity"
+        },
+        {
+          "key": "bid-addr-04520037cd249ccbcfeb0b9feae07d8d4f7d922cf88adc4f3e8691f9d34ccc8d093400000000000000",
+          "kind": {
+            "Write": {
+              "BidKind": {
+                "Credit": {
+                  "validator_public_key": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+                  "era_id": 52,
+                  "amount": "3000000000"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "messages": [
+    {
+      "hash_addr": "9038763d3066f0217047263ebd48dc7c839fadfdde141f5b990866563655b44a",
+      "message": {
+        "String": "dummy-data"
+      },
+      "topic_name": "events",
+      "topic_name_hash": "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+      "topic_index": 1,
+      "block_index": 2
+    }
+  ]
+}

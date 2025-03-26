@@ -5,9 +5,9 @@ using Casper.Network.SDK.Converters;
 namespace Casper.Network.SDK.Types
 {
     /// <summary>
-    /// Information of an unbonding or delegation withdrawal
+    /// Information of a delegation withdrawal (legacy structure)
     /// </summary>
-    public class UnbondingPurse
+    public class WithdrawPurse
     {
         /// <summary>
         /// Unbonding Amount.
@@ -39,6 +39,13 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("validator_public_key")]
         [JsonConverter(typeof(PublicKey.PublicKeyConverter))]
         public PublicKey ValidatorPublicKey { get; init; }
+    }
+    
+    /// <summary>
+    /// Information of an unbonding or delegation withdrawal
+    /// </summary>
+    public class UnbondingPurse : WithdrawPurse
+    {
         
         /// <summary>
         /// The validator public key to re-delegate to.

@@ -16,9 +16,9 @@ namespace Casper.Network.SDK.Types
         public bool IsDelegator { get; init; }
 
         /// <summary>
-        /// Public key of the delegator (null if not a delegator reward allocation).
+        /// Public key or purse of the delegator (null if not a delegator reward allocation).
         /// </summary>
-        public PublicKey DelegatorPublicKey { get; init; }
+        public DelegatorKind DelegatorKind { get; init; }
 
         /// <summary>
         /// Public key of the validator
@@ -53,7 +53,7 @@ namespace Casper.Network.SDK.Types
 
                 reader.Read(); // start object
 
-                string delegatorPk = null;
+                DelegatorKind delegatorKind = null;
                 string validatorPk = null;
                 BigInteger amount = BigInteger.Zero;
 
@@ -61,8 +61,10 @@ namespace Casper.Network.SDK.Types
                 {
                     var field = reader.GetString();
                     reader.Read();
-                    if (field == "delegator_public_key")
-                        delegatorPk = reader.GetString();
+                    if (field == "delegator_kind")
+                        delegatorKind = JsonSerializer.Deserialize<DelegatorKind>(ref reader, options);
+                    else if (field == "delegator_public_key")
+                        delegatorKind = new DelegatorKind() { PublicKey = PublicKey.FromHexString(reader.GetString()) };
                     else if (field == "validator_public_key")
                         validatorPk = reader.GetString();
                     else if (field == "amount")
@@ -75,7 +77,7 @@ namespace Casper.Network.SDK.Types
                 return new SeigniorageAllocation()
                 {
                     IsDelegator = propertyName?.ToLowerInvariant() == "delegator",
-                    DelegatorPublicKey = delegatorPk != null ? PublicKey.FromHexString(delegatorPk) : null,
+                    DelegatorKind = delegatorKind,
                     ValidatorPublicKey = PublicKey.FromHexString(validatorPk),
                     Amount = amount
                 };
@@ -91,8 +93,8 @@ namespace Casper.Network.SDK.Types
                     writer.WriteStartObject();
                     writer.WritePropertyName("Delegator");
                     writer.WriteStartObject();
-                    writer.WritePropertyName("delegator_public_key");
-                    writer.WriteStringValue(value.DelegatorPublicKey.ToString());
+                    writer.WritePropertyName("delegator_kind");
+                    JsonSerializer.Serialize(writer, value.DelegatorKind, options);
                     writer.WritePropertyName("validator_public_key");
                     writer.WriteStringValue(value.ValidatorPublicKey.ToString());
                     writer.WritePropertyName("amount");

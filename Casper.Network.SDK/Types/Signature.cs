@@ -30,11 +30,8 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public static Signature FromHexString(string signature)
         {
-            var rawBytes = CEP57Checksum.Decode(signature.Substring(2), out var checksumResult);
+            var rawBytes = Hex.Decode(signature.Substring(2));
 
-            if (checksumResult == CEP57Checksum.InvalidChecksum)
-                throw new ArgumentException("Signature checksum mismatch.");
-            
             KeyAlgo algo = signature.Substring(0, 2) switch
             {
                 "01" => KeyAlgo.ED25519,
@@ -92,9 +89,9 @@ namespace Casper.Network.SDK.Types
         public string ToHexString()
         {
             if (KeyAlgorithm == KeyAlgo.ED25519)
-                return "01" + CEP57Checksum.Encode(RawBytes);
+                return "01" + Hex.ToHexString(RawBytes);
             else
-                return "02" + CEP57Checksum.Encode(RawBytes);
+                return "02" + Hex.ToHexString(RawBytes);
         }
         
         public override string ToString()

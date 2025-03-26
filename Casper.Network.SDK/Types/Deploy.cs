@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Casper.Network.SDK.ByteSerializers;
 using Casper.Network.SDK.Converters;
-using Casper.Network.SDK.JsonRpc;
 using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Utilities.Encoders;
 
@@ -18,13 +17,12 @@ namespace Casper.Network.SDK.Types
         /// List of signers and signatures for this Deploy.
         /// </summary>
         [JsonPropertyName("approvals")] 
-        public List<DeployApproval> Approvals { get; } = new List<DeployApproval>();
+        public List<Approval> Approvals { get; } = new List<Approval>();
 
         /// <summary>
         /// A hash over the header of the deploy.
         /// </summary>
         [JsonPropertyName("hash")]
-        [JsonConverter(typeof(CEP57Checksum.HashWithChecksumConverter))]
         public string Hash { get; }
 
         /// <summary>
@@ -94,7 +92,7 @@ namespace Casper.Network.SDK.Types
 
         [JsonConstructor]
         public Deploy(string hash, DeployHeader header, ExecutableDeployItem payment,
-            ExecutableDeployItem session, List<DeployApproval> approvals)
+            ExecutableDeployItem session, List<Approval> approvals)
         {
             this.Hash = hash;
             this.Header = header;
@@ -115,10 +113,10 @@ namespace Casper.Network.SDK.Types
                 Ttl = header.Ttl,
                 Dependencies = header.Dependencies,
                 GasPrice = header.GasPrice,
-                BodyHash = CEP57Checksum.Encode(bodyHash),
+                BodyHash = Hex.ToHexString(bodyHash),
                 ChainName = header.ChainName
             };
-            this.Hash = CEP57Checksum.Encode(ComputeHeaderHash(this.Header));
+            this.Hash = Hex.ToHexString(ComputeHeaderHash(this.Header));
             this.Payment = payment;
             this.Session = session;
         }
@@ -130,7 +128,7 @@ namespace Casper.Network.SDK.Types
         {
             byte[] signature = keyPair.Sign(Hex.Decode(this.Hash));
 
-            Approvals.Add(new DeployApproval()
+            Approvals.Add(new Approval()
             {
                 Signature = Signature.FromRawBytes(signature, keyPair.PublicKey.KeyAlgorithm),
                 Signer = keyPair.PublicKey
@@ -140,7 +138,7 @@ namespace Casper.Network.SDK.Types
         /// <summary>
         /// Adds an approval to the deploy. No check is done to the approval signature.
         /// </summary>
-        public void AddApproval(DeployApproval approval)
+        public void AddApproval(Approval approval)
         {
             this.Approvals.Add(approval);
         }
@@ -157,7 +155,7 @@ namespace Casper.Network.SDK.Types
             {
                 message = "Computed Body Hash does not match value in deploy header. " +
                           $"Expected: '{this.Header.BodyHash}'. " +
-                          $"Computed: '{CEP57Checksum.Encode(computedHash)}'.";
+                          $"Computed: '{Hex.ToHexString(computedHash)}'.";
                 return false;
             }
 
@@ -166,7 +164,7 @@ namespace Casper.Network.SDK.Types
             {
                 message = "Computed Hash does not match value in deploy object. " +
                           $"Expected: '{this.Hash}'. " +
-                          $"Computed: '{CEP57Checksum.Encode(computedHash)}'.";
+                          $"Computed: '{Hex.ToHexString(computedHash)}'.";
                 return false;
             }
 

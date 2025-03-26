@@ -50,13 +50,15 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(_transferDeployHash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
-            Assert.IsTrue(execResult.IsSuccess);
-            
+            var execInfo = getResponse.Parse().ExecutionInfo;
+            var execResult = (ExecutionResultV1)execInfo.ExecutionResult;
+            Assert.IsTrue(execResult.ErrorMessage == null);
+
+            var t = execResult.Transfers.First();
             _transferKey = execResult.Transfers.First();
             Assert.IsNotNull(_transferKey.ToString());
 
-            _transferBlockHash = execResult.BlockHash;
+            _transferBlockHash = execInfo.BlockHash;
             Assert.IsNotNull(_transferBlockHash);
         }
 
@@ -66,12 +68,13 @@ namespace NetCasperTest
             Assert.IsNotNull(_transferKey, "This test must run after WaitTransferExecutionTest");
 
             var getResponse = await _client.QueryGlobalState(_transferKey);
+            Console.WriteLine(getResponse.Result.GetRawText());
             var transfer = getResponse.Parse().StoredValue.Transfer;
             Assert.AreEqual(_transferAmount, transfer.Amount);
 
             var getResponse2 = await _client.QueryGlobalStateWithBlockHash(_transferKey, _transferBlockHash);
             var transfer2 = getResponse.Parse().StoredValue.Transfer;
-            Assert.AreEqual(transfer.DeployHash, transfer2.DeployHash);
+            Assert.AreEqual(transfer.TransactionHash.Deploy, transfer2.TransactionHash.Deploy);
         }
 
         [Test, Order(4)]
@@ -95,7 +98,7 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(deploy.Hash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            var execResult = getResponse.Parse().ExecutionInfo.ExecutionResult;
             Assert.IsFalse(execResult.IsSuccess);
             Assert.IsFalse(string.IsNullOrWhiteSpace(execResult.ErrorMessage));
         }
@@ -131,7 +134,7 @@ namespace NetCasperTest
             var response = await _client.GetBlockTransfers(_transferBlockHash);
             var result = response.Parse();
             Assert.AreEqual(1, result.Transfers.Count);
-            Assert.AreEqual(_transferDeployHash, result.Transfers[0].DeployHash);
+            Assert.AreEqual(_transferDeployHash, result.Transfers[0].TransactionHash.Deploy);
         }
 
         [Test, Order(8)]
@@ -157,8 +160,8 @@ namespace NetCasperTest
             
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(deployHash, tokenSource.Token);
-
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            Console.WriteLine(getResponse.Result.GetRawText());
+            var execResult = getResponse.Parse().ExecutionInfo.ExecutionResult;
             Assert.IsTrue(execResult.IsSuccess);
         }
         
@@ -186,7 +189,7 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(deployHash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            var execResult = getResponse.Parse().ExecutionInfo.ExecutionResult;
             Assert.IsTrue(execResult.IsSuccess);
         }
     }

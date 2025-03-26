@@ -19,7 +19,7 @@ namespace Casper.Network.SDK.Types
         /// The journal of execution transforms.
         /// </summary>
         [JsonPropertyName("transforms")]
-        [JsonConverter(typeof(GenericListConverter<Transform, Transform.TransformConverter>))]
-        public List<Transform> Transforms { get; init; }
+        [JsonConverter(typeof(GenericListConverter<TransformV1, TransformV1.TransformV1Converter>))]
+        public List<TransformV1> Transforms { get; init; }
     }
 }

@@ -1,0 +1,135 @@
+{
+  "api_version": "2.0.0",
+  "transaction": {
+    "Version1": {
+      "hash": "173251b375edd42e3ee43a05ff7d1996380c59192a785884a8cfdd574d86aa9a",
+      "payload": {
+        "initiator_addr": {
+          "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
+        },
+        "timestamp": "2024-12-18T10:27:48.633Z",
+        "ttl": "30m",
+        "chain_name": "casper-net-1",
+        "pricing_mode": {
+          "PaymentLimited": {
+            "payment_amount": 3000000000,
+            "gas_price_tolerance": 1,
+            "standard_payment": true
+          }
+        },
+        "fields": {
+          "args": {
+            "Named": [
+              [
+                "recipient",
+                {
+                  "cl_type": "Key",
+                  "bytes": "00e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f",
+                  "parsed": "account-hash-e25f0c3b986aaa1a6c85ee356be99cd320fa1f7ceaf9928a3fbd015db11f240f"
+                }
+              ],
+              [
+                "amount",
+                {
+                  "cl_type": "U256",
+                  "bytes": "02a861",
+                  "parsed": "25000"
+                }
+              ]
+            ]
+          },
+          "entry_point": {
+            "Custom": "transfer"
+          },
+          "scheduling": "Standard",
+          "target": {
+            "Stored": {
+              "id": {
+                "ByPackageName": {
+                  "name": "cep18_contract_package_CLICKT Test",
+                  "version": null
+                }
+              },
+              "runtime": "VmCasperV1"
+            }
+          }
+        }
+      },
+      "approvals": [
+        {
+          "signer": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a",
+          "signature": "01b39caf891bbac7902078222651a6158bc7aa387355b8d37c70289f58330bc86ab920afcf51be5a523d2be30427150c228ba08aafb45ba927f762a270bdd8f006"
+        }
+      ]
+    }
+  },
+  "execution_info": {
+    "block_hash": "5fd0ee0a8929245148a87cfe57355bf3762dbeabdef91155e1e13f23954d3f92",
+    "block_height": 1400,
+    "execution_result": {
+      "Version2": {
+        "initiator": {
+          "PublicKey": "01a5a5b7328118681638be3e06c8749609280dba4c9daf9aeb3d3464b8839b018a"
+        },
+        "error_message": "ApiError::Formatting [18]",
+        "limit": "3000000000",
+        "consumed": "1241925",
+        "cost": "3000000000",
+        "refund": "2123123123",
+        "current_price": 2,
+        "transfers": [],
+        "size_estimate": 591,
+        "effects": [
+          {
+            "key": "balance-hold-01e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520b1414fd993010000",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "U512",
+                  "bytes": "04005ed0b2",
+                  "parsed": "3000000000"
+                }
+              }
+            }
+          },
+          {
+            "key": "balance-hold-01e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520b1414fd993010000",
+            "kind": {
+              "Prune": "balance-hold-01e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520b1414fd993010000"
+            }
+          },
+          {
+            "key": "balance-hold-00e542fb9f5dc6d06d849e2ac3ad6cc5cd4b7c71392dc8759c0898f4ab04439520b1414fd993010000",
+            "kind": {
+              "Write": {
+                "CLValue": {
+                  "cl_type": "U512",
+                  "bytes": "04005ed0b2",
+                  "parsed": "3000000000"
+                }
+              }
+            }
+          },
+          {
+            "key": "bid-addr-01520037cd249ccbcfeb0b9feae07d8d4f7d922cf88adc4f3e8691f9d34ccc8d09",
+            "kind": "Identity"
+          },
+          {
+            "key": "bid-addr-04520037cd249ccbcfeb0b9feae07d8d4f7d922cf88adc4f3e8691f9d34ccc8d098100000000000000",
+            "kind": {
+              "Write": {
+                "BidKind": {
+                  "Credit": {
+                    "validator_public_key": "0190664e16a17594ed2d0e3c279c4cf5894e8db0da15e3b91c938562a1caae32ab",
+                    "era_id": 129,
+                    "amount": "3000000000"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

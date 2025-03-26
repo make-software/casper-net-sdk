@@ -9,6 +9,7 @@ namespace Casper.Network.SDK.Types
     /// <summary>
     /// A wrapper class for different types of values stored in the global state.
     /// </summary>
+    [JsonConverter(typeof(StoredValue.StoredValueConverter))]
     public class StoredValue
     {
         public Contract Contract { get; init; }
@@ -17,7 +18,7 @@ namespace Casper.Network.SDK.Types
 
         public Account Account { get; init; }
 
-        public string ContractWasm { get; init; }
+        public ContractWasm ContractWasm { get; init; }
 
         public ContractPackage ContractPackage { get; init; }
 
@@ -28,9 +29,55 @@ namespace Casper.Network.SDK.Types
         public EraInfo EraInfo { get; init; }
 
         public Bid Bid { get; init; }
+        
+        public BidKind BidKind { get; init; }
 
-        public List<UnbondingPurse> Withdraw { get; init; }
+        public List<WithdrawPurse> Withdraw { get; init; }
 
+        public List<UnbondingPurse> Unbonding { get; init; }
+        
+        /// <summary>
+        /// Stores an addressable entity.
+        /// </summary>
+        public AddressableEntity AddressableEntity { get; init; }
+        
+        /// <summary>
+        /// Stores a package.
+        /// </summary>
+        public Package Package { get; init; }
+        
+        /// <summary>
+        /// A record of byte code.
+        /// </summary>
+        public ByteCode ByteCode { get; init; }
+        
+        /// <summary>
+        /// Stores a message topic.
+        /// </summary>
+        public MessageTopicSummary MessageTopic { get; init; }
+        
+        /// <summary>
+        /// Stores a message checksum.
+        /// </summary>
+        public string Message { get; init; }
+        
+        /// <summary>
+        /// Stores a NamedKey.
+        /// </summary>
+        public NamedKeyValue NamedKey { get; init; }
+        
+        /// <summary>
+        /// Stores location, type and data for a gas pre-payment.
+        /// </summary>
+        public Prepayment Prepayment { get; init; }
+        
+        public EntryPoint EntryPoint { get; init; }
+        
+        /// <summary>
+        /// Raw bytes. Similar to a [`crate::StoredValue::CLValue`] but does not incur overhead of a [`crate::CLValue`] and [`crate::CLType`].
+        /// </summary>
+        public string RawBytes { get; init; }
+        
         public class StoredValueConverter : JsonConverter<StoredValue>
         {
             public override StoredValue Read
@@ -52,13 +99,16 @@ namespace Casper.Network.SDK.Types
                             throw new JsonException("Cannot deserialize StoredValue. PropertyName expected.");
 
                         var propertyName = reader.GetString();
+                        
                         var propertyInfo = typeof(StoredValue).GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                        if (propertyInfo == null)
+                        if (propertyInfo != null)
+                        {
+                            reader.Read();
+                            var propertyValue = JsonSerializer.Deserialize(ref reader, propertyInfo.PropertyType, options);
+                            propertyInfo.SetValue(storedValue, propertyValue);
+                        }
+                        else
                             throw new JsonException($"Unknown property: {propertyName}.");
-
-                        reader.Read();
-                        var propertyValue = JsonSerializer.Deserialize(ref reader, propertyInfo.PropertyType, options);
-                        propertyInfo.SetValue(storedValue, propertyValue);
                     }
 
                     return storedValue;

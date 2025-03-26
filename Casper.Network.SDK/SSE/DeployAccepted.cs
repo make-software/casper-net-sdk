@@ -12,7 +12,7 @@ namespace Casper.Network.SDK.SSE
         // This is an alias of Deploy to be used in SSE.
         //
         public DeployAccepted(string hash, DeployHeader header, ExecutableDeployItem payment,
-            ExecutableDeployItem session, List<DeployApproval> approvals)
+            ExecutableDeployItem session, List<Approval> approvals)
             : base(hash, header, payment, session, approvals)
         {
         }

@@ -76,11 +76,11 @@ namespace Casper.Network.SDK.JsonRpc
             };
         }
 
-        public RpcMethod(string method, int blockHeight)
+        public RpcMethod(string method, ulong blockHeight)
         {
             this.Method = method;
 
-            var blockIdentifier = new Dictionary<string, int>
+            var blockIdentifier = new Dictionary<string, ulong>
             {
                 {"Height", blockHeight}
             };

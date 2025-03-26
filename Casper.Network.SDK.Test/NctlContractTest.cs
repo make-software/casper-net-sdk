@@ -50,7 +50,8 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(_contractDeployHash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            var execInfo = getResponse.Parse().ExecutionInfo;
+            var execResult = (ExecutionResultV1)execInfo.ExecutionResult;
             Assert.IsTrue(execResult.IsSuccess);
             Assert.AreEqual(64, execResult.BlockHash.Length);
             Assert.IsNull(execResult.ErrorMessage);
@@ -78,7 +79,7 @@ namespace NetCasperTest
             var contractWasmKey = GlobalStateKey.FromString(contractInfo.ContractWasmHash);
             var rpcResponse4 = await _client.QueryGlobalState(contractWasmKey);
             var contractWasmInfo = rpcResponse4.Parse().StoredValue.ContractWasm;
-            Assert.IsFalse(string.IsNullOrWhiteSpace(contractWasmInfo));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(contractWasmInfo.Bytes));
         }
 
         [Test, Order(4)]
@@ -102,7 +103,8 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(deployHash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            var execInfo = getResponse.Parse().ExecutionInfo;
+            var execResult = (ExecutionResultV1)execInfo.ExecutionResult;
             Assert.IsTrue(execResult.IsSuccess);
         }
 
@@ -127,7 +129,8 @@ namespace NetCasperTest
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
             var getResponse = await _client.GetDeploy(deployHash, tokenSource.Token);
 
-            var execResult = getResponse.Parse().ExecutionResults.First();
+            var execInfo = getResponse.Parse().ExecutionInfo;
+            var execResult = (ExecutionResultV1)execInfo.ExecutionResult;
             Assert.IsTrue(execResult.IsSuccess);
             _blockHash = execResult.BlockHash;
             Assert.IsNotNull(_blockHash);

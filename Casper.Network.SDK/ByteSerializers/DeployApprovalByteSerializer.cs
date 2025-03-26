@@ -3,9 +3,9 @@ using Casper.Network.SDK.Types;
 
 namespace Casper.Network.SDK.ByteSerializers
 {
-    public class DeployApprovalByteSerializer : BaseByteSerializer, IByteSerializer<DeployApproval>
+    public class DeployApprovalByteSerializer : BaseByteSerializer, IByteSerializer<Approval>
     {
-        public byte[] ToBytes(DeployApproval source)
+        public byte[] ToBytes(Approval source)
         {
             var ms = new MemoryStream();
             WriteBytes(ms, source.Signer.GetBytes());
