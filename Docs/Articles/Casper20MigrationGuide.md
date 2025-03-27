@@ -179,6 +179,10 @@ if (finalitySignature.Version == 2) {
 }   
 ```
 
+### Auction info
+
+The response from `GetAuctionInfo()` has changed. In v2.x, it returned a list of validators, each containing a list of delegators assigned to them. In v3.0, the SDK now returns a flat list that includes all validators and delegators, along with additional bid entries such as Reservation and Unbond.
+
 ## Other changes
 
 ### Last switch block hash

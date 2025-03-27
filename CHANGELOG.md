@@ -9,6 +9,16 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+## [3.0.0]
+
+This version is identical to `3.0.0-beta4`. Please review the changes in the previous beta releases, and refer to the [Migration guide](https://github.com/make-software/casper-net-sdk/blob/master/Docs/Articles/Casper20MigrationGuide.md) if you’re updating a project from `v2.x`.
+
+## [3.0.0-beta4]
+
+### Added
+
+* Added the `Unbond` bid kind to the `Bids` list in the get auction info response.
+
 ## [3.0.0-beta3]
 
 ### Added
@@ -182,6 +192,8 @@ This new type permits to parse correctly the value `"00"` used for system blocks
 ### Added
 * Initial release of Casper .NET SDK.
 
+[3.0.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0
+[3.0.0-beta4]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta4
 [3.0.0-beta3]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta3
 [3.0.0-beta2]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta2
 [3.0.0-beta1]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta1
