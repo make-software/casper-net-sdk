@@ -5,8 +5,8 @@ The following is a set of rules and guidelines for contributing to this repo. Pl
 ## Submitting issues
 
 If you have questions about how to use Casper .NET SDK, please direct these to the related discord channels:
-* [#smart-contracts](https://discord.gg/casperblockchain)
-* [#sdk-development](https://discord.gg/casperblockchain)
+* [#smart-contracts](https://discord.gg/caspernetwork)
+* [#sdk-development](https://discord.gg/caspernetwork)
 
 ### Guidelines
 * Please search the existing issues first, it's likely that your issue was already reported or even fixed.
