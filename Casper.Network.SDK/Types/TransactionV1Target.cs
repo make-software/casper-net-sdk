@@ -55,21 +55,31 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("addr")] public string Hash { get; init; }
 
         [JsonPropertyName("version")] public UInt32? Version { get; init; }
+        
+        [JsonPropertyName("protocol_version_major")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public UInt32? ProtocolVersionMajor { get; init; }
 
         const ushort TAG_FIELD_INDEX = 0;
         const byte BY_PACKAGE_HASH_VARIANT = 2;
         const ushort BY_PACKAGE_HASH_ADDR_INDEX = 1;
         const ushort BY_PACKAGE_HASH_VERSION_INDEX = 2;
+        const ushort BY_PACKAGE_HASH_PROTOCOL_VERSION_MAJOR_INDEX = 3;
 
         public byte[] ToBytes()
         {
-            return new CalltableSerialization()
+            var calltable = new CalltableSerialization()
                 .AddField(TAG_FIELD_INDEX, new byte[] { BY_PACKAGE_HASH_VARIANT })
                 .AddField(BY_PACKAGE_HASH_ADDR_INDEX, Hex.Decode(Hash))
                 .AddField(BY_PACKAGE_HASH_VERSION_INDEX, Version.HasValue
                     ? CLValue.Option(CLValue.U32(Version.Value))
-                    : CLValue.OptionNone(CLType.U32))
-                .GetBytes();
+                    : CLValue.OptionNone(CLType.U32));
+            
+            if (ProtocolVersionMajor.HasValue)
+                calltable.AddField(BY_PACKAGE_HASH_PROTOCOL_VERSION_MAJOR_INDEX,
+                    CLValue.U32(ProtocolVersionMajor.Value));
+            
+            return calltable.GetBytes();
         }
     }
 
@@ -353,11 +363,11 @@ namespace Casper.Network.SDK.Types
             };
         }
 
-        public static StoredTransactionV1Target StoredByPackageHash(string packageHash, UInt32? version = null)
+        public static StoredTransactionV1Target StoredByPackageHash(string packageHash, UInt32? version = null, UInt32? protocolVersionMajor = null)
         {
             return new StoredTransactionV1Target()
             {
-                Id = new ByPackageHashInvocationTarget { Hash = packageHash, Version = version },
+                Id = new ByPackageHashInvocationTarget { Hash = packageHash, Version = version, ProtocolVersionMajor = protocolVersionMajor },
             };
         }
 

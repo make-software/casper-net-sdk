@@ -581,9 +581,9 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public ContractCallBuilder ByPackageHash(string contractHash, UInt32? version = null)
+            public ContractCallBuilder ByPackageHash(string contractHash, UInt32? version = null, UInt32? protocolVersionMajor = null)
             {
-                _invocationTarget = TransactionV1Target.StoredByPackageHash(contractHash, version);
+                _invocationTarget = TransactionV1Target.StoredByPackageHash(contractHash, version, protocolVersionMajor);
                 return this;
             }
 
