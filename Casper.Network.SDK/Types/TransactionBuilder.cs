@@ -109,6 +109,7 @@ namespace Casper.Network.SDK.Types
         public class NativeTransferBuilder : TransactionV1Builder<NativeTransferBuilder>
         {
             //specific tx properties
+            private URef _source;
             [RequiredArg]
             private CLValue _target;
             [RequiredArg]
@@ -121,15 +122,24 @@ namespace Casper.Network.SDK.Types
                 _entryPoint = TransactionV1EntryPoint.Transfer;
             }
 
-            public NativeTransferBuilder Target(PublicKey publicKey)
+            public NativeTransferBuilder Source(URef uRef)
             {
-                _target = CLValue.PublicKey(publicKey);
+                _source = uRef;
                 return this;
             }
 
-            public NativeTransferBuilder Target(AccountHashKey accountHashKey)
+            public NativeTransferBuilder Target(IPurseIdentifier purseIdentifier)
             {
-                _target = CLValue.ByteArray(accountHashKey.RawBytes);
+                if (purseIdentifier is URef uref)
+                    _target = CLValue.URef(uref);
+                else if (purseIdentifier is AccountHashKey accountHashKey)
+                    _target = CLValue.ByteArray(accountHashKey.RawBytes);
+                else if (purseIdentifier is PublicKey publicKey)
+                    _target = CLValue.PublicKey(publicKey);
+                else if (purseIdentifier is AddressableEntityKey addressableEntityKey)
+                    _target = CLValue.ByteArray(addressableEntityKey.RawBytes);
+                else
+                    throw new Exception("Invalid purse identifier");
                 return this;
             }
 
@@ -156,6 +166,8 @@ namespace Casper.Network.SDK.Types
                 ValidateRequiredProperties();
 
                 _runtimeArgs = new List<NamedArg>();
+                if(_source is not null)
+                    _runtimeArgs.Add(new NamedArg("source", _source));
                 _runtimeArgs.Add(new NamedArg("target", _target));
                 _runtimeArgs.Add(new NamedArg("amount", _amount));
                 if (_idTransfer.HasValue)
