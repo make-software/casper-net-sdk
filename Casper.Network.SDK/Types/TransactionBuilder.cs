@@ -581,15 +581,15 @@ namespace Casper.Network.SDK.Types
                 return this;
             }
 
-            public ContractCallBuilder ByPackageHash(string contractHash, UInt32? version = null, UInt32? protocolVersionMajor = null)
+            public ContractCallBuilder ByPackageHash(string contractPackageHash, UInt32? version = null, UInt32? protocolVersionMajor = null)
             {
-                _invocationTarget = TransactionV1Target.StoredByPackageHash(contractHash, version, protocolVersionMajor);
+                _invocationTarget = TransactionV1Target.StoredByPackageHash(contractPackageHash, version, protocolVersionMajor);
                 return this;
             }
 
-            public ContractCallBuilder ByPackageName(string name, UInt32? version = null)
+            public ContractCallBuilder ByPackageName(string packageName, UInt32? version = null, UInt32? protocolVersionMajor = null)
             {
-                _invocationTarget = TransactionV1Target.StoredByPackageName(name, version);
+                _invocationTarget = TransactionV1Target.StoredByPackageName(packageName, version, protocolVersionMajor);
                 return this;
             }
 

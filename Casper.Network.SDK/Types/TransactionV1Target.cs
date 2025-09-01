@@ -88,20 +88,31 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("name")] public string Name { get; init; }
 
         [JsonPropertyName("version")] public UInt32? Version { get; init; }
+        
+        [JsonPropertyName("protocol_version_major")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public UInt32? ProtocolVersionMajor { get; init; }
 
         const ushort TAG_FIELD_INDEX = 0;
         const byte BY_PACKAGE_NAME_VARIANT = 3;
         const ushort BY_PACKAGE_NAME_NAME_INDEX = 1;
         const ushort BY_PACKAGE_NAME_VERSION_INDEX = 2;
+        const ushort BY_PACKAGE_HASH_PROTOCOL_VERSION_MAJOR_INDEX = 3;
 
         public byte[] ToBytes()
         {
-            return new CalltableSerialization()
+            var calltable =  new CalltableSerialization()
                 .AddField(TAG_FIELD_INDEX, new byte[] { BY_PACKAGE_NAME_VARIANT })
                 .AddField(BY_PACKAGE_NAME_NAME_INDEX, CLValue.String(Name))
                 .AddField(BY_PACKAGE_NAME_VERSION_INDEX, Version.HasValue
                     ? CLValue.Option(CLValue.U32(Version.Value))
-                    : CLValue.OptionNone(CLType.U32)).GetBytes();
+                    : CLValue.OptionNone(CLType.U32));
+            
+            if (ProtocolVersionMajor.HasValue)
+                calltable.AddField(BY_PACKAGE_HASH_PROTOCOL_VERSION_MAJOR_INDEX,
+                    CLValue.U32(ProtocolVersionMajor.Value));
+            
+            return calltable.GetBytes();
         }
     }
 
@@ -371,11 +382,11 @@ namespace Casper.Network.SDK.Types
             };
         }
 
-        public static StoredTransactionV1Target StoredByPackageName(string name, UInt32? version = null)
+        public static StoredTransactionV1Target StoredByPackageName(string name, UInt32? version = null, UInt32? protocolVersionMajor = null)
         {
             return new StoredTransactionV1Target()
             {
-                Id = new ByPackageNameInvocationTarget() { Name = name, Version = version },
+                Id = new ByPackageNameInvocationTarget() { Name = name, Version = version, ProtocolVersionMajor = protocolVersionMajor },
             };
         }
 
