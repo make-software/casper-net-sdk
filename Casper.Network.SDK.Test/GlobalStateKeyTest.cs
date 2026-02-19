@@ -634,6 +634,16 @@ namespace NetCasperTest
                 Assert.IsNull(bidAddrKey.DelegatorAccount);
                 Assert.AreEqual(127, bidAddrKey.EraId);
             }
+            {
+                var validatorRevBidAddrKeyStr = "bid-addr-092f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309";
+                var key = GlobalStateKey.FromString(validatorRevBidAddrKeyStr);
+                Assert.IsNotNull(key);
+                Assert.AreEqual(KeyIdentifier.BidAddr, key.KeyIdentifier);
+
+                var bidAddrKey = key as BidAddrKey;
+                Assert.AreEqual(BidAddrTag.ValidatorRev, bidAddrKey.Tag);
+                Assert.AreEqual("account-hash-2f3fb80d362ad0a922f446915a259c9aaec9ba99292b3e50ff2359c458007309", bidAddrKey.Validator.ToString().ToLower());
+            }
         }
     }
 }
