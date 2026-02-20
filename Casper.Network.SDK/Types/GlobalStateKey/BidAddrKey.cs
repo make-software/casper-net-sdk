@@ -42,6 +42,10 @@ namespace Casper.Network.SDK.Types
         /// BidAddr for unbonding purses.
         /// </summary>
         UnbondPurse = 8,
+        /// <summary>
+        /// BidAddr for reverse validator look up.
+        /// </summary>
+        ValidatorRev = 9,
     }
     
     public class BidAddrKey : GlobalStateKey
@@ -145,6 +149,12 @@ namespace Casper.Network.SDK.Types
                         throw new Exception("Wrong key length for UnbondPurse BidAddr. Expected 65 bytes.");
                     Validator = new AccountHashKey(bytes.Slice(1, 33));
                     DelegatorPurseAddress = Hex.ToHexString(bytes.Slice(33));
+                    break;
+                case (byte)BidAddrTag.ValidatorRev:
+                    Tag = BidAddrTag.ValidatorRev;
+                    if (bytes.Length != 33)
+                        throw new Exception("Wrong key length for ValidatorRev BidAddr. Expected 33 bytes.");
+                    Validator = new AccountHashKey(bytes.Slice(1, 33));
                     break;
                 default:
                     throw new Exception($"Wrong BidAddr tag '{bytes[0]}'.");
