@@ -1,4 +1,4 @@
-ame: Unity Compat - Build and Test
+name: Unity Compat - Build and Test
 
 on:
   push:

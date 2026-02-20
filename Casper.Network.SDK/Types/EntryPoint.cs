@@ -23,6 +23,11 @@ namespace Casper.Network.SDK.Types
         /// </summary>
         public List<string> Groups { get; init; }
 
+        /// <summary>
+        /// Can't be accessed directly but are kept in the derived wasm bytes.
+        /// </summary>
+        public bool IsTemplate { get; init; }
+        
         public class EntryPointAccessConverter : JsonConverter<EntryPointAccess>
         {
             public override EntryPointAccess Read(
@@ -37,6 +42,12 @@ namespace Casper.Network.SDK.Types
                         return new EntryPointAccess()
                         {
                             IsPublic = true,
+                            Groups = null
+                        };
+                    if (value.ToLowerInvariant() == "template")
+                        return new EntryPointAccess()
+                        {
+                            IsTemplate = true,
                             Groups = null
                         };
                 }
