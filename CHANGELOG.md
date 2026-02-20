@@ -9,6 +9,21 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Fixed:      any bug fixes)
 [comment]: <> (Security:   in case of vulnerabilities)
 
+
+## [3.2.0]
+
+### Fixed
+
+* The `Access` property of the `EntryPoint `class was not deserialized correctly for a `Template` entry point.
+* The `BidAddrKey` class was not deserializing correctly for a `ValidatorRev` bid address.
+
+## [3.1.0]
+
+### Added
+
+* Added possibility to specify `source` and `target` as URefs in the native transfers when using the `TransactionBuilder`.
+* Added `ProtocolVersionMajor` to `ByPackageHashInvocationTarget` and `ByPackageNameInvocationTarget` classes.
+
 ## [3.0.0]
 
 This version is identical to `3.0.0-beta4`. Please review the changes in the previous beta releases, and refer to the [Migration guide](https://github.com/make-software/casper-net-sdk/blob/master/Docs/Articles/Casper20MigrationGuide.md) if you’re updating a project from `v2.x`.

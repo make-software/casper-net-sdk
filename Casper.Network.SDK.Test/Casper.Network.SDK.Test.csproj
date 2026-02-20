@@ -32,7 +32,5 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
-    <ItemGroup>
-    </ItemGroup>
 
 </Project>
