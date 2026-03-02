@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Casper.Network.SDK.Types;
+using Casper.Network.SDK.Utils;
 using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace Casper.Network.SDK.ByteSerializers
@@ -16,11 +17,49 @@ namespace Casper.Network.SDK.ByteSerializers
             // serialize data
             //
             WriteBytes(ms, source.Bytes);
-            // serialize type and inner types (if any) recursively 
+            // serialize type and inner types (if any) recursively
             //
             CLTypeToBytes(ms, source.TypeInfo);
 
             return ms.ToArray();
+        }
+
+        public CLValue FromBytes(byte[] bytes)
+        {
+            using var ms = new MemoryStream(bytes);
+            using var reader = new BinaryReader(ms);
+
+            return FromReader(reader);
+        }
+        
+        public CLValue FromReader(BinaryReader reader)
+        {
+            // read data length and data bytes
+            var dataLength = reader.ReadCLU32();
+            var dataBytes = reader.ReadBytes((int)dataLength);
+
+            // read type info recursively
+            var typeInfo = CLTypeFromBytes(reader);
+
+            return new CLValue(dataBytes, typeInfo);
+        }
+
+        private CLTypeInfo CLTypeFromBytes(BinaryReader reader)
+        {
+            var tag = (CLType)reader.ReadByte();
+
+            return tag switch
+            {
+                CLType.Option    => new CLOptionTypeInfo(CLTypeFromBytes(reader)),
+                CLType.List      => new CLListTypeInfo(CLTypeFromBytes(reader)),
+                CLType.ByteArray => new CLByteArrayTypeInfo(reader.ReadCLI32()),
+                CLType.Result    => new CLResultTypeInfo(CLTypeFromBytes(reader), CLTypeFromBytes(reader)),
+                CLType.Map       => new CLMapTypeInfo(CLTypeFromBytes(reader), CLTypeFromBytes(reader)),
+                CLType.Tuple1    => new CLTuple1TypeInfo(CLTypeFromBytes(reader)),
+                CLType.Tuple2    => new CLTuple2TypeInfo(CLTypeFromBytes(reader), CLTypeFromBytes(reader)),
+                CLType.Tuple3    => new CLTuple3TypeInfo(CLTypeFromBytes(reader), CLTypeFromBytes(reader), CLTypeFromBytes(reader)),
+                _                => new CLTypeInfo(tag)
+            };
         }
 
         private void CLTypeToBytes(MemoryStream ms, CLTypeInfo innerType)
