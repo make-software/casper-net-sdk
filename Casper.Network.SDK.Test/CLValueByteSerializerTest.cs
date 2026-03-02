@@ -372,7 +372,7 @@ namespace NetCasperTest
             var clValue = CLValue.Tuple3(CLValue.U32(17), CLValue.U32(127), CLValue.U32(17));
             var bytes = serializer.ToBytes(clValue);
             Assert.AreEqual("0c000000110000007f0000001100000014040404", Hex.ToHexString(bytes));
-            
+
             clValue = CLValue.Tuple3(CLValue.U32(127), CLValue.String("ABCDE"), CLValue.U32(127));
             bytes = serializer.ToBytes(clValue);
             Assert.AreEqual("110000007f0000000500000041424344457f00000014040a04", Hex.ToHexString(bytes));
@@ -382,6 +382,220 @@ namespace NetCasperTest
 
             bytes = serializer.ToBytes(CLValue.OptionNone(new CLTuple3TypeInfo(CLType.U32, CLType.String, CLType.U32)));
             Assert.AreEqual("01000000000d14040a04", Hex.ToHexString(bytes));
+        }
+
+        // FromBytes tests — each uses the hex produced by the corresponding ToBytes test
+
+        [Test]
+        public void BoolFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("010000000000"));
+            Assert.AreEqual(CLType.Bool, clValue.TypeInfo.Type);
+            Assert.AreEqual("00", Hex.ToHexString(clValue.Bytes));
+
+            clValue = serializer.FromBytes(Hex.Decode("010000000100"));
+            Assert.AreEqual(CLType.Bool, clValue.TypeInfo.Type);
+            Assert.AreEqual("01", Hex.ToHexString(clValue.Bytes));
+
+            // Option(Bool)
+            clValue = serializer.FromBytes(Hex.Decode("0200000001000d00"));
+            Assert.AreEqual(CLType.Option, clValue.TypeInfo.Type);
+            Assert.AreEqual(CLType.Bool, ((CLOptionTypeInfo)clValue.TypeInfo).OptionType.Type);
+
+            // OptionNone(Bool)
+            clValue = serializer.FromBytes(Hex.Decode("01000000000d00"));
+            Assert.AreEqual(CLType.Option, clValue.TypeInfo.Type);
+            Assert.AreEqual(CLType.Bool, ((CLOptionTypeInfo)clValue.TypeInfo).OptionType.Type);
+        }
+
+        [Test]
+        public void I32FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("04000000f6ffffff01"));
+            Assert.AreEqual(CLType.I32, clValue.TypeInfo.Type);
+            Assert.AreEqual("f6ffffff", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void I64FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("08000000f0ffffffffffffff02"));
+            Assert.AreEqual(CLType.I64, clValue.TypeInfo.Type);
+            Assert.AreEqual("f0ffffffffffffff", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void U8FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("010000007f03"));
+            Assert.AreEqual(CLType.U8, clValue.TypeInfo.Type);
+            Assert.AreEqual("7f", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void U32FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("04000000ffffffff04"));
+            Assert.AreEqual(CLType.U32, clValue.TypeInfo.Type);
+            Assert.AreEqual("ffffffff", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void U64FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("08000000ffffffffffffffff05"));
+            Assert.AreEqual(CLType.U64, clValue.TypeInfo.Type);
+            Assert.AreEqual("ffffffffffffffff", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void U128FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("0900000008ffffffffffffffff06"));
+            Assert.AreEqual(CLType.U128, clValue.TypeInfo.Type);
+            Assert.AreEqual("08ffffffffffffffff", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void U256FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("0900000008ffffffffffffffff07"));
+            Assert.AreEqual(CLType.U256, clValue.TypeInfo.Type);
+            Assert.AreEqual("08ffffffffffffffff", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void U512FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("0900000008ffffffffffffffff08"));
+            Assert.AreEqual(CLType.U512, clValue.TypeInfo.Type);
+            Assert.AreEqual("08ffffffffffffffff", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void UnitFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("0000000009"));
+            Assert.AreEqual(CLType.Unit, clValue.TypeInfo.Type);
+            Assert.AreEqual(0, clValue.Bytes.Length);
+        }
+
+        [Test]
+        public void StringFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("120000000e00000048656c6c6f2c20436173706572210a"));
+            Assert.AreEqual(CLType.String, clValue.TypeInfo.Type);
+            Assert.AreEqual("Hello, Casper!", clValue.ToString());
+        }
+
+        [Test]
+        public void KeyFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode(
+                "2100000000989ca079a5e446071866331468ab949483162588d57ec13ba6bb051f1e15f8b70b"));
+            Assert.AreEqual(CLType.Key, clValue.TypeInfo.Type);
+            Assert.AreEqual(33, clValue.Bytes.Length);
+        }
+
+        [Test]
+        public void URefFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode(
+                "21000000000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f070c"));
+            Assert.AreEqual(CLType.URef, clValue.TypeInfo.Type);
+            Assert.AreEqual(33, clValue.Bytes.Length);
+        }
+
+        [Test]
+        public void PublicKeyFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode(
+                "2100000001381b36cd07ad85348607ffe0fa3a2d033ea941d14763358ebeace9c8ad3cb77116"));
+            Assert.AreEqual(CLType.PublicKey, clValue.TypeInfo.Type);
+            Assert.AreEqual(33, clValue.Bytes.Length);
+        }
+
+        [Test]
+        public void ListFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode(
+                "1400000004000000010000000200000003000000040000000e04"));
+            Assert.AreEqual(CLType.List, clValue.TypeInfo.Type);
+            Assert.AreEqual(CLType.U32, ((CLListTypeInfo)clValue.TypeInfo).ListType.Type);
+        }
+
+        [Test]
+        public void ByteArrayFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("0800000001020304050607080f08000000"));
+            Assert.AreEqual(CLType.ByteArray, clValue.TypeInfo.Type);
+            Assert.AreEqual(8, ((CLByteArrayTypeInfo)clValue.TypeInfo).Size);
+            Assert.AreEqual("0102030405060708", Hex.ToHexString(clValue.Bytes));
+        }
+
+        [Test]
+        public void MapFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode(
+                "1c00000002000000040000006b65793101000000040000006b65793202000000110a04"));
+            Assert.AreEqual(CLType.Map, clValue.TypeInfo.Type);
+            var mapType = (CLMapTypeInfo)clValue.TypeInfo;
+            Assert.AreEqual(CLType.String, mapType.KeyType.Type);
+            Assert.AreEqual(CLType.U32, mapType.ValueType.Type);
+        }
+
+        [Test]
+        public void ResultFromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("0200000001ff10030a"));
+            Assert.AreEqual(CLType.Result, clValue.TypeInfo.Type);
+            var resultType = (CLResultTypeInfo)clValue.TypeInfo;
+            Assert.AreEqual(CLType.U8, resultType.Ok.Type);
+            Assert.AreEqual(CLType.String, resultType.Err.Type);
+        }
+
+        [Test]
+        public void Tuple1FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("04000000110000001204"));
+            Assert.AreEqual(CLType.Tuple1, clValue.TypeInfo.Type);
+            Assert.AreEqual(CLType.U32, ((CLTuple1TypeInfo)clValue.TypeInfo).Type0.Type);
+        }
+
+        [Test]
+        public void Tuple2FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("08000000110000007f000000130404"));
+            Assert.AreEqual(CLType.Tuple2, clValue.TypeInfo.Type);
+            var tupleType = (CLTuple2TypeInfo)clValue.TypeInfo;
+            Assert.AreEqual(CLType.U32, tupleType.Type0.Type);
+            Assert.AreEqual(CLType.U32, tupleType.Type1.Type);
+        }
+
+        [Test]
+        public void Tuple3FromBytesTest()
+        {
+            var clValue = serializer.FromBytes(Hex.Decode("0c000000110000007f0000001100000014040404"));
+            Assert.AreEqual(CLType.Tuple3, clValue.TypeInfo.Type);
+            var tupleType = (CLTuple3TypeInfo)clValue.TypeInfo;
+            Assert.AreEqual(CLType.U32, tupleType.Type0.Type);
+            Assert.AreEqual(CLType.U32, tupleType.Type1.Type);
+            Assert.AreEqual(CLType.U32, tupleType.Type2.Type);
+        }
+
+        [Test]
+        public void RoundTripFromBytesTest()
+        {
+            // Verify that ToBytes(FromBytes(ToBytes(x))) == ToBytes(x) for a complex nested type
+            var original = CLValue.Option(CLValue.Map(new Dictionary<CLValue, CLValue>
+            {
+                { CLValue.String("key1"), CLValue.U32(1) },
+                { CLValue.String("key2"), CLValue.U32(2) }
+            }));
+            var encoded = serializer.ToBytes(original);
+            var decoded = serializer.FromBytes(encoded);
+            var reEncoded = serializer.ToBytes(decoded);
+            Assert.AreEqual(Hex.ToHexString(encoded), Hex.ToHexString(reEncoded));
         }
     }
 }
