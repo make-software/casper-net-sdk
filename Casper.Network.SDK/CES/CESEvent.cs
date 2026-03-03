@@ -39,6 +39,11 @@ namespace Casper.Network.SDK.CES
         public string ContractPackageHash { get; init; }
 
         /// <summary>
+        /// The key in the global state that stores the event (dictionary item)
+        /// </summary>
+        public GlobalStateKey TransformKey { get; init; }
+        
+        /// <summary>
         /// Zero-based index of the <see cref="Transform"/> inside the execution-result
         /// effect list from which this event was extracted.
         /// Set by <see cref="CESParser.GetEvents"/>; defaults to <c>0</c> when the event
@@ -63,10 +68,10 @@ namespace Casper.Network.SDK.CES
         }
 
         /// <summary>
-        /// Returns the field with the given name, or <c>null</c> if not found.
+        /// Returns the CLValue of the field with the given name, or <c>null</c> if not found.
         /// </summary>
-        public NamedArg this[string fieldName] =>
-            Fields.FirstOrDefault(f => f.Name == fieldName);
+        public CLValue this[string fieldName] =>
+            Fields.FirstOrDefault(f => f.Name == fieldName)?.Value;
 
         // ─────────────────────────────────────────────────────────────────────
         // Parse
@@ -95,8 +100,7 @@ namespace Casper.Network.SDK.CES
         /// Thrown when the event name found in <paramref name="rawBytes"/> is not present in
         /// <paramref name="schema"/>.
         /// </exception>
-        public static CESEvent ParseEvent(byte[] rawBytes, CESContractSchema schema,
-            int transformId = 0, string eventId = null)
+        public static CESEvent ParseEvent(byte[] rawBytes, CESContractSchema schema)
         {
             // Some CES implementations wrap the event payload in a Casper Vec<u8> (Bytes),
             // which prepends a u32 LE length equal to the remaining byte count. Detect and
@@ -139,8 +143,6 @@ namespace Casper.Network.SDK.CES
             {
                 ContractHash = schema.ContractHash,
                 ContractPackageHash = schema.ContractPackageHash,
-                TransformId = transformId,
-                EventId = eventId,
             };
         }
 

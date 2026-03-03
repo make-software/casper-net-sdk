@@ -106,8 +106,8 @@ namespace NetCasperTest
 
             var amountField = evt["amount"];
             Assert.IsNotNull(amountField);
-            Assert.AreEqual(CLType.U512, amountField.Value.TypeInfo.Type);
-            Assert.AreEqual(new BigInteger(100), amountField.Value.ToBigInteger());
+            Assert.AreEqual(CLType.U512, amountField.TypeInfo.Type);
+            Assert.AreEqual(new BigInteger(100), amountField.ToBigInteger());
         }
 
         [Test]
@@ -118,8 +118,8 @@ namespace NetCasperTest
 
             var senderField = evt["sender"];
             Assert.IsNotNull(senderField);
-            Assert.AreEqual(CLType.String, senderField.Value.TypeInfo.Type);
-            Assert.AreEqual("Alice", senderField.Value.ToString());
+            Assert.AreEqual(CLType.String, senderField.TypeInfo.Type);
+            Assert.AreEqual("Alice", senderField.ToString());
         }
 
         [Test]

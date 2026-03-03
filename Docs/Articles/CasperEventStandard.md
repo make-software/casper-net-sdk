@@ -2,7 +2,7 @@
 
 The **Casper Event Standard (CES)** is a convention adopted by make-software for emitting and consuming typed events from Casper smart contracts. Contracts that follow CES store a self-describing schema alongside their events, making it possible to decode any event without out-of-band knowledge of its structure.
 
-The Casper .NET SDK provides `CESParser` in the `Casper.Network.SDK.CES` namespace to handle both schema and event parsing.
+The Casper .NET SDK provides the `Casper.Network.SDK.CES` namespace with three classes: `CESContractSchema` (schema loading and parsing), `CESEvent` (event parsing and field access), and `CESParser` (scanning execution results).
 
 ---
 
@@ -78,19 +78,41 @@ Compound types (Option, List, Map, etc.) are encoded recursively — the tag is 
 
 ---
 
-## API Overview
+## Loading a Contract Schema from the Network
 
-### Parsing the Schema
-
-Retrieve the `__events_schema` named key from the contract's global state, extract the raw bytes from the CLValue, and pass them to `CESParser.ParseSchema`:
+The simplest way to load a contract's schema is `CESContractSchema.LoadAsync`. It takes a `contractPackageHash`, resolves the latest active contract version, reads the named keys to locate `__events_schema` and `__events`, and fetches and parses the schema — all in a single call:
 
 ```csharp
 using Casper.Network.SDK.CES;
 
-byte[] schemaBytes = /* raw bytes from __events_schema CLValue */;
-CESContractSchema schema = CESParser.ParseSchema(schemaBytes);
+var client = new NetCasperClient("https://rpc.testnet.casperlabs.io/rpc");
 
-// Check what events the contract supports
+CESContractSchema schema = await CESContractSchema.LoadAsync(
+    client,
+    "hash-17cb23ce7b6d663fc82bacbdd56a26dc722cabe7e69c84a3ca729bf3cb7fdc70");
+```
+
+The returned `CESContractSchema` is fully annotated:
+
+| Property | Description |
+|---|---|
+| `Events` | Dictionary of event name → `CESEventSchema` |
+| `ContractHash` | Hash of the active contract version |
+| `ContractPackageHash` | Package hash passed in |
+| `SchemaURef` | URef of the `__events_schema` named key |
+| `EventsURef` | URef of the `__events` named key (used when scanning transforms) |
+
+Both legacy (Casper 1.x) and Casper 2.x contract models are supported automatically.
+
+### Parsing a Schema from Raw Bytes
+
+If you have already fetched the `__events_schema` CLValue from the network, you can parse it directly:
+
+```csharp
+byte[] schemaBytes = /* raw bytes from __events_schema CLValue */;
+CESContractSchema schema = CESContractSchema.ParseSchema(schemaBytes);
+
+// Inspect the event types the contract supports
 foreach (var kvp in schema.Events)
 {
     Console.WriteLine($"Event: {kvp.Key}");
@@ -99,25 +121,29 @@ foreach (var kvp in schema.Events)
 }
 ```
 
-### Parsing an Event
+Note that a schema created via `ParseSchema` directly has `SchemaURef` and `EventsURef` set to `null`. Use `LoadAsync` when you need these URefs.
 
-Retrieve the value bytes for one entry from `__events` and pass them together with the schema to `CESParser.ParseEvent`:
+---
+
+## Parsing a Single Event
+
+To decode one event payload, pass the raw event bytes together with a schema to `CESEvent.ParseEvent`:
 
 ```csharp
 byte[] eventBytes = /* raw bytes of one entry from __events map */;
-CESEvent evt = CESParser.ParseEvent(eventBytes, schema);
+CESEvent evt = CESEvent.ParseEvent(eventBytes, schema);
 
 Console.WriteLine(evt.Name); // e.g. "event_Mint"
 
-// Access fields by name
-NamedArg amount = evt["amount"];
-Console.WriteLine(amount.Value.ToBigInteger()); // 1000000000000000000
+// Access field values directly by name — returns CLValue, or null if not found
+CLValue recipient = evt["recipient"];
+Console.WriteLine(recipient.ToGlobalStateKey()); // hash-1262d06e...
 
-NamedArg recipient = evt["recipient"];
-Console.WriteLine(recipient.Value.ToString()); // hash-1262d0...
+CLValue amount = evt["amount"];
+Console.WriteLine(amount.ToBigInteger()); // 1000000000000000000
 ```
 
-Each field in `CESEvent.Fields` is a `NamedArg`, exposing the field name and a fully-typed `CLValue` that supports the standard `ToXxx()` conversion methods (`ToBigInteger()`, `ToString()`, `ToBoolean()`, etc.).
+The indexer `evt["fieldName"]` returns the `CLValue` of that field, or `null` if the field name is not found. The full list of fields is also available as `IReadOnlyList<NamedArg>` through `evt.Fields`, which preserves both name and value.
 
 ### Looking Up an Event Schema
 
@@ -126,10 +152,41 @@ if (schema.TryGetEventSchema("Mint", out CESEventSchema mintSchema))
 {
     Console.WriteLine($"Mint has {mintSchema.Fields.Count} fields.");
 }
-
-// Throws KeyNotFoundException if not found:
-CESEventSchema transferSchema = schema.GetEventSchema("Transfer");
 ```
+
+---
+
+## Scanning Execution Results with `GetEvents`
+
+`CESParser.GetEvents` scans the transform list of an execution result and returns all CES events emitted by any of the watched contracts:
+
+```csharp
+var events = CESParser.GetEvents(
+    executionResult.Effect,
+    new List<CESContractSchema> { schema1, schema2 });
+```
+
+For each transform the method:
+1. Skips transforms whose key is not a `DictionaryKey`.
+2. Skips transforms whose kind is not a `WriteTransformKind`.
+3. Tries to parse the CLValue as a `CLValueDictionary`; skips on failure.
+4. Matches the dictionary seed against each schema's `EventsURef` (access rights are ignored; only the 32-byte hash is compared).
+5. Parses the matching event payload using the schema.
+6. Silently skips events whose name is not present in the schema (graceful version mismatch handling).
+
+Each schema in the list must have `EventsURef` set (schemas loaded via `LoadAsync` always have it). Schemas with a `null` `EventsURef` are silently skipped.
+
+The returned `CESEvent` objects include execution-result context:
+
+| Property | Description |
+|---|---|
+| `Name` | Raw event name as stored in bytes (e.g. `"event_Transfer"`) |
+| `Fields` | Ordered list of `NamedArg` field values |
+| `ContractHash` | Propagated from the matched schema |
+| `ContractPackageHash` | Propagated from the matched schema |
+| `TransformKey` | `GlobalStateKey` of the transform that emitted the event |
+| `TransformId` | Zero-based index in the effect list |
+| `EventId` | Sequential event counter key from `__events` |
 
 ---
 
@@ -137,6 +194,10 @@ CESEventSchema transferSchema = schema.GetEventSchema("Transfer");
 
 ```
 CESContractSchema
+  ├── ContractHash: string
+  ├── ContractPackageHash: string
+  ├── SchemaURef: URef
+  ├── EventsURef: URef
   └── Events: Dictionary<string, CESEventSchema>
         └── CESEventSchema
               ├── EventName: string
@@ -146,43 +207,67 @@ CESContractSchema
 
 CESEvent
   ├── Name: string                    (raw name, e.g. "event_Transfer")
-  └── Fields: IReadOnlyList<NamedArg>
-        ├── Name: string
-        └── Value: CLValue
+  ├── Fields: IReadOnlyList<NamedArg>
+  ├── ContractHash: string
+  ├── ContractPackageHash: string
+  ├── TransformKey: GlobalStateKey
+  ├── TransformId: int
+  └── EventId: string
 ```
 
 ---
 
-## Real-World Example — CEP-18 Token Contract
+## Real-World Example — Watching Multiple Contracts
 
-A CEP-18 fungible token contract exposes seven events: `Burn`, `DecreaseAllowance`, `IncreaseAllowance`, `Mint`, `SetAllowance`, `Transfer`, and `TransferFrom`.
-
-A `Mint` event byte payload (hex) looks like this:
-
-```
-38000000                     ← Vec<u8> length = 56 bytes
-0a000000                     ← String length = 10
-6576656e745f4d696e74         ← "event_Mint"
-01                           ← recipient: Key tag (Account/Hash)
-1262d06e...349               ← 32-byte key hash
-08000000                     ← amount: U512, 8 bytes
-64a7b3b6e00d0000             ← 1 000 000 000 000 000 000
-```
-
-After parsing:
+The following example loads schemas for two contracts, fetches a transaction, and prints the events emitted:
 
 ```csharp
-Console.WriteLine(evt.Name);              // event_Mint
-Console.WriteLine(evt["recipient"]);      // hash-1262d06e...349
-Console.WriteLine(evt["amount"]
-    .Value.ToBigInteger());               // 1000000000000000000
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using Casper.Network.SDK;
+using Casper.Network.SDK.CES;
+
+var client = new NetCasperClient("https://rpc.testnet.casperlabs.io/rpc");
+
+// Load the schema for each contract to watch
+var minterSchema = await CESContractSchema.LoadAsync(
+    client,
+    "hash-1262d06e53125ea098187fb4d1d5b10a7afed48e5e5eef182ed992fc5b100349");
+
+var cep18Schema = await CESContractSchema.LoadAsync(
+    client,
+    "hash-17cb23ce7b6d663fc82bacbdd56a26dc722cabe7e69c84a3ca729bf3cb7fdc70");
+
+// Fetch a transaction and extract its execution result transforms
+var getTxResult = await client.GetTransaction(
+    "8e46a16fc8fc15c38405e092959fb20acc44dcfca1d1caecb9bc59d018f50df6");
+var txResult = getTxResult.Parse();
+
+// Scan for CES events emitted by either watched contract
+var events = CESParser.GetEvents(
+    txResult.ExecutionInfo.ExecutionResult.Effect,
+    new List<CESContractSchema> { minterSchema, cep18Schema });
+
+// Work with a specific event
+var buyEvent = events.FirstOrDefault(e => e.Name == "Buy");
+if (buyEvent != null)
+{
+    Console.WriteLine("Buy token: " + buyEvent["token"].ToGlobalStateKey());
+    Console.WriteLine("Buy amount: " + buyEvent["amount_token_out"].ToBigInteger());
+}
+
+// Serialize all events to JSON
+var json = JsonSerializer.Serialize(events);
+Console.WriteLine(json);
 ```
 
 ---
 
 ## Notes
 
-- **Schema key** (`__events_schema`) and **events key** (`__events`) are both stored as named keys directly on the contract's `StoredContractByHash` or `StoredContractByName` entity.
-- The `Vec<u8>` outer length prefix is auto-detected and skipped transparently by `ParseEvent`.
 - `CESEvent.Name` always reflects the exact string found in the event bytes, including the `"event_"` prefix. Schema lookup normalises the name by stripping that prefix automatically.
-- This implementation targets the Casper 1.x named-key storage pattern. Casper 2.x may use a different mechanism.
+- The `Vec<u8>` outer length prefix is auto-detected and skipped transparently by `ParseEvent`.
+- `EventsURef` access rights are ignored when matching the dictionary seed — only the 32-byte hash is compared.
+- Both legacy (`ContractPackage`/`Contract`) and Casper 2.x (`Package`/`AddressableEntity`) contract models are supported throughout `LoadAsync`.
+- Schemas loaded via `ParseSchema` directly (not through `LoadAsync`) have `SchemaURef` and `EventsURef` set to `null` and cannot be used with `GetEvents`.

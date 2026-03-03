@@ -81,7 +81,15 @@ namespace Casper.Network.SDK.CES
                 // 5. Parse the event payload, stamping it with execution-result context.
                 try
                 {
-                    results.Add(CESEvent.ParseEvent(dict.Value, schema, i, dict.ItemKey));
+                    var evt = CESEvent.ParseEvent(dict.Value, schema);
+                    results.Add(new CESEvent(evt.Name, evt.Fields)
+                    {
+                        ContractHash = schema.ContractHash,
+                        ContractPackageHash = schema.ContractPackageHash,
+                        TransformKey = transform.Key,
+                        TransformId = i,
+                        EventId = dict.ItemKey,
+                    });
                 }
                 catch (KeyNotFoundException)
                 {
