@@ -43,7 +43,7 @@ namespace NetCasperTest
         [Test]
         public void ParseSchema_SingleEvent_CorrectEventName()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
 
             Assert.IsTrue(schema.TryGetEventSchema("Transfer", out var eventSchema));
             Assert.AreEqual("Transfer", eventSchema.EventName);
@@ -52,7 +52,7 @@ namespace NetCasperTest
         [Test]
         public void ParseSchema_SingleEvent_CorrectFieldCount()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
 
             schema.TryGetEventSchema("Transfer", out var eventSchema);
             Assert.AreEqual(2, eventSchema.Fields.Count);
@@ -61,7 +61,7 @@ namespace NetCasperTest
         [Test]
         public void ParseSchema_SingleEvent_CorrectFieldDefinitions()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
 
             schema.TryGetEventSchema("Transfer", out var eventSchema);
 
@@ -75,7 +75,7 @@ namespace NetCasperTest
         [Test]
         public void ParseSchema_UnknownEvent_ReturnsFalse()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
 
             Assert.IsFalse(schema.TryGetEventSchema("Mint", out _));
         }
@@ -83,8 +83,8 @@ namespace NetCasperTest
         [Test]
         public void ParseEvent_CorrectEventName()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
-            var evt = CESParser.ParseEvent(Hex.Decode(EventHex), schema);
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
+            var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
 
             Assert.AreEqual("event_Transfer", evt.Name);
         }
@@ -92,8 +92,8 @@ namespace NetCasperTest
         [Test]
         public void ParseEvent_CorrectFieldCount()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
-            var evt = CESParser.ParseEvent(Hex.Decode(EventHex), schema);
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
+            var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
 
             Assert.AreEqual(2, evt.Fields.Count);
         }
@@ -101,8 +101,8 @@ namespace NetCasperTest
         [Test]
         public void ParseEvent_U512FieldCorrectValue()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
-            var evt = CESParser.ParseEvent(Hex.Decode(EventHex), schema);
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
+            var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
 
             var amountField = evt["amount"];
             Assert.IsNotNull(amountField);
@@ -113,8 +113,8 @@ namespace NetCasperTest
         [Test]
         public void ParseEvent_StringFieldCorrectValue()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
-            var evt = CESParser.ParseEvent(Hex.Decode(EventHex), schema);
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
+            var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
 
             var senderField = evt["sender"];
             Assert.IsNotNull(senderField);
@@ -125,8 +125,8 @@ namespace NetCasperTest
         [Test]
         public void ParseEvent_IndexerReturnsNullForMissingField()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
-            var evt = CESParser.ParseEvent(Hex.Decode(EventHex), schema);
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
+            var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
 
             Assert.IsNull(evt["nonexistent"]);
         }
@@ -134,7 +134,7 @@ namespace NetCasperTest
         [Test]
         public void ParseEvent_UnknownEventName_ThrowsKeyNotFoundException()
         {
-            var schema = CESParser.ParseSchema(Hex.Decode(SchemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
 
             // Build event bytes with an event name ("event_Mint") not present in the schema.
             var mintEventHex = string.Concat(
@@ -143,7 +143,7 @@ namespace NetCasperTest
             );
 
             Assert.Throws<KeyNotFoundException>(
-                () => CESParser.ParseEvent(Hex.Decode(mintEventHex), schema));
+                () => CESEvent.ParseEvent(Hex.Decode(mintEventHex), schema));
         }
 
         [Test]
@@ -162,7 +162,7 @@ namespace NetCasperTest
                 "16"                // CLType.PublicKey
             );
 
-            var schema = CESParser.ParseSchema(Hex.Decode(schemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(schemaHex));
 
             schema.TryGetEventSchema("Approve", out var eventSchema);
             Assert.AreEqual("operator", eventSchema.Fields[0].Name);
@@ -189,7 +189,7 @@ namespace NetCasperTest
                 "07"                // value: CLType.U256
             );
 
-            var schema = CESParser.ParseSchema(Hex.Decode(schemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(schemaHex));
 
             schema.TryGetEventSchema("Allowances", out var eventSchema);
             Assert.AreEqual("data", eventSchema.Fields[0].Name);
@@ -215,7 +215,7 @@ namespace NetCasperTest
                 "66657246726f6d04000000070000007370656e6465720b050000006f776e65720b09000000726563697069656e740b06" +
                 "000000616d6f756e7407";
             
-            var schema = CESParser.ParseSchema(Hex.Decode(schemaHex));
+            var schema = CESContractSchema.ParseSchema(Hex.Decode(schemaHex));
             Assert.IsNotNull(schema);
             schema.TryGetEventSchema("Transfer", out var eventSchema);
             Assert.IsNotNull(eventSchema);
@@ -223,11 +223,11 @@ namespace NetCasperTest
 
             var evt0 =
                 "0a0000006576656e745f4d696e74011262d06e53125ea098187fb4d1d5b10a7afed48e5e5eef182ed992fc5b10034908000064a7b3b6e00d";
-            var parsedEvt = CESParser.ParseEvent(Hex.Decode(evt0), schema);
+            var parsedEvt = CESEvent.ParseEvent(Hex.Decode(evt0), schema);
             Assert.IsNotNull(parsedEvt);
             Assert.AreEqual("event_Mint", parsedEvt.Name);
-            var amount = parsedEvt["amount"];
-            amount.Value
+            // var amount = parsedEvt["amount"];
+            // amount.Value
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Casper.Network.SDK.ByteSerializers
             var dataBytes = reader.ReadBytes((int)dataLength);
 
             // read type info recursively
-            var typeInfo = CLTypeFromBytes(reader);
+            var typeInfo = reader.ReadCLTypeInfo();
 
             return new CLValue(dataBytes, typeInfo);
         }

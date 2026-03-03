@@ -145,6 +145,9 @@ namespace Casper.Network.SDK.Types
             Key = keyPrefix + Hex.ToHexString(bytes);
         }
 
+        /// <summary>
+        /// Returns a string with the hex string representation of the key, without the permissions byte.
+        /// </summary>
         public string ToHexString()
         {
             return Hex.ToHexString(RawBytes);
