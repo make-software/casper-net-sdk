@@ -1,6 +1,6 @@
 # Casper Event Standard (CES)
 
-The **Casper Event Standard (CES)** is a convention adopted by make-software for emitting and consuming typed events from Casper smart contracts. Contracts that follow CES store a self-describing schema alongside their events, making it possible to decode any event without out-of-band knowledge of its structure.
+The **Casper Event Standard (CES)** is a convention adopted by contract developers for emitting and consuming typed events from Casper smart contracts. Contracts that follow CES store a self-describing schema alongside their events, making it possible to decode any event without out-of-band knowledge of its structure.
 
 The Casper .NET SDK provides the `Casper.Network.SDK.CES` namespace with three classes: `CESContractSchema` (schema loading and parsing), `CESEvent` (event parsing and field access), and `CESParser` (scanning execution results).
 
@@ -8,12 +8,12 @@ The Casper .NET SDK provides the `Casper.Network.SDK.CES` namespace with three c
 
 ## How CES Works
 
-A CES-compliant contract uses two special named keys:
+A CES-compliant contract uses two special named keys for events:
 
-| Named key | CLType | Purpose |
+| Named key | Purpose |
 |---|---|---|
-| `__events_schema` | `Any` | Binary-encoded schema listing every event type and its fields |
-| `__events` | `Map(U32, Bytes)` | Ordered map of event index → raw event bytes |
+| `__events_schema` | Binary-encoded schema listing every event type and its fields |
+| `__events` | Ordered map of event index → raw event bytes |
 
 ### Schema (`__events_schema`)
 
@@ -29,7 +29,7 @@ for each event:
     CLType bytes    — Casper binary type encoding (tag byte + optional inner types)
 ```
 
-All integers are little-endian. The `String` encoding used here is the standard Casper string encoding: a `u32` length followed by the UTF-8 content (no null terminator).
+The `String` encoding used here is the standard Casper string encoding: a `u32` length followed by the UTF-8 content (no null terminator).
 
 ### Events (`__events`)
 
@@ -42,39 +42,7 @@ for each field (in schema order):
   raw field bytes   — native Casper serialization, no CLValue wrapper
 ```
 
-The `"event_"` prefix is stripped internally when looking up the event in the schema, but `CESEvent.Name` preserves the original name exactly as stored in the bytes.
-
-### CLType Binary Encoding
-
-CLType tags used in the schema are single bytes:
-
-| CLType | Tag |
-|---|---|
-| `Bool` | `0x00` |
-| `I32` | `0x01` |
-| `I64` | `0x02` |
-| `U8` | `0x03` |
-| `U32` | `0x04` |
-| `U64` | `0x05` |
-| `U128` | `0x06` |
-| `U256` | `0x07` |
-| `U512` | `0x08` |
-| `Unit` | `0x09` |
-| `String` | `0x0a` |
-| `Key` | `0x0b` |
-| `URef` | `0x0c` |
-| `Option` | `0x0d` + inner type |
-| `List` | `0x0e` + item type |
-| `ByteArray` | `0x0f` + `u32` size |
-| `Result` | `0x10` + ok type + err type |
-| `Map` | `0x11` + key type + value type |
-| `Tuple1` | `0x12` + type₁ |
-| `Tuple2` | `0x13` + type₁ + type₂ |
-| `Tuple3` | `0x14` + type₁ + type₂ + type₃ |
-| `Any` | `0x15` |
-| `PublicKey` | `0x16` |
-
-Compound types (Option, List, Map, etc.) are encoded recursively — the tag is followed immediately by its inner type tags.
+The `"event_"` prefix is stripped automatically when parsing the event raw bytes.
 
 ---
 
@@ -109,12 +77,12 @@ CESContractSchema schema = await CESContractSchema.LoadAsync(
 
 The returned `CESContractSchema` is fully annotated:
 
-| Property | Description |
-|---|---|
-| `Events` | Dictionary of event name → `CESEventSchema` |
-| `ContractHash` | Hash of the resolved (or supplied) contract version |
-| `ContractPackageHash` | Package hash passed in, or `null` when a direct contract hash was supplied |
-| `SchemaURef` | URef of the `__events_schema` named key |
+| Property | Description                                                      |
+|---|------------------------------------------------------------------|
+| `Events` | Dictionary of event name → `CESEventSchema`                      |
+| `ContractHash` | Hash of the resolved (or supplied) contract version              |
+| `ContractPackageHash` | Package hash passed in. May be `null` when a direct contract hash was supplied.                                        |
+| `SchemaURef` | URef of the `__events_schema` named key                          |
 | `EventsURef` | URef of the `__events` named key (used when scanning transforms) |
 
 Both legacy (Casper 1.x) and Casper 2.x contract models are supported automatically.
@@ -243,7 +211,7 @@ using System.Text.Json;
 using Casper.Network.SDK;
 using Casper.Network.SDK.CES;
 
-var client = new NetCasperClient("https://rpc.testnet.casperlabs.io/rpc");
+var client = new NetCasperClient("https://node.testnet.casper.network/rpc");
 
 // Load the schema for each contract to watch
 var minterSchema = await CESContractSchema.LoadAsync(
@@ -276,14 +244,3 @@ if (buyEvent != null)
 var json = JsonSerializer.Serialize(events);
 Console.WriteLine(json);
 ```
-
----
-
-## Notes
-
-- `CESEvent.Name` always reflects the exact string found in the event bytes, including the `"event_"` prefix. Schema lookup normalises the name by stripping that prefix automatically.
-- The `Vec<u8>` outer length prefix is auto-detected and skipped transparently by `ParseEvent`.
-- `EventsURef` access rights are ignored when matching the dictionary seed — only the 32-byte hash is compared.
-- Both legacy (`ContractPackage`/`Contract`) and Casper 2.x (`Package`/`AddressableEntity`) contract models are supported throughout `LoadAsync`.
-- `LoadAsync` accepts either a contract-package hash or a direct contract hash. If the value starts with `"contract-"` it is used as-is and package resolution is skipped; `ContractPackageHash` will be `null` in the resulting schema.
-- Schemas loaded via `ParseSchema` directly (not through `LoadAsync`) have `SchemaURef` and `EventsURef` set to `null` and cannot be used with `GetEvents`.
