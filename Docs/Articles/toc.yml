@@ -9,4 +9,6 @@
     href: KeyManagement.md
   - name: Working with CLValue
     href: WorkingWithCLValue.md
+  - name: Casper Event Standard (CES)
+    href: CasperEventStandard.md
 

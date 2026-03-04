@@ -385,5 +385,26 @@ namespace Casper.Network.SDK.Utils
 
             return (TItem) item;
         }
+        
+        /// <summary>
+        /// Reads a <see cref="CLTypeInfo"/> from the binary stream.
+        /// </summary>
+        public static CLTypeInfo ReadCLTypeInfo(this BinaryReader reader)
+        {
+            var tag = (CLType)reader.ReadByte();
+
+            return tag switch
+            {
+                CLType.Option    => new CLOptionTypeInfo(ReadCLTypeInfo(reader)),
+                CLType.List      => new CLListTypeInfo(ReadCLTypeInfo(reader)),
+                CLType.ByteArray => new CLByteArrayTypeInfo(reader.ReadInt32()),
+                CLType.Result    => new CLResultTypeInfo(ReadCLTypeInfo(reader), ReadCLTypeInfo(reader)),
+                CLType.Map       => new CLMapTypeInfo(ReadCLTypeInfo(reader), ReadCLTypeInfo(reader)),
+                CLType.Tuple1    => new CLTuple1TypeInfo(ReadCLTypeInfo(reader)),
+                CLType.Tuple2    => new CLTuple2TypeInfo(ReadCLTypeInfo(reader), ReadCLTypeInfo(reader)),
+                CLType.Tuple3    => new CLTuple3TypeInfo(ReadCLTypeInfo(reader), ReadCLTypeInfo(reader), ReadCLTypeInfo(reader)),
+                _                => new CLTypeInfo(tag)
+            };
+        }
     }
 }
