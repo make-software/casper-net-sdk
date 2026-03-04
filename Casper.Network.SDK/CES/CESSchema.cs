@@ -168,13 +168,21 @@ namespace Casper.Network.SDK.CES
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The method calls <c>GetPackage</c> to enumerate all active versions of the contract
-        /// package and then resolves the target contract:
+        /// The <paramref name="contractPackageHash"/> parameter accepts either a
+        /// <b>contract hash</b> or a <b>contract-package hash</b>:
         /// </para>
         /// <list type="bullet">
-        ///   <item>When <paramref name="version"/> is provided, that exact version is selected.</item>
         ///   <item>
-        ///     When <paramref name="version"/> is <c>null</c> (the default), the highest-numbered
+        ///     If the value starts with <c>"contract-"</c> (e.g. <c>"contract-dead…beef"</c>)
+        ///     it is treated as a direct contract hash and the package-resolution step is skipped.
+        ///     The <paramref name="version"/> parameter is ignored in this case.
+        ///   </item>
+        ///   <item>
+        ///     Otherwise it is treated as a contract-package hash
+        ///     (e.g. <c>"hash-abc…def"</c> or <c>"package-abc…def"</c>)
+        ///     and the method enumerates the package to resolve the target contract version:
+        ///     when <paramref name="version"/> is provided that exact version is selected;
+        ///     when <paramref name="version"/> is <c>null</c> (the default) the highest-numbered
         ///     active (non-disabled) version is used.
         ///   </item>
         /// </list>
@@ -193,16 +201,18 @@ namespace Casper.Network.SDK.CES
         /// </remarks>
         /// <param name="client">An active <see cref="ICasperClient"/> instance.</param>
         /// <param name="contractPackageHash">
-        /// The contract-package hash string, e.g.
-        /// <c>"contract-package-hash-abc…def"</c> or <c>"package-abc…def"</c>.
+        /// Either a contract hash (prefix <c>"contract-"</c>) or a contract-package hash
+        /// (e.g. <c>"hash-abc…def"</c> or <c>"package-abc…def"</c>).
         /// </param>
         /// <param name="version">
-        /// The contract version number to load.  Pass <c>null</c> (the default) to load
-        /// the latest active version.
+        /// The contract version number to load when a package hash is supplied.
+        /// Pass <c>null</c> (the default) to load the latest active version.
+        /// Ignored when a direct contract hash is provided.
         /// </param>
         /// <returns>
         /// A fully-populated <see cref="CESContractSchema"/> with
         /// <see cref="ContractHash"/> and <see cref="ContractPackageHash"/> set.
+        /// When a direct contract hash is supplied, <see cref="ContractPackageHash"/> is <c>null</c>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown when <paramref name="client"/> or <paramref name="contractPackageHash"/> is null.
@@ -225,65 +235,76 @@ namespace Casper.Network.SDK.CES
             if (string.IsNullOrWhiteSpace(contractPackageHash))
                 throw new ArgumentNullException(nameof(contractPackageHash));
 
-            // ── 1. Fetch the package to enumerate versions ────────────────────
-            var pkgResult = (await client.QueryGlobalState(contractPackageHash)).Parse();
-
-            // ── 2. Resolve the target contract version ────────────────────────
             string contractHash;
+            GlobalStateKey resolvedPackageHash;
 
-            if (pkgResult.StoredValue != null && 
-                pkgResult.StoredValue.ContractPackage != null)
+            if (contractPackageHash.StartsWith("contract-", StringComparison.OrdinalIgnoreCase))
             {
-                // Legacy node: Versions contains only active (non-disabled) entries.
-                var pkg = pkgResult.StoredValue.ContractPackage;
-
-                ContractVersion chosen;
-                if (version.HasValue)
-                {
-                    chosen = pkg.Versions.FirstOrDefault(v => v.Version == version.Value)
-                        ?? throw new KeyNotFoundException(
-                            $"Version {version.Value} not found in contract package '{contractPackageHash}'.");
-                }
-                else
-                {
-                    chosen = pkg.Versions.OrderByDescending(v => v.Version).FirstOrDefault()
-                        ?? throw new InvalidOperationException(
-                            $"Contract package '{contractPackageHash}' has no active versions.");
-                }
-
-                contractHash = chosen.Hash; // e.g. "contract-hash-abc…def"
-            }
-            else if (pkgResult.StoredValue != null && 
-                     pkgResult.StoredValue.Package != null)
-            {
-                // New node: Versions contains all versions; filter out disabled ones for latest.
-                var pkg = pkgResult.StoredValue.Package;
-                var disabledSet = new HashSet<uint>(
-                    pkg.DisabledVersions?.Select(d => d.Version) ?? Enumerable.Empty<uint>());
-
-                EntityVersionAndHash chosen;
-                if (version.HasValue)
-                {
-                    chosen = pkg.Versions.FirstOrDefault(v => v.EntityVersion.Version == version.Value)
-                        ?? throw new KeyNotFoundException(
-                            $"Version {version.Value} not found in contract package '{contractPackageHash}'.");
-                }
-                else
-                {
-                    chosen = pkg.Versions
-                        .Where(v => !disabledSet.Contains(v.EntityVersion.Version))
-                        .OrderByDescending(v => v.EntityVersion.Version)
-                        .FirstOrDefault()
-                        ?? throw new InvalidOperationException(
-                            $"Contract package '{contractPackageHash}' has no active versions.");
-                }
-
-                contractHash = chosen.AddressableEntity.ToString(); // e.g. "entity-contract-abc…def"
+                // Input is already a contract hash — skip package resolution entirely.
+                contractHash = contractPackageHash;
+                resolvedPackageHash = null;
             }
             else
             {
-                throw new InvalidOperationException(
-                    $"GetPackage returned neither a ContractPackage nor a Package for '{contractPackageHash}'.");
+                // ── 1. Fetch the package to enumerate versions ────────────────────
+                var pkgResult = (await client.QueryGlobalState(contractPackageHash)).Parse();
+                resolvedPackageHash = GlobalStateKey.FromString(contractPackageHash);
+
+                // ── 2. Resolve the target contract version ────────────────────────
+                if (pkgResult.StoredValue != null &&
+                    pkgResult.StoredValue.ContractPackage != null)
+                {
+                    // Legacy node: Versions contains only active (non-disabled) entries.
+                    var pkg = pkgResult.StoredValue.ContractPackage;
+
+                    ContractVersion chosen;
+                    if (version.HasValue)
+                    {
+                        chosen = pkg.Versions.FirstOrDefault(v => v.Version == version.Value)
+                            ?? throw new KeyNotFoundException(
+                                $"Version {version.Value} not found in contract package '{contractPackageHash}'.");
+                    }
+                    else
+                    {
+                        chosen = pkg.Versions.OrderByDescending(v => v.Version).FirstOrDefault()
+                            ?? throw new InvalidOperationException(
+                                $"Contract package '{contractPackageHash}' has no active versions.");
+                    }
+
+                    contractHash = chosen.Hash; // e.g. "contract-hash-abc…def"
+                }
+                else if (pkgResult.StoredValue != null &&
+                         pkgResult.StoredValue.Package != null)
+                {
+                    // New node: Versions contains all versions; filter out disabled ones for latest.
+                    var pkg = pkgResult.StoredValue.Package;
+                    var disabledSet = new HashSet<uint>(
+                        pkg.DisabledVersions?.Select(d => d.Version) ?? Enumerable.Empty<uint>());
+
+                    EntityVersionAndHash chosen;
+                    if (version.HasValue)
+                    {
+                        chosen = pkg.Versions.FirstOrDefault(v => v.EntityVersion.Version == version.Value)
+                            ?? throw new KeyNotFoundException(
+                                $"Version {version.Value} not found in contract package '{contractPackageHash}'.");
+                    }
+                    else
+                    {
+                        chosen = pkg.Versions
+                            .Where(v => !disabledSet.Contains(v.EntityVersion.Version))
+                            .OrderByDescending(v => v.EntityVersion.Version)
+                            .FirstOrDefault()
+                            ?? throw new InvalidOperationException(
+                                $"Contract package '{contractPackageHash}' has no active versions.");
+                    }
+
+                    contractHash = chosen.AddressableEntity.ToString(); // e.g. "entity-contract-abc…def"
+                }
+                else
+                {
+                    throw new InvalidOperationException(
+                        $"GetPackage returned neither a ContractPackage nor a Package for '{contractPackageHash}'.");
+                }
             }
 
             var contractKey = GlobalStateKey.FromString(contractHash);
@@ -297,6 +318,8 @@ namespace Casper.Network.SDK.CES
                 namedKeys = entityResult.NamedKeys
                     ?? throw new InvalidOperationException(
                         $"No named keys returned for entity '{contractHash}'.");
+                
+                resolvedPackageHash ??= entityResult.Entity.Package;
             }
             else
             {
@@ -306,6 +329,9 @@ namespace Casper.Network.SDK.CES
                 namedKeys = contractResult.StoredValue?.Contract?.NamedKeys
                     ?? throw new InvalidOperationException(
                         $"No named keys found for contract '{contractHash}'.");
+                
+                resolvedPackageHash ??= GlobalStateKey.FromString(
+                    contractResult.StoredValue.Contract.ContractPackageHash);
             }
 
             var schemaNamedKey = namedKeys.FirstOrDefault(k => k.Name == "__events_schema")
@@ -336,7 +362,7 @@ namespace Casper.Network.SDK.CES
             return new CESContractSchema(parsed.Events)
             {
                 ContractHash = contractKey.ToString(),
-                ContractPackageHash = contractPackageHash,
+                ContractPackageHash = resolvedPackageHash.ToString(),
                 SchemaURef = schemaURef,
                 EventsURef = eventsURef,
             };

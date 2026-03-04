@@ -344,7 +344,7 @@ namespace NetCasperTest
 
             var result = CESParser.GetEvents(new List<Transform> { transform }, watched);
 
-            Assert.AreEqual("event_Transfer", result[0].Name);
+            Assert.AreEqual("Transfer", result[0].Name);
         }
 
         [Test]
@@ -355,7 +355,7 @@ namespace NetCasperTest
 
             var result = CESParser.GetEvents(new List<Transform> { transform }, watched);
 
-            Assert.AreEqual(new BigInteger(100), result[0]["amount"].Value.ToBigInteger());
+            Assert.AreEqual(new BigInteger(100), result[0]["amount"].ToBigInteger());
         }
 
         [Test]
@@ -366,7 +366,7 @@ namespace NetCasperTest
 
             var result = CESParser.GetEvents(new List<Transform> { transform }, watched);
 
-            Assert.AreEqual("Alice", result[0]["sender"].Value.ToString());
+            Assert.AreEqual("Alice", result[0]["sender"].ToString());
         }
 
         // ─── graceful skipping ─────────────────────────────────────────────────
@@ -448,13 +448,13 @@ namespace NetCasperTest
             var result = CESParser.GetEvents(new List<Transform> { t1, t2 }, watched);
 
             // first event: Transfer – check both fields
-            Assert.AreEqual("event_Transfer", result[0].Name);
-            Assert.AreEqual(new BigInteger(100), result[0]["amount"].Value.ToBigInteger());
-            Assert.AreEqual("Alice", result[0]["sender"].Value.ToString());
+            Assert.AreEqual("Transfer", result[0].Name);
+            Assert.AreEqual(new BigInteger(100), result[0]["amount"].ToBigInteger());
+            Assert.AreEqual("Alice", result[0]["sender"].ToString());
 
             // second event: Mint – check recipient
-            Assert.AreEqual("event_Mint", result[1].Name);
-            Assert.AreEqual(new BigInteger(200), result[1]["recipient"].Value.ToBigInteger());
+            Assert.AreEqual("Mint", result[1].Name);
+            Assert.AreEqual(new BigInteger(200), result[1]["recipient"].ToBigInteger());
         }
 
         // ─── ordering and mixed transforms ────────────────────────────────────
@@ -471,8 +471,8 @@ namespace NetCasperTest
             var result = CESParser.GetEvents(new List<Transform> { t1, t2 }, watched);
 
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual("Alice", result[0]["sender"].Value.ToString());
-            Assert.AreEqual("Bob",   result[1]["sender"].Value.ToString());
+            Assert.AreEqual("Alice", result[0]["sender"].ToString());
+            Assert.AreEqual("Bob",   result[1]["sender"].ToString());
         }
 
         [Test]
@@ -501,7 +501,7 @@ namespace NetCasperTest
             var result = CESParser.GetEvents(new List<Transform> { t1, t2, t3, t4 }, watched);
 
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("event_Transfer", result[0].Name);
+            Assert.AreEqual("Transfer", result[0].Name);
         }
 
         [Test]
@@ -526,7 +526,7 @@ namespace NetCasperTest
             var result = CESParser.GetEvents(new List<Transform> { t1, t2 }, watched);
 
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("event_Transfer", result[0].Name);
+            Assert.AreEqual("Transfer", result[0].Name);
         }
 
         // ─── TransformId and EventId ───────────────────────────────────────────
@@ -667,17 +667,8 @@ namespace NetCasperTest
             var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
 
             Assert.AreEqual(0, evt.TransformId);
+            Assert.IsNull(evt.TransformKey);
             Assert.IsNull(evt.EventId);
-        }
-
-        [Test]
-        public void ParseEvent_WithExplicitContext_TransformIdAndEventIdAreSet()
-        {
-            var schema = ParseSchema(SchemaHex);
-            var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema, transformId: 5, eventId: "99");
-
-            Assert.AreEqual(5, evt.TransformId);
-            Assert.AreEqual("99", evt.EventId);
         }
     }
 }

@@ -86,7 +86,7 @@ namespace NetCasperTest
             var schema = CESContractSchema.ParseSchema(Hex.Decode(SchemaHex));
             var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
 
-            Assert.AreEqual("event_Transfer", evt.Name);
+            Assert.AreEqual("Transfer", evt.Name);
         }
 
         [Test]
@@ -225,9 +225,11 @@ namespace NetCasperTest
                 "0a0000006576656e745f4d696e74011262d06e53125ea098187fb4d1d5b10a7afed48e5e5eef182ed992fc5b10034908000064a7b3b6e00d";
             var parsedEvt = CESEvent.ParseEvent(Hex.Decode(evt0), schema);
             Assert.IsNotNull(parsedEvt);
-            Assert.AreEqual("event_Mint", parsedEvt.Name);
-            // var amount = parsedEvt["amount"];
-            // amount.Value
+            Assert.AreEqual("Mint", parsedEvt.Name);
+            var amount = parsedEvt["amount"];
+            Assert.IsNotNull(amount);
+            Assert.IsNotNull(amount.ToBigInteger());
+            Assert.AreEqual("1000000000000000000", amount.ToBigInteger().ToString() );
         }
     }
 }

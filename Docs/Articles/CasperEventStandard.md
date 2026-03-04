@@ -80,16 +80,31 @@ Compound types (Option, List, Map, etc.) are encoded recursively — the tag is 
 
 ## Loading a Contract Schema from the Network
 
-The simplest way to load a contract's schema is `CESContractSchema.LoadAsync`. It takes a `contractPackageHash`, resolves the latest active contract version, reads the named keys to locate `__events_schema` and `__events`, and fetches and parses the schema — all in a single call:
+The simplest way to load a contract's schema is `CESContractSchema.LoadAsync`. It accepts either a **contract-package hash** or a direct **contract hash**, reads the named keys to locate `__events_schema` and `__events`, and fetches and parses the schema — all in a single call.
+
+### Using a contract-package hash
+
+When you pass a contract-package hash, the method resolves the latest active contract version automatically. You can also request a specific version with the optional `version` parameter.
 
 ```csharp
 using Casper.Network.SDK.CES;
 
 var client = new NetCasperClient("https://rpc.testnet.casperlabs.io/rpc");
 
+// Load the schema for the latest active version of the contract package
 CESContractSchema schema = await CESContractSchema.LoadAsync(
     client,
     "hash-17cb23ce7b6d663fc82bacbdd56a26dc722cabe7e69c84a3ca729bf3cb7fdc70");
+```
+
+### Using a contract hash directly
+
+If you already know the contract hash, you can pass it directly and the package-resolution step is skipped entirely. Use `"contract-"` prefix instead of `"hash-"` for a contract hash argument.The `version` parameter is ignored in this case.
+
+```csharp
+CESContractSchema schema = await CESContractSchema.LoadAsync(
+    client,
+    "contract-dead1234dead1234dead1234dead1234dead1234dead1234dead1234dead1234beef");
 ```
 
 The returned `CESContractSchema` is fully annotated:
@@ -97,8 +112,8 @@ The returned `CESContractSchema` is fully annotated:
 | Property | Description |
 |---|---|
 | `Events` | Dictionary of event name → `CESEventSchema` |
-| `ContractHash` | Hash of the active contract version |
-| `ContractPackageHash` | Package hash passed in |
+| `ContractHash` | Hash of the resolved (or supplied) contract version |
+| `ContractPackageHash` | Package hash passed in, or `null` when a direct contract hash was supplied |
 | `SchemaURef` | URef of the `__events_schema` named key |
 | `EventsURef` | URef of the `__events` named key (used when scanning transforms) |
 
@@ -270,4 +285,5 @@ Console.WriteLine(json);
 - The `Vec<u8>` outer length prefix is auto-detected and skipped transparently by `ParseEvent`.
 - `EventsURef` access rights are ignored when matching the dictionary seed — only the 32-byte hash is compared.
 - Both legacy (`ContractPackage`/`Contract`) and Casper 2.x (`Package`/`AddressableEntity`) contract models are supported throughout `LoadAsync`.
+- `LoadAsync` accepts either a contract-package hash or a direct contract hash. If the value starts with `"contract-"` it is used as-is and package resolution is skipped; `ContractPackageHash` will be `null` in the resulting schema.
 - Schemas loaded via `ParseSchema` directly (not through `LoadAsync`) have `SchemaURef` and `EventsURef` set to `null` and cannot be used with `GetEvents`.

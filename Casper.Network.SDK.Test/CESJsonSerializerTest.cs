@@ -49,7 +49,14 @@ namespace NetCasperTest
         private static CESEvent BuildAnnotatedEvent()
         {
             var schema = BuildAnnotatedSchema();
-            return CESEvent.ParseEvent(Hex.Decode(EventHex), schema, transformId: 3, eventId: "42");
+            var evt = CESEvent.ParseEvent(Hex.Decode(EventHex), schema);
+            return new CESEvent(evt.Name, evt.Fields)
+            {
+                ContractHash = ContractHash,
+                ContractPackageHash = ContractPkgHash,
+                TransformId = 3,
+                EventId = "42",
+            };
         }
 
         // ── CESEventSchemaField ───────────────────────────────────────────────
@@ -182,7 +189,7 @@ namespace NetCasperTest
             var json = JsonSerializer.Serialize(evt);
             var restored = JsonSerializer.Deserialize<CESEvent>(json);
 
-            Assert.AreEqual("event_Transfer", restored.Name);
+            Assert.AreEqual("Transfer", restored.Name);
         }
 
         [Test]
@@ -206,8 +213,8 @@ namespace NetCasperTest
 
             var amount = restored["amount"];
             Assert.IsNotNull(amount);
-            Assert.AreEqual(CLType.U512, amount.Value.TypeInfo.Type);
-            Assert.AreEqual(new BigInteger(100), amount.Value.ToBigInteger());
+            Assert.AreEqual(CLType.U512, amount.TypeInfo.Type);
+            Assert.AreEqual(new BigInteger(100), amount.ToBigInteger());
         }
 
         [Test]
@@ -220,8 +227,8 @@ namespace NetCasperTest
 
             var sender = restored["sender"];
             Assert.IsNotNull(sender);
-            Assert.AreEqual(CLType.String, sender.Value.TypeInfo.Type);
-            Assert.AreEqual("Alice", sender.Value.ToString());
+            Assert.AreEqual(CLType.String, sender.TypeInfo.Type);
+            Assert.AreEqual("Alice", sender.ToString());
         }
 
         [Test]

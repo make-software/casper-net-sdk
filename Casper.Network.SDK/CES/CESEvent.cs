@@ -10,8 +10,8 @@ using Casper.Network.SDK.Utils;
 namespace Casper.Network.SDK.CES
 {
     /// <summary>
-    /// A fully parsed CES event containing the event name, its typed fields, and the
-    /// execution-context metadata set by <see cref="CESParser.GetEvents"/>.
+    /// A fully parsed CES event containing the event name, its typed fields, and, optionally, the
+    /// execution-context metadata of the event.
     /// </summary>
     public class CESEvent
     {
@@ -23,23 +23,22 @@ namespace Casper.Network.SDK.CES
         public IReadOnlyList<NamedArg> Fields { get; }
 
         /// <summary>
-        /// The contract hash of the emitting contract (e.g. <c>"hash-abc…def"</c>),
-        /// propagated from the <see cref="CESContractSchema"/> supplied to the parser.
-        /// <c>null</c> when the schema was not annotated with a contract hash.
+        /// The contract hash of the emitting contract (e.g. <c>"hash-abc…def"</c>).
+        /// Set by <see cref="CESParser.GetEvents"/>; <c>null</c> when parsed in isolation.
         /// </summary>
         [JsonPropertyName("contract_hash")]
         public string ContractHash { get; init; }
 
         /// <summary>
-        /// The contract-package hash of the emitting contract,
-        /// propagated from the <see cref="CESContractSchema"/> supplied to the parser.
-        /// <c>null</c> when the schema was not annotated with a contract-package hash.
+        /// The contract-package hash of the emitting contract.
+        /// Set by <see cref="CESParser.GetEvents"/>; <c>null</c> when parsed in isolation.
         /// </summary>
         [JsonPropertyName("contract_package_hash")]
         public string ContractPackageHash { get; init; }
 
         /// <summary>
         /// The key in the global state that stores the event (dictionary item)
+        /// Set by <see cref="CESParser.GetEvents"/>; <c>null</c> when parsed in isolation.
         /// </summary>
         public GlobalStateKey TransformKey { get; init; }
         
@@ -86,25 +85,14 @@ namespace Casper.Network.SDK.CES
         /// <param name="schema">
         /// The contract schema obtained from <see cref="CESContractSchema.ParseSchema"/>.
         /// </param>
-        /// <param name="transformId">
-        /// Zero-based index of the source <see cref="Transform"/> in the execution-result
-        /// effect list.  Used to populate <see cref="TransformId"/>.
-        /// Pass <c>0</c> (the default) when parsing in isolation.
-        /// </param>
-        /// <param name="eventId">
-        /// The string key that identifies this entry in the contract's <c>__events</c>
-        /// dictionary.  Used to populate <see cref="EventId"/>.
-        /// Pass <c>null</c> (the default) when parsing in isolation.
-        /// </param>
         /// <exception cref="KeyNotFoundException">
         /// Thrown when the event name found in <paramref name="rawBytes"/> is not present in
         /// <paramref name="schema"/>.
         /// </exception>
         public static CESEvent ParseEvent(byte[] rawBytes, CESContractSchema schema)
         {
-            // Some CES implementations wrap the event payload in a Casper Vec<u8> (Bytes),
-            // which prepends a u32 LE length equal to the remaining byte count. Detect and
-            // skip that outer wrapper transparently.
+            // Depending on the origin of the rawBytes, the actual payload can be prepended with a u32 LE length value.
+            // Detect and skip that outer wrapper transparently.
             var offset = 0;
             if (rawBytes.Length >= 4)
             {
@@ -120,7 +108,7 @@ namespace Casper.Network.SDK.CES
 
             var rawName = reader.ReadCLString();
 
-            // Strip the "event_" prefix that some CES implementations prepend to event names.
+            // Strip the "event_" prefix that CES implementation prepend to event names.
             const string prefix = "event_";
             var eventName = rawName.StartsWith(prefix)
                 ? rawName.Substring(prefix.Length)
