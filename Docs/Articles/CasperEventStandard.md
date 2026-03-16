@@ -244,3 +244,7 @@ if (buyEvent != null)
 var json = JsonSerializer.Serialize(events);
 Console.WriteLine(json);
 ```
+
+## Parsing CES events in the SSE stream
+
+See `Docs/Examples/CESParser/Program.cs` for a runnable sample that connects to the node SSE stream, listens to `TransactionProcessed` events, and pretty-prints parsed CES events.
