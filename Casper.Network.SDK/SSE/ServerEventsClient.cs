@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -115,6 +116,7 @@ namespace Casper.Network.SDK.SSE
 
         protected string _host;
         protected int _port;
+        protected Uri _sseUri;
         protected int _nodeVersion = 1;
         
         public ServerEventsClient()
@@ -147,6 +149,28 @@ namespace Casper.Network.SDK.SSE
         {
             _host = host;
             _port = port;
+            _nodeVersion = nodeVersion;
+        }
+
+        /// <summary>
+        /// Instantiate the class indicating the full SSE stream URL of a node.
+        /// Example: https://node.testnet.casper.network/events
+        /// </summary>
+        /// <param name="sseUrl">Full URL of the SSE stream.</param>
+        /// <param name="nodeVersion">2 for Casper 2.x; 1 for Casper 1.x.</param>
+        public ServerEventsClient(string sseUrl, int nodeVersion = 2) : this()
+        {
+            if (string.IsNullOrWhiteSpace(sseUrl))
+                throw new ArgumentException("SSE URL cannot be null or empty.", nameof(sseUrl));
+
+            if (!Uri.TryCreate(sseUrl, UriKind.Absolute, out var uri))
+                throw new ArgumentException("SSE URL is not a valid absolute URI.", nameof(sseUrl));
+
+            _sseUri = uri;
+            _host = uri.Host;
+            _port = uri.IsDefaultPort
+                ? (uri.Scheme == Uri.UriSchemeHttps ? 443 : 80)
+                : uri.Port;
             _nodeVersion = nodeVersion;
         }
 
@@ -300,8 +324,42 @@ namespace Casper.Network.SDK.SSE
         protected virtual HttpClient _getHttpClient()
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri($"http://{_host}:{_port}");
+            client.BaseAddress = _sseUri != null
+                ? new Uri(_sseUri.GetLeftPart(UriPartial.Authority))
+                : new Uri($"http://{_host}:{_port}");
             return client;
+        }
+
+        private Uri BuildStreamUri(HttpClient client, ChannelType channelType, int? startFrom)
+        {
+            UriBuilder uriBuilder;
+            if (_sseUri != null)
+            {
+                uriBuilder = new UriBuilder(_sseUri);
+            }
+            else
+            {
+                uriBuilder = new UriBuilder(new Uri(client.BaseAddress +
+                    $"events" +
+                    (_nodeVersion == 1 ? $"/{channelType.ToString().ToLowerInvariant()}" : "")));
+            }
+
+            var queryBuilder = new StringBuilder();
+            var existingQuery = uriBuilder.Query;
+            if (!string.IsNullOrWhiteSpace(existingQuery))
+            {
+                queryBuilder.Append(existingQuery.TrimStart('?'));
+                if (queryBuilder.Length > 0)
+                    queryBuilder.Append('&');
+            }
+
+            if (startFrom != null && startFrom != int.MaxValue)
+                queryBuilder.Append($"start_from={startFrom}");
+            else
+                queryBuilder.Append("start_from=0");
+
+            uriBuilder.Query = queryBuilder.ToString();
+            return uriBuilder.Uri;
         }
 
         private Task ListenChannelAsync(ChannelType channelType, int? startFrom, CancellationToken cancelToken)
@@ -317,17 +375,10 @@ namespace Casper.Network.SDK.SSE
                 {
                     try
                     {
-                        var uriBuilder = new UriBuilder(new Uri(client.BaseAddress +
-                            $"events" +
-                            (_nodeVersion == 1 ? $"/{channelType.ToString().ToLowerInvariant()}" : "")));
-                        
-                        if (startFrom != null && startFrom != int.MaxValue)
-                            uriBuilder.Query = $"start_from={startFrom}";
-                        else
-                            uriBuilder.Query = $"start_from={0}";
-                            
+                        var streamUri = BuildStreamUri(client, channelType, startFrom);
+                             
                         using (var streamReader =
-                            new StreamReader(await client.GetStreamAsync(uriBuilder.Uri, cancelToken)))
+                            new StreamReader(await client.GetStreamAsync(streamUri, cancelToken)))
                         {
                             while (!streamReader.EndOfStream && !cancelToken.IsCancellationRequested)
                             {
