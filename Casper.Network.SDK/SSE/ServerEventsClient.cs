@@ -166,6 +166,9 @@ namespace Casper.Network.SDK.SSE
             if (!Uri.TryCreate(sseUrl, UriKind.Absolute, out var uri))
                 throw new ArgumentException("SSE URL is not a valid absolute URI.", nameof(sseUrl));
 
+            if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
+                throw new ArgumentException("SSE URL must use the HTTP or HTTPS scheme.", nameof(sseUrl));
+
             _sseUri = uri;
             _host = uri.Host;
             _port = uri.IsDefaultPort
