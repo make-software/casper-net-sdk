@@ -157,8 +157,8 @@ namespace Casper.Network.SDK.SSE
         /// Example: https://node.testnet.casper.network/events
         /// </summary>
         /// <param name="sseUrl">Full URL of the SSE stream.</param>
-        /// <param name="nodeVersion">2 for Casper 2.x; 1 for Casper 1.x.</param>
-        public ServerEventsClient(string sseUrl, int nodeVersion = 2) : this()
+        /// <remarks>Use this constructor when the node is running version 2.x of the Casper protocol.</remarks>
+        public ServerEventsClient(string sseUrl) : this()
         {
             if (string.IsNullOrWhiteSpace(sseUrl))
                 throw new ArgumentException("SSE URL cannot be null or empty.", nameof(sseUrl));
@@ -174,7 +174,7 @@ namespace Casper.Network.SDK.SSE
             _port = uri.IsDefaultPort
                 ? (uri.Scheme == Uri.UriSchemeHttps ? 443 : 80)
                 : uri.Port;
-            _nodeVersion = nodeVersion;
+            _nodeVersion = 2;
         }
 
         public int NodeVersion

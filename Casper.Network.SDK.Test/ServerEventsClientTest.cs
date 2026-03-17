@@ -18,6 +18,7 @@ namespace NetCasperTest
         private KeyPair _faucetKey;
         private string nodeIpSSE;
         private int nodePortSSE;
+        private string nodeUriSSE;
         
         [SetUp]
         public void Setup()
@@ -41,6 +42,10 @@ namespace NetCasperTest
             Assert.IsNotNull(port,
                 "Please, set environment variable CASPERNETSDK_NODE_SSE_PORT with a valid node ip.");
             Assert.IsTrue(int.TryParse(port, out nodePortSSE));
+            
+            nodeUriSSE = Environment.GetEnvironmentVariable("CASPERNETSDK_NODE_SSE_URI");
+            Assert.IsNotNull(nodeUriSSE,
+                "Please, set environment variable CASPERNETSDK_NODE_SSE_URI with a valid node sse uri.");
         }
         
         [Test]
@@ -117,7 +122,7 @@ namespace NetCasperTest
             int nDeployAccepted = 0;
             int nDeployProcessed = 0;
             
-            var sse = new ServerEventsClient(nodeIpSSE, nodePortSSE);
+            var sse = new ServerEventsClient(nodeUriSSE);
 
             sse.AddEventCallback(EventType.All, "catch-all-cb",
                 (SSEvent evt) =>
