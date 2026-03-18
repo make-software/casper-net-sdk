@@ -40,6 +40,7 @@ namespace Casper.Network.SDK.CES
         /// The key in the global state that stores the event (dictionary item)
         /// Set by <see cref="CESParser.GetEvents"/>; <c>null</c> when parsed in isolation.
         /// </summary>
+        [JsonConverter(typeof(GlobalStateKey.GlobalStateKeyConverter))]
         public GlobalStateKey TransformKey { get; init; }
         
         /// <summary>
