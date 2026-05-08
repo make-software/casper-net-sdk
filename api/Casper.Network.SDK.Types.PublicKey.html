@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class PublicKey
-   | C#/.Net SDK for the Casper Network </title>
+    <title>Class PublicKey | C#/.Net SDK for the Casper Network </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class PublicKey
-   | C#/.Net SDK for the Casper Network ">
-    <meta name="generator" content="docfx 2.58.9.0">
-    
+    <meta name="title" content="Class PublicKey | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,13 +17,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -37,7 +35,7 @@
               </button>
               <a class="navbar-brand" href="../index.html">
                 Casper.Network.SDK
-              </a>    </div>
+              </a>            </div>
             <div class="collapse navbar-collapse" id="navbar">
               <form class="navbar-form navbar-right" role="search" id="search">
                 <div class="form-group">
@@ -47,7 +45,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -57,7 +55,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -67,38 +65,63 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.Types.PublicKey">
-  
-  
-  <h1 id="Casper_Network_SDK_Types_PublicKey" data-uid="Casper.Network.SDK.Types.PublicKey" class="text-break">Class PublicKey
-  </h1>
+
+
+
+  <h1 id="Casper_Network_SDK_Types_PublicKey" data-uid="Casper.Network.SDK.Types.PublicKey" class="text-break">Class PublicKey</h1>
   <div class="markdown level0 summary"><p>A wrapper for a Public Key. Provides signature verification functionality.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">PublicKey</span></div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.Network.SDK.Types.html">Casper.Network.SDK.Types</a></h6>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Casper.Network.SDK.Types.IPurseIdentifier.html">IPurseIdentifier</a></div>
+    <div><a class="xref" href="Casper.Network.SDK.Types.IEntityIdentifier.html">IEntityIdentifier</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.html">Casper</a>.<a class="xref" href="Casper.Network.html">Network</a>.<a class="xref" href="Casper.Network.SDK.html">SDK</a>.<a class="xref" href="Casper.Network.SDK.Types.html">Types</a></h6>
   <h6><strong>Assembly</strong>: Casper.Network.SDK.dll</h6>
   <h5 id="Casper_Network_SDK_Types_PublicKey_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class PublicKey : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class PublicKey : IPurseIdentifier, IEntityIdentifier</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey__ctor_System_Byte___Casper_Network_SDK_Types_KeyAlgo_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.%23ctor(System.Byte%5B%5D%2CCasper.Network.SDK.Types.KeyAlgo)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L30">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey__ctor_" data-uid="Casper.Network.SDK.Types.PublicKey.#ctor*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey__ctor_System_Byte___Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.PublicKey.#ctor(System.Byte[],Casper.Network.SDK.Types.KeyAlgo)">PublicKey(Byte[], KeyAlgo)</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey__ctor_System_Byte___Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.PublicKey.#ctor(System.Byte[],Casper.Network.SDK.Types.KeyAlgo)">PublicKey(byte[], KeyAlgo)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected PublicKey(byte[] rawBytes, KeyAlgo keyAlgorithm)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -108,7 +131,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">rawBytes</span></td>
         <td></td>
       </tr>
@@ -120,19 +143,24 @@
     </tbody>
   </table>
   <h3 id="properties">Properties
-  </h3>
-  
-  
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_KeyAlgorithm.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.KeyAlgorithm%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L28">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_KeyAlgorithm_" data-uid="Casper.Network.SDK.Types.PublicKey.KeyAlgorithm*"></a>
   <h4 id="Casper_Network_SDK_Types_PublicKey_KeyAlgorithm" data-uid="Casper.Network.SDK.Types.PublicKey.KeyAlgorithm">KeyAlgorithm</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public KeyAlgo KeyAlgorithm { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -146,19 +174,24 @@
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_RawBytes.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.RawBytes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L26">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_RawBytes_" data-uid="Casper.Network.SDK.Types.PublicKey.RawBytes*"></a>
   <h4 id="Casper_Network_SDK_Types_PublicKey_RawBytes" data-uid="Casper.Network.SDK.Types.PublicKey.RawBytes">RawBytes</h4>
   <div class="markdown level1 summary"><p>Byte array without the Key algorithm identifier.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public byte[] RawBytes { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -167,25 +200,31 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
-  </h3>
-  
-  
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.Equals(System.Object)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L201">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_Equals_" data-uid="Casper.Network.SDK.Types.PublicKey.Equals*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_Equals_System_Object_" data-uid="Casper.Network.SDK.Types.PublicKey.Equals(System.Object)">Equals(Object)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_Equals_System_Object_" data-uid="Casper.Network.SDK.Types.PublicKey.Equals(System.Object)">Equals(object)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the specified object is equal to the current object.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -195,14 +234,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></td>
         <td><span class="parametername">obj</span></td>
-        <td></td>
+        <td><p>The object to compare with the current object.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -211,25 +251,33 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_FromBytes_System_Byte___.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.FromBytes(System.Byte%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L88">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_FromBytes_" data-uid="Casper.Network.SDK.Types.PublicKey.FromBytes*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_FromBytes_System_Byte___" data-uid="Casper.Network.SDK.Types.PublicKey.FromBytes(System.Byte[])">FromBytes(Byte[])</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_FromBytes_System_Byte___" data-uid="Casper.Network.SDK.Types.PublicKey.FromBytes(System.Byte[])">FromBytes(byte[])</h4>
   <div class="markdown level1 summary"><p>Creates a PublicKey object from a byte array. First byte in the array must contain the
 key algorithm identifier.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static PublicKey FromBytes(byte[] bytes)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -239,14 +287,14 @@ key algorithm identifier.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">bytes</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -260,20 +308,25 @@ key algorithm identifier.</p>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_FromHexString_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.FromHexString(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L40">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_FromHexString_" data-uid="Casper.Network.SDK.Types.PublicKey.FromHexString*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_FromHexString_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.FromHexString(System.String)">FromHexString(String)</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_FromHexString_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.FromHexString(System.String)">FromHexString(string)</h4>
   <div class="markdown level1 summary"><p>Creates a PublicKey object from an hexadecimal string (containing the
 Key algorithm identifier).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static PublicKey FromHexString(string hexBytes)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -283,14 +336,14 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">hexBytes</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -304,19 +357,24 @@ Key algorithm identifier).</p>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_FromPem_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.FromPem(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L59">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_FromPem_" data-uid="Casper.Network.SDK.Types.PublicKey.FromPem*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_FromPem_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.FromPem(System.String)">FromPem(String)</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_FromPem_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.FromPem(System.String)">FromPem(string)</h4>
   <div class="markdown level1 summary"><p>Loads a PublicKey from a PEM file</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static PublicKey FromPem(string filePath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -326,14 +384,14 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">filePath</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -347,19 +405,24 @@ Key algorithm identifier).</p>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_FromRawBytes_System_Byte___Casper_Network_SDK_Types_KeyAlgo_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.FromRawBytes(System.Byte%5B%5D%2CCasper.Network.SDK.Types.KeyAlgo)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L116">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_FromRawBytes_" data-uid="Casper.Network.SDK.Types.PublicKey.FromRawBytes*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_FromRawBytes_System_Byte___Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.PublicKey.FromRawBytes(System.Byte[],Casper.Network.SDK.Types.KeyAlgo)">FromRawBytes(Byte[], KeyAlgo)</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_FromRawBytes_System_Byte___Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.PublicKey.FromRawBytes(System.Byte[],Casper.Network.SDK.Types.KeyAlgo)">FromRawBytes(byte[], KeyAlgo)</h4>
   <div class="markdown level1 summary"><p>Creates a PublicKey object from a byte array and the key algorithm identifier.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static PublicKey FromRawBytes(byte[] rawBytes, KeyAlgo keyAlgo)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -369,7 +432,7 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">rawBytes</span></td>
         <td></td>
       </tr>
@@ -381,7 +444,7 @@ Key algorithm identifier).</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -395,19 +458,24 @@ Key algorithm identifier).</p>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_GetAccountHash.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.GetAccountHash%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L169">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_GetAccountHash_" data-uid="Casper.Network.SDK.Types.PublicKey.GetAccountHash*"></a>
   <h4 id="Casper_Network_SDK_Types_PublicKey_GetAccountHash" data-uid="Casper.Network.SDK.Types.PublicKey.GetAccountHash">GetAccountHash()</h4>
   <div class="markdown level1 summary"><p>Returns the Account Hash associated to this Public Key.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public string GetAccountHash()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -416,24 +484,29 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_GetBytes.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.GetBytes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L219">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_GetBytes_" data-uid="Casper.Network.SDK.Types.PublicKey.GetBytes*"></a>
   <h4 id="Casper_Network_SDK_Types_PublicKey_GetBytes" data-uid="Casper.Network.SDK.Types.PublicKey.GetBytes">GetBytes()</h4>
   <div class="markdown level1 summary"><p>Returns the bytes of the public key, including the Key algorithm as the first byte.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public byte[] GetBytes()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -442,23 +515,60 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_GetEntityIdentifier.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.GetEntityIdentifier%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L283">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_PublicKey_GetEntityIdentifier_" data-uid="Casper.Network.SDK.Types.PublicKey.GetEntityIdentifier*"></a>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_GetEntityIdentifier" data-uid="Casper.Network.SDK.Types.PublicKey.GetEntityIdentifier">GetEntityIdentifier()</h4>
+  <div class="markdown level1 summary"><p>Returns an EntityIdentifier object as defined in the RPC schema for a public key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, object&gt; GetEntityIdentifier()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_GetHashCode.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.GetHashCode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L211">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_GetHashCode_" data-uid="Casper.Network.SDK.Types.PublicKey.GetHashCode*"></a>
   <h4 id="Casper_Network_SDK_Types_PublicKey_GetHashCode" data-uid="Casper.Network.SDK.Types.PublicKey.GetHashCode">GetHashCode()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Serves as the default hash function.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -467,24 +577,63 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>A hash code for the current object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_GetPurseIdentifier.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.GetPurseIdentifier%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L272">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_PublicKey_GetPurseIdentifier_" data-uid="Casper.Network.SDK.Types.PublicKey.GetPurseIdentifier*"></a>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_GetPurseIdentifier" data-uid="Casper.Network.SDK.Types.PublicKey.GetPurseIdentifier">GetPurseIdentifier()</h4>
+  <div class="markdown level1 summary"><p>Returns a PurseIdentifier object as defined in the RPC schema for a public key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, object&gt; GetPurseIdentifier()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_ToAccountHex.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.ToAccountHex%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L186">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_ToAccountHex_" data-uid="Casper.Network.SDK.Types.PublicKey.ToAccountHex*"></a>
   <h4 id="Casper_Network_SDK_Types_PublicKey_ToAccountHex" data-uid="Casper.Network.SDK.Types.PublicKey.ToAccountHex">ToAccountHex()</h4>
   <div class="markdown level1 summary"><p>Returns the key as an hexadecimal string, including the key algorithm in the first position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public string ToAccountHex()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -493,23 +642,29 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_ToString.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.ToString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L196">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_ToString_" data-uid="Casper.Network.SDK.Types.PublicKey.ToString*"></a>
   <h4 id="Casper_Network_SDK_Types_PublicKey_ToString" data-uid="Casper.Network.SDK.Types.PublicKey.ToString">ToString()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns a string that represents the current object.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -518,24 +673,32 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><p>A string that represents the current object.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_VerifySignature_System_Byte___System_Byte___.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.VerifySignature(System.Byte%5B%5D%2CSystem.Byte%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L236">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_VerifySignature_" data-uid="Casper.Network.SDK.Types.PublicKey.VerifySignature*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_VerifySignature_System_Byte___System_Byte___" data-uid="Casper.Network.SDK.Types.PublicKey.VerifySignature(System.Byte[],System.Byte[])">VerifySignature(Byte[], Byte[])</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_VerifySignature_System_Byte___System_Byte___" data-uid="Casper.Network.SDK.Types.PublicKey.VerifySignature(System.Byte[],System.Byte[])">VerifySignature(byte[], byte[])</h4>
   <div class="markdown level1 summary"><p>Verifies the signature given its value and the original message.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public bool VerifySignature(byte[] message, byte[] signature)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -545,19 +708,19 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">message</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">signature</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -566,24 +729,29 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_VerifySignature_System_String_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.VerifySignature(System.String%2CSystem.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L264">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_VerifySignature_" data-uid="Casper.Network.SDK.Types.PublicKey.VerifySignature*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_VerifySignature_System_String_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.VerifySignature(System.String,System.String)">VerifySignature(String, String)</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_VerifySignature_System_String_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.VerifySignature(System.String,System.String)">VerifySignature(string, string)</h4>
   <div class="markdown level1 summary"><p>Verifies the signature given its value and the original message.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public bool VerifySignature(string message, string signature)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -593,19 +761,19 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">message</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">signature</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -614,24 +782,29 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_WriteToPem_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.WriteToPem(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L135">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_WriteToPem_" data-uid="Casper.Network.SDK.Types.PublicKey.WriteToPem*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_WriteToPem_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.WriteToPem(System.String)">WriteToPem(String)</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_WriteToPem_System_String_" data-uid="Casper.Network.SDK.Types.PublicKey.WriteToPem(System.String)">WriteToPem(string)</h4>
   <div class="markdown level1 summary"><p>Saves the public key to a PEM file.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public void WriteToPem(string filePath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -641,26 +814,31 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">filePath</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="operators">Operators
-  </h3>
-  
-  
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey_op_Explicit_Casper_Network_SDK_Types_PublicKey__System_String.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey.op_Explicit(Casper.Network.SDK.Types.PublicKey)~System.String%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L293">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_PublicKey_op_Explicit_" data-uid="Casper.Network.SDK.Types.PublicKey.op_Explicit*"></a>
-  <h4 id="Casper_Network_SDK_Types_PublicKey_op_Explicit_Casper_Network_SDK_Types_PublicKey__System_String" data-uid="Casper.Network.SDK.Types.PublicKey.op_Explicit(Casper.Network.SDK.Types.PublicKey)~System.String">Explicit(PublicKey to String)</h4>
+  <h4 id="Casper_Network_SDK_Types_PublicKey_op_Explicit_Casper_Network_SDK_Types_PublicKey__System_String" data-uid="Casper.Network.SDK.Types.PublicKey.op_Explicit(Casper.Network.SDK.Types.PublicKey)~System.String">explicit operator string(PublicKey)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static explicit operator string (PublicKey pk)</code></pre>
+    <pre><code class="lang-csharp hljs">public static explicit operator string(PublicKey pk)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -677,7 +855,7 @@ Key algorithm identifier).</p>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -686,29 +864,43 @@ Key algorithm identifier).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Casper.Network.SDK.Types.IPurseIdentifier.html">IPurseIdentifier</a>
+  </div>
+  <div>
+      <a class="xref" href="Casper.Network.SDK.Types.IEntityIdentifier.html">IEntityIdentifier</a>
+  </div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_PublicKey.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.PublicKey%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/PublicKey.cs/#L21" class="contribution-link">View Source</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -716,14 +908,14 @@ Key algorithm identifier).</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Maintained by MAKE Technology LLC
-            
+      Maintained by MAKE Technology LLC
+      
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
     <script type="text/javascript" src="../styles/main.js"></script>
   </body>

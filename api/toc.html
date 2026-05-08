@@ -1,21 +1,21 @@
-﻿
+
 <div id="sidetoggle">
   <div>
     <div class="sidefilter">
       <form class="toc-filter">
         <span class="glyphicon glyphicon-filter filter-icon"></span>
         <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
-        <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+        <input type="text" id="toc_filter_input" placeholder="Filter by title" onkeypress="if(event.keyCode==13) {return false;}">
       </form>
     </div>
     <div class="sidetoc">
       <div class="toc" id="toc">
-          
+
           <ul class="nav level1">
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Casper.Network.SDK.html" name="" title="Casper.Network.SDK">Casper.Network.SDK</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="Casper.Network.SDK.DeployTemplates.html" name="" title="DeployTemplates">DeployTemplates</a>
@@ -31,13 +31,16 @@
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Casper.Network.SDK.ByteSerializers.html" name="" title="Casper.Network.SDK.ByteSerializers">Casper.Network.SDK.ByteSerializers</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="Casper.Network.SDK.ByteSerializers.BaseByteSerializer.html" name="" title="BaseByteSerializer">BaseByteSerializer</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.ByteSerializers.CLValueByteSerializer.html" name="" title="CLValueByteSerializer">CLValueByteSerializer</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.ByteSerializers.CalltableSerialization.html" name="" title="CalltableSerialization">CalltableSerialization</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.ByteSerializers.DeployApprovalByteSerializer.html" name="" title="DeployApprovalByteSerializer">DeployApprovalByteSerializer</a>
@@ -49,10 +52,16 @@
                               <a href="Casper.Network.SDK.ByteSerializers.ExecutableDeployItemByteSerializer.html" name="" title="ExecutableDeployItemByteSerializer">ExecutableDeployItemByteSerializer</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.ByteSerializers.Field.html" name="" title="Field">Field</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.ByteSerializers.GlobalStateKeyByteSerializer.html" name="" title="GlobalStateKeyByteSerializer">GlobalStateKeyByteSerializer</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.ByteSerializers.IByteSerializer-1.html" name="" title="IByteSerializer&lt;T&gt;">IByteSerializer&lt;T&gt;</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.ByteSerializers.LittleEndianConverter.html" name="" title="LittleEndianConverter">LittleEndianConverter</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.ByteSerializers.NamedArgByteSerializer.html" name="" title="NamedArgByteSerializer">NamedArgByteSerializer</a>
@@ -61,11 +70,36 @@
                 </li>
                 <li>
                     <span class="expand-stub"></span>
-                    <a href="Casper.Network.SDK.Converters.html" name="" title="Casper.Network.SDK.Converters">Casper.Network.SDK.Converters</a>
-                    
+                    <a href="Casper.Network.SDK.CES.html" name="" title="Casper.Network.SDK.CES">Casper.Network.SDK.CES</a>
+
                     <ul class="nav level2">
                           <li>
-                              <a href="Casper.Network.SDK.Converters.BidsListConverter.html" name="" title="BidsListConverter">BidsListConverter</a>
+                              <a href="Casper.Network.SDK.CES.CESContractSchema.html" name="" title="CESContractSchema">CESContractSchema</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.CES.CESEvent.html" name="" title="CESEvent">CESEvent</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.CES.CESEvent.NamedArgListConverter.html" name="" title="CESEvent.NamedArgListConverter">CESEvent.NamedArgListConverter</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.CES.CESEventSchema.html" name="" title="CESEventSchema">CESEventSchema</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.CES.CESEventSchemaField.html" name="" title="CESEventSchemaField">CESEventSchemaField</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.CES.CESParser.html" name="" title="CESParser">CESParser</a>
+                          </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="expand-stub"></span>
+                    <a href="Casper.Network.SDK.Converters.html" name="" title="Casper.Network.SDK.Converters">Casper.Network.SDK.Converters</a>
+
+                    <ul class="nav level2">
+                          <li>
+                              <a href="Casper.Network.SDK.Converters.BidKindsListConverter.html" name="" title="BidKindsListConverter">BidKindsListConverter</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Converters.BigIntegerConverter.html" name="" title="BigIntegerConverter">BigIntegerConverter</a>
@@ -89,26 +123,29 @@
                               <a href="Casper.Network.SDK.Converters.HexBytesConverter.html" name="" title="HexBytesConverter">HexBytesConverter</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Converters.HexBytesWithChecksumConverter.html" name="" title="HexBytesWithChecksumConverter">HexBytesWithChecksumConverter</a>
-                          </li>
-                          <li>
                               <a href="Casper.Network.SDK.Converters.HumanizeTTLConverter.html" name="" title="HumanizeTTLConverter">HumanizeTTLConverter</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Converters.IDeserializeAsList.html" name="" title="IDeserializeAsList">IDeserializeAsList</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Converters.NamedArgsListConverter-2.html" name="" title="NamedArgsListConverter&lt;T, TConverter&gt;">NamedArgsListConverter&lt;T, TConverter&gt;</a>
                           </li>
                     </ul>
                 </li>
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Casper.Network.SDK.JsonRpc.html" name="" title="Casper.Network.SDK.JsonRpc">Casper.Network.SDK.JsonRpc</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetAccountInfo.html" name="" title="GetAccountInfo">GetAccountInfo</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetAuctionInfo.html" name="" title="GetAuctionInfo">GetAuctionInfo</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.GetAuctionInfoV2.html" name="" title="GetAuctionInfoV2">GetAuctionInfoV2</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetBalance.html" name="" title="GetBalance">GetBalance</a>
@@ -121,6 +158,9 @@
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetChainspec.html" name="" title="GetChainspec">GetChainspec</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.GetDelegatorReward.html" name="" title="GetDelegatorReward">GetDelegatorReward</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetDeploy.html" name="" title="GetDeploy">GetDeploy</a>
@@ -138,6 +178,9 @@
                               <a href="Casper.Network.SDK.JsonRpc.GetDictionaryItemByURef.html" name="" title="GetDictionaryItemByURef">GetDictionaryItemByURef</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.GetEntity.html" name="" title="GetEntity">GetEntity</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetEraInfoBySwitchBlock.html" name="" title="GetEraInfoBySwitchBlock">GetEraInfoBySwitchBlock</a>
                           </li>
                           <li>
@@ -153,16 +196,34 @@
                               <a href="Casper.Network.SDK.JsonRpc.GetNodeStatus.html" name="" title="GetNodeStatus">GetNodeStatus</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.GetPackage.html" name="" title="GetPackage">GetPackage</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetRpcSchema.html" name="" title="GetRpcSchema">GetRpcSchema</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetStateRootHash.html" name="" title="GetStateRootHash">GetStateRootHash</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.GetTransaction.html" name="" title="GetTransaction">GetTransaction</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.GetValidatorChanges.html" name="" title="GetValidatorChanges">GetValidatorChanges</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.GetValidatorReward.html" name="" title="GetValidatorReward">GetValidatorReward</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.PutDeploy.html" name="" title="PutDeploy">PutDeploy</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.PutTransaction.html" name="" title="PutTransaction">PutTransaction</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.QueryBalance.html" name="" title="QueryBalance">QueryBalance</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.QueryBalanceDetails.html" name="" title="QueryBalanceDetails">QueryBalanceDetails</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.QueryGlobalState.html" name="" title="QueryGlobalState">QueryGlobalState</a>
@@ -193,11 +254,8 @@
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Casper.Network.SDK.JsonRpc.ResultTypes.html" name="" title="Casper.Network.SDK.JsonRpc.ResultTypes">Casper.Network.SDK.JsonRpc.ResultTypes</a>
-                    
+
                     <ul class="nav level2">
-                          <li>
-                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.BalanceResultConverter.html" name="" title="BalanceResultConverter">BalanceResultConverter</a>
-                          </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetAccountInfoResult.html" name="" title="GetAccountInfoResult">GetAccountInfoResult</a>
                           </li>
@@ -211,6 +269,9 @@
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockResult.html" name="" title="GetBlockResult">GetBlockResult</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockResult.GetBlockResultConverter.html" name="" title="GetBlockResult.GetBlockResultConverter">GetBlockResult.GetBlockResultConverter</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetBlockTransfersResult.html" name="" title="GetBlockTransfersResult">GetBlockTransfersResult</a>
                           </li>
                           <li>
@@ -220,7 +281,19 @@
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDeployResult.html" name="" title="GetDeployResult">GetDeployResult</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDeployResult.GetDeployResultConverter.html" name="" title="GetDeployResult.GetDeployResultConverter">GetDeployResult.GetDeployResultConverter</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDeployResultCompat.html" name="" title="GetDeployResultCompat">GetDeployResultCompat</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetDictionaryItemResult.html" name="" title="GetDictionaryItemResult">GetDictionaryItemResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetEntityResult.html" name="" title="GetEntityResult">GetEntityResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetEntityResult.GetEntityResultConverter.html" name="" title="GetEntityResult.GetEntityResultConverter">GetEntityResult.GetEntityResultConverter</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetEraInfoBySwitchBlockResult.html" name="" title="GetEraInfoBySwitchBlockResult">GetEraInfoBySwitchBlockResult</a>
@@ -238,13 +311,37 @@
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetNodeStatusResult.html" name="" title="GetNodeStatusResult">GetNodeStatusResult</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetPackageResult.html" name="" title="GetPackageResult">GetPackageResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetPackageResult.GetPackageResultConverter.html" name="" title="GetPackageResult.GetPackageResultConverter">GetPackageResult.GetPackageResultConverter</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetRewardResult.html" name="" title="GetRewardResult">GetRewardResult</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetStateRootHashResult.html" name="" title="GetStateRootHashResult">GetStateRootHashResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetTransactionResult.html" name="" title="GetTransactionResult">GetTransactionResult</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.GetValidatorChangesResult.html" name="" title="GetValidatorChangesResult">GetValidatorChangesResult</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.Hold.html" name="" title="Hold">Hold</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.PutDeployResult.html" name="" title="PutDeployResult">PutDeployResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.PutTransactionResult.html" name="" title="PutTransactionResult">PutTransactionResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryBalanceDetailsResult.html" name="" title="QueryBalanceDetailsResult">QueryBalanceDetailsResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryBalanceResult.html" name="" title="QueryBalanceResult">QueryBalanceResult</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.JsonRpc.ResultTypes.QueryGlobalStateResult.html" name="" title="QueryGlobalStateResult">QueryGlobalStateResult</a>
@@ -260,10 +357,13 @@
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Casper.Network.SDK.SSE.html" name="" title="Casper.Network.SDK.SSE">Casper.Network.SDK.SSE</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="Casper.Network.SDK.SSE.BlockAdded.html" name="" title="BlockAdded">BlockAdded</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.SSE.BlockAdded.BlockConverter.html" name="" title="BlockAdded.BlockConverter">BlockAdded.BlockConverter</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.SSE.ChannelType.html" name="" title="ChannelType">ChannelType</a>
@@ -290,20 +390,32 @@
                               <a href="Casper.Network.SDK.SSE.FinalitySignature.html" name="" title="FinalitySignature">FinalitySignature</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.SSE.FinalitySignature.FinalitySignatureConverter.html" name="" title="FinalitySignature.FinalitySignatureConverter">FinalitySignature.FinalitySignatureConverter</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.SSE.FinalitySignatureV1.html" name="" title="FinalitySignatureV1">FinalitySignatureV1</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.SSE.ISSEClient.html" name="" title="ISSEClient">ISSEClient</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.SSE.SSEvent.html" name="" title="SSEvent">SSEvent</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.SSE.ServerEventsClient.html" name="" title="ServerEventsClient">ServerEventsClient</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.SSE.SSEvent.html" name="" title="SSEvent">SSEvent</a>
+                              <a href="Casper.Network.SDK.SSE.TransactionExpired.html" name="" title="TransactionExpired">TransactionExpired</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.SSE.TransactionProcessed.html" name="" title="TransactionProcessed">TransactionProcessed</a>
                           </li>
                     </ul>
                 </li>
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Casper.Network.SDK.Types.html" name="" title="Casper.Network.SDK.Types">Casper.Network.SDK.Types</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="Casper.Network.SDK.Types.AccessRights.html" name="" title="AccessRights">AccessRights</a>
@@ -318,6 +430,33 @@
                               <a href="Casper.Network.SDK.Types.ActionThresholds.html" name="" title="ActionThresholds">ActionThresholds</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.AddInt32TransformKind.html" name="" title="AddInt32TransformKind">AddInt32TransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.AddKeysTransformKind.html" name="" title="AddKeysTransformKind">AddKeysTransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.AddUInt128TransformKind.html" name="" title="AddUInt128TransformKind">AddUInt128TransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.AddUInt256TransformKind.html" name="" title="AddUInt256TransformKind">AddUInt256TransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.AddUInt512TransformKind.html" name="" title="AddUInt512TransformKind">AddUInt512TransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.AddUInt64TransformKind.html" name="" title="AddUInt64TransformKind">AddUInt64TransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.AddressableEntity.html" name="" title="AddressableEntity">AddressableEntity</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.AddressableEntityKey.html" name="" title="AddressableEntityKey">AddressableEntityKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Approval.html" name="" title="Approval">Approval</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.AssociatedKey.html" name="" title="AssociatedKey">AssociatedKey</a>
                           </li>
                           <li>
@@ -327,40 +466,103 @@
                               <a href="Casper.Network.SDK.Types.AvailableBlockRange.html" name="" title="AvailableBlockRange">AvailableBlockRange</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.BalanceHoldKey.html" name="" title="BalanceHoldKey">BalanceHoldKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BalanceHoldTag.html" name="" title="BalanceHoldTag">BalanceHoldTag</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.BalanceKey.html" name="" title="BalanceKey">BalanceKey</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.Bid.html" name="" title="Bid">Bid</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.BidAddrKey.html" name="" title="BidAddrKey">BidAddrKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BidAddrTag.html" name="" title="BidAddrTag">BidAddrTag</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.BidKey.html" name="" title="BidKey">BidKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BidKind.html" name="" title="BidKind">BidKind</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.Block.html" name="" title="Block">Block</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.BlockBody.html" name="" title="BlockBody">BlockBody</a>
+                              <a href="Casper.Network.SDK.Types.BlockBodyV1.html" name="" title="BlockBodyV1">BlockBodyV1</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BlockBodyV2.html" name="" title="BlockBodyV2">BlockBodyV2</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BlockGlobalAddrKey.html" name="" title="BlockGlobalAddrKey">BlockGlobalAddrKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BlockGlobalAddrTag.html" name="" title="BlockGlobalAddrTag">BlockGlobalAddrTag</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BlockGlobalAddrTagExtensions.html" name="" title="BlockGlobalAddrTagExtensions">BlockGlobalAddrTagExtensions</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.BlockHeader.html" name="" title="BlockHeader">BlockHeader</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.BlockProof.html" name="" title="BlockProof">BlockProof</a>
+                              <a href="Casper.Network.SDK.Types.BlockHeaderV1.html" name="" title="BlockHeaderV1">BlockHeaderV1</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.BlockSynchronizerStatus.html" name="" title="BlockSynchronizerStatus">BlockSynchronizerStatus</a>
+                              <a href="Casper.Network.SDK.Types.BlockHeaderV2.html" name="" title="BlockHeaderV2">BlockHeaderV2</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BlockIdentifier.html" name="" title="BlockIdentifier">BlockIdentifier</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BlockProof.html" name="" title="BlockProof">BlockProof</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.BlockSyncStatus.html" name="" title="BlockSyncStatus">BlockSyncStatus</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.ChainspecRawBytes.html" name="" title="ChainspecRawBytes">ChainspecRawBytes</a>
+                              <a href="Casper.Network.SDK.Types.BlockSynchronizerStatus.html" name="" title="BlockSynchronizerStatus">BlockSynchronizerStatus</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.ChainspecRegistryKey.html" name="" title="ChainspecRegistryKey">ChainspecRegistryKey</a>
+                              <a href="Casper.Network.SDK.Types.BlockTransaction.html" name="" title="BlockTransaction">BlockTransaction</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.ChecksumRegistryKey.html" name="" title="ChecksumRegistryKey">ChecksumRegistryKey</a>
+                              <a href="Casper.Network.SDK.Types.BlockV1.html" name="" title="BlockV1">BlockV1</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.BlockV2.html" name="" title="BlockV2">BlockV2</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Bridge.html" name="" title="Bridge">Bridge</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByHashInvocationTarget.html" name="" title="ByHashInvocationTarget">ByHashInvocationTarget</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByNameInvocationTarget.html" name="" title="ByNameInvocationTarget">ByNameInvocationTarget</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByPackageHashInvocationTarget.html" name="" title="ByPackageHashInvocationTarget">ByPackageHashInvocationTarget</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByPackageNameInvocationTarget.html" name="" title="ByPackageNameInvocationTarget">ByPackageNameInvocationTarget</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByteCode.html" name="" title="ByteCode">ByteCode</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByteCodeKey.html" name="" title="ByteCodeKey">ByteCodeKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByteCodeKind.html" name="" title="ByteCodeKind">ByteCodeKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ByteCodeKindExtensions.html" name="" title="ByteCodeKindExtensions">ByteCodeKindExtensions</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.CLByteArrayTypeInfo.html" name="" title="CLByteArrayTypeInfo">CLByteArrayTypeInfo</a>
@@ -399,7 +601,22 @@
                               <a href="Casper.Network.SDK.Types.CLValue.html" name="" title="CLValue">CLValue</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.CLValueDictionary.html" name="" title="CLValueDictionary">CLValueDictionary</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.CLValueException.html" name="" title="CLValueException">CLValueException</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.CLValueReader.html" name="" title="CLValueReader">CLValueReader</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ChainspecRawBytes.html" name="" title="ChainspecRawBytes">ChainspecRawBytes</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ChainspecRegistryKey.html" name="" title="ChainspecRegistryKey">ChainspecRegistryKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ChecksumRegistryKey.html" name="" title="ChecksumRegistryKey">ChecksumRegistryKey</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.Contract.html" name="" title="Contract">Contract</a>
@@ -411,13 +628,22 @@
                               <a href="Casper.Network.SDK.Types.ContractVersion.html" name="" title="ContractVersion">ContractVersion</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.ContractWasm.html" name="" title="ContractWasm">ContractWasm</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.CustomTransactionV1EntryPoint.html" name="" title="CustomTransactionV1EntryPoint">CustomTransactionV1EntryPoint</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Delegator.html" name="" title="Delegator">Delegator</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.Deploy.html" name="" title="Deploy">Deploy</a>
+                              <a href="Casper.Network.SDK.Types.DelegatorBid.html" name="" title="DelegatorBid">DelegatorBid</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.DeployApproval.html" name="" title="DeployApproval">DeployApproval</a>
+                              <a href="Casper.Network.SDK.Types.DelegatorKind.html" name="" title="DelegatorKind">DelegatorKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Deploy.html" name="" title="Deploy">Deploy</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.DeployHeader.html" name="" title="DeployHeader">DeployHeader</a>
@@ -435,16 +661,46 @@
                               <a href="Casper.Network.SDK.Types.DisabledVersion.html" name="" title="DisabledVersion">DisabledVersion</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.EntityKinEnumExtensions.html" name="" title="EntityKinEnumExtensions">EntityKinEnumExtensions</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.EntityKind.html" name="" title="EntityKind">EntityKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.EntityKindEnum.html" name="" title="EntityKindEnum">EntityKindEnum</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.EntityVersion.html" name="" title="EntityVersion">EntityVersion</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.EntityVersionAndHash.html" name="" title="EntityVersionAndHash">EntityVersionAndHash</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.EntryPoint.html" name="" title="EntryPoint">EntryPoint</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.EntryPointAccess.html" name="" title="EntryPointAccess">EntryPointAccess</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.EntryPointKey.html" name="" title="EntryPointKey">EntryPointKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.EntryPointPayment.html" name="" title="EntryPointPayment">EntryPointPayment</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.EntryPointType.html" name="" title="EntryPointType">EntryPointType</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.EntryPointV2.html" name="" title="EntryPointV2">EntryPointV2</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.EraEnd.html" name="" title="EraEnd">EraEnd</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.EraEndV1.html" name="" title="EraEndV1">EraEndV1</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.EraEndV2.html" name="" title="EraEndV2">EraEndV2</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.EraInfo.html" name="" title="EraInfo">EraInfo</a>
@@ -471,7 +727,31 @@
                               <a href="Casper.Network.SDK.Types.ExecutionEffect.html" name="" title="ExecutionEffect">ExecutionEffect</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.ExecutionInfo.html" name="" title="ExecutionInfo">ExecutionInfo</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.ExecutionResult.html" name="" title="ExecutionResult">ExecutionResult</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ExecutionResultV1.html" name="" title="ExecutionResultV1">ExecutionResultV1</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.FailureTransformKind.html" name="" title="FailureTransformKind">FailureTransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.FixedPricingMode.html" name="" title="FixedPricingMode">FixedPricingMode</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.FutureEraTransactionScheduling.html" name="" title="FutureEraTransactionScheduling">FutureEraTransactionScheduling</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.FutureEraTransactionV1Scheduling.html" name="" title="FutureEraTransactionV1Scheduling">FutureEraTransactionV1Scheduling</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.FutureTimestampTransactionScheduling.html" name="" title="FutureTimestampTransactionScheduling">FutureTimestampTransactionScheduling</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.FutureTimestampTransactionV1Scheduling.html" name="" title="FutureTimestampTransactionV1Scheduling">FutureTimestampTransactionV1Scheduling</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.GlobalStateKey.html" name="" title="GlobalStateKey">GlobalStateKey</a>
@@ -481,6 +761,42 @@
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.HashKey.html" name="" title="HashKey">HashKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.IBlockIdentifier.html" name="" title="IBlockIdentifier">IBlockIdentifier</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.IEntityIdentifier.html" name="" title="IEntityIdentifier">IEntityIdentifier</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.IInvocationTarget.html" name="" title="IInvocationTarget">IInvocationTarget</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.IPackageIdentifier.html" name="" title="IPackageIdentifier">IPackageIdentifier</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.IPricingMode.html" name="" title="IPricingMode">IPricingMode</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.IPurseIdentifier.html" name="" title="IPurseIdentifier">IPurseIdentifier</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ITransactionV1EntryPoint.html" name="" title="ITransactionV1EntryPoint">ITransactionV1EntryPoint</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ITransactionV1Scheduling.html" name="" title="ITransactionV1Scheduling">ITransactionV1Scheduling</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.ITransactionV1Target.html" name="" title="ITransactionV1Target">ITransactionV1Target</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.IdentityTransformKind.html" name="" title="IdentityTransformKind">IdentityTransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.InitiatorAddr.html" name="" title="InitiatorAddr">InitiatorAddr</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.InvocationTargetTag.html" name="" title="InvocationTargetTag">InvocationTargetTag</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.KeyAlgo.html" name="" title="KeyAlgo">KeyAlgo</a>
@@ -495,6 +811,21 @@
                               <a href="Casper.Network.SDK.Types.LockStatus.html" name="" title="LockStatus">LockStatus</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.Message.html" name="" title="Message">Message</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.MessageKey.html" name="" title="MessageKey">MessageKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.MessagePayload.html" name="" title="MessagePayload">MessagePayload</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.MessageTopic.html" name="" title="MessageTopic">MessageTopic</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.MessageTopicSummary.html" name="" title="MessageTopicSummary">MessageTopicSummary</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.MinimalBlockInfo.html" name="" title="MinimalBlockInfo">MinimalBlockInfo</a>
                           </li>
                           <li>
@@ -504,31 +835,88 @@
                               <a href="Casper.Network.SDK.Types.NamedArg.html" name="" title="NamedArg">NamedArg</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.NamedEntryPoint.html" name="" title="NamedEntryPoint">NamedEntryPoint</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.NamedKey.html" name="" title="NamedKey">NamedKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.NamedKeyKey.html" name="" title="NamedKeyKey">NamedKeyKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.NamedKeyValue.html" name="" title="NamedKeyValue">NamedKeyValue</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.NamedUserGroup.html" name="" title="NamedUserGroup">NamedUserGroup</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.NativeEntryPoint.html" name="" title="NativeEntryPoint">NativeEntryPoint</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.NativeTransactionV1EntryPoint.html" name="" title="NativeTransactionV1EntryPoint">NativeTransactionV1EntryPoint</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.NativeTransactionV1Target.html" name="" title="NativeTransactionV1Target">NativeTransactionV1Target</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.NextUpgrade.html" name="" title="NextUpgrade">NextUpgrade</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.OpKind.html" name="" title="OpKind">OpKind</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Operation.html" name="" title="Operation">Operation</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.OpKind.html" name="" title="OpKind">OpKind</a>
+                              <a href="Casper.Network.SDK.Types.Package.html" name="" title="Package">Package</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.PackageIdentifier.html" name="" title="PackageIdentifier">PackageIdentifier</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.PackageKey.html" name="" title="PackageKey">PackageKey</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.PackageStatus.html" name="" title="PackageStatus">PackageStatus</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.Parameter.html" name="" title="Parameter">Parameter</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.PayloadFields.html" name="" title="PayloadFields">PayloadFields</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.PaymentLimitedPricingMode.html" name="" title="PaymentLimitedPricingMode">PaymentLimitedPricingMode</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Peer.html" name="" title="Peer">Peer</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.PrepaidPricingMode.html" name="" title="PrepaidPricingMode">PrepaidPricingMode</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Prepayment.html" name="" title="Prepayment">Prepayment</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.PricingMode.html" name="" title="PricingMode">PricingMode</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.PricingModeType.html" name="" title="PricingModeType">PricingModeType</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Proposer.html" name="" title="Proposer">Proposer</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.PruneTransformKind.html" name="" title="PruneTransformKind">PruneTransformKind</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.PublicKey.html" name="" title="PublicKey">PublicKey</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.ReactorState.html" name="" title="ReactorState">ReactorState</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Reservation.html" name="" title="Reservation">Reservation</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.Result-2.html" name="" title="Result&lt;TOk, TErr&gt;">Result&lt;TOk, TErr&gt;</a>
@@ -540,7 +928,16 @@
                               <a href="Casper.Network.SDK.Types.SeigniorageAllocation.html" name="" title="SeigniorageAllocation">SeigniorageAllocation</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.SessionTransactionV1Target.html" name="" title="SessionTransactionV1Target">SessionTransactionV1Target</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Signature.html" name="" title="Signature">Signature</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.StandardTransactionScheduling.html" name="" title="StandardTransactionScheduling">StandardTransactionScheduling</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.StandardTransactionV1Scheduling.html" name="" title="StandardTransactionV1Scheduling">StandardTransactionV1Scheduling</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.StateIdentifier.html" name="" title="StateIdentifier">StateIdentifier</a>
@@ -555,6 +952,9 @@
                               <a href="Casper.Network.SDK.Types.StoredContractByNameDeployItem.html" name="" title="StoredContractByNameDeployItem">StoredContractByNameDeployItem</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.StoredTransactionV1Target.html" name="" title="StoredTransactionV1Target">StoredTransactionV1Target</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.StoredValue.html" name="" title="StoredValue">StoredValue</a>
                           </li>
                           <li>
@@ -567,6 +967,108 @@
                               <a href="Casper.Network.SDK.Types.SystemContractRegistryKey.html" name="" title="SystemContractRegistryKey">SystemContractRegistryKey</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.SystemEntityType.html" name="" title="SystemEntityType">SystemEntityType</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.html" name="" title="Transaction">Transaction</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.ContractCallBuilder.html" name="" title="Transaction.ContractCallBuilder">Transaction.ContractCallBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.ITransactionInvocation.html" name="" title="Transaction.ITransactionInvocation">Transaction.ITransactionInvocation</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeActivateBidBuilder.html" name="" title="Transaction.NativeActivateBidBuilder">Transaction.NativeActivateBidBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeAddBidBuilder.html" name="" title="Transaction.NativeAddBidBuilder">Transaction.NativeAddBidBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeAddReservationsBuilder.html" name="" title="Transaction.NativeAddReservationsBuilder">Transaction.NativeAddReservationsBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeCancelReservationsBuilder.html" name="" title="Transaction.NativeCancelReservationsBuilder">Transaction.NativeCancelReservationsBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeChangeBidPublicKeyBuilder.html" name="" title="Transaction.NativeChangeBidPublicKeyBuilder">Transaction.NativeChangeBidPublicKeyBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeDelegateBuilder.html" name="" title="Transaction.NativeDelegateBuilder">Transaction.NativeDelegateBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeRedelegateBuilder.html" name="" title="Transaction.NativeRedelegateBuilder">Transaction.NativeRedelegateBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeTransactionInvocation.html" name="" title="Transaction.NativeTransactionInvocation">Transaction.NativeTransactionInvocation</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeTransferBuilder.html" name="" title="Transaction.NativeTransferBuilder">Transaction.NativeTransferBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeUndelegateBuilder.html" name="" title="Transaction.NativeUndelegateBuilder">Transaction.NativeUndelegateBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.NativeWithdrawBidBuilder.html" name="" title="Transaction.NativeWithdrawBidBuilder">Transaction.NativeWithdrawBidBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.RequiredArgAttribute.html" name="" title="Transaction.RequiredArgAttribute">Transaction.RequiredArgAttribute</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.SessionBuilder.html" name="" title="Transaction.SessionBuilder">Transaction.SessionBuilder</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.SessionTransactionInvocation.html" name="" title="Transaction.SessionTransactionInvocation">Transaction.SessionTransactionInvocation</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.StoredTransactionInvocation.html" name="" title="Transaction.StoredTransactionInvocation">Transaction.StoredTransactionInvocation</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.TransactionInvocation.html" name="" title="Transaction.TransactionInvocation">Transaction.TransactionInvocation</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Transaction.TransactionV1Builder-1.html" name="" title="Transaction.TransactionV1Builder&lt;T&gt;">Transaction.TransactionV1Builder&lt;T&gt;</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionCategory.html" name="" title="TransactionCategory">TransactionCategory</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionHash.html" name="" title="TransactionHash">TransactionHash</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionRuntime.html" name="" title="TransactionRuntime">TransactionRuntime</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionScheduling.html" name="" title="TransactionScheduling">TransactionScheduling</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionTargetType.html" name="" title="TransactionTargetType">TransactionTargetType</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionV1.html" name="" title="TransactionV1">TransactionV1</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionV1EntryPoint.html" name="" title="TransactionV1EntryPoint">TransactionV1EntryPoint</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionV1Payload.html" name="" title="TransactionV1Payload">TransactionV1Payload</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionV1PayloadJson.html" name="" title="TransactionV1PayloadJson">TransactionV1PayloadJson</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionV1Scheduling.html" name="" title="TransactionV1Scheduling">TransactionV1Scheduling</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionV1SchedulingType.html" name="" title="TransactionV1SchedulingType">TransactionV1SchedulingType</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionV1Target.html" name="" title="TransactionV1Target">TransactionV1Target</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransactionVersion.html" name="" title="TransactionVersion">TransactionVersion</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Transfer.html" name="" title="Transfer">Transfer</a>
                           </li>
                           <li>
@@ -576,25 +1078,52 @@
                               <a href="Casper.Network.SDK.Types.TransferKey.html" name="" title="TransferKey">TransferKey</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.TransferV1.html" name="" title="TransferV1">TransferV1</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Transform.html" name="" title="Transform">Transform</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.TransformType.html" name="" title="TransformType">TransformType</a>
+                              <a href="Casper.Network.SDK.Types.TransformKind.html" name="" title="TransformKind">TransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransformKindV1.html" name="" title="TransformKindV1">TransformKindV1</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransformKindV2.html" name="" title="TransformKindV2">TransformKindV2</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransformKind-1.html" name="" title="TransformKind&lt;T&gt;">TransformKind&lt;T&gt;</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.TransformV1.html" name="" title="TransformV1">TransformV1</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.U64GlobalStateKey.html" name="" title="U64GlobalStateKey">U64GlobalStateKey</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.UnbondingPurse.html" name="" title="UnbondingPurse">UnbondingPurse</a>
+                              <a href="Casper.Network.SDK.Types.URef.html" name="" title="URef">URef</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.Unbond.html" name="" title="Unbond">Unbond</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.UnbondEra.html" name="" title="UnbondEra">UnbondEra</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.UnbondKey.html" name="" title="UnbondKey">UnbondKey</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.UnbondKind.html" name="" title="UnbondKind">UnbondKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.UnbondingPurse.html" name="" title="UnbondingPurse">UnbondingPurse</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.Unit.html" name="" title="Unit">Unit</a>
                           </li>
                           <li>
-                              <a href="Casper.Network.SDK.Types.URef.html" name="" title="URef">URef</a>
+                              <a href="Casper.Network.SDK.Types.ValidatorBid.html" name="" title="ValidatorBid">ValidatorBid</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.ValidatorChange.html" name="" title="ValidatorChange">ValidatorChange</a>
@@ -603,10 +1132,16 @@
                               <a href="Casper.Network.SDK.Types.ValidatorChanges.html" name="" title="ValidatorChanges">ValidatorChanges</a>
                           </li>
                           <li>
+                              <a href="Casper.Network.SDK.Types.ValidatorCredit.html" name="" title="ValidatorCredit">ValidatorCredit</a>
+                          </li>
+                          <li>
                               <a href="Casper.Network.SDK.Types.ValidatorStatusChange.html" name="" title="ValidatorStatusChange">ValidatorStatusChange</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.ValidatorWeight.html" name="" title="ValidatorWeight">ValidatorWeight</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.VersionedEntryPoint.html" name="" title="VersionedEntryPoint">VersionedEntryPoint</a>
                           </li>
                           <li>
                               <a href="Casper.Network.SDK.Types.VestingSchedule.html" name="" title="VestingSchedule">VestingSchedule</a>
@@ -614,12 +1149,27 @@
                           <li>
                               <a href="Casper.Network.SDK.Types.WithdrawKey.html" name="" title="WithdrawKey">WithdrawKey</a>
                           </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.WithdrawPurse.html" name="" title="WithdrawPurse">WithdrawPurse</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.WriteContractLegacyTransformKind.html" name="" title="WriteContractLegacyTransformKind">WriteContractLegacyTransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.WriteContractPackageLegacyTransformKind.html" name="" title="WriteContractPackageLegacyTransformKind">WriteContractPackageLegacyTransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.WriteContractWasmLegacyTransformKind.html" name="" title="WriteContractWasmLegacyTransformKind">WriteContractWasmLegacyTransformKind</a>
+                          </li>
+                          <li>
+                              <a href="Casper.Network.SDK.Types.WriteTransformKind.html" name="" title="WriteTransformKind">WriteTransformKind</a>
+                          </li>
                     </ul>
                 </li>
                 <li>
                     <span class="expand-stub"></span>
                     <a href="Casper.Network.SDK.Utils.html" name="" title="Casper.Network.SDK.Utils">Casper.Network.SDK.Utils</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="Casper.Network.SDK.Utils.BinaryReaderExtensions.html" name="" title="BinaryReaderExtensions">BinaryReaderExtensions</a>

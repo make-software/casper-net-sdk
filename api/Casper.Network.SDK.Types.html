@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Namespace Casper.Network.SDK.Types
-   | C#/.Net SDK for the Casper Network </title>
+    <title>Namespace Casper.Network.SDK.Types | C#/.Net SDK for the Casper Network </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Namespace Casper.Network.SDK.Types
-   | C#/.Net SDK for the Casper Network ">
-    <meta name="generator" content="docfx 2.58.9.0">
-    
+    <meta name="title" content="Namespace Casper.Network.SDK.Types | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,13 +17,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -37,7 +35,7 @@
               </button>
               <a class="navbar-brand" href="../index.html">
                 Casper.Network.SDK
-              </a>    </div>
+              </a>            </div>
             <div class="collapse navbar-collapse" id="navbar">
               <form class="navbar-form navbar-right" role="search" id="search">
                 <div class="form-group">
@@ -47,7 +45,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -57,7 +55,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -67,14 +65,14 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.Types">
-  
-  <h1 id="Casper_Network_SDK_Types" data-uid="Casper.Network.SDK.Types" class="text-break">Namespace Casper.Network.SDK.Types
-  </h1>
+
+  <h1 id="Casper_Network_SDK_Types" data-uid="Casper.Network.SDK.Types" class="text-break">Namespace Casper.Network.SDK.Types</h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="markdown level0 remarks"></div>
-    <h3 id="classes">Classes
-  </h3>
+    <h3 id="classes">
+Classes
+</h3>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Account.html">Account</a></h4>
       <section><p>Structure representing a user's account, stored in global state.</p>
 </section>
@@ -85,6 +83,32 @@ Format: 32-byte length with prefix 'account-hash-'.</p>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ActionThresholds.html">ActionThresholds</a></h4>
       <section><p>Thresholds that have to be met when executing an action of a certain type.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddInt32TransformKind.html">AddInt32TransformKind</a></h4>
+      <section><p>A wrapping addition of an <code>i32</code> to an existing numeric value (not necessarily an <code>i32</code>) in the global state.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddKeysTransformKind.html">AddKeysTransformKind</a></h4>
+      <section><p>Adds new named keys to an existing entry in the global state.\n\nThis transform assumes that the existing stored
+value is either an Account or a Contract.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddUInt128TransformKind.html">AddUInt128TransformKind</a></h4>
+      <section><p>A wrapping addition of a <code>U128</code> to an existing numeric value (not necessarily an <code>U128</code>) in the global state.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddUInt256TransformKind.html">AddUInt256TransformKind</a></h4>
+      <section><p>A wrapping addition of a <code>U256</code> to an existing numeric value (not necessarily an <code>U256</code>) in the global state.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddUInt512TransformKind.html">AddUInt512TransformKind</a></h4>
+      <section><p>A wrapping addition of a <code>U512</code> to an existing numeric value (not necessarily an <code>U512</code>) in the global state.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddUInt64TransformKind.html">AddUInt64TransformKind</a></h4>
+      <section><p>A wrapping addition of a <code>u64</code> to an existing numeric value (not necessarily an <code>u64</code>) in the global state.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddressableEntity.html">AddressableEntity</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.AddressableEntityKey.html">AddressableEntityKey</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Approval.html">Approval</a></h4>
+      <section><p>Signature and Public Key of the signer.</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.AssociatedKey.html">AssociatedKey</a></h4>
       <section><p>public key allowed to provide signatures on deploys for the account</p>
 </section>
@@ -94,47 +118,85 @@ Format: 32-byte length with prefix 'account-hash-'.</p>
       <h4><a class="xref" href="Casper.Network.SDK.Types.AvailableBlockRange.html">AvailableBlockRange</a></h4>
       <section><p>An unbroken, inclusive range of blocks.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BalanceHoldKey.html">BalanceHoldKey</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.BalanceKey.html">BalanceKey</a></h4>
       <section><p>Stores information related to the balance of a given purse.
 Format: 32-byte length with prefix 'balance-'.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Bid.html">Bid</a></h4>
-      <section><p>An entry in a founding validator map representing a bid.</p>
+      <section><p>An entry in the validator map.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BidAddrKey.html">BidAddrKey</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.BidKey.html">BidKey</a></h4>
       <section><p>Stores information related to auction bids in the global state.
 Format: 32-byte length with prefix 'bid-'.</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.Block.html">Block</a></h4>
-      <section><p>A block in the network</p>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BidKind.html">BidKind</a></h4>
+      <section><p>Auction bid variants.</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockBody.html">BlockBody</a></h4>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Block.html">Block</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockBodyV1.html">BlockBodyV1</a></h4>
       <section><p>A block body</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockBodyV2.html">BlockBodyV2</a></h4>
+      <section><p>A block body</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockGlobalAddrKey.html">BlockGlobalAddrKey</a></h4>
+      <section><p>Address for singleton values associated to specific block. These are values which are
+calculated or set during the execution of a block such as the block timestamp, or the
+total count of messages emitted during the execution of the block, and so on.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockGlobalAddrTagExtensions.html">BlockGlobalAddrTagExtensions</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.BlockHeader.html">BlockHeader</a></h4>
+      <section><p>A block header (alias for BlockHeaderV2)</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockHeaderV1.html">BlockHeaderV1</a></h4>
       <section><p>A block header</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockProof.html">BlockProof</a></h4>
-      <section><p>Block's finality signature.</p>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockHeaderV2.html">BlockHeaderV2</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockIdentifier.html">BlockIdentifier</a></h4>
+      <section><p>A block identified by its hash or its height.</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockSynchronizerStatus.html">BlockSynchronizerStatus</a></h4>
-      <section><p>The status of the block synchronizer.</p>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockProof.html">BlockProof</a></h4>
+      <section><p>A validator's public key paired with a corresponding signature of a given block hash.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.BlockSyncStatus.html">BlockSyncStatus</a></h4>
       <section><p>The status of syncing an individual block.</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.ChainspecRawBytes.html">ChainspecRawBytes</a></h4>
-      <section><p>The raw bytes of the chainspec.toml, genesis accounts.toml, and global_state.toml files.</p>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockSynchronizerStatus.html">BlockSynchronizerStatus</a></h4>
+      <section><p>The status of the block synchronizer.</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.ChainspecRegistryKey.html">ChainspecRegistryKey</a></h4>
-      <section><p>Stores a mapping of file names to the hash of the file itself. These files include <em>Chainspec.toml</em> and may
-also include <em>Accounts.toml</em> and <em>GlobalState.toml</em>.
-Format: 32-byte length with prefix 'chainspec-registry-'.</p>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockTransaction.html">BlockTransaction</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockV1.html">BlockV1</a></h4>
+      <section><p>A block in the network</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.ChecksumRegistryKey.html">ChecksumRegistryKey</a></h4>
-      <section><p>Stores a registry of checksums.
-Format: 32-byte length with prefix 'chainspec-registry-'.</p>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockV2.html">BlockV2</a></h4>
+      <section><p>A block in the network</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Bridge.html">Bridge</a></h4>
+      <section><p>A bridge record pointing to a new <code>ValidatorBid</code> after the public key was changed.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByHashInvocationTarget.html">ByHashInvocationTarget</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByNameInvocationTarget.html">ByNameInvocationTarget</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByPackageHashInvocationTarget.html">ByPackageHashInvocationTarget</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByPackageNameInvocationTarget.html">ByPackageNameInvocationTarget</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByteCode.html">ByteCode</a></h4>
+      <section><p>A container for contract's Wasm bytes.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByteCodeKey.html">ByteCodeKey</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByteCodeKindExtensions.html">ByteCodeKindExtensions</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.CLByteArrayTypeInfo.html">CLByteArrayTypeInfo</a></h4>
       <section><p>A <code>CLTypeInfo</code> specific for byte arrays.</p>
 </section>
@@ -170,8 +232,27 @@ as a base class for ByteArrays, Keys, Lists, Maps, Options, Results and Tuples.<
       <section><p>The type used in deploy input arguments. And it can also be returned as a
 result of a query to the network or a contract call.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.CLValueDictionary.html">CLValueDictionary</a></h4>
+      <section><p>Represents a parsed CLValue dictionary entry containing a raw value, a seed URef, and an item key string.</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.CLValueException.html">CLValueException</a></h4>
       <section><p>Exception thrown during CLValue conversion errors.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.CLValueReader.html">CLValueReader</a></h4>
+      <section><p>Reads a <a class="xref" href="Casper.Network.SDK.Types.CLValue.html">CLValue</a> from a binary stream given a <a class="xref" href="Casper.Network.SDK.Types.CLTypeInfo.html">CLTypeInfo</a> descriptor.
+The caller is responsible for knowing the type layout of the stream; no type tag bytes are read.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ChainspecRawBytes.html">ChainspecRawBytes</a></h4>
+      <section><p>The raw bytes of the chainspec.toml, genesis accounts.toml, and global_state.toml files.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ChainspecRegistryKey.html">ChainspecRegistryKey</a></h4>
+      <section><p>Stores a mapping of file names to the hash of the file itself. These files include <em>Chainspec.toml</em> and may
+also include <em>Accounts.toml</em> and <em>GlobalState.toml</em>.
+Format: 32-byte length with prefix 'chainspec-registry-'.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ChecksumRegistryKey.html">ChecksumRegistryKey</a></h4>
+      <section><p>Stores a registry of checksums.
+Format: 32-byte length with prefix 'chainspec-registry-'.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Contract.html">Contract</a></h4>
       <section><p>Information, entry points and named keys belonging to a Contract</p>
@@ -182,14 +263,22 @@ result of a query to the network or a contract call.</p>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ContractVersion.html">ContractVersion</a></h4>
       <section><p>Information related to an active version of a contract.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ContractWasm.html">ContractWasm</a></h4>
+      <section><p>A container for contract's WASM bytes.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.CustomTransactionV1EntryPoint.html">CustomTransactionV1EntryPoint</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Delegator.html">Delegator</a></h4>
       <section><p>A delegator associated with the given validator.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.DelegatorBid.html">DelegatorBid</a></h4>
+      <section><p>Represents a party delegating their stake to a validator (or &quot;delegatee</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.DelegatorKind.html">DelegatorKind</a></h4>
+      <section><p>Auction bid variants. Kinds of delegation bids.</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Deploy.html">Deploy</a></h4>
       <section></section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.DeployApproval.html">DeployApproval</a></h4>
-      <section><p>Signature and Public Key of the signer.</p>
-</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.DeployHeader.html">DeployHeader</a></h4>
       <section><p>Header information of a Deploy.</p>
 </section>
@@ -207,14 +296,33 @@ Format: 32-byte length with prefix 'dictionary-'.</p>
       <h4><a class="xref" href="Casper.Network.SDK.Types.DisabledVersion.html">DisabledVersion</a></h4>
       <section><p>A disabled version of a contract.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntityKinEnumExtensions.html">EntityKinEnumExtensions</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntityKind.html">EntityKind</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntityVersion.html">EntityVersion</a></h4>
+      <section><p>Major element of <code>ProtocolVersion</code> combined with <code>EntityVersion</code>.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntityVersionAndHash.html">EntityVersionAndHash</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.EntryPoint.html">EntryPoint</a></h4>
       <section><p>Type signature of a method. Order of arguments matter since can be referenced by index as well as name.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.EntryPointAccess.html">EntryPointAccess</a></h4>
       <section><p>Access control options for a contract entry point (method).</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntryPointKey.html">EntryPointKey</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntryPointV2.html">EntryPointV2</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.EraEnd.html">EraEnd</a></h4>
-      <section><p>Era end report and list of validator weights for next era</p>
+      <section><p>Information related to the end of an era, and validator weights for the following era (alias for EraEndV2).</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EraEndV1.html">EraEndV1</a></h4>
+      <section><p>Information related to the end of an era, and validator weights for the following era.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EraEndV2.html">EraEndV2</a></h4>
+      <section><p>Information related to the end of an era, and validator weights for the following era.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.EraInfo.html">EraInfo</a></h4>
       <section><p>Auction metadata. Intended to be recorded at each era.</p>
@@ -224,7 +332,7 @@ Format: 32-byte length with prefix 'dictionary-'.</p>
 Format: u64 number with prefix 'era-' (e.g. 'era-3407').</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.EraReport.html">EraReport</a></h4>
-      <section><p>Equivocation and reward information to be included in the terminal block.</p>
+      <section><p>Equivocation, reward and validator inactivity information.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.EraSummary.html">EraSummary</a></h4>
       <section><p>The summary of an era</p>
@@ -242,9 +350,26 @@ Format: 32-byte length with prefix 'era-summary-'.</p>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ExecutionEffect.html">ExecutionEffect</a></h4>
       <section><p>The journal of execution transforms from a single deploy.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ExecutionInfo.html">ExecutionInfo</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ExecutionResult.html">ExecutionResult</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ExecutionResultV1.html">ExecutionResultV1</a></h4>
       <section><p>The result of executing a single deploy.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.FailureTransformKind.html">FailureTransformKind</a></h4>
+      <section><p>Represents the case where applying a transform would cause an error.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.FixedPricingMode.html">FixedPricingMode</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.FutureEraTransactionScheduling.html">FutureEraTransactionScheduling</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.FutureEraTransactionV1Scheduling.html">FutureEraTransactionV1Scheduling</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.FutureTimestampTransactionScheduling.html">FutureTimestampTransactionScheduling</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.FutureTimestampTransactionV1Scheduling.html">FutureTimestampTransactionV1Scheduling</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html">GlobalStateKey</a></h4>
       <section><p>Base class for the different global state keys.</p>
 </section>
@@ -255,8 +380,29 @@ Format: 32-byte length with prefix 'era-summary-'.</p>
       <section><p>Stores a contract inmutably in the global state.
 Format: 32-byte length with prefix 'hash-'.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.IdentityTransformKind.html">IdentityTransformKind</a></h4>
+      <section><p>An identity transformation that does not modify a value in the global state. Created as a result of
+reading from the global state.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.InitiatorAddr.html">InitiatorAddr</a></h4>
+      <section><p>The address of the initiator of a TransactionV1</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.KeyPair.html">KeyPair</a></h4>
       <section><p>A Private key. Provides signing functionality.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Message.html">Message</a></h4>
+      <section><p>Message that was emitted by an addressable entity during execution.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.MessageKey.html">MessageKey</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.MessagePayload.html">MessagePayload</a></h4>
+      <section><p>The payload of a message.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.MessageTopic.html">MessageTopic</a></h4>
+      <section><p>A message topic.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.MessageTopicSummary.html">MessageTopicSummary</a></h4>
+      <section><p>Summary of a message topic that will be stored in global state.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.MinimalBlockInfo.html">MinimalBlockInfo</a></h4>
       <section><p>Minimal info of a <code>Block</code>.</p>
@@ -267,26 +413,67 @@ Format: 32-byte length with prefix 'hash-'.</p>
       <h4><a class="xref" href="Casper.Network.SDK.Types.NamedArg.html">NamedArg</a></h4>
       <section><p>Named arguments passed as input in a Deploy item.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.NamedEntryPoint.html">NamedEntryPoint</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.NamedKey.html">NamedKey</a></h4>
       <section><p>A named key in an Account or Contract.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.NamedKeyKey.html">NamedKeyKey</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.NamedKeyValue.html">NamedKeyValue</a></h4>
+      <section><p>A named key in an addressable entity.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.NamedUserGroup.html">NamedUserGroup</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.NativeTransactionV1EntryPoint.html">NativeTransactionV1EntryPoint</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.NativeTransactionV1Target.html">NativeTransactionV1Target</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.NextUpgrade.html">NextUpgrade</a></h4>
       <section><p>Information about the next protocol upgrade.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Operation.html">Operation</a></h4>
       <section><p>An operation performed while executing a deploy.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Package.html">Package</a></h4>
+      <section><p>Entity definition, metadata, and security container.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PackageIdentifier.html">PackageIdentifier</a></h4>
+      <section><p>Identifier of a package by its contract package hash or its addressable entity package address.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PackageKey.html">PackageKey</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Parameter.html">Parameter</a></h4>
       <section><p>Parameter to a method</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PayloadFields.html">PayloadFields</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PaymentLimitedPricingMode.html">PaymentLimitedPricingMode</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Peer.html">Peer</a></h4>
       <section><p>A node in the network.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PrepaidPricingMode.html">PrepaidPricingMode</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Prepayment.html">Prepayment</a></h4>
+      <section><p>Container for bytes recording location, type and data for a gas pre-payment.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PricingMode.html">PricingMode</a></h4>
+      <section><p>Pricing mode of a Transaction.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Proposer.html">Proposer</a></h4>
       <section><p>Validator that proposed the block</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PruneTransformKind.html">PruneTransformKind</a></h4>
+      <section><p>Removes the pathing to the global state entry of the specified key. The pruned element remains reachable from
+previously generated global state root hashes, but will not be included in the next generated global state
+root hash and subsequent state accumulated from it.</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.PublicKey.html">PublicKey</a></h4>
       <section><p>A wrapper for a Public Key. Provides signature verification functionality.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Reservation.html">Reservation</a></h4>
+      <section><p>Represents a validator reserving a slot for specific delegator</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Result-2.html">Result&lt;TOk, TErr&gt;</a></h4>
       <section><p>Equivalent to the <code>Result</code> type in Rust. It can wrap a value with type <code>TOk</code> when the
@@ -294,14 +481,20 @@ returning method returns successfully. Or an error with type <code>TErr</code> w
 needs to return an error.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Reward.html">Reward</a></h4>
-      <section><p>A validator reward</p>
+      <section><p>validator's public key paired with a measure of the value of its contribution to consensus, as a fraction of the configured maximum block reward.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.SeigniorageAllocation.html">SeigniorageAllocation</a></h4>
       <section><p>Information about a seigniorage allocation</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.SessionTransactionV1Target.html">SessionTransactionV1Target</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Signature.html">Signature</a></h4>
       <section><p>A wrapper for a cryptographic signature.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.StandardTransactionScheduling.html">StandardTransactionScheduling</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.StandardTransactionV1Scheduling.html">StandardTransactionV1Scheduling</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.StateIdentifier.html">StateIdentifier</a></h4>
       <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Step.html">Step</a></h4>
@@ -315,6 +508,8 @@ by its hash.</p>
       <section><p>Deploy item to call an entry point in a contract. The contract is referenced
 by a named key in the caller account pointing to the contract hash.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.StoredTransactionV1Target.html">StoredTransactionV1Target</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.StoredValue.html">StoredValue</a></h4>
       <section><p>A wrapper class for different types of values stored in the global state.</p>
 </section>
@@ -332,8 +527,68 @@ and a version number.</p>
 handle payment, mint and standard payment).
 Format: 32-byte length with prefix 'system-contract-registry-'.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.html">Transaction</a></h4>
+      <section><p>A versioned wrapper for a TransactionV1 or Deploy.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.ContractCallBuilder.html">Transaction.ContractCallBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeActivateBidBuilder.html">Transaction.NativeActivateBidBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeAddBidBuilder.html">Transaction.NativeAddBidBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeAddReservationsBuilder.html">Transaction.NativeAddReservationsBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeCancelReservationsBuilder.html">Transaction.NativeCancelReservationsBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeChangeBidPublicKeyBuilder.html">Transaction.NativeChangeBidPublicKeyBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeDelegateBuilder.html">Transaction.NativeDelegateBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeRedelegateBuilder.html">Transaction.NativeRedelegateBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeTransactionInvocation.html">Transaction.NativeTransactionInvocation</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeTransferBuilder.html">Transaction.NativeTransferBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeUndelegateBuilder.html">Transaction.NativeUndelegateBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.NativeWithdrawBidBuilder.html">Transaction.NativeWithdrawBidBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.RequiredArgAttribute.html">Transaction.RequiredArgAttribute</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.SessionBuilder.html">Transaction.SessionBuilder</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.SessionTransactionInvocation.html">Transaction.SessionTransactionInvocation</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.StoredTransactionInvocation.html">Transaction.StoredTransactionInvocation</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.TransactionInvocation.html">Transaction.TransactionInvocation</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.TransactionV1Builder-1.html">Transaction.TransactionV1Builder&lt;T&gt;</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionHash.html">TransactionHash</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionRuntime.html">TransactionRuntime</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionScheduling.html">TransactionScheduling</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionV1.html">TransactionV1</a></h4>
+      <section><p>A unit of work sent by a client to the network, which when executed can cause global state to be altered.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionV1EntryPoint.html">TransactionV1EntryPoint</a></h4>
+      <section><p>A native or custom entry point to call within a transaction.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionV1Payload.html">TransactionV1Payload</a></h4>
+      <section><p>The payload portion of a TransactionV1.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionV1PayloadJson.html">TransactionV1PayloadJson</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionV1Scheduling.html">TransactionV1Scheduling</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionV1Target.html">TransactionV1Target</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Transfer.html">Transfer</a></h4>
-      <section><p>Represents a transfer from one purse to another</p>
+      <section><p>Represents a version 2 transfer from one purse to another</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.TransferDeployItem.html">TransferDeployItem</a></h4>
       <section><p>Deploy item for transferring funds to a target account.</p>
@@ -342,36 +597,59 @@ Format: 32-byte length with prefix 'system-contract-registry-'.</p>
       <section><p>Stores information for a transfer in the global state.
 Format: 32-byte length with prefix 'transfer-'.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransferV1.html">TransferV1</a></h4>
+      <section><p>Represents a transfer from one purse to another</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.Transform.html">Transform</a></h4>
+      <section><p>A transformation performed while executing a deploy.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransformKind.html">TransformKind</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransformKind-1.html">TransformKind&lt;T&gt;</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransformV1.html">TransformV1</a></h4>
       <section><p>A transformation performed while executing a deploy.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.U64GlobalStateKey.html">U64GlobalStateKey</a></h4>
       <section></section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.UnbondingPurse.html">UnbondingPurse</a></h4>
-      <section><p>Information of an unbonding or delegation withdrawal</p>
-</section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.UnbondKey.html">UnbondKey</a></h4>
-      <section><p>Stores unbond information,
-Format: 32-byte length with prefix 'unbond-'.</p>
-</section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.Unit.html">Unit</a></h4>
-      <section><p>Represents the <code>unit</code> Rust type. aka <code>()</code>. It  is used when there is no other
-meaningful value that could be returned.</p>
-</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.URef.html">URef</a></h4>
       <section><p>Unforgeable Reference. This key type is used for storing any type of value
 except Account. Additionally, URefs used in contracts carry permission information
 to prevent unauthorized usage of the value stored under the key.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Unbond.html">Unbond</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.UnbondEra.html">UnbondEra</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.UnbondKey.html">UnbondKey</a></h4>
+      <section><p>Stores unbond information,
+Format: 32-byte length with prefix 'unbond-'.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.UnbondKind.html">UnbondKind</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.UnbondingPurse.html">UnbondingPurse</a></h4>
+      <section><p>Information of an unbonding or delegation withdrawal</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Unit.html">Unit</a></h4>
+      <section><p>Represents the <code>unit</code> Rust type. aka <code>()</code>. It  is used when there is no other
+meaningful value that could be returned.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ValidatorBid.html">ValidatorBid</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ValidatorChanges.html">ValidatorChanges</a></h4>
       <section><p>The changes in a validator's status.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ValidatorCredit.html">ValidatorCredit</a></h4>
+      <section><p>Validator credit record.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ValidatorStatusChange.html">ValidatorStatusChange</a></h4>
       <section><p>A single change to a validator's status in the given era.</p>
 </section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ValidatorWeight.html">ValidatorWeight</a></h4>
-      <section><p>A validator's weight.</p>
+      <section><p>A validator's public key paired with its weight, i.e. the total number of motes staked by it and its delegators.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.VersionedEntryPoint.html">VersionedEntryPoint</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.VestingSchedule.html">VestingSchedule</a></h4>
       <section><p>Vesting schedule for a genesis validator. <code>None</code> if non-genesis validator.</p>
 </section>
@@ -379,18 +657,73 @@ to prevent unauthorized usage of the value stored under the key.</p>
       <section><p>Stores information related to auction withdraws in the global state.
 Format: 32-byte length with prefix 'withdraw-'.</p>
 </section>
-    <h3 id="enums">Enums
-  </h3>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.WithdrawPurse.html">WithdrawPurse</a></h4>
+      <section><p>Information of a delegation withdrawal (legacy structure)</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.WriteContractLegacyTransformKind.html">WriteContractLegacyTransformKind</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.WriteContractPackageLegacyTransformKind.html">WriteContractPackageLegacyTransformKind</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.WriteContractWasmLegacyTransformKind.html">WriteContractWasmLegacyTransformKind</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.WriteTransformKind.html">WriteTransformKind</a></h4>
+      <section><p>Writes a new value (StoredValue) in the global state.</p>
+</section>
+    <h3 id="interfaces">
+Interfaces
+</h3>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.IBlockIdentifier.html">IBlockIdentifier</a></h4>
+      <section><p>A block identified by its hash or its height.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.IEntityIdentifier.html">IEntityIdentifier</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.IInvocationTarget.html">IInvocationTarget</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.IPackageIdentifier.html">IPackageIdentifier</a></h4>
+      <section><p>Identifier of a package by its contract package hash or its addressable entity package address.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.IPricingMode.html">IPricingMode</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.IPurseIdentifier.html">IPurseIdentifier</a></h4>
+      <section><p>A PublicKey, AccountHashKey, AddressableEntityKey or URef object that identifies a purse.
+For keys, the main purse under the key is identified automatically.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ITransactionV1EntryPoint.html">ITransactionV1EntryPoint</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ITransactionV1Scheduling.html">ITransactionV1Scheduling</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ITransactionV1Target.html">ITransactionV1Target</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.Transaction.ITransactionInvocation.html">Transaction.ITransactionInvocation</a></h4>
+      <section></section>
+    <h3 id="enums">
+Enums
+</h3>
       <h4><a class="xref" href="Casper.Network.SDK.Types.AccessRights.html">AccessRights</a></h4>
       <section><p>Access Rights associated with an URef address.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BalanceHoldTag.html">BalanceHoldTag</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BidAddrTag.html">BidAddrTag</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.BlockGlobalAddrTag.html">BlockGlobalAddrTag</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.ByteCodeKind.html">ByteCodeKind</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.CLType.html">CLType</a></h4>
       <section><p>Casper types, i.e. types which can be stored and manipulated by smart contracts.
 Provides a description of the underlying data type of a <code>CLValue</code>.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntityKindEnum.html">EntityKindEnum</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.EntryPointPayment.html">EntryPointPayment</a></h4>
+      <section><p>Defines who pays for the execution of the entry point.</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.EntryPointType.html">EntryPointType</a></h4>
       <section><p>Defines whether the code runs in the contract's or the session context.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.InvocationTargetTag.html">InvocationTargetTag</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.KeyAlgo.html">KeyAlgo</a></h4>
       <section><p>Enumeration of the different key algorithms supported</p>
 </section>
@@ -400,21 +733,42 @@ Provides a description of the underlying data type of a <code>CLValue</code>.</p
       <h4><a class="xref" href="Casper.Network.SDK.Types.LockStatus.html">LockStatus</a></h4>
       <section><p>A enum to determine the lock status of the contract package.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.NativeEntryPoint.html">NativeEntryPoint</a></h4>
+      <section><p>Collection of entry points available for native calls to the system contracts.</p>
+</section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.OpKind.html">OpKind</a></h4>
       <section><p>The type of operation performed while executing a deploy.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PackageStatus.html">PackageStatus</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.PricingModeType.html">PricingModeType</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ReactorState.html">ReactorState</a></h4>
       <section><p>The state of the reactor.</p>
 </section>
-      <h4><a class="xref" href="Casper.Network.SDK.Types.TransformType.html">TransformType</a></h4>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.SystemEntityType.html">SystemEntityType</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionCategory.html">TransactionCategory</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionTargetType.html">TransactionTargetType</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionV1SchedulingType.html">TransactionV1SchedulingType</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransactionVersion.html">TransactionVersion</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransformKindV1.html">TransformKindV1</a></h4>
       <section><p>Enumeration of transformation types used in the execution of a deploy.</p>
 </section>
+      <h4><a class="xref" href="Casper.Network.SDK.Types.TransformKindV2.html">TransformKindV2</a></h4>
+      <section></section>
       <h4><a class="xref" href="Casper.Network.SDK.Types.ValidatorChange.html">ValidatorChange</a></h4>
       <section><p>A change to a validator's status between two eras.</p>
 </section>
+
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
@@ -422,14 +776,14 @@ Provides a description of the underlying data type of a <code>CLValue</code>.</p
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -437,14 +791,14 @@ Provides a description of the underlying data type of a <code>CLValue</code>.</p
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Maintained by MAKE Technology LLC
-            
+      Maintained by MAKE Technology LLC
+      
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
     <script type="text/javascript" src="../styles/main.js"></script>
   </body>

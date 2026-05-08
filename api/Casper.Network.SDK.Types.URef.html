@@ -1,17 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class URef
-   | C#/.Net SDK for the Casper Network </title>
+    <title>Class URef | C#/.Net SDK for the Casper Network </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class URef
-   | C#/.Net SDK for the Casper Network ">
-    <meta name="generator" content="docfx 2.58.9.0">
-    
+    <meta name="title" content="Class URef | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -19,13 +17,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    
-    
+  
+  
+  
   </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -37,7 +35,7 @@
               </button>
               <a class="navbar-brand" href="../index.html">
                 Casper.Network.SDK
-              </a>    </div>
+              </a>            </div>
             <div class="collapse navbar-collapse" id="navbar">
               <form class="navbar-form navbar-right" role="search" id="search">
                 <div class="form-group">
@@ -47,7 +45,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -57,7 +55,7 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -67,10 +65,10 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.Types.URef">
-  
-  
-  <h1 id="Casper_Network_SDK_Types_URef" data-uid="Casper.Network.SDK.Types.URef" class="text-break">Class URef
-  </h1>
+
+
+
+  <h1 id="Casper_Network_SDK_Types_URef" data-uid="Casper.Network.SDK.Types.URef" class="text-break">Class URef</h1>
   <div class="markdown level0 summary"><p>Unforgeable Reference. This key type is used for storing any type of value
 except Account. Additionally, URefs used in contracts carry permission information
 to prevent unauthorized usage of the value stored under the key.</p>
@@ -78,9 +76,13 @@ to prevent unauthorized usage of the value stored under the key.</p>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html">GlobalStateKey</a></div>
     <div class="level2"><span class="xref">URef</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Casper.Network.SDK.Types.IPurseIdentifier.html">IPurseIdentifier</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -97,33 +99,56 @@ to prevent unauthorized usage of the value stored under the key.</p>
       <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_ToHexString">GlobalStateKey.ToHexString()</a>
     </div>
     <div>
-      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_FromString_System_String_">GlobalStateKey.FromString(String)</a>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_FromString_System_String_">GlobalStateKey.FromString(string)</a>
     </div>
     <div>
-      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_FromBytes_System_Byte___">GlobalStateKey.FromBytes(Byte[])</a>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_FromBytes_System_Byte___">GlobalStateKey.FromBytes(byte[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_Equals_System_Object_">GlobalStateKey.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_GetHashCode">GlobalStateKey.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.Network.SDK.Types.html">Casper.Network.SDK.Types</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.html">Casper</a>.<a class="xref" href="Casper.Network.html">Network</a>.<a class="xref" href="Casper.Network.SDK.html">SDK</a>.<a class="xref" href="Casper.Network.SDK.Types.html">Types</a></h6>
   <h6><strong>Assembly</strong>: Casper.Network.SDK.dll</h6>
   <h5 id="Casper_Network_SDK_Types_URef_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class URef : GlobalStateKey</code></pre>
+    <pre><code class="lang-csharp hljs">public class URef : GlobalStateKey, IPurseIdentifier</code></pre>
   </div>
   <h3 id="constructors">Constructors
-  </h3>
-  
-  
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef__ctor_System_Byte___.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.%23ctor(System.Byte%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L44">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_URef__ctor_" data-uid="Casper.Network.SDK.Types.URef.#ctor*"></a>
-  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_Byte___" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.Byte[])">URef(Byte[])</h4>
+  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_Byte___" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.Byte[])">URef(byte[])</h4>
   <div class="markdown level1 summary"><p>Creates an URef from a 33 bytes array. Last byte corresponds to the access rights.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public URef(byte[] bytes)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -133,25 +158,30 @@ to prevent unauthorized usage of the value stored under the key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">bytes</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef__ctor_System_Byte___Casper_Network_SDK_Types_AccessRights_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.%23ctor(System.Byte%5B%5D%2CCasper.Network.SDK.Types.AccessRights)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L52">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_URef__ctor_" data-uid="Casper.Network.SDK.Types.URef.#ctor*"></a>
-  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_Byte___Casper_Network_SDK_Types_AccessRights_" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.Byte[],Casper.Network.SDK.Types.AccessRights)">URef(Byte[], AccessRights)</h4>
+  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_Byte___Casper_Network_SDK_Types_AccessRights_" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.Byte[],Casper.Network.SDK.Types.AccessRights)">URef(byte[], AccessRights)</h4>
   <div class="markdown level1 summary"><p>Creates an URef from a 32 bytes array and the access rights.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public URef(byte[] rawBytes, AccessRights accessRights)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -161,7 +191,7 @@ to prevent unauthorized usage of the value stored under the key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td><span class="parametername">rawBytes</span></td>
         <td></td>
       </tr>
@@ -172,18 +202,23 @@ to prevent unauthorized usage of the value stored under the key.</p>
       </tr>
     </tbody>
   </table>
-  
-  
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef__ctor_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.%23ctor(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L20">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_URef__ctor_" data-uid="Casper.Network.SDK.Types.URef.#ctor*"></a>
-  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_String_" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.String)">URef(String)</h4>
+  <h4 id="Casper_Network_SDK_Types_URef__ctor_System_String_" data-uid="Casper.Network.SDK.Types.URef.#ctor(System.String)">URef(string)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public URef(string value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -193,25 +228,30 @@ to prevent unauthorized usage of the value stored under the key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">value</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="fields">Fields
-  </h3>
-  
-  
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef_KEYPREFIX.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.KEYPREFIX%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L16">View Source</a>
+  </span>
   <h4 id="Casper_Network_SDK_Types_URef_KEYPREFIX" data-uid="Casper.Network.SDK.Types.URef.KEYPREFIX">KEYPREFIX</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static string KEYPREFIX</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -220,25 +260,30 @@ to prevent unauthorized usage of the value stored under the key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
-  </h3>
-  
-  
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef_AccessRights.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.AccessRights%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L18">View Source</a>
+  </span>
   <a id="Casper_Network_SDK_Types_URef_AccessRights_" data-uid="Casper.Network.SDK.Types.URef.AccessRights*"></a>
   <h4 id="Casper_Network_SDK_Types_URef_AccessRights" data-uid="Casper.Network.SDK.Types.URef.AccessRights">AccessRights</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public AccessRights AccessRights { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -253,19 +298,120 @@ to prevent unauthorized usage of the value stored under the key.</p>
     </tbody>
   </table>
   <h3 id="methods">Methods
-  </h3>
-  
-  
-  <a id="Casper_Network_SDK_Types_URef__GetRawBytesFromKey_" data-uid="Casper.Network.SDK.Types.URef._GetRawBytesFromKey*"></a>
-  <h4 id="Casper_Network_SDK_Types_URef__GetRawBytesFromKey_System_String_" data-uid="Casper.Network.SDK.Types.URef._GetRawBytesFromKey(System.String)">_GetRawBytesFromKey(String)</h4>
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef_GetBytes.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.GetBytes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L63">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_URef_GetBytes_" data-uid="Casper.Network.SDK.Types.URef.GetBytes*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef_GetBytes" data-uid="Casper.Network.SDK.Types.URef.GetBytes">GetBytes()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override byte[] GetBytes()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_GetBytes">GlobalStateKey.GetBytes()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef_GetPurseIdentifier.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.GetPurseIdentifier%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L81">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_URef_GetPurseIdentifier_" data-uid="Casper.Network.SDK.Types.URef.GetPurseIdentifier*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef_GetPurseIdentifier" data-uid="Casper.Network.SDK.Types.URef.GetPurseIdentifier">GetPurseIdentifier()</h4>
+  <div class="markdown level1 summary"><p>Returns a PurseIdentifier object as defined in the RPC schema for an URef key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, object&gt; GetPurseIdentifier()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef_ToString.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef.ToString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L73">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_URef_ToString_" data-uid="Casper.Network.SDK.Types.URef.ToString*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef_ToString" data-uid="Casper.Network.SDK.Types.URef.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Converts a key object to a string with the right prefix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_ToString">GlobalStateKey.ToString()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef__GetRawBytesFromKey_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef._GetRawBytesFromKey(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L57">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_URef__GetRawBytesFromKey_" data-uid="Casper.Network.SDK.Types.URef._GetRawBytesFromKey*"></a>
+  <h4 id="Casper_Network_SDK_Types_URef__GetRawBytesFromKey_System_String_" data-uid="Casper.Network.SDK.Types.URef._GetRawBytesFromKey(System.String)">_GetRawBytesFromKey(string)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected override byte[] _GetRawBytesFromKey(string key)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -275,14 +421,14 @@ to prevent unauthorized usage of the value stored under the key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">key</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Type</th>
@@ -291,85 +437,42 @@ to prevent unauthorized usage of the value stored under the key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey__GetRawBytesFromKey_System_String_">GlobalStateKey._GetRawBytesFromKey(String)</a></div>
-  
-  
-  <a id="Casper_Network_SDK_Types_URef_GetBytes_" data-uid="Casper.Network.SDK.Types.URef.GetBytes*"></a>
-  <h4 id="Casper_Network_SDK_Types_URef_GetBytes" data-uid="Casper.Network.SDK.Types.URef.GetBytes">GetBytes()</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override byte[] GetBytes()</code></pre>
+  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey__GetRawBytesFromKey_System_String_">GlobalStateKey._GetRawBytesFromKey(string)</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Casper.Network.SDK.Types.IPurseIdentifier.html">IPurseIdentifier</a>
   </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Byte</span>[]</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_GetBytes">GlobalStateKey.GetBytes()</a></div>
-  
-  
-  <a id="Casper_Network_SDK_Types_URef_ToString_" data-uid="Casper.Network.SDK.Types.URef.ToString*"></a>
-  <h4 id="Casper_Network_SDK_Types_URef_ToString" data-uid="Casper.Network.SDK.Types.URef.ToString">ToString()</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Casper.Network.SDK.Types.GlobalStateKey.html#Casper_Network_SDK_Types_GlobalStateKey_ToString">GlobalStateKey.ToString()</a></div>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/new/docfx-update/apiSpec/new?filename=Casper_Network_SDK_Types_URef.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.URef%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Casper.Network.SDK/Types/URef.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -377,14 +480,14 @@ to prevent unauthorized usage of the value stored under the key.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Maintained by MAKE Technology LLC
-            
+      Maintained by MAKE Technology LLC
+      
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
     <script type="text/javascript" src="../styles/main.js"></script>
   </body>

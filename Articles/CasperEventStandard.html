@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Casper Event Standard (CES) | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Casper Event Standard (CES) | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="casper-event-standard-ces">Casper Event Standard (CES)</h1>
+
+<p>The <strong>Casper Event Standard (CES)</strong> is a convention adopted by contract developers for emitting and consuming typed events from Casper smart contracts. Contracts that follow CES store a self-describing schema alongside their events, making it possible to decode any event without out-of-band knowledge of its structure.</p>
+<p>The Casper .NET SDK provides the <code>Casper.Network.SDK.CES</code> namespace with three classes: <code>CESContractSchema</code> (schema loading and parsing), <code>CESEvent</code> (event parsing and field access), and <code>CESParser</code> (scanning execution results).</p>
+<hr>
+<h2 id="how-ces-works">How CES Works</h2>
+<p>A CES-compliant contract uses two special named keys for events:</p>
+<table>
+<thead>
+<tr>
+<th>Named key</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__events_schema</code></td>
+<td>Binary-encoded schema listing every event type and its fields</td>
+</tr>
+<tr>
+<td><code>__events</code></td>
+<td>Ordered map of event index → raw event bytes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="schema-__events_schema">Schema (<code>__events_schema</code>)</h3>
+<p>The schema describes every event the contract can emit. It is stored as a CLValue of type <code>Any</code>, whose raw bytes encode a sequence of event descriptors:</p>
+<pre><code>u32 LE              — number of events
+for each event:
+  String            — event name (4-byte LE length + UTF-8 bytes)
+  u32 LE            — number of fields
+  for each field:
+    String          — field name
+    CLType bytes    — Casper binary type encoding (tag byte + optional inner types)
+</code></pre>
+<p>The <code>String</code> encoding used here is the standard Casper string encoding: a <code>u32</code> length followed by the UTF-8 content (no null terminator).</p>
+<h3 id="events-__events">Events (<code>__events</code>)</h3>
+<p>Each entry in the <code>__events</code> map is a <code>Bytes</code> (<code>Vec&lt;u8&gt;</code>) value. The raw bytes of one event entry are laid out as follows:</p>
+<pre><code>u32 LE              — Vec&lt;u8&gt; outer length (= remaining bytes; auto-detected and skipped)
+String              — event name, prefixed with &quot;event_&quot; (e.g. &quot;event_Mint&quot;)
+for each field (in schema order):
+  raw field bytes   — native Casper serialization, no CLValue wrapper
+</code></pre>
+<p>The <code>&quot;event_&quot;</code> prefix is stripped automatically when parsing the event raw bytes.</p>
+<hr>
+<h2 id="loading-a-contract-schema-from-the-network">Loading a Contract Schema from the Network</h2>
+<p>The simplest way to load a contract's schema is <code>CESContractSchema.LoadAsync</code>. It accepts either a <strong>contract-package hash</strong> or a direct <strong>contract hash</strong>, reads the named keys to locate <code>__events_schema</code> and <code>__events</code>, and fetches and parses the schema — all in a single call.</p>
+<h3 id="using-a-contract-package-hash">Using a contract-package hash</h3>
+<p>When you pass a contract-package hash, the method resolves the latest active contract version automatically. You can also request a specific version with the optional <code>version</code> parameter.</p>
+<pre><code class="lang-csharp">using Casper.Network.SDK.CES;
+
+var client = new NetCasperClient(&quot;https://rpc.testnet.casperlabs.io/rpc&quot;);
+
+// Load the schema for the latest active version of the contract package
+CESContractSchema schema = await CESContractSchema.LoadAsync(
+    client,
+    &quot;hash-17cb23ce7b6d663fc82bacbdd56a26dc722cabe7e69c84a3ca729bf3cb7fdc70&quot;);
+</code></pre>
+<h3 id="using-a-contract-hash-directly">Using a contract hash directly</h3>
+<p>If you already know the contract hash, you can pass it directly and the package-resolution step is skipped entirely. Use <code>&quot;contract-&quot;</code> prefix instead of <code>&quot;hash-&quot;</code> for a contract hash argument.The <code>version</code> parameter is ignored in this case.</p>
+<pre><code class="lang-csharp">CESContractSchema schema = await CESContractSchema.LoadAsync(
+    client,
+    &quot;contract-dead1234dead1234dead1234dead1234dead1234dead1234dead1234dead1234beef&quot;);
+</code></pre>
+<p>The returned <code>CESContractSchema</code> is fully annotated:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Events</code></td>
+<td>Dictionary of event name → <code>CESEventSchema</code></td>
+</tr>
+<tr>
+<td><code>ContractHash</code></td>
+<td>Hash of the resolved (or supplied) contract version</td>
+</tr>
+<tr>
+<td><code>ContractPackageHash</code></td>
+<td>Package hash passed in. May be <code>null</code> when a direct contract hash was supplied.</td>
+</tr>
+<tr>
+<td><code>SchemaURef</code></td>
+<td>URef of the <code>__events_schema</code> named key</td>
+</tr>
+<tr>
+<td><code>EventsURef</code></td>
+<td>URef of the <code>__events</code> named key (used when scanning transforms)</td>
+</tr>
+</tbody>
+</table>
+<p>Both legacy (Casper 1.x) and Casper 2.x contract models are supported automatically.</p>
+<h3 id="parsing-a-schema-from-raw-bytes">Parsing a Schema from Raw Bytes</h3>
+<p>If you have already fetched the <code>__events_schema</code> CLValue from the network, you can parse it directly:</p>
+<pre><code class="lang-csharp">byte[] schemaBytes = /* raw bytes from __events_schema CLValue */;
+CESContractSchema schema = CESContractSchema.ParseSchema(schemaBytes);
+
+// Inspect the event types the contract supports
+foreach (var kvp in schema.Events)
+{
+    Console.WriteLine($&quot;Event: {kvp.Key}&quot;);
+    foreach (var field in kvp.Value.Fields)
+        Console.WriteLine($&quot;  {field.Name}: {field.CLTypeInfo.Type}&quot;);
+}
+</code></pre>
+<p>Note that a schema created via <code>ParseSchema</code> directly has <code>SchemaURef</code> and <code>EventsURef</code> set to <code>null</code>. Use <code>LoadAsync</code> when you need these URefs.</p>
+<hr>
+<h2 id="parsing-a-single-event">Parsing a Single Event</h2>
+<p>To decode one event payload, pass the raw event bytes together with a schema to <code>CESEvent.ParseEvent</code>:</p>
+<pre><code class="lang-csharp">byte[] eventBytes = /* raw bytes of one entry from __events map */;
+CESEvent evt = CESEvent.ParseEvent(eventBytes, schema);
+
+Console.WriteLine(evt.Name); // e.g. &quot;event_Mint&quot;
+
+// Access field values directly by name — returns CLValue, or null if not found
+CLValue recipient = evt[&quot;recipient&quot;];
+Console.WriteLine(recipient.ToGlobalStateKey()); // hash-1262d06e...
+
+CLValue amount = evt[&quot;amount&quot;];
+Console.WriteLine(amount.ToBigInteger()); // 1000000000000000000
+</code></pre>
+<p>The indexer <code>evt[&quot;fieldName&quot;]</code> returns the <code>CLValue</code> of that field, or <code>null</code> if the field name is not found. The full list of fields is also available as <code>IReadOnlyList&lt;NamedArg&gt;</code> through <code>evt.Fields</code>, which preserves both name and value.</p>
+<h3 id="looking-up-an-event-schema">Looking Up an Event Schema</h3>
+<pre><code class="lang-csharp">if (schema.TryGetEventSchema(&quot;Mint&quot;, out CESEventSchema mintSchema))
+{
+    Console.WriteLine($&quot;Mint has {mintSchema.Fields.Count} fields.&quot;);
+}
+</code></pre>
+<hr>
+<h2 id="scanning-execution-results-with-getevents">Scanning Execution Results with <code>GetEvents</code></h2>
+<p><code>CESParser.GetEvents</code> scans the transform list of an execution result and returns all CES events emitted by any of the watched contracts:</p>
+<pre><code class="lang-csharp">var events = CESParser.GetEvents(
+    executionResult.Effect,
+    new List&lt;CESContractSchema&gt; { schema1, schema2 });
+</code></pre>
+<p>For each transform the method:</p>
+<ol>
+<li>Skips transforms whose key is not a <code>DictionaryKey</code>.</li>
+<li>Skips transforms whose kind is not a <code>WriteTransformKind</code>.</li>
+<li>Tries to parse the CLValue as a <code>CLValueDictionary</code>; skips on failure.</li>
+<li>Matches the dictionary seed against each schema's <code>EventsURef</code> (access rights are ignored; only the 32-byte hash is compared).</li>
+<li>Parses the matching event payload using the schema.</li>
+<li>Silently skips events whose name is not present in the schema (graceful version mismatch handling).</li>
+</ol>
+<p>Each schema in the list must have <code>EventsURef</code> set (schemas loaded via <code>LoadAsync</code> always have it). Schemas with a <code>null</code> <code>EventsURef</code> are silently skipped.</p>
+<p>The returned <code>CESEvent</code> objects include execution-result context:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Raw event name as stored in bytes (e.g. <code>&quot;event_Transfer&quot;</code>)</td>
+</tr>
+<tr>
+<td><code>Fields</code></td>
+<td>Ordered list of <code>NamedArg</code> field values</td>
+</tr>
+<tr>
+<td><code>ContractHash</code></td>
+<td>Propagated from the matched schema</td>
+</tr>
+<tr>
+<td><code>ContractPackageHash</code></td>
+<td>Propagated from the matched schema</td>
+</tr>
+<tr>
+<td><code>TransformKey</code></td>
+<td><code>GlobalStateKey</code> of the transform that emitted the event</td>
+</tr>
+<tr>
+<td><code>TransformId</code></td>
+<td>Zero-based index in the effect list</td>
+</tr>
+<tr>
+<td><code>EventId</code></td>
+<td>Sequential event counter key from <code>__events</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="data-model">Data Model</h2>
+<pre><code>CESContractSchema
+  ├── ContractHash: string
+  ├── ContractPackageHash: string
+  ├── SchemaURef: URef
+  ├── EventsURef: URef
+  └── Events: Dictionary&lt;string, CESEventSchema&gt;
+        └── CESEventSchema
+              ├── EventName: string
+              └── Fields: IReadOnlyList&lt;CESEventSchemaField&gt;
+                    ├── Name: string
+                    └── CLTypeInfo: CLTypeInfo
+
+CESEvent
+  ├── Name: string                    (raw name, e.g. &quot;event_Transfer&quot;)
+  ├── Fields: IReadOnlyList&lt;NamedArg&gt;
+  ├── ContractHash: string
+  ├── ContractPackageHash: string
+  ├── TransformKey: GlobalStateKey
+  ├── TransformId: int
+  └── EventId: string
+</code></pre>
+<hr>
+<h2 id="real-world-example--watching-multiple-contracts">Real-World Example — Watching Multiple Contracts</h2>
+<p>The following example loads schemas for two contracts, fetches a transaction, and prints the events emitted:</p>
+<pre><code class="lang-csharp">using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using Casper.Network.SDK;
+using Casper.Network.SDK.CES;
+
+var client = new NetCasperClient(&quot;https://node.testnet.casper.network/rpc&quot;);
+
+// Load the schema for each contract to watch
+var minterSchema = await CESContractSchema.LoadAsync(
+    client,
+    &quot;hash-1262d06e53125ea098187fb4d1d5b10a7afed48e5e5eef182ed992fc5b100349&quot;);
+
+var cep18Schema = await CESContractSchema.LoadAsync(
+    client,
+    &quot;hash-17cb23ce7b6d663fc82bacbdd56a26dc722cabe7e69c84a3ca729bf3cb7fdc70&quot;);
+
+// Fetch a transaction and extract its execution result transforms
+var getTxResult = await client.GetTransaction(
+    &quot;8e46a16fc8fc15c38405e092959fb20acc44dcfca1d1caecb9bc59d018f50df6&quot;);
+var txResult = getTxResult.Parse();
+
+// Scan for CES events emitted by either watched contract
+var events = CESParser.GetEvents(
+    txResult.ExecutionInfo.ExecutionResult.Effect,
+    new List&lt;CESContractSchema&gt; { minterSchema, cep18Schema });
+
+// Work with a specific event
+var buyEvent = events.FirstOrDefault(e =&gt; e.Name == &quot;Buy&quot;);
+if (buyEvent != null)
+{
+    Console.WriteLine(&quot;Buy token: &quot; + buyEvent[&quot;token&quot;].ToGlobalStateKey());
+    Console.WriteLine(&quot;Buy amount: &quot; + buyEvent[&quot;amount_token_out&quot;].ToBigInteger());
+}
+
+// Serialize all events to JSON
+var json = JsonSerializer.Serialize(events);
+Console.WriteLine(json);
+</code></pre>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Articles/CasperEventStandard.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      Maintained by MAKE Technology LLC
+      
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

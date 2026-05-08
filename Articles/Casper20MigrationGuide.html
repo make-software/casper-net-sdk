@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Migration from Casper .NET SDK v2.x to v3.0 | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Migration from Casper .NET SDK v2.x to v3.0 | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="migration-from-casper-net-sdk-v2x-to-v30">Migration from Casper .NET SDK v2.x to v3.0</h1>
+
+<p>To migrate your application from Casper .NET SDK v2.x to Casper .NET SDK v3.0, you’ll need to make several changes to your code. The good news is that version 3 of this SDK keeps compatibility with Casper v1.5.6 nodes; therefore, once you update your application, it will work before and after the Casper 2.0 upgrade.</p>
+<p>This guide outlines the changes necessary for your application. However, it's worth noting that it doesn't replace other documents introducing the new concepts in Casper 2.0 or migration guides. We strongly advise the reader to understand these new concepts first, as they will significantly aid in grasping the changes.</p>
+<h2 id="blocks">Blocks</h2>
+<p>With Casper 2.0, produced blocks are stored in a new format that extends the information contained compared to old blocks. Blocks produced before the upgrade keep their original format. Thus, the SDK implements <code>BlockV1</code> and <code>BlockV2</code> classes to handle old and new block formats, respectively.</p>
+<p>To facilitate handling different versions, the SDK also implements the type <code>Block</code>, which can represent either a V1 or V2 type in the network. This is the type obtained by default in the RPC queries and the SSE channel and contains all the data you may want to query:</p>
+<pre><code class="lang-csharp">public class Block
+{
+        public int Version { get; init; }
+        public string Hash { get; init; }
+        public string AccumulatedSeed { get; init; }
+        public ulong EraId { get; init; }
+        public ulong Height { get; init; }
+        public string ParentHash { get; init; }
+        public string ProtocolVersion { get; init; }
+        public bool RandomBit { get; init; }
+        public string StateRootHash { get; init; }
+        public string Timestamp { get; init; }
+        public EraEnd EraEnd { get; init; }
+        public UInt16 CurrentGasPrice { get; init; }
+        public Proposer Proposer { get; init; }
+        public string LastSwitchBlockHash { get; init; }
+        public List&lt;BlockTransaction&gt; Transactions { get; init; }
+        public List&lt;List&lt;UInt16&gt;&gt; RewardedSignatures { get; init; }
+}
+</code></pre>
+<p>Note that <code>Block</code> does not have a header or body parts.</p>
+<p>Also, some properties may have a <code>null</code> value if they’re not part of the versioned block version. For example, <code>LastSwitchBlockHash</code> is present only for V2 blocks and <code>null</code> for V1 blocks.</p>
+<h3 id="recovering-the-versioned-block-object">Recovering the versioned block object</h3>
+<p>If, for any reason, you need to work with the original format of the block, you can cast a Block into BlockV1 or BlockV2. For example:</p>
+<pre><code class="lang-csharp">if (block.Version == 2) {
+    var blockv2 = (BlockV2)block;
+    // ...
+} else if (block.Version == 1) {
+    var blockv1 = (BlockV1)block;
+    // ...
+}    
+</code></pre>
+<h3 id="eraend">EraEnd</h3>
+<p>EraEnd structure also differs for switch blocks produced before and after Casper 2.0. In most cases, you can just use the EraEnd object from the common Block class. But again, if necessary, you can recover an EraEndV1 object from a version 1 block instance:</p>
+<pre><code class="lang-csharp">if (block.Version == 1) {
+    var blockv1 = (BlockV1)block;
+    var eraEnd = blockv1.Header.EraEnd;
+    // ...
+}    
+</code></pre>
+<h3 id="transactions-included-in-a-block">Transactions included in a block</h3>
+<p>Blocks produced on Casper v1.x contain a list of deploys that differentiate between native transfers and all other types of deploys. On Casper 2.0, transactions (this includes legacy deploys too) the payment amount determines the processing lane to which the transaction is sent. The chainspec of the network determines the properties of each lane:</p>
+<ol>
+<li>Maximum transaction size in bytes for a given transaction in a certain lane.</li>
+<li>Maximum args length size in bytes for a given transaction in a certain lane.</li>
+<li>Transaction gas limit size in motes for a given transaction in a certain lane.</li>
+<li>The maximum number of transactions the lane can contain for one block.</li>
+</ol>
+<p>The categories (i.e., lanes) defined so far are:</p>
+<ol>
+<li>Mint (native CSPR transfers) transactions</li>
+<li>Auction (native interaction with the Auction contract) transactions</li>
+<li>Install/Upgrade transactions</li>
+<li>Large transactions</li>
+<li>Medium transactions</li>
+<li>Small transactions</li>
+</ol>
+<p>A <code>Block</code> contains a list of transactions:</p>
+<pre><code class="lang-csharp">public List&lt;BlockTransaction&gt; Transactions { get; init; }
+</code></pre>
+<p>The category, version (either a legacy Deploy or the new TransactionV1 type), and the hash are provided for each transaction.</p>
+<p><code>Deploy</code>s in V1 blocks are categorized as <code>Mint</code> for native transfer deploys and <code>Large</code> for all the rest. The same applies to legacy deploys sent to a Casper v2.x node.</p>
+<h3 id="block-height-type">Block height type</h3>
+<p>The type to represent block height is now <code>ulong</code> everywhere. <code>int</code> was used in some methods or types in the previous
+version. That's not the case with Casper .NET SDK v3.</p>
+<h2 id="transfers">Transfers</h2>
+<p>The <code>Transfer</code> class contained in the response for a <code>GetBlockTransfers()</code> call or in a <code>ExecutionResult</code> object is also a versioned object. It contains all the information related to the transfer.</p>
+<p>If you need to recover the original format, cast an instance to a <code>TransferV1</code> or <code>TransferV2</code> object:</p>
+<pre><code class="lang-csharp">var response = await rpcClient.GetBlockTransfers();
+var result = response.Parse();
+foreach(var transfer in result.Transfers)
+{
+    if (transfer.Version == 1) {
+        var transferv1 = (TransferV1)transfer;
+        // ...
+    }
+}
+</code></pre>
+<h3 id="getdeploy">GetDeploy()</h3>
+<p>Response from the <code>GetDeploy()</code> method has changed. Instead of a list of <code>ExecutionResult</code> objects, it now returns an instance of <code>ExecutionInfo</code> for a processed deploy. This instance contains block information and a results object.</p>
+<h3 id="payments-and-costs">Payments and costs</h3>
+<p>For a transaction (old and new versions) processed in Casper 2.0, the execution results object contains three properties related to the gas consumed and the CSPR tokens paid:</p>
+<ul>
+<li><code>limit</code>: The maximum allowed gas limit for the transaction.</li>
+<li><code>consumed</code>: Gas consumed executing the transaction.</li>
+<li><code>cost</code>: CSPR paid/held for the transaction.</li>
+</ul>
+<p>In the NoFee model, the user does not specify any amount for payment. Instead, he must use the Fixed pricing mode with a gas price tolerance. The network chainspec defines the gas limit for each transaction category (see the ‘Transactions included in a block’ section above). Then, the network determines a gas price for each era based on the previous era's load. This price works as a multiplier for the consumed gas and relates to the gas price tolerance specified in the transaction. The transaction won't be processed if the tolerance is lower than the gas price. The gas consumed in a transaction must always be lower than the limit, or it will fail with an out-of-gas error. Finally, the cost in the no-fee model is the limit multiplied by the gas price.</p>
+<h3 id="execution-results">Execution results</h3>
+<p>The <code>ExecutionResult</code> class is a versioned object. Deploys processed before the Casper 2.0 upgrade are stored in the global state as <code>ExecutionResultV1</code>records, and deploys and transactions processed after the Casper 2.0 upgrade are stored as <code>ExecutionResultV2</code> records.</p>
+<p>For a processed transaction, the <code>GetTransaction</code> method always returns an <code>ExecutionResult</code> instance regardless of the version. It has the same fields as <code>ExecutionResultV2</code>. You can obtain the original structure by casting this instance to the correct version:</p>
+<pre><code class="lang-csharp">if (executionResult.Version == 2) {
+    var executionResultV2 = (ExecutionResultV2)executionResult;
+    // ...
+} else if (executionResult.Version == 1) {
+    var executionResultV1 = (ExecutionResultV1)executionResult;
+    // ...
+}   
+</code></pre>
+<p>The Effect property contains a list of Transforms that modify the global state due to the transaction execution. Note that the ExecutionEffect type in Casper v1.x, which also contained a list of operations in addition to the transforms, has been removed in Casper 2.0 execution results.</p>
+<h2 id="auction-contract">Auction contract</h2>
+<p>The auction contract has also changed in Casper 2.0. If your application tracks validator bids, rewards, and delegators, you must rework how network responses are parsed and interpreted. A complete description of the changes cannot be covered in this guide.</p>
+<h2 id="server-sent-events">Server Sent Events</h2>
+<p>The ServerEventsClient class listens to an event stream from a v1.x node and from v2.x. By default, the client class expects a 2.x network. To listen to a 1.x network change the <code>nodeVersion</code> property to <code>1</code>.</p>
+<h3 id="blocks-1">Blocks</h3>
+<p>The BlockedAdded event contains a Block object. The original block structure, BlockV1 or BlockV2, can be obtained with the cast operator, as described above.</p>
+<h3 id="transactions">Transactions</h3>
+<p>On Casper 2.0, the <code>DeployAccepted</code>, <code>DeployProcessed</code>, and <code>DeployExpired</code> events are replaced with the equivalent <code>TransactionAccepted</code>, <code>TransactionProcessed</code>, and <code>TransactionExpired</code> events. These are emitted for both <code>Deploy</code> and <code>TransactionV1</code> types of transactions.</p>
+<p>A <code>TransactionAccepted</code> event contains a <code>Transaction</code> property with either a <code>Deploy</code> or a <code>TransactionV1</code>. <code>TransactionProcessed</code> and <code>TransactionExpired</code> events contain a <code>TransactionHash</code> property with either a deploy hash or a transaction version 1 hash.</p>
+<h3 id="finality-signatures">Finality signatures</h3>
+<p>The <code>FinalitySignature</code> event contains an instance of the versioned <code>FinalitySignature</code> class. Version 2 of this type is an extension that contains all properties in version 1 plus the block height and the chain name hash.</p>
+<p>The user can obtain the original structure by casting this instance to the appropriate version:</p>
+<pre><code class="lang-csharp">if (finalitySignature.Version == 2) {
+    var finalitySignatureV2 = (FinalitySignatureV2)finalitySignature;
+    // ...
+} else if (finalitySignature.Version == 1) {
+    var finalitySignatureV1 = (FinalitySignatureV1)finalitySignature;
+    // ...
+}   
+</code></pre>
+<h3 id="auction-info">Auction info</h3>
+<p>The response from <code>GetAuctionInfo()</code> has changed. In v2.x, it returned a list of validators, each containing a list of delegators assigned to them. In v3.0, the SDK now returns a flat list that includes all validators and delegators, along with additional bid entries such as Reservation and Unbond.</p>
+<h2 id="other-changes">Other changes</h2>
+<h3 id="last-switch-block-hash">Last switch block hash</h3>
+<p>For a Casper 2.0 network, the <code>GetNodeStatus</code> method can be used to get the latest switch block hash. The response contains the <code>LatestSwitchBlockHash</code> property with this value.</p>
+<p>Also, for blocks produced in Casper 2.0, the <code>Block</code> instance contains the previous switch block hash in the <code>LastSwitchBlockHash</code> property.</p>
+<h3 id="checksums-cep-57">Checksums (CEP-57)</h3>
+<p>On SDK v3 only public keys are checksummed with the CEP-57 standard. The rest of the keys and hashes are not checksummed anymore.</p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Articles/Casper20MigrationGuide.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      Maintained by MAKE Technology LLC
+      
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

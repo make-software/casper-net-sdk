@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Casper.Network.SDK.CES | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Casper.Network.SDK.CES | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Casper.Network.SDK.CES">
+
+  <h1 id="Casper_Network_SDK_CES" data-uid="Casper.Network.SDK.CES" class="text-break">Namespace Casper.Network.SDK.CES</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">
+Classes
+</h3>
+      <h4><a class="xref" href="Casper.Network.SDK.CES.CESContractSchema.html">CESContractSchema</a></h4>
+      <section><p>Full schema for a CES-compliant contract, parsed from the <code>__events_schema</code> named key.
+Maps event names to their <a class="xref" href="Casper.Network.SDK.CES.CESEventSchema.html">CESEventSchema</a>.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.CES.CESEvent.html">CESEvent</a></h4>
+      <section><p>A fully parsed CES event containing the event name, its typed fields, and, optionally, the
+execution-context metadata of the event.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.CES.CESEvent.NamedArgListConverter.html">CESEvent.NamedArgListConverter</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Casper.Network.SDK.CES.CESEventSchema.html">CESEventSchema</a></h4>
+      <section><p>Schema for a single named CES event type, listing its fields in order.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.CES.CESEventSchemaField.html">CESEventSchemaField</a></h4>
+      <section><p>Defines one field in a CES event schema: its name and Casper type.</p>
+</section>
+      <h4><a class="xref" href="Casper.Network.SDK.CES.CESParser.html">CESParser</a></h4>
+      <section><p>Parses CES (Casper Event Standard) schema and event bytes produced by
+smart contracts following the make-software CES convention.</p>
+<p>
+Contracts store their event schema in the named key <code>__events_schema</code>
+(a <code>CLValue</code> of type <code>Any</code>) and emit events into <code>__events</code>
+(a <code>CLValue</code> of type <code>Map(U32, Bytes)</code>).
+</p>
+</section>
+
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      Maintained by MAKE Technology LLC
+      
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
