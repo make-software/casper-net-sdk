@@ -13,13 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     name: Generate and publish the docs
     steps:
-    - uses: actions/checkout@v1
-      name: Checkout code
-    - uses: davidatwhiletrue/docfx-action@v1.0.0
-      name: Build and Publish Documentation
-      with:
-        args: Docs/docfx.json
-      env:
-        BUILD_DIR: Docs/_site # docfx's default output directory is _site
-        GH_PAT: ${{ secrets.GH_PAT }} # See https://github.com/maxheld83/ghpages
+    - name: Checkout code
+      uses: actions/checkout@v6
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Install DocFX
+      run: dotnet tool install -g docfx
+
+    - name: Build Documentation
+      run: docfx Docs/docfx.json
+
+    - name: Publish to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: Docs/_site
