@@ -9,6 +9,8 @@ Using the Casper .NET SDK, we'll show you how to:
 - Read the counter value.
 - Call the `counter_inc` contract entry point to increase the counter.
 
+> **Note:** This tutorial uses the legacy `Deploy` model for transactions. Starting with SDK v3.x, you can also use the new `TransactionV1` model for Casper 2.0 networks. See [Working with TransactionV1](../../Articles/WorkingWithTransactionV1.md) for details on how to use `Transaction.SessionBuilder` and `Transaction.ContractCallBuilder`.
+
 NOTE: We use a local network in this example. Learn [here](https://casper.network/docs/dapp-dev-guide/setup-nctl) 
 how to install your own local network. Alternatively, you can easily adapt the code in this example 
 to use the casper-test network. In this case, skip the transfer from faucet step.

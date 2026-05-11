@@ -3,12 +3,21 @@
   items:
   - name: Getting started
     href: GettingStarted.md
-  - name: Running a local Casper network with NCTL
-    href: RunningNctlLocally.md
-  - name: Key Management
-    href: KeyManagement.md
+  - name: Working with TransactionV1
+    href: WorkingWithTransactionV1.md
+  - name: Querying Balances
+    href: QueryingBalances.md
+  - name: Working with AddressableEntity
+    href: WorkingWithAddressableEntity.md
   - name: Working with CLValue
     href: WorkingWithCLValue.md
+  - name: Working with SSE
+    href: WorkingWithSSE.md
   - name: Casper Event Standard (CES)
     href: CasperEventStandard.md
-
+  - name: Key Management
+    href: KeyManagement.md
+  - name: Running a local Casper network with NCTL
+    href: RunningNctlLocally.md
+  - name: Migration from v2.x to v3.0
+    href: Casper20MigrationGuide.md
