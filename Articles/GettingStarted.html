@@ -12,15 +12,17 @@
   
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
   
   
   
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
 
@@ -67,31 +69,69 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="getting-started">Getting started</h1>
 
-<p>Get started with &quot;Casper.Network.SDK&quot; quickly by adding a reference to the NuGet package or linking to the source code project. Or start developing in a remote environment with a Gitpod workspace.</p>
+<p>Get started with <code>Casper.Network.SDK</code> quickly by adding a reference to the NuGet package or linking to the source code project.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>The SDK targets <strong>.NET 8</strong>. Make sure you have the <a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET 8 SDK</a> installed on your machine.</p>
 <h2 id="add-the-nuget-package-to-your-project">Add the NuGet package to your project</h2>
-<p>The Casper.Network.SDK for .NET is published as a nuget package in <a href="https://www.nuget.org/packages/Casper.Network.SDK">nuget.org</a>.</p>
-<p>To add a reference to the SDK in your project, use the Package Manager in Visual Studio or the <code>dotnet</code> cli tool.</p>
+<p>The <code>Casper.Network.SDK</code> is published as a NuGet package on <a href="https://www.nuget.org/packages/Casper.Network.SDK">nuget.org</a>.</p>
+<p>To add a reference to the SDK in your project, use the Package Manager in Visual Studio or the <code>dotnet</code> CLI tool.</p>
 <h3 id="package-manager-windows">Package Manager (Windows)</h3>
 <pre><code>Install-Package Casper.Network.SDK
 </code></pre>
-<h3 id="dotnet-cli-tool-windowsmaclinux">dotnet cli tool (Windows/Mac/Linux)</h3>
+<h3 id="dotnet-cli-tool-windowsmaclinux">dotnet CLI tool (Windows/Mac/Linux)</h3>
 <pre><code>dotnet add package Casper.Network.SDK
 </code></pre>
 <h2 id="add-a-reference-to-the-source-code">Add a reference to the source code</h2>
-<p>Clone the GitHub repository in your solution folder and add a reference in your project to the Casper.Network.SDK.csproj file.</p>
-<h2 id="create-a-gitpod-workspace">Create a Gitpod workspace</h2>
-<p>Click the button below to start a workspace in Gitpod with a clone of the SDK repository:</p>
-<p><a href="https://gitpod.io/#https://github.com/make-software/casper-net-sdk"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod"></a></p>
-<p>Once the workspace is ready, go to the terminal and create a new console app:</p>
-<pre><code>dotnet new console -o GetStarted
+<p>Clone the GitHub repository in your solution folder and add a reference in your project to the <code>Casper.Network.SDK.csproj</code> file.</p>
+<pre><code class="lang-bash">git clone https://github.com/make-software/casper-net-sdk.git
+cd your-project
+dotnet add reference ../casper-net-sdk/Casper.Network.SDK/Casper.Network.SDK.csproj
 </code></pre>
-<p>Now, add a reference to the SDK:</p>
-<pre><code>cd GetStarted
-dotnet add reference ../Casper.Network.SDK/Casper.Network.SDK.csproj
+<h2 id="create-a-minimal-console-application">Create a minimal console application</h2>
+<p>Create a new console app and add the SDK package:</p>
+<pre><code class="lang-bash">dotnet new console -o GetStarted
+cd GetStarted
+dotnet add package Casper.Network.SDK
 </code></pre>
-<p>Copy the code in one of the examples from <code>Docs\Examples</code> and run the program:</p>
-<pre><code>dotnet run
+<p>Replace the contents of <code>Program.cs</code> with the following example. This program connects to a public Casper testnet node and prints the latest block height:</p>
+<pre><code class="lang-csharp">using System;
+using System.Threading.Tasks;
+using Casper.Network.SDK;
+using Casper.Network.SDK.JsonRpc;
+
+namespace GetStarted
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            var client = new NetCasperClient(&quot;https://rpc.testnet.casperlabs.io/rpc&quot;);
+
+            try
+            {
+                var response = await client.GetBlock();
+                var block = response.Parse().Block;
+                Console.WriteLine($&quot;Latest block height: {block.Height}&quot;);
+                Console.WriteLine($&quot;Block hash: {block.Hash}&quot;);
+            }
+            catch (RpcClientException e)
+            {
+                Console.WriteLine($&quot;RPC Error: {e.RpcError.Message}&quot;);
+            }
+        }
+    }
+}
 </code></pre>
+<p>Run the program:</p>
+<pre><code class="lang-bash">dotnet run
+</code></pre>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li>Read <a href="WorkingWithTransactionV1.html">Working with TransactionV1</a> to learn how to send the new Casper 2.0 transaction type.</li>
+<li>Read <a href="KeyManagement.html">Key management</a> to learn how to create and load key pairs for signing transactions.</li>
+<li>Browse the <a href="../Examples/index.html">Examples</a> for more complete sample programs.</li>
+<li>Follow one of the <a href="../Tutorials/index.html">Tutorials</a> to deploy and interact with smart contracts.</li>
+</ul>
 
 </article>
           </div>
@@ -101,7 +141,7 @@ dotnet add reference ../Casper.Network.SDK/Casper.Network.SDK.csproj
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Articles/GettingStarted.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Articles/GettingStarted.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>

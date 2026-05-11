@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Working with TransactionV1 | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Working with TransactionV1 | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="working-with-transactionv1">Working with TransactionV1</h1>
+
+<p>Casper 2.0 introduced a new transaction model called <code>TransactionV1</code>. It replaces the legacy <code>Deploy</code> model for many operations while remaining backward compatible: nodes still accept legacy deploys, but new features (such as the fixed pricing mode and native auction operations) require the new transaction type.</p>
+<p>The Casper .NET SDK provides a fluent <code>TransactionBuilder</code> API to create <code>TransactionV1</code> objects without manually assembling low-level fields.</p>
+<blockquote>
+<p><strong>Note:</strong> If you are migrating from SDK v2.x, read the <a href="Casper20MigrationGuide.html">Migration Guide</a> for a side-by-side comparison of <code>Deploy</code> and <code>TransactionV1</code>.</p>
+</blockquote>
+<h2 id="transaction-structure">Transaction structure</h2>
+<p>A <code>TransactionV1</code> consists of:</p>
+<ul>
+<li><strong>Hash</strong> — A Blake2b hash of the payload.</li>
+<li><strong>Payload</strong> — Contains the initiator address, chain name, timestamp, TTL, pricing mode, runtime arguments, invocation target, entry point, and scheduling.</li>
+<li><strong>Approvals</strong> — One or more signatures from the initiator account.</li>
+</ul>
+<h2 id="pricing-modes">Pricing modes</h2>
+<p>Casper 2.0 supports three pricing modes. You must choose one when building a transaction.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+<th>Typical usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PaymentLimited</code></td>
+<td>The initiator specifies a maximum payment amount and a gas price tolerance.</td>
+<td>Legacy-style payments with a cap.</td>
+</tr>
+<tr>
+<td><code>Fixed</code></td>
+<td>The cost is determined by the network's cost table based on the transaction category (lane).</td>
+<td>Casper 2.0 no-fee model.</td>
+</tr>
+<tr>
+<td><code>Prepaid</code></td>
+<td>Reserved for future use. Not currently supported by the network.</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> <code>PaymentLimited</code> is the only pricing mode currently activated on Casper testnet and mainnet. <code>Fixed</code> and <code>Prepaid</code> are not yet enabled on live networks.</p>
+</blockquote>
+<p>The <code>TransactionBuilder</code> provides a convenient <code>.Payment(ulong amount, byte gasPriceTolerance = 1)</code> method that automatically selects <code>PaymentLimited</code> mode. This is the recommended way to set payment for transactions targeting live networks:</p>
+<pre><code class="lang-csharp">// PaymentLimited: pay up to 2.5 billion motes, tolerate gas price up to 1
+.Payment(2_500_000_000, 1)
+</code></pre>
+<h2 id="building-a-native-transfer">Building a native transfer</h2>
+<p>The simplest transaction is a native CSPR transfer between accounts. Use <code>Transaction.NativeTransferBuilder</code>:</p>
+<pre><code class="lang-csharp">using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Casper.Network.SDK;
+using Casper.Network.SDK.JsonRpc;
+using Casper.Network.SDK.Types;
+using Casper.Network.SDK.Utils;
+
+public class TransferExample
+{
+    public static async Task Main(string[] args)
+    {
+        var client = new NetCasperClient(&quot;http://127.0.0.1:11101/rpc&quot;);
+        var chainName = &quot;casper-net-1&quot;;
+
+        var sourceKey = KeyPair.FromPem(&quot;source_sk.pem&quot;);
+        var targetPK = PublicKey.FromPem(&quot;target_pk.pem&quot;);
+
+        var transaction = new Transaction.NativeTransferBuilder()
+            .From(sourceKey.PublicKey)
+            .Target(targetPK)
+            .Amount(25_000_000_000) // 25 CSPR in motes
+            .Id(DateUtils.ToEpochTime(DateTime.Now))
+            .ChainName(chainName)
+            .Payment(100_000_000, 1)
+            .Build();
+
+        transaction.Sign(sourceKey);
+
+        var response = await client.PutTransaction(transaction);
+        var txHash = response.GetTransactionHash();
+
+        Console.WriteLine($&quot;Transaction sent: {txHash}&quot;);
+
+        // Wait for execution (up to 2 minutes)
+        var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
+        var result = await client.GetTransaction(txHash, tokenSource.Token);
+
+        var execResult = result.Parse().ExecutionInfo.ExecutionResult;
+        Console.WriteLine($&quot;Cost: {execResult.Cost}&quot;);
+    }
+}
+</code></pre>
+<h3 id="optional-transfer-parameters">Optional transfer parameters</h3>
+<ul>
+<li><strong>Source</strong> — By default, the transfer debits the initiator's main purse. You can specify a different source purse with <code>.Source(uref)</code>.</li>
+<li><strong>Target</strong> — The recipient can be a <code>PublicKey</code>, <code>AccountHashKey</code>, <code>URef</code>, or <code>AddressableEntityKey</code>.</li>
+<li><strong>Id</strong> — An optional transfer ID (useful for idempotency).</li>
+</ul>
+<pre><code class="lang-csharp">var transaction = new Transaction.NativeTransferBuilder()
+    .From(sourceKey.PublicKey)
+    .Source(new URef(&quot;uref-...-007&quot;))
+    .Target(new AccountHashKey(targetPK))
+    .Amount(1_000_000_000)
+    .Id(42)
+    .ChainName(chainName)
+    .Payment(100_000_000, 1)
+    .Build();
+</code></pre>
+<h2 id="building-auction-transactions">Building auction transactions</h2>
+<p>The SDK provides dedicated builders for native auction operations. These do not require a contract hash because they target the network's built-in auction contract.</p>
+<h3 id="addbid">AddBid</h3>
+<pre><code class="lang-csharp">var transaction = new Transaction.NativeAddBidBuilder()
+    .From(validatorKey.PublicKey)
+    .Validator(validatorKey.PublicKey)
+    .Amount(1_000_000_000_000) // 1,000 CSPR
+    .DelegationRate(10)
+    .MinimumDelegationAmount(500_000_000_000)
+    .MaximumDelegationAmount(2_000_000_000_000)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<h3 id="delegate">Delegate</h3>
+<pre><code class="lang-csharp">var transaction = new Transaction.NativeDelegateBuilder()
+    .From(delegatorKey.PublicKey)
+    .Validator(validatorKey.PublicKey)
+    .Amount(500_000_000_000)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<h3 id="undelegate">Undelegate</h3>
+<pre><code class="lang-csharp">var transaction = new Transaction.NativeUndelegateBuilder()
+    .From(delegatorKey.PublicKey)
+    .Validator(validatorKey.PublicKey)
+    .Amount(100_000_000_000)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<h3 id="withdrawbid">WithdrawBid</h3>
+<pre><code class="lang-csharp">var transaction = new Transaction.NativeWithdrawBidBuilder()
+    .From(validatorKey.PublicKey)
+    .Validator(validatorKey.PublicKey)
+    .Amount(500_000_000_000)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<h3 id="redelegate">Redelegate</h3>
+<pre><code class="lang-csharp">var transaction = new Transaction.NativeRedelegateBuilder()
+    .From(delegatorKey.PublicKey)
+    .Validator(oldValidatorKey.PublicKey)
+    .NewValidator(newValidatorKey.PublicKey)
+    .Amount(250_000_000_000)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<h3 id="activatebid">ActivateBid</h3>
+<pre><code class="lang-csharp">var transaction = new Transaction.NativeActivateBidBuilder()
+    .From(validatorKey.PublicKey)
+    .Validator(validatorKey.PublicKey)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<h2 id="calling-a-stored-contract">Calling a stored contract</h2>
+<p>To call an entry point in a stored contract, use <code>Transaction.ContractCallBuilder</code>:</p>
+<pre><code class="lang-csharp">var runtimeArgs = new List&lt;NamedArg&gt;
+{
+    new NamedArg(&quot;recipient&quot;, CLValue.Key(new AccountHashKey(recipientPK))),
+    new NamedArg(&quot;amount&quot;, CLValue.U256(100))
+};
+
+var transaction = new Transaction.ContractCallBuilder()
+    .From(senderKey.PublicKey)
+    .ByHash(&quot;hash-deadbeef...&quot;)
+    .EntryPoint(&quot;transfer&quot;)
+    .RuntimeArgs(runtimeArgs)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<p>You can also reference contracts by name, package hash, or package name:</p>
+<pre><code class="lang-csharp">// By contract name (stored in the caller's named keys)
+.ByName(&quot;my_contract&quot;)
+
+// By package hash, optionally specifying a version
+.ByPackageHash(&quot;hash-...&quot;, version: 1)
+
+// By package name
+.ByPackageName(&quot;my_package&quot;, version: 1)
+</code></pre>
+<h2 id="deploying-session-code-wasm">Deploying session code (WASM)</h2>
+<p>To deploy new session code, use <code>Transaction.SessionBuilder</code>:</p>
+<pre><code class="lang-csharp">var wasmBytes = await File.ReadAllBytesAsync(&quot;contract.wasm&quot;);
+
+var runtimeArgs = new List&lt;NamedArg&gt;
+{
+    new NamedArg(&quot;name&quot;, &quot;MyToken&quot;),
+    new NamedArg(&quot;symbol&quot;, &quot;MTK&quot;)
+};
+
+var transaction = new Transaction.SessionBuilder()
+    .From(deployerKey.PublicKey)
+    .Wasm(wasmBytes)
+    .RuntimeArgs(runtimeArgs)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<p>For install/upgrade operations, call <code>.InstallOrUpgrade()</code>:</p>
+<pre><code class="lang-csharp">var transaction = new Transaction.SessionBuilder()
+    .From(deployerKey.PublicKey)
+    .Wasm(wasmBytes)
+    .InstallOrUpgrade()
+    .RuntimeArgs(runtimeArgs)
+    .ChainName(chainName)
+    .Payment(2_500_000_000, 1)
+    .Build();
+</code></pre>
+<h2 id="signing-a-transaction">Signing a transaction</h2>
+<p>After building, sign the transaction with the initiator's private key:</p>
+<pre><code class="lang-csharp">transaction.Sign(keyPair);
+</code></pre>
+<p>You can also add additional approvals (multi-sig) using <code>AddApproval()</code>.</p>
+<h2 id="sending-and-monitoring-a-transaction">Sending and monitoring a transaction</h2>
+<p>Use <code>PutTransaction()</code> to send the transaction to the network, then poll <code>GetTransaction()</code> to wait for execution:</p>
+<pre><code class="lang-csharp">var putResponse = await client.PutTransaction(transaction);
+var txHash = putResponse.GetTransactionHash();
+
+var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
+var getResponse = await client.GetTransaction(txHash, tokenSource.Token);
+
+var execInfo = getResponse.Parse().ExecutionInfo;
+Console.WriteLine($&quot;Block hash: {execInfo.BlockHash}&quot;);
+Console.WriteLine($&quot;Cost: {execInfo.ExecutionResult.Cost}&quot;);
+Console.WriteLine($&quot;Consumed gas: {execInfo.ExecutionResult.Consumed}&quot;);
+</code></pre>
+<h2 id="validating-and-verifying-a-transaction">Validating and verifying a transaction</h2>
+<p>Before sending, you can validate the transaction hash and verify signatures:</p>
+<pre><code class="lang-csharp">if (!transaction.ValidateHashes(out string hashError))
+{
+    Console.WriteLine($&quot;Hash validation failed: {hashError}&quot;);
+}
+
+if (!transaction.VerifySignatures(out string sigError))
+{
+    Console.WriteLine($&quot;Signature verification failed: {sigError}&quot;);
+}
+</code></pre>
+<h2 id="serialization">Serialization</h2>
+<p>You can serialize a transaction to JSON and save it to a file for later use:</p>
+<pre><code class="lang-csharp">var json = transaction.SerializeToJson();
+File.WriteAllText(&quot;transaction.json&quot;, json);
+
+// Load it back later
+var loaded = TransactionV1.Load(&quot;transaction.json&quot;);
+</code></pre>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Articles/WorkingWithTransactionV1.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      Maintained by MAKE Technology LLC
+      
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

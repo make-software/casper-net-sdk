@@ -12,15 +12,17 @@
   
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.min.css">
     <link rel="stylesheet" href="../../styles/docfx.css">
     <link rel="stylesheet" href="../../styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta property="docfx:navrel" content="../../toc.html">
     <meta property="docfx:tocrel" content="../toc.html">
   
   
   
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
 
@@ -75,6 +77,9 @@
 <li>Read the counter value.</li>
 <li>Call the <code>counter_inc</code> contract entry point to increase the counter.</li>
 </ul>
+<blockquote>
+<p><strong>Note:</strong> This tutorial uses the legacy <code>Deploy</code> model for transactions. Starting with SDK v3.x, you can also use the new <code>TransactionV1</code> model for Casper 2.0 networks. See <a href="../../Articles/WorkingWithTransactionV1.html">Working with TransactionV1</a> for details on how to use <code>Transaction.SessionBuilder</code> and <code>Transaction.ContractCallBuilder</code>.</p>
+</blockquote>
 <p>NOTE: We use a local network in this example. Learn <a href="https://casper.network/docs/dapp-dev-guide/setup-nctl">here</a>
 how to install your own local network. Alternatively, you can easily adapt the code in this example
 to use the casper-test network. In this case, skip the transfer from faucet step.</p>
@@ -246,7 +251,7 @@ contract. For this, we can use the <code>ContractCall</code> template:</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Tutorials/counter-contract/README.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Tutorials/counter-contract/README.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>

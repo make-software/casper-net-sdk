@@ -6726,6 +6726,15 @@ references:
   fullName.vb: Casper.Network.SDK.SSE.ServerEventsClient.New()
   nameWithType: ServerEventsClient.ServerEventsClient()
   nameWithType.vb: ServerEventsClient.New()
+- uid: Casper.Network.SDK.SSE.ServerEventsClient.#ctor(System.String)
+  name: ServerEventsClient(string)
+  href: api/Casper.Network.SDK.SSE.ServerEventsClient.html#Casper_Network_SDK_SSE_ServerEventsClient__ctor_System_String_
+  commentId: M:Casper.Network.SDK.SSE.ServerEventsClient.#ctor(System.String)
+  name.vb: New(String)
+  fullName: Casper.Network.SDK.SSE.ServerEventsClient.ServerEventsClient(string)
+  fullName.vb: Casper.Network.SDK.SSE.ServerEventsClient.New(String)
+  nameWithType: ServerEventsClient.ServerEventsClient(string)
+  nameWithType.vb: ServerEventsClient.New(String)
 - uid: Casper.Network.SDK.SSE.ServerEventsClient.#ctor(System.String,System.Int32,System.Int32)
   name: ServerEventsClient(string, int, int)
   href: api/Casper.Network.SDK.SSE.ServerEventsClient.html#Casper_Network_SDK_SSE_ServerEventsClient__ctor_System_String_System_Int32_System_Int32_
@@ -6873,6 +6882,12 @@ references:
   commentId: F:Casper.Network.SDK.SSE.ServerEventsClient._port
   fullName: Casper.Network.SDK.SSE.ServerEventsClient._port
   nameWithType: ServerEventsClient._port
+- uid: Casper.Network.SDK.SSE.ServerEventsClient._sseUri
+  name: _sseUri
+  href: api/Casper.Network.SDK.SSE.ServerEventsClient.html#Casper_Network_SDK_SSE_ServerEventsClient__sseUri
+  commentId: F:Casper.Network.SDK.SSE.ServerEventsClient._sseUri
+  fullName: Casper.Network.SDK.SSE.ServerEventsClient._sseUri
+  nameWithType: ServerEventsClient._sseUri
 - uid: Casper.Network.SDK.SSE.TransactionExpired
   name: TransactionExpired
   href: api/Casper.Network.SDK.SSE.TransactionExpired.html

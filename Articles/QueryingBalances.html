@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Querying Balances | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Querying Balances | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="querying-balances">Querying Balances</h1>
+
+<p>On Casper 2.0 networks, the recommended way to query an account's balance is the <code>QueryBalance()</code> method. It replaces the older <code>GetAccountBalance()</code> method (removed in SDK v3) and supports multiple ways to identify a purse or account.</p>
+<h2 id="balance-identifiers">Balance identifiers</h2>
+<p><code>QueryBalance()</code> accepts any object implementing the <code>IPurseIdentifier</code> interface. The following types implement this interface:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PublicKey</code></td>
+<td>The public key of an account.</td>
+</tr>
+<tr>
+<td><code>AccountHashKey</code></td>
+<td>The account hash derived from a public key.</td>
+</tr>
+<tr>
+<td><code>URef</code></td>
+<td>The main purse or any other purse URef.</td>
+</tr>
+<tr>
+<td><code>AddressableEntityKey</code></td>
+<td>An entity key (account or smart contract) introduced in Casper 2.0.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="querying-by-public-key">Querying by public key</h2>
+<p>The simplest way to get a balance is to pass the account's public key:</p>
+<pre><code class="lang-csharp">using System;
+using System.Threading.Tasks;
+using Casper.Network.SDK;
+using Casper.Network.SDK.JsonRpc;
+using Casper.Network.SDK.Types;
+
+public class BalanceExample
+{
+    public static async Task Main(string[] args)
+    {
+        var client = new NetCasperClient(&quot;http://127.0.0.1:11101/rpc&quot;);
+
+        var publicKey = PublicKey.FromHexString(
+            &quot;0184f6d260F4EE6869DDB36affe15456dE6aE045278FA2f467bb677561cE0daD55&quot;);
+
+        try
+        {
+            var response = await client.QueryBalance(publicKey);
+            var balance = response.Parse().BalanceValue;
+            Console.WriteLine($&quot;Balance: {balance} motes&quot;);
+        }
+        catch (RpcClientException e)
+        {
+            Console.WriteLine($&quot;RPC Error: {e.RpcError.Message}&quot;);
+        }
+    }
+}
+</code></pre>
+<h2 id="querying-by-purse-uref">Querying by purse URef</h2>
+<p>If you already know the main purse URef of an account, you can query it directly:</p>
+<pre><code class="lang-csharp">var mainPurse = new URef(&quot;uref-0d0b57865e41b9e39170c038993997af432f66545f56838f1bf602c6d56e0e54-007&quot;);
+var response = await client.QueryBalance(mainPurse);
+Console.WriteLine($&quot;Purse balance: {response.Parse().BalanceValue} motes&quot;);
+</code></pre>
+<h2 id="querying-by-account-hash">Querying by account hash</h2>
+<p>You can also use the account hash:</p>
+<pre><code class="lang-csharp">var accountHash = new AccountHashKey(&quot;account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de&quot;);
+var response = await client.QueryBalance(accountHash);
+Console.WriteLine($&quot;Balance: {response.Parse().BalanceValue} motes&quot;);
+</code></pre>
+<h2 id="querying-by-addressableentity-casper-20">Querying by AddressableEntity (Casper 2.0)</h2>
+<p>On Casper 2.0 networks, accounts and smart contracts are represented as <code>AddressableEntity</code>. You can query the balance of an entity using its key:</p>
+<pre><code class="lang-csharp">var entityKey = new AddressableEntityKey(
+    &quot;entity-account-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de&quot;);
+
+var response = await client.QueryBalance(entityKey);
+Console.WriteLine($&quot;Entity balance: {response.Parse().BalanceValue} motes&quot;);
+</code></pre>
+<h2 id="querying-at-a-specific-block">Querying at a specific block</h2>
+<p>By default, <code>QueryBalance()</code> returns the balance at the latest block. You can query at a specific block hash or height:</p>
+<pre><code class="lang-csharp">// By block hash
+var response = await client.QueryBalance(publicKey, &quot;block-hash-...&quot;);
+
+// By block height
+var response = await client.QueryBalance(publicKey, 12345UL);
+</code></pre>
+<h2 id="querying-balance-details">Querying balance details</h2>
+<p>In addition to the total balance, you can retrieve detailed balance information (available and total hold amounts) using <code>QueryBalanceDetails()</code>:</p>
+<pre><code class="lang-csharp">var response = await client.QueryBalanceDetails(publicKey);
+var details = response.Parse();
+
+Console.WriteLine($&quot;Total balance: {details.TotalBalance}&quot;);
+Console.WriteLine($&quot;Available balance: {details.AvailableBalance}&quot;);
+Console.WriteLine($&quot;Total holds: {details.TotalHolds}&quot;);
+</code></pre>
+<h2 id="legacy-method-getbalance">Legacy method: GetBalance</h2>
+<p>If you need to use the older <code>state_get_balance</code> RPC method directly (for example, with a specific state root hash), use <code>GetBalance()</code>:</p>
+<pre><code class="lang-csharp">var response = await client.GetBalance(&quot;uref-...-007&quot;, stateRootHash: &quot;...&quot;);
+Console.WriteLine($&quot;Balance: {response.Parse().BalanceValue}&quot;);
+</code></pre>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Articles/QueryingBalances.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      Maintained by MAKE Technology LLC
+      
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

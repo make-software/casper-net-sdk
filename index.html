@@ -12,15 +12,17 @@
   
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.vendor.min.css">
     <link rel="stylesheet" href="styles/docfx.css">
     <link rel="stylesheet" href="styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta property="docfx:navrel" content="toc.html">
     <meta property="docfx:tocrel" content="toc.html">
   
   
   
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
 
@@ -55,20 +57,36 @@
         </div>
       </header>
       <div role="main" class="container body-content hide-when-search">
-        <div class="article row grid">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="caspernetworksdk">Casper.Network.SDK</h1>
 
 <p><a href="https://badge.fury.io/gh/make-software%2Fcasper-net-sdk"><img src="https://badge.fury.io/gh/make-software%2Fcasper-net-sdk.svg" alt="GitHub version"></a>  <a href="https://badge.fury.io/nu/casper.network.sdk"><img src="https://badge.fury.io/nu/casper.network.sdk.svg" alt="NuGet version"></a></p>
 <p><img src="https://github.com/make-software/casper-net-sdk/actions/workflows/build-and-test.yml/badge.svg" alt="build-and-test workflow"></p>
-<p>The Casper .NET SDK allows developers to interact with the Casper Network using the .NET languages. The project itself is being developed with C#.</p>
+<p>The Casper .NET SDK allows developers to interact with the Casper Network using .NET languages. The project is developed with C# and targets <strong>.NET 8</strong>.</p>
+<blockquote>
+<p><strong>New in v3.x:</strong> This version of the SDK supports both <strong>Casper 1.x</strong> and <strong>Casper 2.0</strong> networks. It introduces <code>TransactionV1</code>, a new transaction model for Casper 2.0, alongside the legacy <code>Deploy</code> model. If you are upgrading from v2.x, please read the <a href="Articles/Casper20MigrationGuide.html">Migration Guide</a>.</p>
+</blockquote>
 <h2 id="articles">Articles</h2>
 <ul>
-<li><a href="Articles/GettingStarted.html">Getting started</a></li>
-<li><a href="Articles/RunningNctlLocally.html">Running a local Casper network with NCTL</a></li>
-<li><a href="Articles/KeyManagement.html">Key management</a></li>
-<li><a href="Articles/WorkingWithCLValue.html">Working with CLValue</a></li>
+<li><a href="Articles/GettingStarted.html">Getting started</a> — Install the SDK and run your first program.</li>
+<li><a href="Articles/WorkingWithTransactionV1.html">Working with TransactionV1</a> — Build, sign, and send transactions using the new Casper 2.0 transaction model.</li>
+<li><a href="Articles/WorkingWithCLValue.html">Working with CLValue</a> — Convert between C# types and Casper's <code>CLValue</code> type system.</li>
+<li><a href="Articles/QueryingBalances.html">Querying Balances</a> — Retrieve account and purse balances on Casper 2.0 networks.</li>
+<li><a href="Articles/WorkingWithAddressableEntity.html">Working with AddressableEntity</a> — Query entities (accounts, contracts, and system contracts) on Casper 2.0.</li>
+<li><a href="Articles/KeyManagement.html">Key management</a> — Create, load, and save public/private key pairs.</li>
+<li><a href="Articles/WorkingWithSSE.html">Working with Server-Sent Events (SSE)</a> — Listen to real-time events from a Casper node.</li>
+<li><a href="Articles/CasperEventStandard.html">Casper Event Standard (CES)</a> — Decode typed events emitted by smart contracts.</li>
+<li><a href="Articles/RunningNctlLocally.html">Running a local Casper network with NCTL</a> — Set up a local test network using Docker.</li>
+<li><a href="Articles/Casper20MigrationGuide.html">Migration from v2.x to v3.0</a> — Upgrade your application for Casper 2.0 compatibility.</li>
 </ul>
 <h2 id="usage-examples">Usage Examples</h2>
 <p>See the complete list of examples <a href="Examples/index.html">here</a>.</p>
@@ -85,7 +103,7 @@
 <h2 id="links">Links</h2>
 <ul>
 <li><a href="https://github.com/make-software/casper-net-sdk">GitHub repository</a></li>
-<li><a href="https://www.nuget.org/packages/Casper.Network.SDK/">Nuget package</a></li>
+<li><a href="https://www.nuget.org/packages/Casper.Network.SDK/">NuGet package</a></li>
 </ul>
 
 </article>
@@ -96,7 +114,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/index.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/index.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>

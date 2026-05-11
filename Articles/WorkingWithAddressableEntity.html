@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Working with AddressableEntity | C#/.Net SDK for the Casper Network </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Working with AddressableEntity | C#/.Net SDK for the Casper Network ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                Casper.Network.SDK
+              </a>            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="working-with-addressableentity">Working with AddressableEntity</h1>
+
+<blockquote>
+<p><strong>Info:</strong> <code>AddressableEntity</code> is currently not enabled on Casper testnet or mainnet.</p>
+</blockquote>
+<p>Casper 2.0 introduced the <strong>AddressableEntity</strong> model, which unifies how accounts, smart contracts, and system contracts are represented on the network. Instead of treating accounts and contracts as completely separate concepts, Casper 2.0 wraps them in a common <code>AddressableEntity</code> structure.</p>
+<p>The Casper .NET SDK provides the <code>GetEntity()</code> method to retrieve this information and the <code>AddressableEntityKey</code> type to reference entities in global state.</p>
+<blockquote>
+<p><strong>Note:</strong> <code>GetEntity()</code> replaces <code>GetAccountInfo()</code> for Casper 2.0 networks. On a Casper 2.0 node, <code>GetAccountInfo()</code> may return legacy account data, while <code>GetEntity()</code> returns the new unified model.</p>
+</blockquote>
+<h2 id="what-is-an-addressableentity">What is an AddressableEntity?</h2>
+<p>An <code>AddressableEntity</code> represents any of the following:</p>
+<ul>
+<li><strong>Account</strong> — A user account with associated keys and action thresholds.</li>
+<li><strong>Smart Contract</strong> — A Wasm-based contract deployed on the network.</li>
+<li><strong>System Contract</strong> — A built-in contract such as Mint, HandlePayment, StandardPayment, or Auction.</li>
+</ul>
+<p>Each entity has:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ProtocolVersion</code></td>
+<td>The Casper protocol version at which the entity was created or last updated.</td>
+</tr>
+<tr>
+<td><code>EntityKind</code></td>
+<td>Indicates whether the entity is an <code>Account</code>, <code>SmartContract</code>, or <code>System</code> contract.</td>
+</tr>
+<tr>
+<td><code>Package</code></td>
+<td>The package hash associated with the entity (for contracts).</td>
+</tr>
+<tr>
+<td><code>ByteCodeHash</code></td>
+<td>The hash of the contract's Wasm bytecode (for smart contracts).</td>
+</tr>
+<tr>
+<td><code>MainPurse</code></td>
+<td>The URef of the entity's main purse (used for balance queries).</td>
+</tr>
+<tr>
+<td><code>AssociatedKeys</code></td>
+<td>Public keys authorized to act on behalf of the entity.</td>
+</tr>
+<tr>
+<td><code>ActionThresholds</code></td>
+<td>Minimum weights required for deployment and key management actions.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entity-kinds">Entity kinds</h2>
+<p>The <code>EntityKind</code> property tells you what type of entity you are working with:</p>
+<pre><code class="lang-csharp">var entity = response.Parse().Entity;
+
+if (entity.EntityKind.Account != null)
+{
+    Console.WriteLine(&quot;This is an account entity.&quot;);
+}
+else if (entity.EntityKind.SmartContract.HasValue)
+{
+    Console.WriteLine($&quot;This is a smart contract with runtime: {entity.EntityKind.SmartContract}&quot;);
+}
+else if (entity.EntityKind.System.HasValue)
+{
+    Console.WriteLine($&quot;This is a system contract: {entity.EntityKind.System}&quot;);
+}
+</code></pre>
+<p>Possible <code>System</code> values are:</p>
+<ul>
+<li><code>Mint</code></li>
+<li><code>HandlePayment</code></li>
+<li><code>StandardPayment</code></li>
+<li><code>Auction</code></li>
+</ul>
+<h2 id="querying-an-entity-by-public-key">Querying an entity by public key</h2>
+<p>The simplest way to query an entity is to pass the account's public key:</p>
+<pre><code class="lang-csharp">using System;
+using System.Threading.Tasks;
+using Casper.Network.SDK;
+using Casper.Network.SDK.JsonRpc;
+using Casper.Network.SDK.Types;
+
+public class EntityExample
+{
+    public static async Task Main(string[] args)
+    {
+        var client = new NetCasperClient(&quot;http://127.0.0.1:11101/rpc&quot;);
+
+        var publicKey = PublicKey.FromHexString(
+            &quot;0184f6d260F4EE6869DDB36affe15456dE6aE045278FA2f467bb677561cE0daD55&quot;);
+
+        try
+        {
+            var response = await client.GetEntity(publicKey);
+            var entity = response.Parse().Entity;
+
+            Console.WriteLine($&quot;Protocol version: {entity.ProtocolVersion}&quot;);
+            Console.WriteLine($&quot;Main purse: {entity.MainPurse}&quot;);
+            Console.WriteLine($&quot;Associated keys: {entity.AssociatedKeys.Count}&quot;);
+            Console.WriteLine($&quot;Deployment threshold: {entity.ActionThresholds.Deployment}&quot;);
+        }
+        catch (RpcClientException e)
+        {
+            Console.WriteLine($&quot;RPC Error: {e.RpcError.Message}&quot;);
+        }
+    }
+}
+</code></pre>
+<h2 id="querying-by-account-hash">Querying by account hash</h2>
+<p>You can also query using an <code>AccountHashKey</code>:</p>
+<pre><code class="lang-csharp">var accountHash = new AccountHashKey(&quot;account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de&quot;);
+var response = await client.GetEntity(accountHash);
+var entity = response.Parse().Entity;
+</code></pre>
+<h2 id="querying-by-entity-address">Querying by entity address</h2>
+<p>Casper 2.0 uses a new addressing scheme for entities. You can query directly by the entity address string:</p>
+<pre><code class="lang-csharp">var entityAddr = &quot;entity-account-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de&quot;;
+var response = await client.GetEntity(entityAddr);
+var entity = response.Parse().Entity;
+</code></pre>
+<h2 id="querying-at-a-specific-block">Querying at a specific block</h2>
+<p>You can query the entity state at a specific block hash or height:</p>
+<pre><code class="lang-csharp">// By block hash
+var response = await client.GetEntity(publicKey, &quot;block-hash-...&quot;);
+
+// By block height
+var response = await client.GetEntity(publicKey, 12345UL);
+</code></pre>
+<h2 id="using-the-main-purse-for-balance-queries">Using the main purse for balance queries</h2>
+<p>One of the most common uses of <code>GetEntity()</code> is to obtain the <code>MainPurse</code> URef for balance queries:</p>
+<pre><code class="lang-csharp">var response = await client.GetEntity(publicKey);
+var mainPurse = response.Parse().Entity.MainPurse;
+
+var balanceResponse = await client.QueryBalance(mainPurse);
+Console.WriteLine($&quot;Balance: {balanceResponse.Parse().BalanceValue} motes&quot;);
+</code></pre>
+<h2 id="differences-from-getaccountinfo">Differences from GetAccountInfo</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>GetAccountInfo()</code></th>
+<th><code>GetEntity()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Casper 1.x</td>
+<td>Returns full account info</td>
+<td>Returns entity wrapper</td>
+</tr>
+<tr>
+<td>Casper 2.x</td>
+<td>Returns legacy account data</td>
+<td>Returns unified entity model</td>
+</tr>
+<tr>
+<td>Named keys</td>
+<td>Included directly</td>
+<td>May be structured differently</td>
+</tr>
+<tr>
+<td>Main purse</td>
+<td>Included</td>
+<td>Included</td>
+</tr>
+<tr>
+<td>Action thresholds</td>
+<td>Included</td>
+<td>Included</td>
+</tr>
+</tbody>
+</table>
+<p>For new applications targeting Casper 2.0, prefer <code>GetEntity()</code>. For backward compatibility with Casper 1.x, you can continue to use <code>GetAccountInfo()</code> or branch based on the node version.</p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Articles/WorkingWithAddressableEntity.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      Maintained by MAKE Technology LLC
+      
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -12,15 +12,17 @@
   
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
   
   
   
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
 
@@ -318,6 +320,8 @@ if (buyEvent != null)
 var json = JsonSerializer.Serialize(events);
 Console.WriteLine(json);
 </code></pre>
+<h2 id="parsing-ces-events-in-the-sse-stream">Parsing CES events in the SSE stream</h2>
+<p>See <code>Docs/Examples/CESParser/Program.cs</code> for a runnable sample that connects to the node SSE stream, listens to <code>TransactionProcessed</code> events, and pretty-prints parsed CES events.</p>
 
 </article>
           </div>
@@ -327,7 +331,7 @@ Console.WriteLine(json);
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/make-software/casper-net-sdk/blob/docfx-update/Docs/Articles/CasperEventStandard.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Articles/CasperEventStandard.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
