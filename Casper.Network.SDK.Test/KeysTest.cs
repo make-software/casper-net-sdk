@@ -199,7 +199,7 @@ namespace NetCasperTest
         [Test]
         public void WritePrivateKeyToPemEd25519()
         {
-            var keyPair = KeyPair.CreateNew(KeyAlgo.ED25519);
+            var keyPair = KeyPair.Create(KeyAlgo.ED25519);
             Assert.IsNotNull(keyPair);
             Assert.IsNotNull(keyPair.PublicKey);
 
@@ -221,7 +221,7 @@ namespace NetCasperTest
         [Test]
         public void WritePrivateKeyToPemSecp256K1()
         {
-            var keyPair = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var keyPair = KeyPair.Create(KeyAlgo.SECP256K1);
             Assert.IsNotNull(keyPair);
             Assert.IsNotNull(keyPair.PublicKey);
 
@@ -244,12 +244,156 @@ namespace NetCasperTest
         public void WritePrivateKeyToPemFailsForExistingFile()
         {
             var tmpfile = Path.GetTempFileName();
-            var keyPair = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var keyPair = KeyPair.Create(KeyAlgo.SECP256K1);
             Assert.IsNotNull(keyPair);
-            
+
             var ex =Assert.Catch<Exception>(() => keyPair.WriteToPem(tmpfile));
             Assert.IsNotNull(ex);
             Assert.IsTrue(ex.Message.StartsWith("Target file already exists."));
+        }
+
+        [Test]
+        public void TestKeyPairWritePublicKeyToPemEd25519()
+        {
+            var keyPair = KeyPair.Create(KeyAlgo.ED25519);
+
+            var tmpfile = Path.GetTempFileName();
+            File.Delete(tmpfile);
+
+            keyPair.WritePublicKeyToPem(tmpfile);
+
+            var pk = PublicKey.FromPem(tmpfile);
+            Assert.AreEqual(keyPair.PublicKey, pk);
+            Assert.AreEqual(keyPair.PublicKey.ToAccountHex(), pk.ToAccountHex());
+        }
+
+        [Test]
+        public void TestKeyPairWritePublicKeyToPemSecp256K1()
+        {
+            var keyPair = KeyPair.Create(KeyAlgo.SECP256K1);
+
+            var tmpfile = Path.GetTempFileName();
+            File.Delete(tmpfile);
+
+            keyPair.WritePublicKeyToPem(tmpfile);
+
+            var pk = PublicKey.FromPem(tmpfile);
+            Assert.AreEqual(keyPair.PublicKey, pk);
+            Assert.AreEqual(keyPair.PublicKey.ToAccountHex(), pk.ToAccountHex());
+        }
+
+        [Test]
+        public void WritePublicKeyToPemFailsForExistingFileOnKeyPair()
+        {
+            var tmpfile = Path.GetTempFileName();
+            var keyPair = KeyPair.Create(KeyAlgo.SECP256K1);
+
+            var ex = Assert.Catch<Exception>(() => keyPair.WritePublicKeyToPem(tmpfile));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.StartsWith("Target file already exists."));
+        }
+
+        [Test]
+        public void TestKeyPairFromBytesEd25519()
+        {
+            var original = KeyPair.Create(KeyAlgo.ED25519);
+            var roundTrip = KeyPair.FromBytes(original.RawBytes, KeyAlgo.ED25519);
+
+            Assert.AreEqual(original.PublicKey, roundTrip.PublicKey);
+            Assert.IsTrue(original.RawBytes.SequenceEqual(roundTrip.RawBytes));
+
+            byte[] message = Hex.Decode("000102030405060708090A0B0C0D0E0F10111213");
+            var sig = roundTrip.Sign(message);
+            Assert.IsTrue(original.PublicKey.VerifySignature(message, sig));
+        }
+
+        [Test]
+        public void TestKeyPairFromBytesEd25519RejectsWrongLength()
+        {
+            var tooShort = Hex.Decode("01");
+            var tooLong = Hex.Decode("000000000000000000000000000000000000000000000000000000000000000001");
+
+            Assert.Catch<ArgumentException>(() => KeyPair.FromBytes(tooShort, KeyAlgo.ED25519));
+            Assert.Catch<ArgumentException>(() => KeyPair.FromBytes(tooLong, KeyAlgo.ED25519));
+        }
+
+        [Test]
+        public void TestKeyPairFromBytesSecp256K1()
+        {
+            var original = KeyPair.Create(KeyAlgo.SECP256K1);
+            var roundTrip = KeyPair.FromBytes(original.RawBytes, KeyAlgo.SECP256K1);
+
+            Assert.AreEqual(original.PublicKey, roundTrip.PublicKey);
+            Assert.IsTrue(original.RawBytes.SequenceEqual(roundTrip.RawBytes));
+
+            byte[] message = Hex.Decode("000102030405060708090A0B0C0D0E0F10111213");
+            var sig = roundTrip.Sign(message);
+            Assert.IsTrue(original.PublicKey.VerifySignature(message, sig));
+        }
+
+        [Test]
+        public void TestKeyPairFromBytesSecp256K1PreservesThirtyTwoByteScalar()
+        {
+            var privateKey = Hex.Decode("0000000000000000000000000000000000000000000000000000000000000001");
+            var keyPair = KeyPair.FromBytes(privateKey, KeyAlgo.SECP256K1);
+
+            Assert.AreEqual(32, keyPair.RawBytes.Length);
+            Assert.IsTrue(privateKey.SequenceEqual(keyPair.RawBytes));
+        }
+
+        [Test]
+        public void TestKeyPairFromBytesSecp256K1RejectsWrongLength()
+        {
+            var tooShort = Hex.Decode("01");
+            var tooLong = Hex.Decode("000000000000000000000000000000000000000000000000000000000000000001");
+
+            Assert.Catch<ArgumentException>(() => KeyPair.FromBytes(tooShort, KeyAlgo.SECP256K1));
+            Assert.Catch<ArgumentException>(() => KeyPair.FromBytes(tooLong, KeyAlgo.SECP256K1));
+        }
+
+        [Test]
+        public void TestKeyPairSignSecp256K1ProducesLowS()
+        {
+            var keyPair = KeyPair.Create(KeyAlgo.SECP256K1);
+            byte[] message = Hex.Decode("000102030405060708090A0B0C0D0E0F10111213");
+
+            for (int i = 0; i < 20; i++)
+            {
+                var sig = keyPair.Sign(message);
+                Assert.AreEqual(64, sig.Length, "ECDSA signature must be 64 bytes (r||s).");
+                Assert.AreEqual(0, sig[32] & 0x80, "s has the high bit set; low-S rule violated.");
+                Assert.IsTrue(keyPair.PublicKey.VerifySignature(message, sig));
+            }
+        }
+
+        [Test]
+        public void TestKeyPairSignFailsForTamperedMessage()
+        {
+            var keyPair = KeyPair.Create(KeyAlgo.ED25519);
+            var message = Hex.Decode("000102030405060708090A0B0C0D0E0F10111213");
+            var signature = keyPair.Sign(message);
+
+            Assert.IsTrue(keyPair.PublicKey.VerifySignature(message, signature));
+
+            var tamperedMessage = (byte[]) message.Clone();
+            tamperedMessage[0] ^= 0x01;
+            Assert.IsFalse(keyPair.PublicKey.VerifySignature(tamperedMessage, signature));
+
+            var tamperedSig = (byte[]) signature.Clone();
+            tamperedSig[0] ^= 0x01;
+            Assert.IsFalse(keyPair.PublicKey.VerifySignature(message, tamperedSig));
+
+            var other = KeyPair.Create(KeyAlgo.ED25519);
+            Assert.IsFalse(other.PublicKey.VerifySignature(message, signature));
+        }
+
+        [Test]
+        public void TestKeyPairFromPemMissingFile()
+        {
+            var missing = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".pem");
+            var ex = Assert.Catch<FileNotFoundException>(() => KeyPair.FromPem(missing));
+            Assert.IsNotNull(ex);
+            Assert.AreEqual(missing, ex.FileName);
         }
     }
 }

@@ -109,7 +109,7 @@ namespace NetCasperTest
 
             try
             {
-                var key1 = KeyPair.CreateNew(KeyAlgo.ED25519);
+                var key1 = KeyPair.Create(KeyAlgo.ED25519);
 
                 await _client.GetAccountInfo(key1.PublicKey);
                 Assert.Fail("Exception expected");
@@ -122,7 +122,7 @@ namespace NetCasperTest
             
             try
             {
-                var key1 = KeyPair.CreateNew(KeyAlgo.ED25519);
+                var key1 = KeyPair.Create(KeyAlgo.ED25519);
 
                 await _client.QueryBalance(key1.PublicKey);
                 Assert.Fail("Exception expected");

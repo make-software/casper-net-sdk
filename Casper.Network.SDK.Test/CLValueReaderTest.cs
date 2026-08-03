@@ -215,7 +215,7 @@ namespace NetCasperTest
         [Test]
         public void ReadPublicKeyEd25519Test()
         {
-            var publicKey = KeyPair.CreateNew(KeyAlgo.ED25519).PublicKey;
+            var publicKey = KeyPair.Create(KeyAlgo.ED25519).PublicKey;
             var original = CLValue.PublicKey(publicKey);
             var result = ReaderFor(original.Bytes).Read(CLType.PublicKey);
 
@@ -228,7 +228,7 @@ namespace NetCasperTest
         [Test]
         public void ReadPublicKeySecp256k1Test()
         {
-            var publicKey = KeyPair.CreateNew(KeyAlgo.SECP256K1).PublicKey;
+            var publicKey = KeyPair.Create(KeyAlgo.SECP256K1).PublicKey;
             var original = CLValue.PublicKey(publicKey);
             var result = ReaderFor(original.Bytes).Read(CLType.PublicKey);
 

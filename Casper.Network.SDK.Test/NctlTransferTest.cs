@@ -24,7 +24,7 @@ namespace NetCasperTest
         [Test, Order(1)]
         public async Task TransferFromFaucetTest()
         {
-            _myAccount = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            _myAccount = KeyPair.Create(KeyAlgo.SECP256K1);
             
             var deploy = DeployTemplates.StandardTransfer(
                 _faucetKey.PublicKey,
@@ -80,9 +80,7 @@ namespace NetCasperTest
         [Test, Order(4)]
         public async Task CatchFailedTransferTest()
         {
-            Assert.IsNotNull(_transferKey, "This test must run after TransferFromFaucetTest");
-
-            var otherAccount = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var otherAccount = KeyPair.Create(KeyAlgo.SECP256K1);
             
             var deploy = DeployTemplates.StandardTransfer(
                 _myAccount.PublicKey,
@@ -106,7 +104,7 @@ namespace NetCasperTest
         [Test, Order(6)]
         public async Task CatchUnknownAcctTransferTest()
         {
-            var newAccount = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var newAccount = KeyPair.Create(KeyAlgo.SECP256K1);
             
             var deploy = DeployTemplates.StandardTransfer(
                 newAccount.PublicKey,
