@@ -92,7 +92,7 @@ namespace NetCasperTest
 
         private async Task MakeTransfer()
         {
-            KeyPair myAccount = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            KeyPair myAccount = KeyPair.Create(KeyAlgo.SECP256K1);
             
             var deploy = DeployTemplates.StandardTransfer(
                 _faucetKey.PublicKey,

@@ -139,7 +139,7 @@ namespace NetCasperTest
         [Test]
         public void ReadPublicKeyTest()
         {
-            var key = KeyPair.CreateNew(KeyAlgo.ED25519);
+            var key = KeyPair.Create(KeyAlgo.ED25519);
             var bytes = key.PublicKey.GetBytes();
 
             var reader = new BinaryReader(new MemoryStream(bytes));
@@ -153,7 +153,7 @@ namespace NetCasperTest
         {
             // test with an AccountHash key
             //
-            var key = KeyPair.CreateNew(KeyAlgo.ED25519);
+            var key = KeyPair.Create(KeyAlgo.ED25519);
             var accHash = key.PublicKey.GetAccountHash();
             var gsKey = GlobalStateKey.FromString(accHash);
 

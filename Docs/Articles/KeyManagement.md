@@ -4,14 +4,14 @@ Use the `PublicKey` and `KeyPair` classes to work with public keys and private k
 
 ### Creating new key pairs
 
-To create a new key pair use the method `CreateNew()` indicating the algorithm used:
+To create a new key pair use the method `Create()` indicating the algorithm used:
 
 ```csharp
-var newKeyPair = KeyPair.CreateNew(KeyAlgo.ED25519);
+var newKeyPair = KeyPair.Create(KeyAlgo.ED25519);
 ```
 
 ```csharp
-var anotherKeyPair = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+var anotherKeyPair = KeyPair.Create(KeyAlgo.SECP256K1);
 ```
 
 ### Reading keys from PEM files

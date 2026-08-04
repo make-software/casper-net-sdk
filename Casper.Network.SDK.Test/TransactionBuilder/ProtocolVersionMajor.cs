@@ -10,7 +10,7 @@ namespace NetCasperTest.TransactionBuilder
         [Test]
         public void ByPackageHashNoVersionTest()
         {
-            var testKey = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var testKey = KeyPair.Create(KeyAlgo.SECP256K1);
             var runtimeArgs = new List<NamedArg>();
             
             var transaction = new Transaction.ContractCallBuilder()
@@ -33,7 +33,7 @@ namespace NetCasperTest.TransactionBuilder
         [Test]
         public void ByPackageHashWithVersionTest()
         {
-            var testKey = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var testKey = KeyPair.Create(KeyAlgo.SECP256K1);
             var runtimeArgs = new List<NamedArg>();
             
             var transaction = new Transaction.ContractCallBuilder()
@@ -57,7 +57,7 @@ namespace NetCasperTest.TransactionBuilder
         [Test]
         public void ByPackageNameNoVersionTest()
         {
-            var testKey = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var testKey = KeyPair.Create(KeyAlgo.SECP256K1);
             var runtimeArgs = new List<NamedArg>();
             
             var transaction = new Transaction.ContractCallBuilder()
@@ -80,7 +80,7 @@ namespace NetCasperTest.TransactionBuilder
         [Test]
         public void ByPackageNameWithVersionTest()
         {
-            var testKey = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var testKey = KeyPair.Create(KeyAlgo.SECP256K1);
             var runtimeArgs = new List<NamedArg>();
             
             var transaction = new Transaction.ContractCallBuilder()
@@ -103,7 +103,7 @@ namespace NetCasperTest.TransactionBuilder
         [Test]
         public void ByPackageNameNoVersionJsonTest()
         {
-            var testKey = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var testKey = KeyPair.Create(KeyAlgo.SECP256K1);
             var runtimeArgs = new List<NamedArg>();
             
             var transaction = new Transaction.ContractCallBuilder()
@@ -123,7 +123,7 @@ namespace NetCasperTest.TransactionBuilder
         [Test]
         public void ByPackageNameWithVersionJsonTest()
         {
-            var testKey = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+            var testKey = KeyPair.Create(KeyAlgo.SECP256K1);
             var runtimeArgs = new List<NamedArg>();
             
             var transaction = new Transaction.ContractCallBuilder()
