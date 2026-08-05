@@ -14,8 +14,8 @@ namespace Casper.NET.SDK.Examples
     {
         public static async Task Main(string[] args)
         {
-            string nodeAddress = "http://127.0.0.1:11101/rpc";
-            string chainName = "casper-net-1";
+            string nodeAddress = "https://node.testnet.casper.network/rpc";
+            string chainName = "casper-test";
             
             try
             {
@@ -37,10 +37,10 @@ namespace Casper.NET.SDK.Examples
                 var transaction = new Transaction.NativeTransferBuilder()
                     .From(sourceKey.PublicKey)
                     .Target(targetPK)
-                    .Amount(25_000_000_000)
+                    .Amount(2_500_000_000)
                     .Id(DateUtils.ToEpochTime(DateTime.Now))
                     .ChainName(chainName)
-                    .Payment(PricingMode.PaymentLimited(100_000_000, 1))
+                    .Payment(100_000_000)
                     .Build();
 
                 // sign the transaction and send it to the network
@@ -55,19 +55,9 @@ namespace Casper.NET.SDK.Examples
                 var transactionHash = response.GetTransactionHash();
                 
                 var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(120));
-                var transactionResponse = await casperSdk.GetTransaction(transactionHash, tokenSource.Token);
+                await casperSdk.GetTransaction(transactionHash, tokenSource.Token);
 
-                // only as an example, extract the transfer key, and retrieve the transfer
-                // information from the network
-                //
-                var transfer = transactionResponse.Parse().ExecutionInfo.ExecutionResult.Transfers[0];
-                
-                Console.WriteLine("Transfer amount: " + 
-                                  transfer.Amount);
-                Console.WriteLine("Transfer from  : " + 
-                                  transfer.From);
-                Console.WriteLine("Transfer to    : " + 
-                                  transfer.To);
+                Console.WriteLine("Transaction executed. See the results: https://testnet.cspr.live/transaction/" + transactionHash);
             }
             catch (RpcClientException e)
             {
