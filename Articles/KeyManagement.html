@@ -71,10 +71,10 @@
 
 <p>Use the <code>PublicKey</code> and <code>KeyPair</code> classes to work with public keys and private keys respectively.</p>
 <h3 id="creating-new-key-pairs">Creating new key pairs</h3>
-<p>To create a new key pair use the method <code>CreateNew()</code> indicating the algorithm used:</p>
-<pre><code class="lang-csharp">var newKeyPair = KeyPair.CreateNew(KeyAlgo.ED25519);
+<p>To create a new key pair use the method <code>Create()</code> indicating the algorithm used:</p>
+<pre><code class="lang-csharp">var newKeyPair = KeyPair.Create(KeyAlgo.ED25519);
 </code></pre>
-<pre><code class="lang-csharp">var anotherKeyPair = KeyPair.CreateNew(KeyAlgo.SECP256K1);
+<pre><code class="lang-csharp">var anotherKeyPair = KeyPair.Create(KeyAlgo.SECP256K1);
 </code></pre>
 <h3 id="reading-keys-from-pem-files">Reading keys from PEM files</h3>
 <p>To read a key from a PEM file use the method <code>FromPEM()</code>:</p>

@@ -15608,6 +15608,19 @@ references:
   commentId: T:Casper.Network.SDK.Types.KeyPair
   fullName: Casper.Network.SDK.Types.KeyPair
   nameWithType: KeyPair
+- uid: Casper.Network.SDK.Types.KeyPair.Create(Casper.Network.SDK.Types.KeyAlgo)
+  name: Create(KeyAlgo)
+  href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_Create_Casper_Network_SDK_Types_KeyAlgo_
+  commentId: M:Casper.Network.SDK.Types.KeyPair.Create(Casper.Network.SDK.Types.KeyAlgo)
+  fullName: Casper.Network.SDK.Types.KeyPair.Create(Casper.Network.SDK.Types.KeyAlgo)
+  nameWithType: KeyPair.Create(KeyAlgo)
+- uid: Casper.Network.SDK.Types.KeyPair.Create*
+  name: Create
+  href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_Create_
+  commentId: Overload:Casper.Network.SDK.Types.KeyPair.Create
+  isSpec: "True"
+  fullName: Casper.Network.SDK.Types.KeyPair.Create
+  nameWithType: KeyPair.Create
 - uid: Casper.Network.SDK.Types.KeyPair.CreateNew(Casper.Network.SDK.Types.KeyAlgo)
   name: CreateNew(KeyAlgo)
   href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_CreateNew_Casper_Network_SDK_Types_KeyAlgo_
@@ -15621,6 +15634,22 @@ references:
   isSpec: "True"
   fullName: Casper.Network.SDK.Types.KeyPair.CreateNew
   nameWithType: KeyPair.CreateNew
+- uid: Casper.Network.SDK.Types.KeyPair.FromBytes(System.Byte[],Casper.Network.SDK.Types.KeyAlgo)
+  name: FromBytes(byte[], KeyAlgo)
+  href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_FromBytes_System_Byte___Casper_Network_SDK_Types_KeyAlgo_
+  commentId: M:Casper.Network.SDK.Types.KeyPair.FromBytes(System.Byte[],Casper.Network.SDK.Types.KeyAlgo)
+  name.vb: FromBytes(Byte(), KeyAlgo)
+  fullName: Casper.Network.SDK.Types.KeyPair.FromBytes(byte[], Casper.Network.SDK.Types.KeyAlgo)
+  fullName.vb: Casper.Network.SDK.Types.KeyPair.FromBytes(Byte(), Casper.Network.SDK.Types.KeyAlgo)
+  nameWithType: KeyPair.FromBytes(byte[], KeyAlgo)
+  nameWithType.vb: KeyPair.FromBytes(Byte(), KeyAlgo)
+- uid: Casper.Network.SDK.Types.KeyPair.FromBytes*
+  name: FromBytes
+  href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_FromBytes_
+  commentId: Overload:Casper.Network.SDK.Types.KeyPair.FromBytes
+  isSpec: "True"
+  fullName: Casper.Network.SDK.Types.KeyPair.FromBytes
+  nameWithType: KeyPair.FromBytes
 - uid: Casper.Network.SDK.Types.KeyPair.FromPem(System.String)
   name: FromPem(string)
   href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_FromPem_System_String_
@@ -15650,6 +15679,19 @@ references:
   isSpec: "True"
   fullName: Casper.Network.SDK.Types.KeyPair.PublicKey
   nameWithType: KeyPair.PublicKey
+- uid: Casper.Network.SDK.Types.KeyPair.RawBytes
+  name: RawBytes
+  href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_RawBytes
+  commentId: P:Casper.Network.SDK.Types.KeyPair.RawBytes
+  fullName: Casper.Network.SDK.Types.KeyPair.RawBytes
+  nameWithType: KeyPair.RawBytes
+- uid: Casper.Network.SDK.Types.KeyPair.RawBytes*
+  name: RawBytes
+  href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_RawBytes_
+  commentId: Overload:Casper.Network.SDK.Types.KeyPair.RawBytes
+  isSpec: "True"
+  fullName: Casper.Network.SDK.Types.KeyPair.RawBytes
+  nameWithType: KeyPair.RawBytes
 - uid: Casper.Network.SDK.Types.KeyPair.Sign(System.Byte[])
   name: Sign(byte[])
   href: api/Casper.Network.SDK.Types.KeyPair.html#Casper_Network_SDK_Types_KeyPair_Sign_System_Byte___

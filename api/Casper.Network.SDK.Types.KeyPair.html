@@ -116,11 +116,12 @@
     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_PublicKey.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.PublicKey%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L21">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L27">View Source</a>
   </span>
   <a id="Casper_Network_SDK_Types_KeyPair_PublicKey_" data-uid="Casper.Network.SDK.Types.KeyPair.PublicKey*"></a>
   <h4 id="Casper_Network_SDK_Types_KeyPair_PublicKey" data-uid="Casper.Network.SDK.Types.KeyPair.PublicKey">PublicKey</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>The public key derived from the private key.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
@@ -141,23 +142,56 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
-</h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_CreateNew_Casper_Network_SDK_Types_KeyAlgo_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.CreateNew(Casper.Network.SDK.Types.KeyAlgo)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_RawBytes.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.RawBytes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L76">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L34">View Source</a>
   </span>
-  <a id="Casper_Network_SDK_Types_KeyPair_CreateNew_" data-uid="Casper.Network.SDK.Types.KeyPair.CreateNew*"></a>
-  <h4 id="Casper_Network_SDK_Types_KeyPair_CreateNew_Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.KeyPair.CreateNew(Casper.Network.SDK.Types.KeyAlgo)">CreateNew(KeyAlgo)</h4>
-  <div class="markdown level1 summary"><p>Creates a new key pair with the specified elliptic curve.</p>
+  <a id="Casper_Network_SDK_Types_KeyPair_RawBytes_" data-uid="Casper.Network.SDK.Types.KeyPair.RawBytes*"></a>
+  <h4 id="Casper_Network_SDK_Types_KeyPair_RawBytes" data-uid="Casper.Network.SDK.Types.KeyPair.RawBytes">RawBytes</h4>
+  <div class="markdown level1 summary"><p>The raw bytes of the private key.
+For ED25519, the 32-byte seed.
+For SECP256K1, the 32-byte big-endian unsigned scalar.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static KeyPair CreateNew(KeyAlgo keyAlgorithm)</code></pre>
+    <pre><code class="lang-csharp hljs">public byte[] RawBytes { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_Create_Casper_Network_SDK_Types_KeyAlgo_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.Create(Casper.Network.SDK.Types.KeyAlgo)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L143">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_KeyPair_Create_" data-uid="Casper.Network.SDK.Types.KeyPair.Create*"></a>
+  <h4 id="Casper_Network_SDK_Types_KeyPair_Create_Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.KeyPair.Create(Casper.Network.SDK.Types.KeyAlgo)">Create(KeyAlgo)</h4>
+  <div class="markdown level1 summary"><p>Creates a new key pair with the specified algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static KeyPair Create(KeyAlgo keyAlgorithm)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -193,10 +227,113 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_CreateNew_Casper_Network_SDK_Types_KeyAlgo_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.CreateNew(Casper.Network.SDK.Types.KeyAlgo)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L134">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_KeyPair_CreateNew_" data-uid="Casper.Network.SDK.Types.KeyPair.CreateNew*"></a>
+  <h4 id="Casper_Network_SDK_Types_KeyPair_CreateNew_Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.KeyPair.CreateNew(Casper.Network.SDK.Types.KeyAlgo)">CreateNew(KeyAlgo)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;Use Create() instead.&quot;, false)]
+public static KeyPair CreateNew(KeyAlgo keyAlgorithm)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.KeyAlgo.html">KeyAlgo</a></td>
+        <td><span class="parametername">keyAlgorithm</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.KeyPair.html">KeyPair</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_FromBytes_System_Byte___Casper_Network_SDK_Types_KeyAlgo_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.FromBytes(System.Byte%5B%5D%2CCasper.Network.SDK.Types.KeyAlgo)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L90">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_Types_KeyPair_FromBytes_" data-uid="Casper.Network.SDK.Types.KeyPair.FromBytes*"></a>
+  <h4 id="Casper_Network_SDK_Types_KeyPair_FromBytes_System_Byte___Casper_Network_SDK_Types_KeyAlgo_" data-uid="Casper.Network.SDK.Types.KeyPair.FromBytes(System.Byte[],Casper.Network.SDK.Types.KeyAlgo)">FromBytes(byte[], KeyAlgo)</h4>
+  <div class="markdown level1 summary"><p>Loads a key pair from a raw byte array containing the private key.
+For ED25519, the 32-byte seed is expected.
+For SECP256K1, the 32-byte big-endian unsigned scalar is expected.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static KeyPair FromBytes(byte[] bytes, KeyAlgo keyAlgorithm)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</td>
+        <td><span class="parametername">bytes</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.KeyAlgo.html">KeyAlgo</a></td>
+        <td><span class="parametername">keyAlgorithm</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Casper.Network.SDK.Types.KeyPair.html">KeyPair</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_FromPem_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.FromPem(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L29">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L41">View Source</a>
   </span>
   <a id="Casper_Network_SDK_Types_KeyPair_FromPem_" data-uid="Casper.Network.SDK.Types.KeyPair.FromPem*"></a>
   <h4 id="Casper_Network_SDK_Types_KeyPair_FromPem_System_String_" data-uid="Casper.Network.SDK.Types.KeyPair.FromPem(System.String)">FromPem(string)</h4>
@@ -244,7 +381,7 @@
     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_Sign_System_Byte___.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.Sign(System.Byte%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L168">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L221">View Source</a>
   </span>
   <a id="Casper_Network_SDK_Types_KeyPair_Sign_" data-uid="Casper.Network.SDK.Types.KeyPair.Sign*"></a>
   <h4 id="Casper_Network_SDK_Types_KeyPair_Sign_System_Byte___" data-uid="Casper.Network.SDK.Types.KeyPair.Sign(System.Byte[])">Sign(byte[])</h4>
@@ -292,7 +429,7 @@
     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_WritePublicKeyToPem_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.WritePublicKeyToPem(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L152">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L213">View Source</a>
   </span>
   <a id="Casper_Network_SDK_Types_KeyPair_WritePublicKeyToPem_" data-uid="Casper.Network.SDK.Types.KeyPair.WritePublicKeyToPem*"></a>
   <h4 id="Casper_Network_SDK_Types_KeyPair_WritePublicKeyToPem_System_String_" data-uid="Casper.Network.SDK.Types.KeyPair.WritePublicKeyToPem(System.String)">WritePublicKeyToPem(string)</h4>
@@ -325,7 +462,7 @@
     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair_WriteToPem_System_String_.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair.WriteToPem(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L119">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L184">View Source</a>
   </span>
   <a id="Casper_Network_SDK_Types_KeyPair_WriteToPem_" data-uid="Casper.Network.SDK.Types.KeyPair.WriteToPem*"></a>
   <h4 id="Casper_Network_SDK_Types_KeyPair_WriteToPem_System_String_" data-uid="Casper.Network.SDK.Types.KeyPair.WriteToPem(System.String)">WriteToPem(string)</h4>
@@ -365,7 +502,7 @@
                     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_Types_KeyPair.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.Types.KeyPair%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
                   </li>
                   <li>
-                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L19" class="contribution-link">View Source</a>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/Types/KeyPair.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
