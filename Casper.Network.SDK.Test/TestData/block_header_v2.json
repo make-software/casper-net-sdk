@@ -1,0 +1,17 @@
+{
+  "Version2": {
+    "parent_hash": "368341437a11a71ec589e62eec8e2fb82bc5539b02a76660f5bad03c124c5e36",
+    "state_root_hash": "1bcde15749ac85e56f76d7428fc5c7e2a83b5e968dfe3845b0c46e929913c992",
+    "body_hash": "d272bd190802c4872a303685f7e096878640b9ce7781a8ab1695dadd5d2a0b65",
+    "random_bit": false,
+    "accumulated_seed": "228b79f15324574618e8f5b4a864406f953b14f6e4bf6503525ee4b65a7f4aab",
+    "era_end": null,
+    "timestamp": "2026-08-11T12:55:16.837Z",
+    "era_id": 23277,
+    "height": 8803828,
+    "protocol_version": "2.2.2",
+    "proposer": "012d58e05b2057a84115709e0a6ccf000c6a83b4e8dfa389a680c1ab001864f1f2",
+    "current_gas_price": 1,
+    "last_switch_block_hash": "fd4cd1c938d4d8c4876940f2514af3251f127b20203fa8850ee57504579fe438"
+  }
+}
