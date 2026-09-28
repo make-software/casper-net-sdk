@@ -1,0 +1,14 @@
+{
+  "Version1": {
+    "parent_hash": "61b6f6cb0afcb6ff20ad7dca007e90eccc31717943c5fe1451a620c16985721f",
+    "state_root_hash": "a11fbc52f7ace34fb3b84af0756462691af64f6e8ecf562171b8a61281dc1f00",
+    "body_hash": "34eb0b689accd4867e88c765e623da2f63265dbbb99f16e3f369b5ae92c29ebd",
+    "random_bit": false,
+    "accumulated_seed": "c2912f64fd5212ee49117862239814d4f3bb3a7d2dee67a22413d565b45e92b6",
+    "era_end": null,
+    "timestamp": "2021-04-09T14:53:50.976Z",
+    "era_id": 10,
+    "height": 1000,
+    "protocol_version": "1.0.0"
+  }
+}

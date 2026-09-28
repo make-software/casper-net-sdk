@@ -202,7 +202,7 @@ namespace Casper.Network.SDK.Types
                         }
                         if (document.RootElement.TryGetProperty("Version2", out var headerV2))
                         {
-                            var blockHeaderV2 = JsonSerializer.Deserialize<BlockHeaderV2>(headerV1.GetRawText());
+                            var blockHeaderV2 = JsonSerializer.Deserialize<BlockHeaderV2>(headerV2.GetRawText());
                             return (BlockHeader)blockHeaderV2;
                         }
                         throw new JsonException("Cannot deserialize BlockHeader");
