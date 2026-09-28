@@ -152,6 +152,6 @@ namespace Casper.Network.SDK
 
         Task<RpcResponse<SpeculativeExecutionResult>> SpeceulativeExecution(Deploy deploy, string stateRootHash = null);
 
-        Task<RpcResponse<PutDeployResult>> SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null);
+        Task<RpcResponse<SpeculativeExecutionResult>> SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null);
     }
 }

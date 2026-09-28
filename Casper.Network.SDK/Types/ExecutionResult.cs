@@ -62,6 +62,19 @@ namespace Casper.Network.SDK.Types
                 Transfers = v2Transfers,
             };
         }
+
+        internal static ExecutionResult FromSpeculativeExecutionV2(SpeculativeExecutionResultV2 executionResult)
+        {
+            return new ExecutionResult
+            {
+                _version = 2,
+                ErrorMessage = executionResult.Error,
+                Transfers = executionResult.Transfers,
+                Limit = executionResult.Limit,
+                Consumed = executionResult.Consumed,
+                Effect = executionResult.Effect,
+            };
+        }
         
         /// <summary>
         /// What was the maximum allowed gas limit for this transaction?.
@@ -397,5 +410,54 @@ namespace Casper.Network.SDK.Types
         [JsonPropertyName("effects")]
         [JsonConverter(typeof(GenericListConverter<Transform, Transform.TransformConverter>))]
         public List<Transform> Effect { get; init; }
+    }
+
+    internal class SpeculativeExecutionResultV2
+    {
+        /// <summary>
+        /// Block hash used for the speculative execution.
+        /// </summary>
+        [JsonPropertyName("block_hash")]
+        public string BlockHash { get; init; }
+
+        /// <summary>
+        /// If there is no error message, this execution was processed successfully. If there is an error message, this
+        /// execution failed to fully process for the stated reason.
+        /// </summary>
+        [JsonPropertyName("error")]
+        public string Error { get; init; }
+
+        /// <summary>
+        /// What was the maximum allowed gas limit for this transaction?.
+        /// </summary>
+        [JsonPropertyName("limit")]
+        [JsonConverter(typeof(BigIntegerConverter))]
+        public BigInteger Limit { get; init; }
+
+        /// <summary>
+        /// How much gas was consumed executing this transaction.
+        /// </summary>
+        [JsonPropertyName("consumed")]
+        [JsonConverter(typeof(BigIntegerConverter))]
+        public BigInteger Consumed { get; init; }
+
+        /// <summary>
+        /// A record of transfers performed while executing this transaction.
+        /// </summary>
+        [JsonPropertyName("transfers")]
+        public List<Transfer> Transfers { get; init; }
+
+        /// <summary>
+        /// A log of all transforms produced during execution.
+        /// </summary>
+        [JsonPropertyName("effects")]
+        [JsonConverter(typeof(GenericListConverter<Transform, Transform.TransformConverter>))]
+        public List<Transform> Effect { get; init; }
+
+        /// <summary>
+        /// List of messages emitted in the transaction execution
+        /// </summary>
+        [JsonPropertyName("messages")]
+        public List<Message> Messages { get; init; }
     }
 }

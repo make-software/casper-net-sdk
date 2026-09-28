@@ -1,0 +1,116 @@
+{
+  "api_version": "2.0.0",
+  "execution_result": {
+    "block_hash": "2bd86fac7be3623f5a99cb43973eee8da93530c5b14947c4416778413a80a3fa",
+    "transfers": [],
+    "limit": "2500000000",
+    "consumed": "395091618",
+    "effects": [
+      {
+        "key": "hash-eece73f6a210f5d08f8a9da3348ab3c6f65d42eb0df9938f324940fb5422c360",
+        "kind": "Identity"
+      },
+      {
+        "key": "hash-938fc527ad756afaa216e03f9b4262525ab4a956f240c79a7eaa2c8103396d44",
+        "kind": "Identity"
+      },
+      {
+        "key": "hash-b0f8b7a6b856f8f66bd17d439e7902a899c15ac4ebaf435f7074ced0578c9d9d",
+        "kind": "Identity"
+      },
+      {
+        "key": "dictionary-8c3534ba90dcba55deaf1d532e049a563964045e5e326b011491236bf638633b",
+        "kind": "Identity"
+      },
+      {
+        "key": "dictionary-8c3534ba90dcba55deaf1d532e049a563964045e5e326b011491236bf638633b",
+        "kind": {
+          "Write": {
+            "CLValue": {
+              "cl_type": "Any",
+              "bytes": "0800000007ffeb902d7e8d030720000000211ba008d31d187259acfe2ee2da614d47b0570f2a4aaf04a10d12734f71c7cb2c0000004146612b2f424f6d2f574c686a7a5958414b58676a355a7041634e4e2b4151624e7579583155316758435065",
+              "parsed": null
+            }
+          }
+        }
+      },
+      {
+        "key": "dictionary-e345eb6a59b9197207d8c8016c5f3e4343e6721612a8b93883b3399bbac650ce",
+        "kind": {
+          "Write": {
+            "CLValue": {
+              "cl_type": "Any",
+              "bytes": "0200000001010720000000211ba008d31d187259acfe2ee2da614d47b0570f2a4aaf04a10d12734f71c7cb300000004551482f716e4d7a46434865517631786f6f676b34574271484b663664552b52395148777a31594258334b457a513d3d",
+              "parsed": null
+            }
+          }
+        }
+      },
+      {
+        "key": "uref-0e58eb93fc2f4606cd97de81159163b2dcea4dae32189f10c76408db1964a459-000",
+        "kind": "Identity"
+      },
+      {
+        "key": "message-topic-entity-contract-eece73f6a210f5d08f8a9da3348ab3c6f65d42eb0df9938f324940fb5422c360-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+        "kind": "Identity"
+      },
+      {
+        "key": "block-message-count-00000000000000000000000000000000000000000000000000000000000000",
+        "kind": "Identity"
+      },
+      {
+        "key": "message-entity-contract-eece73f6a210f5d08f8a9da3348ab3c6f65d42eb0df9938f324940fb5422c360-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1-0",
+        "kind": {
+          "Write": {
+            "Message": "message-checksum-d518a59ff2625b76c2fc08a3090fc3ab8b1eadc08114d78718266cb15de52bf9"
+          }
+        }
+      },
+      {
+        "key": "message-topic-entity-contract-eece73f6a210f5d08f8a9da3348ab3c6f65d42eb0df9938f324940fb5422c360-5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+        "kind": {
+          "Write": {
+            "MessageTopic": {
+              "message_count": 1,
+              "blocktime": 1790591335485,
+              "topic_name": "events"
+            }
+          }
+        }
+      },
+      {
+        "key": "block-message-count-00000000000000000000000000000000000000000000000000000000000000",
+        "kind": {
+          "Write": {
+            "CLValue": {
+              "cl_type": {
+                "Tuple2": [
+                  "U64",
+                  "U64"
+                ]
+              },
+              "bytes": "3d7c8fe7a00100000100000000000000",
+              "parsed": [
+                1790591335485,
+                1
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "messages": [
+      {
+        "entity_addr": "entity-contract-eece73f6a210f5d08f8a9da3348ab3c6f65d42eb0df9938f324940fb5422c360",
+        "message": {
+          "String": "{\"sender\":\"account-hash-56befc13a6fd62e18f361700a5e08f966901c34df8041b36ec97d54d605c23de\",\"recipient\":\"entity-account-ffaa73331421de42fd71a28824e1606a1ca7fa754f91f501f0cf56015f7284cd\",\"amount\":\"1\"}"
+        },
+        "topic_name": "events",
+        "topic_name_hash": "5721a6d9d7a9afe5dfdb35276fb823bed0f825350e4d865a5ec0110c380de4e1",
+        "topic_index": 1,
+        "block_index": 2
+      }
+    ],
+    "error": null
+  }
+}
