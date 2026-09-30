@@ -915,13 +915,13 @@ namespace Casper.Network.SDK
         /// </summary>
         /// <param name="deploy">The deploy to execute.</param>
         /// <param name="blockHash">Hash of the block on top of which the deploy is executed.</param>
-        public async Task<RpcResponse<PutDeployResult>> SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null)
+        public async Task<RpcResponse<SpeculativeExecutionResult>> SpeceulativeExecutionWithBlockHash(Deploy deploy, string blockHash = null)
         {
             if (deploy.Approvals.Count == 0)
                 throw new Exception("Sign the deploy before sending it to the network.");
 
             var method = new SpeculativeExecution(deploy, blockHash, isBlockHash: true );
-            return await SendRpcRequestAsync<PutDeployResult>(method);
+            return await SendRpcRequestAsync<SpeculativeExecutionResult>(method);
         }
 
         /// <summary>

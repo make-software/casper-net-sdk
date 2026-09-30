@@ -56,7 +56,7 @@ namespace NetCasperTest
             var result = rpcResponse.Parse();
             Assert.IsNotNull(result.BlockHash);
             Assert.IsNotNull(result.ExecutionResult);
-            Assert.IsTrue(result.ExecutionResult.Effect.Transforms.Count > 0);
+            Assert.IsTrue(result.ExecutionResult.Effect.Count > 0);
         }
     }
     

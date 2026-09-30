@@ -73,7 +73,7 @@
   },
   "messages": [
     {
-      "hash_addr": "9038763d3066f0217047263ebd48dc7c839fadfdde141f5b990866563655b44a",
+      "entity_addr": "entity-contract-eece73f6a210f5d08f8a9da3348ab3c6f65d42eb0df9938f324940fb5422c360",
       "message": {
         "String": "dummy-data"
       },
