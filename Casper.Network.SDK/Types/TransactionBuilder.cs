@@ -574,6 +574,44 @@ namespace Casper.Network.SDK.Types
                 return base.Build();
             }
         }
+        
+        public class NativeBurnBuilder : TransactionV1Builder<NativeBurnBuilder>
+        {
+            //specific tx properties
+            private URef _source;
+            [RequiredArg]
+            private CLValue _amount = CLValue.U512((BigInteger)0);
+
+            public NativeBurnBuilder()
+            {
+                _invocationTarget = TransactionV1Target.Native;
+                _entryPoint = TransactionV1EntryPoint.Burn;
+            }
+
+            public NativeBurnBuilder Source(URef uRef)
+            {
+                _source = uRef;
+                return this;
+            }
+            
+            public NativeBurnBuilder Amount(ulong amount)
+            {
+                _amount = CLValue.U512(amount);
+                return this;
+            }
+
+            public override Transaction Build()
+            {
+                ValidateRequiredProperties();
+
+                _runtimeArgs = new List<NamedArg>();
+                if(_source is not null)
+                    _runtimeArgs.Add(new NamedArg("source", _source));
+                _runtimeArgs.Add(new NamedArg("amount", _amount));
+
+                return base.Build();
+            }
+        }
 
         public class ContractCallBuilder : TransactionV1Builder<ContractCallBuilder>
         {
