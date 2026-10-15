@@ -23,7 +23,7 @@ namespace NetCasperTest.RPCResponses
             var transactionV1 = (TransactionV1)transaction;
             Assert.IsNotNull(transactionV1);
 
-            Assert.AreEqual("06e0cf828f7a588efd1bbfdc31d326ef64fdcf53efd338ae38672d751139fe80", transactionV1.Hash);
+            Assert.IsTrue(transactionV1.ValidateHashes(out var msg), msg);
             Assert.AreEqual("casper-test", transactionV1.Payload.ChainName);
 
             Assert.IsTrue(transactionV1.Payload.Target is NativeTransactionV1Target);
@@ -52,8 +52,7 @@ namespace NetCasperTest.RPCResponses
             Assert.AreEqual("3000000000", transaction.Invocation.GetRuntimeArgValue("amount").Parsed.ToString());
 
             Assert.AreEqual(1, transactionV1.Approvals.Count);
-            Assert.AreEqual("0164e74dcd32e8332a7ce3c7ad0cf77a85c64e34568e855a80ac337ad3b85b4183ad7933e784a50b9d76f5dd3e35fb4b36967a5ce73592f3818efebf0d44991b0a",
-                transactionV1.Approvals[0].Signature.ToString());
+            Assert.IsTrue(transactionV1.VerifySignatures(out var vsMsg), vsMsg);
 
             AssertExtensions.IsHash(result.ExecutionInfo.BlockHash);
             Assert.AreEqual(9496612UL, result.ExecutionInfo.BlockHeight);

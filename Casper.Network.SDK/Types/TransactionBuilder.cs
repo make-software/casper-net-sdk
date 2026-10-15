@@ -580,7 +580,7 @@ namespace Casper.Network.SDK.Types
             //specific tx properties
             private URef _source;
             [RequiredArg]
-            private CLValue _amount = CLValue.U512((BigInteger)0);
+            private CLValue _amount;
 
             public NativeBurnBuilder()
             {
