@@ -70,6 +70,11 @@ namespace Casper.Network.SDK.Types
         /// The `cancel_reservations` native entry point, used to remove delegators from validator's reserve list.
         /// </summary>
         CancelReservations = 11,
+        
+        /// <summary>
+        /// The `burn` native entry point, used to burn `Motes` from a source purse.
+        /// </summary>
+        Burn = 12,
     }
 
 
@@ -120,6 +125,7 @@ namespace Casper.Network.SDK.Types
         const byte CHANGE_BID_PUBLIC_KEY_VARIANT_TAG = 9;
         const byte ADD_RESERVATIONS_VARIANT_TAG = 10;
         const byte CANCEL_RESERVATIONS_VARIANT_TAG = 11;
+        const byte BURN_VARIANT_TAG = 12;
         
         public byte[] ToBytes()
         {
@@ -137,6 +143,7 @@ namespace Casper.Network.SDK.Types
                 NativeEntryPoint.ChangeBidPublicKey => CHANGE_BID_PUBLIC_KEY_VARIANT_TAG,
                 NativeEntryPoint.AddReservations => ADD_RESERVATIONS_VARIANT_TAG,
                 NativeEntryPoint.CancelReservations => CANCEL_RESERVATIONS_VARIANT_TAG,
+                NativeEntryPoint.Burn => BURN_VARIANT_TAG,
                 _ => throw new Exception($"Unknown NativeEntryPoint type: {Type}")
             };
             return new CalltableSerialization()
@@ -204,6 +211,9 @@ namespace Casper.Network.SDK.Types
         
         public static ITransactionV1EntryPoint CancelReservations =>
             new NativeTransactionV1EntryPoint(NativeEntryPoint.CancelReservations);
+        
+        public static ITransactionV1EntryPoint Burn =>
+            new NativeTransactionV1EntryPoint(NativeEntryPoint.Burn);
         
         public static ITransactionV1EntryPoint Custom(string name) => 
             new CustomTransactionV1EntryPoint(name);
