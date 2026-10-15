@@ -10,6 +10,29 @@ All notable changes to this project will be documented in this file.  The format
 [comment]: <> (Security:   in case of vulnerabilities)
 
 
+## [3.3.0]
+
+### Added
+
+* Added Casper Event Standard (CES) schema loading, event decoding, and extraction of contract events from execution results through `CESContractSchema`, `CESEvent`, and `CESParser`. These types are provided by the separate `Casper.Network.SDK.CES` NuGet package, which depends on the core SDK and supports .NET 8 and .NET Standard 2.0. Import the `Casper.Network.SDK.CES` namespace to use them. [PR#111](https://github.com/make-software/casper-net-sdk/pull/111).
+* Added binary deserialization of `CLValue` and `NamedArg` values through `FromBytes()` and `FromReader()` methods on their byte serializers, and of named argument lists through `NamedArg.ListFromBytes()` and `NamedArg.ListFromReader()`. [PR#110](https://github.com/make-software/casper-net-sdk/pull/110).
+* Added `CLValueDictionary.Parse()` to decode dictionary entries into their value bytes, seed URef, and item key, and `CLValueReader` to read values from a binary stream using a known `CLTypeInfo`. [PR#110](https://github.com/make-software/casper-net-sdk/pull/110) and [PR#111](https://github.com/make-software/casper-net-sdk/pull/111).
+* Added a `ServerEventsClient(string sseUrl)` constructor for Casper 2.x nodes that accepts a full HTTP or HTTPS event stream URL, including a custom path and query parameters. [PR#113](https://github.com/make-software/casper-net-sdk/pull/113).
+* Added `KeyPair.Create()`, `KeyPair.FromBytes()`, and `KeyPair.RawBytes` for key generation and raw private-key import/export. Raw keys must contain 32 bytes: an ED25519 seed or a SECP256K1 unsigned scalar in big-endian order. [PR#117](https://github.com/make-software/casper-net-sdk/pull/117).
+* Added Casper 2.0 guides for `TransactionV1`, balance queries, and addressable entities, and refreshed the existing articles and tutorials. [PR#115](https://github.com/make-software/casper-net-sdk/pull/115).
+
+### Fixed
+
+* Fixed incorrect deserialization of `Version2` block headers. [PR#119](https://github.com/make-software/casper-net-sdk/pull/119).
+* Renamed `Message.HashAddr` to `Message.EntityAddr` and changed its JSON field from `hash_addr` to `entity_addr` to match Casper 2.0 responses. Applications using `HashAddr` must update their references. [PR#120](https://github.com/make-software/casper-net-sdk/pull/120).
+* Fixed speculative execution response parsing for Casper 2.x nodes while preserving support for Casper 1.x responses. [PR#120](https://github.com/make-software/casper-net-sdk/pull/120).
+* Corrected the return type of `SpeceulativeExecutionWithBlockHash()` in `ICasperClient` and `NetCasperClient` from `RpcResponse<PutDeployResult>` to `RpcResponse<SpeculativeExecutionResult>`. Callers and interface implementations must use the corrected type. [PR#120](https://github.com/make-software/casper-net-sdk/pull/120).
+* Fixed intermittent invalid SECP256K1 signatures by normalizing the signature's `s` component instead of retrying with the same signer. [PR#117](https://github.com/make-software/casper-net-sdk/pull/117).
+
+### Deprecated
+
+* `KeyPair.CreateNew()` is marked as obsolete. Use `KeyPair.Create()` instead. The old method remains available as a compatibility wrapper. [PR#117](https://github.com/make-software/casper-net-sdk/pull/117).
+
 ## [3.2.0]
 
 ### Fixed
@@ -207,6 +230,8 @@ This new type permits to parse correctly the value `"00"` used for system blocks
 ### Added
 * Initial release of Casper .NET SDK.
 
+[3.3.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.3.0
+[3.2.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.2.0
 [3.0.0]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0
 [3.0.0-beta4]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta4
 [3.0.0-beta3]: https://github.com/make-software/casper-net-sdk/releases/tag/v3.0.0-beta3
