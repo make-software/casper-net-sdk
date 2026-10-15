@@ -5,7 +5,7 @@ using Casper.Network.SDK.Types;
 using NUnit.Framework;
 using Org.BouncyCastle.Utilities.Encoders;
 
-namespace NetCasperTest
+namespace Casper.Network.SDK.CES.Test
 {
     /// <summary>
     /// Verifies that <see cref="CESContractSchema"/> and <see cref="CESEvent"/> round-trip

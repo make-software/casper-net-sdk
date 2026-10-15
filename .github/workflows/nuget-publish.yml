@@ -46,3 +46,13 @@ jobs:
 
           # Flag to toggle pushing symbols along with nuget package to the server, disabled by default
           # INCLUDE_SYMBOLS: false
+
+      - name: publish CES on version change
+        id: publish_ces_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj
+          PACKAGE_NAME: Casper.Network.SDK.CES
+          VERSION_REGEX: ^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$
+          TAG_FORMAT: v*
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}

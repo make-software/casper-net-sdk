@@ -8,7 +8,7 @@ using Casper.Network.SDK.Types;
 using NUnit.Framework;
 using Org.BouncyCastle.Utilities.Encoders;
 
-namespace NetCasperTest
+namespace Casper.Network.SDK.CES.Test
 {
     [TestFixture]
     public class CESParserGetEventsTest
