@@ -34,6 +34,12 @@ cd your-project
 dotnet add reference ../casper-net-sdk/Casper.Network.SDK/Casper.Network.SDK.csproj
 ```
 
+If you need the CES parser, also add a reference to the `Casper.Network.SDK.CES.csproj` project in the same way:
+
+```bash
+dotnet add reference ../casper-net-sdk/Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj
+```
+
 ## Create a minimal console application
 
 Create a new console app and add the SDK package:
