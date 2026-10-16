@@ -113,11 +113,12 @@
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Casper.html">Casper</a>.<a class="xref" href="Casper.Network.html">Network</a>.<a class="xref" href="Casper.Network.SDK.html">SDK</a>.<a class="xref" href="Casper.Network.SDK.JsonRpc.html">JsonRpc</a>.<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.html">ResultTypes</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Casper</span>.<span class="xref">Network</span>.<a class="xref" href="Casper.Network.SDK.html">SDK</a>.<a class="xref" href="Casper.Network.SDK.JsonRpc.html">JsonRpc</a>.<a class="xref" href="Casper.Network.SDK.JsonRpc.ResultTypes.html">ResultTypes</a></h6>
   <h6><strong>Assembly</strong>: Casper.Network.SDK.dll</h6>
   <h5 id="Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SpeculativeExecutionResult : RpcResult</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonConverter(typeof(SpeculativeExecutionResult.SpeculativeExecutionResultConverter))]
+public class SpeculativeExecutionResult : RpcResult</code></pre>
   </div>
   <h3 id="properties">Properties
 </h3>
@@ -126,7 +127,7 @@
     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_BlockHash.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.BlockHash%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/JsonRpc/ResultTypes/SpeculativeExecutionResult.cs/#L14">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Casper.Network.SDK/JsonRpc/ResultTypes/SpeculativeExecutionResult.cs/#L18">View Source</a>
   </span>
   <a id="Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_BlockHash_" data-uid="Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.BlockHash*"></a>
   <h4 id="Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_BlockHash" data-uid="Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.BlockHash">BlockHash</h4>
@@ -158,7 +159,7 @@ public string BlockHash { get; init; }</code></pre>
     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_ExecutionResult.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.ExecutionResult%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/JsonRpc/ResultTypes/SpeculativeExecutionResult.cs/#L20">View Source</a>
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Casper.Network.SDK/JsonRpc/ResultTypes/SpeculativeExecutionResult.cs/#L24">View Source</a>
   </span>
   <a id="Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_ExecutionResult_" data-uid="Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.ExecutionResult*"></a>
   <h4 id="Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_ExecutionResult" data-uid="Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.ExecutionResult">ExecutionResult</h4>
@@ -168,8 +169,7 @@ public string BlockHash { get; init; }</code></pre>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[JsonPropertyName(&quot;execution_result&quot;)]
-[JsonConverter(typeof(ExecutionResultV1.ExecutionResultV1Converter))]
-public ExecutionResultV1 ExecutionResult { get; init; }</code></pre>
+public ExecutionResult ExecutionResult { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -181,7 +181,39 @@ public ExecutionResultV1 ExecutionResult { get; init; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Casper.Network.SDK.Types.ExecutionResultV1.html">ExecutionResultV1</a></td>
+        <td><a class="xref" href="Casper.Network.SDK.Types.ExecutionResult.html">ExecutionResult</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_Messages.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Casper.Network.SDK/JsonRpc/ResultTypes/SpeculativeExecutionResult.cs/#L30">View Source</a>
+  </span>
+  <a id="Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_Messages_" data-uid="Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages*"></a>
+  <h4 id="Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_Messages" data-uid="Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages">Messages</h4>
+  <div class="markdown level1 summary"><p>List of messages emitted in the transaction execution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonPropertyName(&quot;messages&quot;)]
+public List&lt;Message&gt; Messages { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Casper.Network.SDK.Types.Message.html">Message</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -198,7 +230,7 @@ public ExecutionResultV1 ExecutionResult { get; init; }</code></pre>
                     <a href="https://github.com/make-software/casper-net-sdk/new/master/apiSpec/new?filename=Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult.md&amp;value=---%0Auid%3A%20Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
                   </li>
                   <li>
-                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Docs/Casper.Network.SDK/JsonRpc/ResultTypes/SpeculativeExecutionResult.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/make-software/casper-net-sdk/blob/master/Casper.Network.SDK/JsonRpc/ResultTypes/SpeculativeExecutionResult.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

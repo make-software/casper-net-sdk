@@ -4536,6 +4536,54 @@ references:
   isSpec: "True"
   fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.ExecutionResult
   nameWithType: SpeculativeExecutionResult.ExecutionResult
+- uid: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages
+  name: Messages
+  href: api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.html#Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_Messages
+  commentId: P:Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages
+  fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages
+  nameWithType: SpeculativeExecutionResult.Messages
+- uid: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages*
+  name: Messages
+  href: api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.html#Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_Messages_
+  commentId: Overload:Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages
+  isSpec: "True"
+  fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.Messages
+  nameWithType: SpeculativeExecutionResult.Messages
+- uid: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter
+  name: SpeculativeExecutionResult.SpeculativeExecutionResultConverter
+  href: api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.html
+  commentId: T:Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter
+  fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter
+  nameWithType: SpeculativeExecutionResult.SpeculativeExecutionResultConverter
+- uid: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)
+  name: Read(ref Utf8JsonReader, Type, JsonSerializerOptions)
+  href: api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.html#Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_SpeculativeExecutionResultConverter_Read_System_Text_Json_Utf8JsonReader__System_Type_System_Text_Json_JsonSerializerOptions_
+  commentId: M:Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)
+  name.vb: Read(Utf8JsonReader, Type, JsonSerializerOptions)
+  fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read(ref System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions)
+  fullName.vb: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read(System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions)
+  nameWithType: SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read(ref Utf8JsonReader, Type, JsonSerializerOptions)
+  nameWithType.vb: SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read(Utf8JsonReader, Type, JsonSerializerOptions)
+- uid: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read*
+  name: Read
+  href: api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.html#Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_SpeculativeExecutionResultConverter_Read_
+  commentId: Overload:Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read
+  isSpec: "True"
+  fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read
+  nameWithType: SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Read
+- uid: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write(System.Text.Json.Utf8JsonWriter,Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult,System.Text.Json.JsonSerializerOptions)
+  name: Write(Utf8JsonWriter, SpeculativeExecutionResult, JsonSerializerOptions)
+  href: api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.html#Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_SpeculativeExecutionResultConverter_Write_System_Text_Json_Utf8JsonWriter_Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_System_Text_Json_JsonSerializerOptions_
+  commentId: M:Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write(System.Text.Json.Utf8JsonWriter,Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult,System.Text.Json.JsonSerializerOptions)
+  fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write(System.Text.Json.Utf8JsonWriter, Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult, System.Text.Json.JsonSerializerOptions)
+  nameWithType: SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write(Utf8JsonWriter, SpeculativeExecutionResult, JsonSerializerOptions)
+- uid: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write*
+  name: Write
+  href: api/Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.html#Casper_Network_SDK_JsonRpc_ResultTypes_SpeculativeExecutionResult_SpeculativeExecutionResultConverter_Write_
+  commentId: Overload:Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write
+  isSpec: "True"
+  fullName: Casper.Network.SDK.JsonRpc.ResultTypes.SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write
+  nameWithType: SpeculativeExecutionResult.SpeculativeExecutionResultConverter.Write
 - uid: Casper.Network.SDK.JsonRpc.RpcClient
   name: RpcClient
   href: api/Casper.Network.SDK.JsonRpc.RpcClient.html
@@ -15777,19 +15825,19 @@ references:
   isSpec: "True"
   fullName: Casper.Network.SDK.Types.Message.BlockIndex
   nameWithType: Message.BlockIndex
-- uid: Casper.Network.SDK.Types.Message.HashAddr
-  name: HashAddr
-  href: api/Casper.Network.SDK.Types.Message.html#Casper_Network_SDK_Types_Message_HashAddr
-  commentId: P:Casper.Network.SDK.Types.Message.HashAddr
-  fullName: Casper.Network.SDK.Types.Message.HashAddr
-  nameWithType: Message.HashAddr
-- uid: Casper.Network.SDK.Types.Message.HashAddr*
-  name: HashAddr
-  href: api/Casper.Network.SDK.Types.Message.html#Casper_Network_SDK_Types_Message_HashAddr_
-  commentId: Overload:Casper.Network.SDK.Types.Message.HashAddr
+- uid: Casper.Network.SDK.Types.Message.EntityAddr
+  name: EntityAddr
+  href: api/Casper.Network.SDK.Types.Message.html#Casper_Network_SDK_Types_Message_EntityAddr
+  commentId: P:Casper.Network.SDK.Types.Message.EntityAddr
+  fullName: Casper.Network.SDK.Types.Message.EntityAddr
+  nameWithType: Message.EntityAddr
+- uid: Casper.Network.SDK.Types.Message.EntityAddr*
+  name: EntityAddr
+  href: api/Casper.Network.SDK.Types.Message.html#Casper_Network_SDK_Types_Message_EntityAddr_
+  commentId: Overload:Casper.Network.SDK.Types.Message.EntityAddr
   isSpec: "True"
-  fullName: Casper.Network.SDK.Types.Message.HashAddr
-  nameWithType: Message.HashAddr
+  fullName: Casper.Network.SDK.Types.Message.EntityAddr
+  nameWithType: Message.EntityAddr
 - uid: Casper.Network.SDK.Types.Message.MessagePayload
   name: MessagePayload
   href: api/Casper.Network.SDK.Types.Message.html#Casper_Network_SDK_Types_Message_MessagePayload
@@ -16564,6 +16612,12 @@ references:
   commentId: F:Casper.Network.SDK.Types.NativeEntryPoint.AddReservations
   fullName: Casper.Network.SDK.Types.NativeEntryPoint.AddReservations
   nameWithType: NativeEntryPoint.AddReservations
+- uid: Casper.Network.SDK.Types.NativeEntryPoint.Burn
+  name: Burn
+  href: api/Casper.Network.SDK.Types.NativeEntryPoint.html#Casper_Network_SDK_Types_NativeEntryPoint_Burn
+  commentId: F:Casper.Network.SDK.Types.NativeEntryPoint.Burn
+  fullName: Casper.Network.SDK.Types.NativeEntryPoint.Burn
+  nameWithType: NativeEntryPoint.Burn
 - uid: Casper.Network.SDK.Types.NativeEntryPoint.Call
   name: Call
   href: api/Casper.Network.SDK.Types.NativeEntryPoint.html#Casper_Network_SDK_Types_NativeEntryPoint_Call
@@ -19627,6 +19681,73 @@ references:
   isSpec: "True"
   fullName: Casper.Network.SDK.Types.Transaction.NativeAddReservationsBuilder.Reservations
   nameWithType: Transaction.NativeAddReservationsBuilder.Reservations
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder
+  name: Transaction.NativeBurnBuilder
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html
+  commentId: T:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder
+  nameWithType: Transaction.NativeBurnBuilder
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.#ctor
+  name: NativeBurnBuilder()
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder__ctor
+  commentId: M:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.#ctor
+  name.vb: New()
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.NativeBurnBuilder()
+  fullName.vb: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.New()
+  nameWithType: Transaction.NativeBurnBuilder.NativeBurnBuilder()
+  nameWithType.vb: Transaction.NativeBurnBuilder.New()
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.#ctor*
+  name: NativeBurnBuilder
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder__ctor_
+  commentId: Overload:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.NativeBurnBuilder
+  fullName.vb: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.New
+  nameWithType: Transaction.NativeBurnBuilder.NativeBurnBuilder
+  nameWithType.vb: Transaction.NativeBurnBuilder.New
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Amount(System.UInt64)
+  name: Amount(ulong)
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder_Amount_System_UInt64_
+  commentId: M:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Amount(System.UInt64)
+  name.vb: Amount(ULong)
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Amount(ulong)
+  fullName.vb: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Amount(ULong)
+  nameWithType: Transaction.NativeBurnBuilder.Amount(ulong)
+  nameWithType.vb: Transaction.NativeBurnBuilder.Amount(ULong)
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Amount*
+  name: Amount
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder_Amount_
+  commentId: Overload:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Amount
+  isSpec: "True"
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Amount
+  nameWithType: Transaction.NativeBurnBuilder.Amount
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Build
+  name: Build()
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder_Build
+  commentId: M:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Build
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Build()
+  nameWithType: Transaction.NativeBurnBuilder.Build()
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Build*
+  name: Build
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder_Build_
+  commentId: Overload:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Build
+  isSpec: "True"
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Build
+  nameWithType: Transaction.NativeBurnBuilder.Build
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Source(Casper.Network.SDK.Types.URef)
+  name: Source(URef)
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder_Source_Casper_Network_SDK_Types_URef_
+  commentId: M:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Source(Casper.Network.SDK.Types.URef)
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Source(Casper.Network.SDK.Types.URef)
+  nameWithType: Transaction.NativeBurnBuilder.Source(URef)
+- uid: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Source*
+  name: Source
+  href: api/Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.html#Casper_Network_SDK_Types_Transaction_NativeBurnBuilder_Source_
+  commentId: Overload:Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Source
+  isSpec: "True"
+  fullName: Casper.Network.SDK.Types.Transaction.NativeBurnBuilder.Source
+  nameWithType: Transaction.NativeBurnBuilder.Source
 - uid: Casper.Network.SDK.Types.Transaction.NativeCancelReservationsBuilder
   name: Transaction.NativeCancelReservationsBuilder
   href: api/Casper.Network.SDK.Types.Transaction.NativeCancelReservationsBuilder.html
@@ -21220,6 +21341,19 @@ references:
   isSpec: "True"
   fullName: Casper.Network.SDK.Types.TransactionV1EntryPoint.AddReservations
   nameWithType: TransactionV1EntryPoint.AddReservations
+- uid: Casper.Network.SDK.Types.TransactionV1EntryPoint.Burn
+  name: Burn
+  href: api/Casper.Network.SDK.Types.TransactionV1EntryPoint.html#Casper_Network_SDK_Types_TransactionV1EntryPoint_Burn
+  commentId: P:Casper.Network.SDK.Types.TransactionV1EntryPoint.Burn
+  fullName: Casper.Network.SDK.Types.TransactionV1EntryPoint.Burn
+  nameWithType: TransactionV1EntryPoint.Burn
+- uid: Casper.Network.SDK.Types.TransactionV1EntryPoint.Burn*
+  name: Burn
+  href: api/Casper.Network.SDK.Types.TransactionV1EntryPoint.html#Casper_Network_SDK_Types_TransactionV1EntryPoint_Burn_
+  commentId: Overload:Casper.Network.SDK.Types.TransactionV1EntryPoint.Burn
+  isSpec: "True"
+  fullName: Casper.Network.SDK.Types.TransactionV1EntryPoint.Burn
+  nameWithType: TransactionV1EntryPoint.Burn
 - uid: Casper.Network.SDK.Types.TransactionV1EntryPoint.Call
   name: Call
   href: api/Casper.Network.SDK.Types.TransactionV1EntryPoint.html#Casper_Network_SDK_Types_TransactionV1EntryPoint_Call

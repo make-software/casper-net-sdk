@@ -70,7 +70,11 @@
 <h1 id="casper-event-standard-ces">Casper Event Standard (CES)</h1>
 
 <p>The <strong>Casper Event Standard (CES)</strong> is a convention adopted by contract developers for emitting and consuming typed events from Casper smart contracts. Contracts that follow CES store a self-describing schema alongside their events, making it possible to decode any event without out-of-band knowledge of its structure.</p>
-<p>The Casper .NET SDK provides the <code>Casper.Network.SDK.CES</code> namespace with three classes: <code>CESContractSchema</code> (schema loading and parsing), <code>CESEvent</code> (event parsing and field access), and <code>CESParser</code> (scanning execution results).</p>
+<p>The <code>Casper.Network.SDK.CES</code> NuGet package provides the <code>Casper.Network.SDK.CES</code> namespace with three main classes: <code>CESContractSchema</code> (schema loading and parsing), <code>CESEvent</code> (event parsing and field access), and <code>CESParser</code> (scanning execution results).</p>
+<h2 id="installation">Installation</h2>
+<p>Add the CES package to your application. It depends on <code>Casper.Network.SDK</code>, which NuGet installs automatically:</p>
+<pre><code class="lang-bash">dotnet add package Casper.Network.SDK.CES
+</code></pre>
 <hr>
 <h2 id="how-ces-works">How CES Works</h2>
 <p>A CES-compliant contract uses two special named keys for events:</p>
@@ -116,7 +120,8 @@ for each field (in schema order):
 <p>The simplest way to load a contract's schema is <code>CESContractSchema.LoadAsync</code>. It accepts either a <strong>contract-package hash</strong> or a direct <strong>contract hash</strong>, reads the named keys to locate <code>__events_schema</code> and <code>__events</code>, and fetches and parses the schema — all in a single call.</p>
 <h3 id="using-a-contract-package-hash">Using a contract-package hash</h3>
 <p>When you pass a contract-package hash, the method resolves the latest active contract version automatically. You can also request a specific version with the optional <code>version</code> parameter.</p>
-<pre><code class="lang-csharp">using Casper.Network.SDK.CES;
+<pre><code class="lang-csharp">using Casper.Network.SDK;
+using Casper.Network.SDK.CES;
 
 var client = new NetCasperClient(&quot;https://rpc.testnet.casperlabs.io/rpc&quot;);
 
@@ -321,7 +326,10 @@ var json = JsonSerializer.Serialize(events);
 Console.WriteLine(json);
 </code></pre>
 <h2 id="parsing-ces-events-in-the-sse-stream">Parsing CES events in the SSE stream</h2>
-<p>See <code>Docs/Examples/CESParser/Program.cs</code> for a runnable sample that connects to the node SSE stream, listens to <code>TransactionProcessed</code> events, and pretty-prints parsed CES events.</p>
+<p>See <a href="https://github.com/make-software/casper-net-sdk/tree/master/Docs/Examples/CESParser">the CES parser example</a> for a runnable sample that references the CES library, connects to the node SSE stream, listens to <code>TransactionProcessed</code> events, and pretty-prints parsed CES events.</p>
+<p>Run it from the repository root, supplying the contract-package hash to watch:</p>
+<pre><code class="lang-bash">dotnet run --project Docs/Examples/CESParser -- &lt;contract-package-hash&gt;
+</code></pre>
 
 </article>
           </div>

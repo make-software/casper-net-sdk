@@ -81,11 +81,15 @@
 <h3 id="dotnet-cli-tool-windowsmaclinux">dotnet CLI tool (Windows/Mac/Linux)</h3>
 <pre><code>dotnet add package Casper.Network.SDK
 </code></pre>
+<p>For Casper Event Standard schema and event parsing, also install <code>Casper.Network.SDK.CES</code> and import <code>Casper.Network.SDK.CES</code>. See the <a href="CasperEventStandard.html">CES guide</a>.</p>
 <h2 id="add-a-reference-to-the-source-code">Add a reference to the source code</h2>
 <p>Clone the GitHub repository in your solution folder and add a reference in your project to the <code>Casper.Network.SDK.csproj</code> file.</p>
 <pre><code class="lang-bash">git clone https://github.com/make-software/casper-net-sdk.git
 cd your-project
 dotnet add reference ../casper-net-sdk/Casper.Network.SDK/Casper.Network.SDK.csproj
+</code></pre>
+<p>If you need the CES parser, also add a reference to the <code>Casper.Network.SDK.CES.csproj</code> project in the same way:</p>
+<pre><code class="lang-bash">dotnet add reference ../casper-net-sdk/Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj
 </code></pre>
 <h2 id="create-a-minimal-console-application">Create a minimal console application</h2>
 <p>Create a new console app and add the SDK package:</p>
