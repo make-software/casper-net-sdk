@@ -3,56 +3,66 @@ name: Publish to nuget.org
 on:
   workflow_dispatch:
 
+concurrency:
+  group: nuget-publish
+  cancel-in-progress: false
+
 jobs:
   publish:
-
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+    permissions:
+      contents: write # Required to push version tags.
+      id-token: write # Required by NuGet/login to request an OIDC token.
 
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # Include existing version tags so reruns can skip them.
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.0.x
 
-      - name: publish on version change
-        id: publish_nuget
-        uses: rohith/publish-nuget@v2
+      - name: Pack SDK
+        run: dotnet pack Casper.Network.SDK/Casper.Network.SDK.csproj --configuration Release --output artifacts
+
+      - name: Pack CES
+        run: dotnet pack Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj --configuration Release --output artifacts
+
+      # Configure a nuget.org Trusted Publishing policy for make-software/casper-net-sdk,
+      # workflow nuget-publish.yml, with no environment and access to both packages.
+      - name: Log in to NuGet with Trusted Publishing
+        id: nuget_login
+        uses: NuGet/login@v1
         with:
-          # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: Casper.Network.SDK/Casper.Network.SDK.csproj
-          
-          # NuGet package id, used for version detection & defaults to project name
-          PACKAGE_NAME: Casper.Network.SDK
-          
-          # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
-          # VERSION_FILE_PATH: Directory.Build.props
+          # NuGet profile username (not email) associated with the publishing policy.
+          user: ${{ secrets.NUGET_USER }}
 
-          # Regex pattern to extract version info in a capturing group
-          VERSION_REGEX: ^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$
-          
-          # Flag to toggle git tagging, enabled by default
-          # TAG_COMMIT: true
+      - name: Publish packages
+        env:
+          NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
+        run: >-
+          dotnet nuget push "artifacts/*.nupkg"
+          --api-key "$NUGET_API_KEY"
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+          --no-symbols
 
-          # Format of the git tag, [*] gets replaced with actual version
-          TAG_FORMAT: v*
-
-          # API key to authenticate with NuGet server
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-
-          # NuGet server uri hosting the packages, defaults to https://api.nuget.org
-          # NUGET_SOURCE: https://api.nuget.org
-
-          # Flag to toggle pushing symbols along with nuget package to the server, disabled by default
-          # INCLUDE_SYMBOLS: false
-
-      - name: publish CES on version change
-        id: publish_ces_nuget
-        uses: rohith/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj
-          PACKAGE_NAME: Casper.Network.SDK.CES
-          VERSION_REGEX: ^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$
-          TAG_FORMAT: v*
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: Tag published versions
+        run: |
+          for project in Casper.Network.SDK/Casper.Network.SDK.csproj Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj; do
+            version=$(dotnet msbuild "$project" -getProperty:PackageVersion -nologo)
+            tag="v$version"
+            if git show-ref --verify --quiet "refs/tags/$tag"; then
+              echo "Tag $tag already exists; skipping."
+              continue
+            fi
+            git tag "$tag"
+            git push origin "refs/tags/$tag"
+          done
