@@ -2,7 +2,15 @@
 
 The **Casper Event Standard (CES)** is a convention adopted by contract developers for emitting and consuming typed events from Casper smart contracts. Contracts that follow CES store a self-describing schema alongside their events, making it possible to decode any event without out-of-band knowledge of its structure.
 
-The Casper .NET SDK provides the `Casper.Network.SDK.CES` namespace with three classes: `CESContractSchema` (schema loading and parsing), `CESEvent` (event parsing and field access), and `CESParser` (scanning execution results).
+The `Casper.Network.SDK.CES` NuGet package provides the `Casper.Network.SDK.CES` namespace with three main classes: `CESContractSchema` (schema loading and parsing), `CESEvent` (event parsing and field access), and `CESParser` (scanning execution results).
+
+## Installation
+
+Add the CES package to your application. It depends on `Casper.Network.SDK`, which NuGet installs automatically:
+
+```bash
+dotnet add package Casper.Network.SDK.CES
+```
 
 ---
 
@@ -55,6 +63,7 @@ The simplest way to load a contract's schema is `CESContractSchema.LoadAsync`. I
 When you pass a contract-package hash, the method resolves the latest active contract version automatically. You can also request a specific version with the optional `version` parameter.
 
 ```csharp
+using Casper.Network.SDK;
 using Casper.Network.SDK.CES;
 
 var client = new NetCasperClient("https://rpc.testnet.casperlabs.io/rpc");
@@ -247,4 +256,10 @@ Console.WriteLine(json);
 
 ## Parsing CES events in the SSE stream
 
-See `Docs/Examples/CESParser/Program.cs` for a runnable sample that connects to the node SSE stream, listens to `TransactionProcessed` events, and pretty-prints parsed CES events.
+See [the CES parser example](https://github.com/make-software/casper-net-sdk/tree/master/Docs/Examples/CESParser) for a runnable sample that references the CES library, connects to the node SSE stream, listens to `TransactionProcessed` events, and pretty-prints parsed CES events.
+
+Run it from the repository root, supplying the contract-package hash to watch:
+
+```bash
+dotnet run --project Docs/Examples/CESParser -- <contract-package-hash>
+```

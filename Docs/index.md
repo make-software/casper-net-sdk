@@ -21,7 +21,7 @@ The Casper .NET SDK allows developers to interact with the Casper Network using 
 * [Working with AddressableEntity](./Articles/WorkingWithAddressableEntity.md) — Query entities (accounts, contracts, and system contracts) on Casper 2.0.
 * [Key management](./Articles/KeyManagement.md) — Create, load, and save public/private key pairs.
 * [Working with Server-Sent Events (SSE)](./Articles/WorkingWithSSE.md) — Listen to real-time events from a Casper node.
-* [Casper Event Standard (CES)](./Articles/CasperEventStandard.md) — Decode typed events emitted by smart contracts.
+* [Casper Event Standard (CES)](./Articles/CasperEventStandard.md) — Decode typed events emitted by smart contracts with the separate `Casper.Network.SDK.CES` package.
 * [Running a local Casper network with NCTL](./Articles/RunningNctlLocally.md) — Set up a local test network using Docker.
 * [Migration from v2.x to v3.0](./Articles/Casper20MigrationGuide.md) — Upgrade your application for Casper 2.0 compatibility.
 
@@ -43,3 +43,4 @@ See the complete list of examples [here](./Examples/index.md).
 
 * [GitHub repository](https://github.com/make-software/casper-net-sdk)
 * [NuGet package](https://www.nuget.org/packages/Casper.Network.SDK/)
+* [CES NuGet package](https://www.nuget.org/packages/Casper.Network.SDK.CES/)

@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Casper.Network.SDK\Casper.Network.SDK.csproj" />
+      <ProjectReference Include="..\..\..\Casper.Network.SDK.CES\Casper.Network.SDK.CES.csproj" />
     </ItemGroup>
 
 </Project>

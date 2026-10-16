@@ -3,8 +3,10 @@
     {
       "src": [
         {
+          "src": "..",
           "files": [
-            "Casper.Network.SDK/**.csproj"
+            "Casper.Network.SDK/Casper.Network.SDK.csproj",
+            "Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj"
           ]
         }
       ],

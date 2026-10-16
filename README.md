@@ -26,6 +26,16 @@ Install-Package Casper.Network.SDK
 dotnet add package Casper.Network.SDK
 ``` 
 
+### Casper Event Standard (CES)
+
+CES schema and event parsing is provided by the separate `Casper.Network.SDK.CES` package, which depends on the core SDK:
+
+```bash
+dotnet add package Casper.Network.SDK.CES
+```
+
+Import `Casper.Network.SDK.CES` to use `CESContractSchema`, `CESEvent`, and `CESParser`. See the [CES documentation](Docs/Articles/CasperEventStandard.md) and [SSE example](Docs/Examples/CESParser/Program.cs).
+
 ## Run a Casper node locally with NCTL
 
 [NCTL](https://github.com/casper-network/casper-node/tree/release-1.4.3/utils/nctl) is a CLI application to control one or multiple Casper networks locally. Many developers wish to spin up relatively small test networks to localize their testing before deploying to the blockchain.

@@ -22,6 +22,8 @@ Install-Package Casper.Network.SDK
 dotnet add package Casper.Network.SDK
 ``` 
 
+For Casper Event Standard schema and event parsing, also install `Casper.Network.SDK.CES` and import `Casper.Network.SDK.CES`. See the [CES guide](./CasperEventStandard.md).
+
 ## Add a reference to the source code
 
 Clone the GitHub repository in your solution folder and add a reference in your project to the `Casper.Network.SDK.csproj` file.
@@ -30,6 +32,12 @@ Clone the GitHub repository in your solution folder and add a reference in your 
 git clone https://github.com/make-software/casper-net-sdk.git
 cd your-project
 dotnet add reference ../casper-net-sdk/Casper.Network.SDK/Casper.Network.SDK.csproj
+```
+
+If you need the CES parser, also add a reference to the `Casper.Network.SDK.CES.csproj` project in the same way:
+
+```bash
+dotnet add reference ../casper-net-sdk/Casper.Network.SDK.CES/Casper.Network.SDK.CES.csproj
 ```
 
 ## Create a minimal console application

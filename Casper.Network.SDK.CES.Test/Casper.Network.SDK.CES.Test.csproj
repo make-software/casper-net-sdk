@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>9.0</LangVersion>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>Casper.Network.SDK.CES.Test</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+        <PackageReference Include="NUnit" Version="3.14.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+        <PackageReference Include="coverlet.collector" Version="3.2.0" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <CustomTargetFramework Condition="'$(TEST_FRAMEWORK)' != ''">$(TEST_FRAMEWORK)</CustomTargetFramework>
+        <CustomTargetFramework Condition="'$(CustomTargetFramework)' == ''">net8.0</CustomTargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(CustomTargetFramework)' == 'net8.0'">
+        <ProjectReference Include="..\Casper.Network.SDK.CES\Casper.Network.SDK.CES.csproj" Properties="TargetFramework=net8.0" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(CustomTargetFramework)' == 'netstandard2.0'">
+        <ProjectReference Include="..\Casper.Network.SDK.CES\Casper.Network.SDK.CES.csproj" Properties="TargetFramework=netstandard2.0" />
+    </ItemGroup>
+
+</Project>
