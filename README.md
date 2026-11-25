@@ -91,9 +91,3 @@ To test against `netstandard2.0` framework, launch the tests as follows:
 ```
 TEST_FRAMEWORK=netstandard2.0 dotnet test --settings Casper.Network.SDK.Test/test.runsettings --filter 'TestCategory~NCTL'
 ```
-
-## Create a workspace in Gitpod
-
-Click the button to start coding in Gitpod with an online IDE.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/make-software/casper-net-sdk)
